@@ -1,0 +1,19 @@
+{
+  "name": "@ossinsight/widgets-next",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "next": "^13.4.10"
+  },
+  "peerDependencies": {
+    "next": "^13.4.10"
+  },
+  "dependencies": {
+    "webpack-virtual-modules": "^0.5.0"
+  }
+}

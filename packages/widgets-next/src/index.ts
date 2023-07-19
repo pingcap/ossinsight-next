@@ -1,0 +1,1 @@
+export { withWidgets } from './withWidgets'

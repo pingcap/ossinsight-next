@@ -1,0 +1,22 @@
+{
+  "name": "@ossinsight/widgets-core",
+  "version": "1.0.0",
+  "type": "module",
+  "module": "lib/index.ts",
+  "devDependencies": {
+    "@ossinsight/widgets-types": "workspace:^",
+    "@types/jsonpath": "^0.2.0",
+    "@types/react": "18.2.15",
+    "react": "18.2.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "echarts": "^5.4.3",
+    "jsonpath": "^1.1.1"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "tailwindcss": "3.3.3"
+  }
+}
