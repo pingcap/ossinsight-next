@@ -2,7 +2,6 @@
   "name": "@ossinsight/widgets-core",
   "version": "1.0.0",
   "type": "module",
-  "module": "lib/index.ts",
   "devDependencies": {
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",

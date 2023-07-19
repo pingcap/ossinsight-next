@@ -30,6 +30,6 @@ export default async function Page ({ params, searchParams }: { params: { name: 
   );
 }
 
-export function resolveInitialCache () {
+function resolveInitialCache () {
 
 }

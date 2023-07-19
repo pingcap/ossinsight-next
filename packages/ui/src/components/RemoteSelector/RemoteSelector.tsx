@@ -73,7 +73,7 @@ export function RemoteSelector<Item> ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
-  const debouncedTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const debouncedTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const mounted = useRef(true);
 
   const getRemoteOptionsRef = useRef(getRemoteOptions);

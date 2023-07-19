@@ -4,8 +4,6 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "outDir": "lib",
-    "rootDir": "src",
     "skipLibCheck": true,
     "declaration": true,
     "jsx": "react-jsx",
