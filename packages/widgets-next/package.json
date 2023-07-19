@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
