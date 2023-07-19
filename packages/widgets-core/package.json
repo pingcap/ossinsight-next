@@ -4,6 +4,7 @@
   "type": "module",
   "module": "lib/index.ts",
   "devDependencies": {
+    "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@types/jsonpath": "^0.2.0",
     "@types/react": "18.2.15",
@@ -16,7 +17,10 @@
     "jsonpath": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "18.2.0",
+    "@ossinsight/ui": "workspace:^",
     "tailwindcss": "3.3.3"
+  },
+  "optionalDependencies": {
+    "react": "18.2.0"
   }
 }

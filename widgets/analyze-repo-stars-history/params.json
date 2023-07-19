@@ -1,8 +1,11 @@
 {
   "repo_id": {
-    "type": "repo-id"
+    "type": "repo-id",
+    "title": "Analyzing Repo",
+    "required": true
   },
   "vs_repo_id": {
-    "type": "repo-id"
+    "type": "repo-id",
+    "title": "Comparing Repo"
   }
 }

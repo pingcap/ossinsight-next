@@ -25,3 +25,17 @@ export interface WidgetModule<T extends string, R, D, P> {
   version: string;
 }
 
+export interface BaseParameterDefinition {
+  type: string;
+  title?: string;
+  description?: string;
+  required: boolean;
+}
+
+export interface RepoIdParameterDefinition extends BaseParameterDefinition {
+  type: 'repo-id';
+}
+
+export type ParameterDefinition = RepoIdParameterDefinition; // | Others;
+
+export type ParameterDefinitions = Record<string, ParameterDefinition>;

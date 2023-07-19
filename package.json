@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "pnpm run build:toolchain",
+    "dev": "pnpm run --filter @ossinsight/web dev",
     "build:toolchain": "pnpm run --filter @ossinsight/widgets-next build"
   },
   "keywords": [],
@@ -12,5 +13,6 @@
   "license": "ISC",
   "devDependencies": {
     "typescript": "^5.1.6"
-  }
+  },
+  "packageManager": "pnpm@8.6.9"
 }
