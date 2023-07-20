@@ -57,3 +57,5 @@ function parseSize (raw: string | undefined | null, min: number, max: number) {
 
   return undefined;
 }
+
+export const dynamic = 'force-dynamic';
