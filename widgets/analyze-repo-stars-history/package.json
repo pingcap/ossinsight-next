@@ -1,8 +1,11 @@
 {
   "name": "@ossinsight/widget-analyze-repo-stars-history",
   "version": "1.0.0",
+  "description": "Show the star history of a GitHub repository monthly.",
   "type": "module",
   "main": "visualization.ts",
+  "keywords": ["Repository", "Stars"],
+  "author": "OSSInsight",
   "devDependencies": {
     "@ossinsight/widgets-types": "workspace:^"
   }
