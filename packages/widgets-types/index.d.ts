@@ -10,6 +10,14 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
   theme: {
     colors: typeof colors
   };
+
+  getRepo (id: number): any;
+
+  getUser (id: number): any;
+
+  getCollection (id: number): any;
+
+  getOrg (id: number): any;
 }
 
 export type EChartsVisualizationConfig = EChartsOption;

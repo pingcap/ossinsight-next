@@ -10,6 +10,18 @@ export default function renderEcharts (width: number, height: number, visualizer
     parameters,
     theme: { colors },
     runtime: 'server',
+    getRepo (id: number): any {
+      return {};
+    },
+    getUser (id: number): any {
+      return {};
+    },
+    getCollection (id: number): any {
+      return {};
+    },
+    getOrg (id: number): any {
+      return {};
+    },
   });
 
   const echarts = init(canvas as any, undefined, {

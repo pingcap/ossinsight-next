@@ -18,6 +18,18 @@ function EChartsComponent ({ data, visualizer, parameters }: EChartsComponentPro
       runtime: 'client',
       parameters,
       theme: { colors },
+      getRepo (id: number): any {
+        return {};
+      },
+      getUser (id: number): any {
+        return {};
+      },
+      getCollection (id: number): any {
+        return {};
+      },
+      getOrg (id: number): any {
+        return {};
+      }
     });
   }, [data, visualizer, parameters]);
 
