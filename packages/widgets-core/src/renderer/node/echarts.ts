@@ -10,6 +10,8 @@ export default function renderEcharts (width: number, height: number, visualizer
     parameters,
     theme: { colors },
     runtime: 'server',
+    width,
+    height,
     getRepo (id: number): any {
       return {};
     },

@@ -1,6 +1,6 @@
 import { VisualizeFunction } from '@ossinsight/widgets-types';
 import { EChartsOption, EChartsType, init } from 'echarts';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 
 interface EChartsComponentProps {
@@ -13,11 +13,19 @@ function EChartsComponent ({ data, visualizer, parameters }: EChartsComponentPro
   const echartsRef = useRef<EChartsType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const option = useMemo(() => {
-    return visualizer(data, {
+  useEffect(() => {
+    echartsRef.current = init(containerRef.current!, null, {});
+  }, []);
+
+  useEffect(() => {
+    const { clientWidth: width, clientHeight: height } = containerRef.current!;
+
+    const option = visualizer(data, {
       runtime: 'client',
       parameters,
       theme: { colors },
+      width,
+      height,
       getRepo (id: number): any {
         return {};
       },
@@ -29,17 +37,10 @@ function EChartsComponent ({ data, visualizer, parameters }: EChartsComponentPro
       },
       getOrg (id: number): any {
         return {};
-      }
+      },
     });
-  }, [data, visualizer, parameters]);
-
-  useEffect(() => {
-    echartsRef.current = init(containerRef.current!, null, {});
-  }, []);
-
-  useEffect(() => {
     echartsRef.current!.setOption(option);
-  }, [option]);
+  }, [data, visualizer, parameters]);
 
   return (
     <div className="WidgetContainer WidgetContainer-echarts" ref={containerRef} />
