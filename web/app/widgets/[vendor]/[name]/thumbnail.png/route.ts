@@ -32,13 +32,15 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   const width = request.nextUrl.searchParams.get('width');
   const height = request.nextUrl.searchParams.get('height');
+  const devicePixelRatio = request.nextUrl.searchParams.get('dpr');
 
   const buffer = await render({
     type: visualizer.type,
     data,
     visualizer: visualizer.default,
-    width: parseSize(width, 400, 1920) ?? 400,
-    height: parseSize(height, 400, 1920) ?? 400,
+    width: parseSize(width, 120, 1920) ?? 400,
+    height: parseSize(height, 120, 1920) ?? 400,
+    dpr: parseSize(devicePixelRatio, 1, 3) ?? 2,
     parameters,
   });
 

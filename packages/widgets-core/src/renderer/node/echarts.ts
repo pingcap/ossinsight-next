@@ -3,7 +3,7 @@ import { EChartsVisualizationConfig, VisualizeFunction } from '@ossinsight/widge
 import { init } from 'echarts';
 import * as colors from 'tailwindcss/colors';
 
-export default function renderEcharts (width: number, height: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any) {
+export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any) {
   const canvas = createCanvas(width, height);
 
   const option = visualizer(data, {
@@ -27,8 +27,9 @@ export default function renderEcharts (width: number, height: number, visualizer
   });
 
   const echarts = init(canvas as any, undefined, {
-    width,
-    height,
+    width: width / dpr,
+    height: height / dpr,
+    devicePixelRatio: dpr,
   });
 
   echarts.setOption({ ...option, animation: false });

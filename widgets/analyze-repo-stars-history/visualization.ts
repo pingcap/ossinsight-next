@@ -5,7 +5,7 @@ type Params = {
   vs_repo_id?: string
 }
 
-type  DataPoint = {
+type DataPoint = {
   count: number
   event_month: string
 }
@@ -19,11 +19,21 @@ export default function (data: Input, ctx: WidgetVisualizerContext<Params>): ECh
     dataset: {
       source: main,
     },
+    grid: {
+      top: 16,
+      bottom: 16,
+      left: 8,
+      right: 16,
+      containLabel: true,
+    },
     xAxis: {
       type: 'time',
     },
     yAxis: {
       type: 'value',
+      axisLabel: {
+        formatter: format,
+      },
     },
     series: {
       type: 'line',
@@ -40,9 +50,24 @@ export default function (data: Input, ctx: WidgetVisualizerContext<Params>): ECh
       trigger: 'axis',
       axisPointer: {
         type: 'line',
-      }
-    }
+      },
+    },
   };
+}
+
+const units = ['', 'k', 'm', 'b'];
+
+function format (value: number) {
+  if (value === 0) {
+    return '0';
+  }
+  let i = 0;
+  while (value % 1000 === 0 && i < units.length) {
+    value = value / 1000;
+    i++;
+  }
+
+  return `${value}${units[i]}`;
 }
 
 export const type = 'echarts';
