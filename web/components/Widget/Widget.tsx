@@ -1,12 +1,12 @@
 'use client';
 
 import { ChartSkeleton } from '@ossinsight/ui/src/components/Skeleton';
-import widgets from '@ossinsight/widgets';
+import { visualizers } from '@ossinsight/widgets';
 import { cache, Suspense, use } from 'react';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
 
 export default function Widget ({ name, params, data }: { name: string, params: Record<string, string>, data: any }) {
-  const widget = use(cache(widgets[name])());
+  const widget = use(cache(visualizers[name])());
 
   if (isEmptyData(data)) {
     return <p>Empty data</p>;

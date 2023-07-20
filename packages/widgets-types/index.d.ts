@@ -16,13 +16,17 @@ export type EChartsVisualizationConfig = EChartsOption;
 
 export type VisualizeFunction<R, D, P> = (data: D, ctx: WidgetVisualizerContext<P>) => R
 
-export interface WidgetModule<T extends string, R, D, P> {
+export interface WidgetMeta {
+  name: string;
+  description?: string;
+  version: string;
+  keywords?: string[];
+  author?: string | Partial<{ email: string, name: string, url: string }>;
+}
+
+export interface VisualizerModule<T extends string, R, D, P> {
   type: T;
   default: VisualizeFunction<R, D, P>;
-
-  name: string;
-  description: string;
-  version: string;
 }
 
 export interface BaseParameterDefinition {
