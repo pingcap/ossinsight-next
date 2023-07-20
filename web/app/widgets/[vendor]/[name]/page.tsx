@@ -2,7 +2,11 @@ import Widget, { WidgetParameters } from '@/components/Widget';
 import { datasourceFetchers } from '@ossinsight/widgets';
 import { notFound } from 'next/navigation';
 
-export default async function Page ({ params, searchParams }: { params: { name: string }, searchParams: Record<string, string> }) {
+export default async function Page ({ params, searchParams }: { params: { vendor: string, name: string }, searchParams: Record<string, string> }) {
+  if (params.vendor !== 'official') {
+    notFound();
+  }
+
   const name = `@ossinsight/widget-${decodeURIComponent(params.name)}`;
   if (!(name in datasourceFetchers)) {
     notFound();
