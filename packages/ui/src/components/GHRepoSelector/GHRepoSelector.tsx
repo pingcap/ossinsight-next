@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { CancelablePromise, makeAbortingPromise } from '../../utils/promise';
+import { GHAvatar } from '../GHAvatar';
 import { RemoteSelector, RemoteSelectorListItemProps, RemoteSelectorListProps, RemoteSelectorProps } from '../RemoteSelector';
 
 export type RemoteRepoInfo = {
@@ -57,7 +58,7 @@ function renderList ({ children }: RemoteSelectorListProps) {
 function renderListItem ({ item, onClick, disabled, selected }: RemoteSelectorListItemProps<RemoteRepoInfo>) {
   return (
     <li className={clsx('flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer transition-colors', selected && 'bg-gray-100')} key={item.id} onClick={onClick}>
-      <img className="h-6 rounded-full" src={`https://github.com/${item.fullName.split('/')[0]}.png`} alt={`Avatar of ${item.fullName}`} />
+      <GHAvatar name={item.fullName} size={6} />
       <span className="text-gray-700">
         {item.fullName}
       </span>

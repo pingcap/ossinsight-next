@@ -15,7 +15,7 @@ export default {
     layout: 'centered',
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
-  tags: ['autodocs'],
+  tags: [],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
 };
@@ -26,7 +26,7 @@ export const Default = {
     getRemoteOptions: testSearch,
     renderInput(props) {
       return <input className='border rounded outline-none px-2 py-1 text-gray-700' {...props}
-                    type={props.type === 'button' ? undefined : props.type} />
+                    type={undefined} />
     },
     renderList(props) {
       return <ul {...props} />
@@ -48,24 +48,18 @@ export const Default = {
 };
 
 function Wrapper(props) {
-  const [fetching, setFetching] = useState(false)
   const [value, setValue] = useState(undefined)
 
   return (
     <div>
       <div>
         Value: {value ?? 'N/A'}
-        <br />
-        Fetching: {fetching ? 'true' : 'false'}
       </div>
 
       <RemoteSelector
         {...props}
         onSelect={setValue}
         value={[value]}
-        onStartFetching={() => setFetching(true)}
-        onFinishedFetching={() => setFetching(false)}
-        onCancelFetching={() => setFetching(false)}
       />
     </div>
   )

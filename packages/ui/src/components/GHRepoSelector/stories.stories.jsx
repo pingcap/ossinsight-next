@@ -29,5 +29,5 @@ function Wrapper() {
 
 function renderInput(props) {
   return <input className='border rounded outline-none px-2 py-1 text-gray-700' {...props}
-                type={props.type === 'button' ? undefined : props.type} />
+                type={undefined} />
 }

@@ -1,6 +1,7 @@
 import * as RuiPopover from '@radix-ui/react-popover';
-import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { CancelablePromise } from '../../utils/promise';
+import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useState } from 'react';
+import { useCancellablePromise } from '../../hooks/useCancellablePromise';
+import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
 import './style.scss';
 
 export interface RemoteSelectorProps<Item> {
@@ -13,10 +14,6 @@ export interface RemoteSelectorProps<Item> {
   popoverContentProps?: Omit<RuiPopover.PopoverContentProps, 'children' | 'onOpenAutoFocus'>;
 
   onSelect? (item: Item, event: MouseEvent): void;
-
-  onStartFetching? (text: string): void;
-
-  onFinishedFetching? (text: string): void;
 
   renderInput (props: RemoteSelectorInputProps): ReactElement;
 
@@ -60,8 +57,6 @@ export function RemoteSelector<Item> ({
   renderEmpty,
   renderError,
   onSelect,
-  onStartFetching,
-  onFinishedFetching,
   popoverContentProps,
   popoverPortalProps,
   equals = Object.is,
@@ -69,59 +64,20 @@ export function RemoteSelector<Item> ({
 }: RemoteSelectorProps<Item>) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(undefined);
+  const { execute, result: items, executing: loading, error } = useCancellablePromise<string, Item[]>({
+    executor: getRemoteOptions,
+    defaultResult: [],
+  });
 
-  const debouncedTimerRef = useRef<ReturnType<typeof setTimeout>>();
-  const mounted = useRef(true);
-
-  const getRemoteOptionsRef = useRef(getRemoteOptions);
-  getRemoteOptionsRef.current = getRemoteOptions;
-
-  const fetchingPromise = useRef<CancelablePromise<Item[]>>();
+  const startFetch = useDebouncedCallback(execute, { timeout: 500 });
 
   const onInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const value = ev.target.value;
     setInput(value);
-
-    clearTimeout(debouncedTimerRef.current);
-    debouncedTimerRef.current = setTimeout(() => {
-      startFetch(value);
-    }, 500);
+    startFetch(value);
   }, []);
 
   const onInputFocus = useCallback((ev: FocusEvent<HTMLInputElement>) => {
-    onInputChange(ev);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(debouncedTimerRef.current);
-      mounted.current = false;
-      fetchingPromise.current?.cancel();
-    };
-  }, []);
-
-  const startFetch = useCallback((text: string) => {
-    fetchingPromise.current?.cancel();
-    setLoading(true);
-    setError(undefined);
-    onStartFetching?.(text);
-
-    const p = getRemoteOptionsRef.current(text);
-
-    fetchingPromise.current = p;
-
-    p
-      .then(res => {
-        setItems(res);
-        onFinishedFetching?.(text);
-      })
-      .catch(setError)
-      .finally(() => {
-        setLoading(false);
-      });
   }, []);
 
   const renderChildren = () => {
