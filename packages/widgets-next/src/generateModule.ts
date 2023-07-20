@@ -6,6 +6,7 @@ export function generateModule () {
   const widgetsPath = path.resolve(base, '../widgets');
 
   const folders = fs.readdirSync(widgetsPath, { withFileTypes: true });
+  const widgets: Record<string, string> = {}
 
   let src = `const widgets = {}
 const visualizers = {}
@@ -18,6 +19,7 @@ const parameterDefinitions = {}
       const pkg = path.join(widgetsPath, folder.name, 'package.json');
       const { name, version, keywords, description, author } = require(pkg);
       const meta = { name, version, keywords, description, author };
+      widgets[name] = path.resolve(widgetsPath, folder.name);
 
       const quotedName = JSON.stringify(name);
       const visPath = JSON.stringify(path.join(name, 'visualization.ts'));
@@ -41,4 +43,6 @@ const parameterDefinitions = {}
   fs.mkdirSync(path.dirname(filepath), { recursive: true });
 
   fs.writeFileSync(filepath, src);
+
+  return widgets;
 }
