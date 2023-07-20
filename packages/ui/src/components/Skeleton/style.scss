@@ -1,0 +1,13 @@
+.skeleton {
+  animation: skeleton-keyframes 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton-keyframes {
+  0% {
+    @apply bg-gray-100 text-gray-200;
+  }
+  100% {
+    @apply bg-gray-200 text-gray-400;
+  }
+}
+
