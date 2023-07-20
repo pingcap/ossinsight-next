@@ -1,13 +1,8 @@
 import { lazy } from 'react';
+import { WidgetVisualizationProps } from '../../types';
 
 const ECharts = lazy(() => import('./echarts'));
 
-export interface WidgetVisualizationProps {
-  type: string;
-  visualizer: any;
-  data: any;
-  parameters: any;
-}
 
 export default function WidgetVisualization ({ type, visualizer, parameters, data }: WidgetVisualizationProps) {
   let el;

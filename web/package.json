@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
     "@ossinsight/widgets-core": "workspace:^",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",

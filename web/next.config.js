@@ -4,6 +4,7 @@ const {withWidgets} = require("@ossinsight/widgets-next");
 const nextConfig = {
   experimental: {
     externalDir: true,
+    serverComponentsExternalPackages: ['@napi-rs/canvas'],
   }
 }
 
