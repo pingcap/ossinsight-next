@@ -4,7 +4,7 @@ export interface AvatarSkeletonProps {
   size?: number
 }
 
-export function AvatarSkeleton ({ size }: AvatarSkeletonProps) {
+export function AvatarSkeleton ({ size = 8 }: AvatarSkeletonProps) {
   return (
     <span
       className='block rounded-full skeleton'
