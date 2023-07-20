@@ -1,8 +1,11 @@
 import Widget, { WidgetParameters } from '@/components/Widget';
-import { datasourceFetchers } from '@ossinsight/widgets';
+import widgets, { datasourceFetchers } from '@ossinsight/widgets';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-export default async function Page ({ params, searchParams }: { params: { vendor: string, name: string }, searchParams: Record<string, string> }) {
+type Props = { params: { vendor: string, name: string }, searchParams: Record<string, string> };
+
+export default async function Page ({ params, searchParams }: Props) {
   if (params.vendor !== 'official') {
     notFound();
   }
@@ -34,6 +37,32 @@ export default async function Page ({ params, searchParams }: { params: { vendor
   );
 }
 
-function resolveInitialCache () {
+export function generateMetadata ({ params, searchParams }: Props): Metadata {
+  const name = `@ossinsight/widget-${decodeURIComponent(params.name)}`;
 
+  const widget = widgets[name];
+
+  if (!widget) {
+    return {};
+  }
+
+  const usp = new URLSearchParams(searchParams);
+  const twitterImageUsp = new URLSearchParams(usp);
+
+  twitterImageUsp.set('width', '800');
+  twitterImageUsp.set('height', '418');
+  twitterImageUsp.set('dpr', '2');
+
+  return {
+    description: widget.description,
+    keywords: ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(...(widget.keywords ?? [])),
+    openGraph: {
+      description: widget.description,
+      images: [`/widgets/${params.vendor}/${params.name}/thumbnail.png?${usp.toString()}`],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: [`/widgets/${params.vendor}/${params.name}/thumbnail.png?${twitterImageUsp.toString()}`],
+    },
+  };
 }
