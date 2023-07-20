@@ -1,5 +1,6 @@
 'use client';
 
+import { cacheIfBrowser } from '@/utils/cacheIfBrowser';
 import { parameterDefinitions } from '@ossinsight/widgets';
 import parsers from '@ossinsight/widgets-core/src/parameters/parser';
 import { ParamInput } from '@ossinsight/widgets-core/src/parameters/react';
@@ -18,7 +19,7 @@ export function WidgetParameters ({ widgetName }: { widgetName: string }) {
     throw new Error('bad widget');
   }
 
-  const parameters = use(cache(getParameters)());
+  const parameters = use(cacheIfBrowser(getParameters)());
 
   const [values, setValues] = useState(() => {
     const values: Record<string, string> = {};
