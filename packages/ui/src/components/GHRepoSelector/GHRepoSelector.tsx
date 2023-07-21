@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { CancelablePromise, makeAbortingPromise } from '../../utils/promise';
+import { cancellableFetch } from '../../utils/fetch';
+import { CancelablePromise } from '../../utils/promise';
 import { GHAvatar } from '../GHAvatar';
 import { RemoteSelector, RemoteSelectorListItemProps, RemoteSelectorListProps, RemoteSelectorProps } from '../RemoteSelector';
 
@@ -37,14 +38,9 @@ function isRepoEquals (a: RemoteRepoInfo, b: RemoteRepoInfo) {
 }
 
 function fetchRepoInfo (text: string): CancelablePromise<RemoteRepoInfo[]> {
-  const controller = new AbortController();
-  const responsePromise = fetch(`https://api.ossinsight.io/gh/repos/search?keyword=${encodeURIComponent(text)}`, {
-    signal: controller.signal,
-  });
-
-  const dataPromise = responsePromise.then(res => res.json()).then(res => res.data);
-
-  return makeAbortingPromise(dataPromise, controller);
+  return cancellableFetch(`https://api.ossinsight.io/gh/repos/search?keyword=${encodeURIComponent(text)}`)
+    .then(res => res.json())
+    .then(res => res.data);
 }
 
 function renderList ({ children }: RemoteSelectorListProps) {

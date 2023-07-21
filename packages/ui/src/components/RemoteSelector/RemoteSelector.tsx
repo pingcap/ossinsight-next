@@ -2,11 +2,12 @@ import * as RuiPopover from '@radix-ui/react-popover';
 import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useState } from 'react';
 import { useCancellablePromise } from '../../hooks/useCancellablePromise';
 import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
+import { CancelablePromise } from '../../utils/promise';
 import './style.scss';
 
 export interface RemoteSelectorProps<Item> {
   value: Item[];
-  getRemoteOptions: (text: string) => Promise<Item[]> & { cancel: () => void };
+  getRemoteOptions: (text: string) => CancelablePromise<Item[]>;
 
   getItemText?: (item: Item) => string;
 
