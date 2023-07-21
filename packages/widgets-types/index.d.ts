@@ -79,3 +79,5 @@ export interface RepoIdParameterDefinition extends BaseParameterDefinition {
 export type ParameterDefinition = RepoIdParameterDefinition; // | Others;
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
+
+export type MetadataGenerator<P> = (ctx: WidgetVisualizerContext<P>) => Partial<{ title: string, description: string, keywords: [] }>

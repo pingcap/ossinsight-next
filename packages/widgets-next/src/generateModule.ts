@@ -12,6 +12,7 @@ export function generateModule () {
 const visualizers = {}
 const datasourceFetchers = {}
 const parameterDefinitions = {}
+const metadataGenerators = {}
 `;
 
   folders.forEach(folder => {
@@ -25,6 +26,7 @@ const parameterDefinitions = {}
       const visPath = JSON.stringify(path.join(name, 'visualization.ts'));
       const dataPath = JSON.stringify(path.join(name, 'datasource.json'));
       const paramsPath = JSON.stringify(path.join(name, 'params.json'));
+      const metadataPath = JSON.stringify(path.join(name, 'metadata.ts'));
 
       src += `widgets[${quotedName}] = ${JSON.stringify(meta)}\n`;
 
@@ -33,11 +35,13 @@ const parameterDefinitions = {}
       src += `datasourceFetchers[${quotedName}] = (ctx) => Promise.all([import(${dataPath}), import('@ossinsight/widgets-core/src/datasource')]).then(([jsonModule, core]) => core.default(jsonModule.default, ctx))\n`;
 
       src += `parameterDefinitions[${quotedName}] = () => import(${paramsPath}).then(module => module.default)\n`;
+
+      src += `metadataGenerators[${quotedName}] = () => import(${metadataPath}).then(module => module.default)\n`;
     }
   });
 
   src += 'export default widgets\n';
-  src += 'export { visualizers, datasourceFetchers, parameterDefinitions }\n';
+  src += 'export { visualizers, datasourceFetchers, parameterDefinitions, metadataGenerators }\n';
 
   const filepath = path.resolve(base, 'node_modules/@ossinsight/widgets/index.js');
   fs.mkdirSync(path.dirname(filepath), { recursive: true });

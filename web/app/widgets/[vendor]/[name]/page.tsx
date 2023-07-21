@@ -1,8 +1,9 @@
 import Widget, { WidgetParameters } from '@/components/Widget';
-import widgets, { datasourceFetchers } from '@ossinsight/widgets';
+import widgets, { datasourceFetchers, metadataGenerators } from '@ossinsight/widgets';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
+import * as colors from 'tailwindcss/colors';
 
 type Props = { params: { vendor: string, name: string }, searchParams: Record<string, string> };
 
@@ -38,13 +39,14 @@ export default async function Page ({ params, searchParams }: Props) {
   );
 }
 
-export function generateMetadata ({ params, searchParams }: Props): Metadata {
+export async function generateMetadata ({ params, searchParams }: Props): Promise<Metadata> {
   const requestHeaders = headers();
   const host = requestHeaders.get('host');
 
   const name = `@ossinsight/widget-${decodeURIComponent(params.name)}`;
 
   const widget = widgets[name];
+  const generateMetadata = await metadataGenerators[name]();
 
   if (!widget) {
     return {};
@@ -53,23 +55,43 @@ export function generateMetadata ({ params, searchParams }: Props): Metadata {
   const usp = new URLSearchParams(searchParams);
   const twitterImageUsp = new URLSearchParams(usp);
 
+  const { title, description, keywords } = generateMetadata({
+    theme: { colors },
+    parameters: params,
+    runtime: 'server',
+    width: 0,
+    height: 0,
+    getRepo (id: number): any {
+      return {};
+    },
+    getUser (id: number): any {
+      return {};
+    },
+    getCollection (id: number): any {
+      return {};
+    },
+    getOrg (id: number): any {
+      return {};
+    },
+  });
+
   twitterImageUsp.set('width', '800');
   twitterImageUsp.set('height', '418');
   twitterImageUsp.set('dpr', '2');
 
   return {
-    description: widget.description,
-    title: decodeURIComponent(params.name),
-    keywords: ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(...(widget.keywords ?? [])),
+    title: title ?? decodeURIComponent(params.name),
+    description: description || widget.description,
+    keywords: ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []),
     openGraph: {
-      title: decodeURIComponent(params.name),
-      tags: widget.keywords,
-      description: widget.description,
+      title: title ?? decodeURIComponent(params.name),
+      description: description ?? widget.description,
+      tags: (widget.keywords ?? []).concat(keywords ?? []),
       images: [`${protocol}://${host}/widgets/${params.vendor}/${params.name}/thumbnail.png?${usp.toString()}`],
     },
     twitter: {
-      title: decodeURIComponent(params.name),
-      description: widget.description,
+      title: title ?? decodeURIComponent(params.name),
+      description: description ?? widget.description,
       card: 'summary_large_image',
       images: [`${protocol}://${host}/widgets/${params.vendor}/${params.name}/thumbnail.png?${twitterImageUsp.toString()}`],
     },
