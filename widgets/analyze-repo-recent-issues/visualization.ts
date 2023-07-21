@@ -9,16 +9,16 @@ type Params = {
 
 type DataPoint = {
   idx: number;
+  current_period_closed_day_issues: number;
+  current_period_closed_issues: number;
   current_period_day: string;
-  current_period_merged_day_prs: number;
-  current_period_merged_prs: number;
-  current_period_opened_day_prs: number;
-  current_period_opened_prs: number;
+  current_period_opened_day_issues: number;
+  current_period_opened_issues: number;
+  last_period_closed_day_issues: number;
+  last_period_closed_issues: number;
   last_period_day: string;
-  last_period_merged_day_prs: number;
-  last_period_merged_prs: number;
-  last_period_opened_day_prs: number;
-  last_period_opened_prs: number;
+  last_period_opened_day_issues: number;
+  last_period_opened_issues: number;
 };
 
 type Input = [DataPoint[], DataPoint[] | undefined];
@@ -45,7 +45,7 @@ export default function (
         showSymbol: false,
         encode: {
           x: 'current_period_day',
-          y: 'current_period_opened_day_prs',
+          y: 'current_period_opened_day_issues',
         },
         smooth: true,
         color: ctx.theme.colors.green['400'],
@@ -56,7 +56,7 @@ export default function (
         showSymbol: false,
         encode: {
           x: 'current_period_day',
-          y: 'current_period_merged_day_prs',
+          y: 'current_period_closed_day_issues',
         },
         smooth: true,
         color: ctx.theme.colors.indigo['400'],

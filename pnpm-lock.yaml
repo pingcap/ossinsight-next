@@ -187,6 +187,9 @@ importers:
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../packages/ui
+      '@ossinsight/widget-analyze-repo-recent-issues':
+        specifier: workspace:^
+        version: link:../widgets/analyze-repo-recent-issues
       '@ossinsight/widget-analyze-repo-recent-pull-requests':
         specifier: workspace:^
         version: link:../widgets/analyze-repo-recent-pull-requests
@@ -205,6 +208,12 @@ importers:
       sass:
         specifier: ^1.63.6
         version: 1.63.6
+
+  widgets/analyze-repo-recent-issues:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
 
   widgets/analyze-repo-recent-pull-requests:
     devDependencies:

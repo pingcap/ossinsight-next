@@ -41,7 +41,7 @@ export default function (
         x: 'current_period_day',
         y: 'current_period_day_stars',
       },
-      color: ctx.theme.colors.red['400'],
+      color: ctx.theme.colors.orange['400'],
       name: 'Stars',
     },
     tooltip: {
