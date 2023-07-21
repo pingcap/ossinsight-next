@@ -14,7 +14,13 @@ export default function Widget ({ name, params, data }: { name: string, params: 
 
   return (
     <Suspense fallback={<ChartSkeleton style={{ aspectRatio: '16 / 9' }} />}>
-      <WidgetVisualization type={widget.type} visualizer={widget.default} data={data} parameters={params} />
+      <WidgetVisualization
+        type={widget.type}
+        visualizer={widget.default}
+        data={data}
+        parameters={params}
+        onSizeChange={widget.onSizeChange}
+      />
     </Suspense>
   );
 }

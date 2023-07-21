@@ -1,0 +1,9 @@
+{
+  "name": "@ossinsight/widget-analyze-repo-recent-pull-requests",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "visualization.ts",
+  "devDependencies": {
+    "@ossinsight/widgets-types": "workspace:^"
+  }
+}

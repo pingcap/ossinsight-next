@@ -28,6 +28,7 @@
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widget-analyze-repo-stars-history": "workspace:^",
     "@ossinsight/widget-analyze-repo-recent-stars": "workspace:^",
+    "@ossinsight/widget-analyze-repo-recent-pull-requests": "workspace:^",
     "@ossinsight/widgets-next": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "sass": "^1.63.6"

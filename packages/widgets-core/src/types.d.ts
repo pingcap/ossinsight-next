@@ -9,4 +9,6 @@ export interface WidgetVisualizationProps {
   visualizer: any;
   data: any;
   parameters: any;
+  onSizeChange?: any;
+  onColorSchemeChange?: any;
 }

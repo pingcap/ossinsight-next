@@ -187,12 +187,15 @@ importers:
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../packages/ui
+      '@ossinsight/widget-analyze-repo-recent-pull-requests':
+        specifier: workspace:^
+        version: link:../widgets/analyze-repo-recent-pull-requests
+      '@ossinsight/widget-analyze-repo-recent-stars':
+        specifier: workspace:^
+        version: link:../widgets/analyze-repo-recent-stars
       '@ossinsight/widget-analyze-repo-stars-history':
         specifier: workspace:^
         version: link:../widgets/analyze-repo-stars-history
-      '@ossinsight/widget-repo-analyze-recent-stars':
-        specifier: workspace:^
-        version: link:../widgets/analyze-repo-recent-stars
       '@ossinsight/widgets-next':
         specifier: workspace:^
         version: link:../packages/widgets-next
@@ -202,6 +205,12 @@ importers:
       sass:
         specifier: ^1.63.6
         version: 1.63.6
+
+  widgets/analyze-repo-recent-pull-requests:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
 
   widgets/analyze-repo-recent-stars:
     devDependencies:
