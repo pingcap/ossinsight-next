@@ -1,5 +1,5 @@
 import Widget, { WidgetParameters } from '@/components/Widget';
-import widgets, { datasourceFetchers, metadataGenerators } from '@ossinsight/widgets';
+import { isWidget, widgetDatasourceFetcher, widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -13,10 +13,10 @@ export default async function Page ({ params, searchParams }: Props) {
   }
 
   const name = `@ossinsight/widget-${decodeURIComponent(params.name)}`;
-  if (!(name in datasourceFetchers)) {
+  if (!isWidget(name)) {
     notFound();
   }
-  const fetcher = datasourceFetchers[name];
+  const fetcher = widgetDatasourceFetcher(name);
 
   const data = await fetcher({
     runtime: 'server',
@@ -45,8 +45,8 @@ export async function generateMetadata ({ params, searchParams }: Props): Promis
 
   const name = `@ossinsight/widget-${decodeURIComponent(params.name)}`;
 
-  const widget = widgets[name];
-  const generateMetadata = await metadataGenerators[name]();
+  const widget = widgetMeta(name);
+  const generateMetadata = await widgetMetadataGenerator(name);
 
   if (!widget) {
     return {};

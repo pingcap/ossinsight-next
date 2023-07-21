@@ -1,4 +1,4 @@
-import widgets, { datasourceFetchers, visualizers } from '@ossinsight/widgets';
+import { isWidget, widgetDatasourceFetcher, widgetVisualizer } from '@/utils/widgets';
 import render from '@ossinsight/widgets-core/src/renderer/node';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
@@ -10,12 +10,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   const name = `@ossinsight/widget-${decodeURIComponent(paramName)}`;
 
-  const meta = widgets[name];
-  if (!meta) {
+  if (!isWidget(name)) {
     notFound();
   }
-  const datasource = await datasourceFetchers[name];
-  const visualizer = await visualizers[name]();
+  const datasource = await widgetDatasourceFetcher(name);
+  const visualizer = await widgetVisualizer(name);
 
   const parameters: any = {};
   request.nextUrl.searchParams.forEach((value, key) => {
