@@ -1,32 +1,25 @@
-import * as RuiPopover from '@radix-ui/react-popover';
 import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useState } from 'react';
-import { useCancellablePromise } from '../../hooks/useCancellablePromise';
-import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
-import { CancelablePromise } from '../../utils/promise';
-import './style.scss';
+import { InputPopover, InputPopoverProps } from '../InputPopover';
+import { useRemoteList, UseRemoteListOptions } from './useRemoteList';
 
-export interface RemoteSelectorProps<Item> {
+export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, Pick<InputPopoverProps, 'popoverContentProps' | 'popoverPortalProps'> {
   value: Item[];
-  getRemoteOptions: (text: string) => CancelablePromise<Item[]>;
 
   getItemText?: (item: Item) => string;
-
-  popoverPortalProps?: Omit<RuiPopover.PortalProps, 'children'>;
-  popoverContentProps?: Omit<RuiPopover.PopoverContentProps, 'children' | 'onOpenAutoFocus'>;
 
   onSelect? (item: Item, event: MouseEvent): void;
 
   renderInput (props: RemoteSelectorInputProps): ReactElement;
 
-  renderList (props: RemoteSelectorListProps): ReactElement;
+  renderList? (props: RemoteSelectorListProps): ReactElement;
 
   renderListItem (props: RemoteSelectorListItemProps<Item>): ReactElement;
 
-  renderLoading (): ReactElement;
+  renderLoading? (): ReactElement;
 
-  renderEmpty (): ReactElement;
+  renderEmpty? (): ReactElement;
 
-  renderError (error: unknown): ReactElement;
+  renderError? (error: unknown): ReactElement;
 
   equals?: (item: Item, Item: Item) => boolean;
 }
@@ -52,11 +45,11 @@ export function RemoteSelector<Item> ({
   value,
   getRemoteOptions,
   renderInput,
-  renderList,
+  renderList = defaultRenderList,
   renderListItem,
-  renderLoading,
-  renderEmpty,
-  renderError,
+  renderLoading = defaultRenderLoading,
+  renderEmpty = defaultRenderEmpty,
+  renderError = defaultRenderError,
   onSelect,
   popoverContentProps,
   popoverPortalProps,
@@ -65,17 +58,12 @@ export function RemoteSelector<Item> ({
 }: RemoteSelectorProps<Item>) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const { execute, result: items, executing: loading, error } = useCancellablePromise<string, Item[]>({
-    executor: getRemoteOptions,
-    defaultResult: [],
-  });
-
-  const startFetch = useDebouncedCallback(execute, { timeout: 500 });
+  const { items, reload, error, loading } = useRemoteList({ getRemoteOptions });
 
   const onInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const value = ev.target.value;
     setInput(value);
-    startFetch(value);
+    reload(value);
   }, []);
 
   const onInputFocus = useCallback((ev: FocusEvent<HTMLInputElement>) => {
@@ -111,19 +99,35 @@ export function RemoteSelector<Item> ({
   };
 
   return (
-    <RuiPopover.Root open={open} onOpenChange={setOpen}>
-      <RuiPopover.Trigger asChild>
-        <RuiPopover.Anchor asChild>
-          {renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus })}
-        </RuiPopover.Anchor>
-      </RuiPopover.Trigger>
-      <RuiPopover.Portal {...popoverPortalProps}>
-        <RuiPopover.Content className="remote-popper-content" {...popoverContentProps} onOpenAutoFocus={prevent}>
-          {renderChildren()}
-        </RuiPopover.Content>
-      </RuiPopover.Portal>
-    </RuiPopover.Root>
+    <InputPopover
+      open={open}
+      onOpenChange={setOpen}
+      input={renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus })}
+      popperContent={renderChildren()}
+      popoverPortalProps={popoverPortalProps}
+      popoverContentProps={popoverContentProps}
+    />
   );
+}
+
+function defaultRenderList ({ children }: RemoteSelectorListProps) {
+  return (
+    <ul>
+      {children}
+    </ul>
+  );
+}
+
+function defaultRenderLoading () {
+  return <div className="py-1 px-2 text-gray-400 text-xs">Loading...</div>;
+}
+
+function defaultRenderEmpty () {
+  return <div className="py-1 px-2 text-gray-400 text-xs">Empty result</div>;
+}
+
+function defaultRenderError (error: unknown) {
+  return <div className="py-1 px-2 text-red-700 text-xs">Failed to load</div>;
 }
 
 const prevent = (ev: Event) => ev.preventDefault();

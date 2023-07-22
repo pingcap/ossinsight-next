@@ -1,0 +1,17 @@
+$color: #FFE895;
+
+@mixin control-shadow {
+  @apply outline-none rounded;
+
+  &:focus {
+    box-shadow: $color 0 0 2px 0;
+  }
+}
+
+@mixin control-border {
+  @apply border;
+
+  &:focus {
+    border-color: $color;
+  }
+}

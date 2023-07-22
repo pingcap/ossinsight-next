@@ -1,0 +1,39 @@
+import * as RuiPopover from '@radix-ui/react-popover';
+import clsx from 'clsx';
+import { ReactElement, ReactNode } from 'react';
+import { preventDefault } from '../../utils/event';
+
+export interface InputPopoverProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  input: ReactElement;
+  popperContent: ReactNode;
+
+  popoverPortalProps?: Omit<RuiPopover.PortalProps, 'children'>;
+  popoverContentProps?: Omit<RuiPopover.PopoverContentProps, 'children' | 'onOpenAutoFocus'>;
+}
+
+export function InputPopover ({ open, onOpenChange, input, popperContent, popoverPortalProps, popoverContentProps }: InputPopoverProps) {
+
+  return (
+    <RuiPopover.Root open={open} onOpenChange={onOpenChange}>
+      <RuiPopover.Trigger asChild>
+        <RuiPopover.Anchor asChild>
+          {input}
+        </RuiPopover.Anchor>
+      </RuiPopover.Trigger>
+      <RuiPopover.Portal
+        {...popoverPortalProps}
+      >
+        <RuiPopover.Content
+          {...popoverContentProps}
+          className={clsx('InputPopper-content', popoverContentProps?.className)}
+          onOpenAutoFocus={preventDefault}
+          align="start"
+        >
+          {popperContent}
+        </RuiPopover.Content>
+      </RuiPopover.Portal>
+    </RuiPopover.Root>
+  );
+}
