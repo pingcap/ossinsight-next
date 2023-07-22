@@ -1,4 +1,5 @@
-import { isWidget, widgetDatasourceFetcher, widgetVisualizer } from '@/utils/widgets';
+import { isWidget, widgetDatasourceFetcher, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
+import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
@@ -24,6 +25,10 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     parameters[key] = value;
   });
 
+
+  const paramDef = await widgetParameterDefinitions(name);
+  const linkedData = await resolveParameters(paramDef, parameters);
+
   const data = await datasource({
     runtime: 'server',
     parameters,
@@ -41,6 +46,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     height: parseSize(height, 120, 1920) ?? 400,
     dpr: parseSize(devicePixelRatio, 1, 3) ?? 2,
     parameters,
+    linkedData,
   });
 
   return new NextResponse(buffer, {

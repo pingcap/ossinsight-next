@@ -1,0 +1,14 @@
+{
+  "name": "@ossinsight/widgets-utils",
+  "version": "1.0.0",
+  "type": "module",
+  "devDependencies": {
+    "echarts": "^5.4.3"
+  },
+  "peerDependencies": {
+    "echarts": "^5.4.3",
+    "tailwindcss": "3.3.3"
+  },
+  "optionalDependencies": {
+  }
+}

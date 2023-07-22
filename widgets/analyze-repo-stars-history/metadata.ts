@@ -5,11 +5,11 @@ const generateMetadata: MetadataGenerator<{ repo_id: string, vs_repo_id?: string
   if (vs_repo_id) {
     const vs = getRepo(parseInt(vs_repo_id));
     return {
-      title: `${main.full_name} vs ${vs.full_name} | Stars history | OSSInsight`,
+      title: `${main.fullName} vs ${vs.fullName} | Stars history | OSSInsight`,
     };
   } else {
     return {
-      title: `Stars history of ${main.full_name} | OSSInsight`,
+      title: `Stars history of ${main.fullName} | OSSInsight`,
     };
   }
 };

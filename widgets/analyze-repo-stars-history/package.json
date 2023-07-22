@@ -7,6 +7,6 @@
   "keywords": ["Repository", "Stars"],
   "author": "OSSInsight",
   "devDependencies": {
-    "@ossinsight/widgets-types": "workspace:^"
+    "@ossinsight/widgets-parent": "workspace:^"
   }
 }

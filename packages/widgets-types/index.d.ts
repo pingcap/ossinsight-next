@@ -21,7 +21,7 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
    */
   height: number
 
-  getRepo (id: number): any;
+  getRepo (id: number): { id: number, fullName: string } | undefined;
 
   getUser (id: number): any;
 

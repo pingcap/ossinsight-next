@@ -4,14 +4,14 @@ import { isWidget, widgetParameterDefinitions } from '@/utils/widgets';
 import parsers from '@ossinsight/widgets-core/src/parameters/parser';
 import { ParamInput } from '@ossinsight/widgets-core/src/parameters/react';
 import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
+import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { use, useRef, useState } from 'react';
 
-export function WidgetParameters ({ widgetName }: { widgetName: string }) {
+export function WidgetParameters ({ widgetName, linkedData }: { widgetName: string, linkedData: LinkedData }) {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const reposCache = useRef({});
 
   if (!isWidget(widgetName)) {
     throw new Error('bad widget');
@@ -28,7 +28,7 @@ export function WidgetParameters ({ widgetName }: { widgetName: string }) {
   });
 
   return (
-    <ParametersContext.Provider value={{ reposCache: reposCache.current }}>
+    <ParametersContext.Provider value={{ linkedData }}>
       <div className="flex items-start gap-4 mt-4">
         {Object.entries(parameters).map(([key, config]) => {
           const rawValue = values[key];

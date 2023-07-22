@@ -2,8 +2,9 @@ import { createCanvas } from '@napi-rs/canvas';
 import { EChartsVisualizationConfig, VisualizeFunction } from '@ossinsight/widgets-types';
 import { init } from 'echarts';
 import * as colors from 'tailwindcss/colors';
+import { LinkedData } from '../../parameters/resolver';
 
-export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any) {
+export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any, linkedData: LinkedData) {
   const canvas = createCanvas(width, height);
 
   const option = visualizer(data, {
@@ -13,7 +14,7 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     width,
     height,
     getRepo (id: number): any {
-      return {};
+      return linkedData.repos[String(id)];
     },
     getUser (id: number): any {
       return {};

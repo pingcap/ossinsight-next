@@ -57,7 +57,7 @@ export function RemoteSelector<Item> ({
   getItemText = String,
 }: RemoteSelectorProps<Item>) {
   const [open, setOpen] = useState(false);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(() => value[0] && getItemText(value[0]));
   const { items, reload, error, loading } = useRemoteList({ getRemoteOptions });
 
   const onInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {

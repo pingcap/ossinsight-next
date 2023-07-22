@@ -145,6 +145,16 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
 
+  packages/widgets-utils:
+    dependencies:
+      tailwindcss:
+        specifier: 3.3.3
+        version: 3.3.3
+    devDependencies:
+      echarts:
+        specifier: ^5.4.3
+        version: 5.4.3
+
   web:
     dependencies:
       '@napi-rs/canvas':
@@ -203,11 +213,20 @@ importers:
         specifier: ^1.63.6
         version: 1.63.6
 
-  widgets/analyze-repo-stars-history:
-    devDependencies:
+  widgets:
+    dependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../packages/widgets-types
+      '@ossinsight/widgets-utils':
+        specifier: workspace:^
+        version: link:../packages/widgets-utils
+
+  widgets/analyze-repo-stars-history:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
 
 packages:
 
@@ -5993,7 +6012,6 @@ packages:
     dependencies:
       tslib: 2.3.0
       zrender: 5.4.4
-    dev: false
 
   /ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -10570,7 +10588,6 @@ packages:
 
   /tslib@2.3.0:
     resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
-    dev: false
 
   /tslib@2.6.0:
     resolution: {integrity: sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==}
@@ -11178,4 +11195,3 @@ packages:
     resolution: {integrity: sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw==}
     dependencies:
       tslib: 2.3.0
-    dev: false

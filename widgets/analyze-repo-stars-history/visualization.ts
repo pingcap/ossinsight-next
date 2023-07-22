@@ -1,4 +1,5 @@
 import type { EChartsVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 
 type Params = {
   repo_id: string
@@ -12,15 +13,17 @@ type DataPoint = {
 
 type Input = [DataPoint[], (DataPoint[]) | undefined]
 
-export default function (data: Input, ctx: WidgetVisualizerContext<Params>): EChartsVisualizationConfig {
-  const [main, vs] = data;
+export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EChartsVisualizationConfig {
+  const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
+  const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
 
   return {
-    dataset: {
-      source: main,
-    },
+    dataset: compare(input, (data, name) => ({
+      id: name,
+      source: data,
+    })),
     grid: {
-      top: 16,
+      top: 32,
       bottom: 16,
       left: 8,
       right: 16,
@@ -35,22 +38,26 @@ export default function (data: Input, ctx: WidgetVisualizerContext<Params>): ECh
         formatter: format,
       },
     },
-    series: {
+    series: compare([main, vs], (data, name) => ({
+      datasetId: name,
       type: 'line',
+      name: data.fullName,
       encode: {
         x: 'event_month',
         y: 'total',
       },
-      color: ctx.theme.colors.red['400'],
       lineStyle: {},
       showSymbol: false,
-    },
+    })),
     tooltip: {
       show: true,
       trigger: 'axis',
       axisPointer: {
         type: 'line',
       },
+    },
+    legend: {
+      show: true,
     },
   };
 }

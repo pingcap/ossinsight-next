@@ -3,14 +3,14 @@ import { useCallback, useContext } from 'react';
 import { ParametersContext } from '../context';
 
 export function RepoIdInput ({ value, onValueChange }: { value: number, onValueChange: (newValue: number) => void }) {
-  const { reposCache } = useContext(ParametersContext);
+  const { linkedData } = useContext(ParametersContext);
 
   const handleRepoChange = useCallback((repo: RemoteRepoInfo) => {
-    reposCache[repo.id] = repo;
+    linkedData.repos[String(repo.id)] = repo;
     onValueChange(repo.id);
   }, []);
 
-  const repo = reposCache[value];
+  const repo = linkedData.repos[String(value)];
 
   return (
     <GHRepoSelector

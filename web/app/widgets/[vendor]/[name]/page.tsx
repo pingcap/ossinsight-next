@@ -1,5 +1,6 @@
 import Widget, { WidgetParameters } from '@/components/Widget';
-import { isWidget, widgetDatasourceFetcher, widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
+import { isWidget, widgetDatasourceFetcher, widgetMeta, widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
+import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
@@ -18,18 +19,21 @@ export default async function Page ({ params, searchParams }: Props) {
   }
   const fetcher = widgetDatasourceFetcher(name);
 
+  const paramDef = await widgetParameterDefinitions(name);
+  const linkedData = await resolveParameters(paramDef, searchParams);
+
   const data = await fetcher({
     runtime: 'server',
     parameters: searchParams,
   });
 
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 max-w-screen-lg">
       <h1 className="text-3xl font-bold mb-4 text-gray-700">Widget landing page prototype</h1>
       <div className="p-4 border-dashed border-2 rounded-2xl">
-        <WidgetParameters widgetName={name} />
+        <WidgetParameters widgetName={name} linkedData={linkedData} />
       </div>
-      <Widget name={name} params={searchParams} data={data} />
+      <Widget name={name} params={searchParams} data={data} linkedData={linkedData} />
       <div className="p-4 border-dashed border-2 rounded-2xl">
         <p className="text-gray-400">
           Share operations will be placed here
@@ -52,17 +56,20 @@ export async function generateMetadata ({ params, searchParams }: Props): Promis
     return {};
   }
 
+  const paramDef = await widgetParameterDefinitions(name);
+  const linkedData = await resolveParameters(paramDef, searchParams);
+
   const usp = new URLSearchParams(searchParams);
   const twitterImageUsp = new URLSearchParams(usp);
 
   const { title, description, keywords } = generateMetadata({
     theme: { colors },
-    parameters: params,
+    parameters: searchParams,
     runtime: 'server',
     width: 0,
     height: 0,
     getRepo (id: number): any {
-      return {};
+      return linkedData.repos[String(id)];
     },
     getUser (id: number): any {
       return {};

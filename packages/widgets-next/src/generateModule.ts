@@ -17,6 +17,9 @@ const metadataGenerators = {}
 `;
 
   folders.forEach(folder => {
+    if (folder.name === 'node_modules') {
+      return;
+    }
     if (folder.isDirectory()) {
       const pkg = path.join(widgetsPath, folder.name, 'package.json');
       const { name, version, keywords, description, author } = require(pkg);
