@@ -11,8 +11,8 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     parameters,
     theme: { colors },
     runtime: 'server',
-    width,
-    height,
+    width: width * dpr,
+    height: width * dpr,
     getRepo (id: number): any {
       return linkedData.repos[String(id)];
     },
@@ -28,8 +28,8 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
   });
 
   const echarts = init(canvas as any, undefined, {
-    width: width / dpr,
-    height: height / dpr,
+    width: width,
+    height: height,
     devicePixelRatio: dpr,
   });
 
