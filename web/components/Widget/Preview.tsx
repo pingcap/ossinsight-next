@@ -9,7 +9,7 @@ export function WidgetPreview ({ name }: { name: string }) {
 
   return (
     <div className="rounded-md overflow-hidden bg-white border w-[320px] transition-shadow hover:shadow-lg">
-      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?repo_id=41986369&width=640&height=480&dpr=${dpr}`} alt="preview" />
+      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?repo_id=41986369&width=320&height=240&dpr=${dpr}`} alt="preview" />
       <div className="p-4 border-t bg-gray-50">
         <h2 className="text-lg font-bold text-gray-700">{getName(widget.name)}</h2>
         {widget.keywords?.length && (
