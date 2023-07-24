@@ -38,10 +38,10 @@ export function CodeBlock ({ code, language }: CodeBlockProps) {
         setResult(ev.data.result);
       }
     };
-    worker.addEventListener('message', handler);
+    worker?.addEventListener('message', handler);
 
     return () => {
-      worker.removeEventListener('message', handler);
+      worker?.removeEventListener('message', handler);
     };
   }, []);
 
