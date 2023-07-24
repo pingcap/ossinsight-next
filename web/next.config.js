@@ -1,4 +1,5 @@
 const {withWidgets} = require("@ossinsight/widgets-next");
+const withSvgr = require('next-plugin-svgr')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -13,8 +14,15 @@ const nextConfig = {
   webpack: config => {
     config.externals.push('@napi-rs/canvas')
     return config;
+  },
+  svgrOptions: {
+    ref: true,
+    svgo: false,
+    replaceAttrValues: {
+      fill: 'currentColor',
+    },
   }
 }
 
 
-module.exports = withWidgets(nextConfig)
+module.exports = withWidgets(withSvgr(nextConfig))

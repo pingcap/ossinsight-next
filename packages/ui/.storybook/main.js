@@ -24,5 +24,26 @@ const config = {
   docs: {
     autodocs: "tag",
   },
+  webpackFinal: config => {
+    const imageRule = config.module.rules.find((rule) => rule.test?.test('.svg'));
+    imageRule.exclude = /\.svg$/;
+
+    // Configure .svg files to be loaded with @svgr/webpack
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: {
+        loader: '@svgr/webpack',
+        options: {
+          ref: true,
+          svgo: false,
+          replaceAttrValues: {
+            fill: 'currentColor',
+          },
+        }
+      }
+    });
+
+    return config;
+  }
 };
 export default config;
