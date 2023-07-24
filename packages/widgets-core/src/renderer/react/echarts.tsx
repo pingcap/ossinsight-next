@@ -3,6 +3,7 @@ import { EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
+import  '../echarts-theme';
 
 interface EChartsComponentProps {
   data: any;
@@ -16,7 +17,7 @@ function EChartsComponent ({ data, visualizer, parameters, linkedData }: ECharts
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ec = echartsRef.current = init(containerRef.current!, null, {});
+    const ec = echartsRef.current = init(containerRef.current!, 'dark', {});
 
     const ro = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;

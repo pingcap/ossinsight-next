@@ -27,7 +27,7 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     },
   });
 
-  const echarts = init(canvas as any, undefined, {
+  const echarts = init(canvas as any, 'dark', {
     width: width,
     height: height,
     devicePixelRatio: dpr,
