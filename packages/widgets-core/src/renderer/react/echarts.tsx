@@ -55,6 +55,7 @@ function EChartsComponent ({ data, visualizer, parameters, linkedData }: ECharts
       },
     });
     echartsRef.current!.setOption(option);
+    console.log(option);
   }, [data, visualizer, parameters]);
 
 

@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-repo-pushes-and-commits-per-month",
+  "version": "1.0.0",
+  "description": "Commits & Pushes History",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": ["Repository", "Commits", "Pushes"],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^"
+  }
+}
