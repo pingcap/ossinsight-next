@@ -1,0 +1,9 @@
+@import "controls";
+
+@layer components {
+  .TextInput {
+    @apply px-2 py-1 text-gray-700 text-sm transition-all;
+    @include control-shadow;
+    @include control-border;
+  }
+}

@@ -1,10 +1,10 @@
-import { RemoteRepoInfo } from '@ossinsight/ui';
 import { createContext } from 'react';
+import { LinkedData } from '../resolver';
 
 export interface ParametersContextValues {
-  reposCache: Record<number, RemoteRepoInfo>;
+  linkedData: LinkedData;
 }
 
 export const ParametersContext = createContext<ParametersContextValues>({
-  reposCache: {},
+  linkedData: { repos: {}, users: {} },
 });

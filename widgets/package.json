@@ -1,0 +1,10 @@
+{
+  "name": "@ossinsight/widgets-parent",
+  "private": true,
+  "version": "1.0.0",
+  "description": "This package is used to provide common dependencies.",
+  "dependencies": {
+    "@ossinsight/widgets-types": "workspace:^",
+    "@ossinsight/widgets-utils": "workspace:^"
+  }
+}

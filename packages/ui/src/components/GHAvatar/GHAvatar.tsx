@@ -7,7 +7,7 @@ export interface GHAvatarProps {
 }
 
 export function GHAvatar ({ name, size = 8 }: GHAvatarProps) {
-  size = size || 8;
+  const sizeValue = `${(size || 8) * 0.25}rem`;
 
   return (
     <RuiAvatar.Root>
@@ -17,8 +17,12 @@ export function GHAvatar ({ name, size = 8 }: GHAvatarProps) {
       <RuiAvatar.Image
         className={`block rounded-full`}
         style={{
-          width: `${size * 0.25}rem`,
-          height: `${size * 0.25}rem`,
+          width: sizeValue,
+          height: sizeValue,
+          minWidth: sizeValue,
+          minHeight: sizeValue,
+          maxWidth: sizeValue,
+          maxHeight: sizeValue,
         }}
         src={getAvatarUrl(name)}
         alt={`Avatar for ${name}`}

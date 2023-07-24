@@ -1,24 +1,23 @@
 'use client';
 
-import { parameterDefinitions } from '@ossinsight/widgets';
+import { isWidget, widgetParameterDefinitions } from '@/utils/widgets';
 import parsers from '@ossinsight/widgets-core/src/parameters/parser';
 import { ParamInput } from '@ossinsight/widgets-core/src/parameters/react';
 import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
+import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { cache, use, useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 
-export function WidgetParameters ({ widgetName }: { widgetName: string }) {
-  const getParameters = parameterDefinitions[widgetName];
+export function WidgetParameters ({ widgetName, linkedData }: { widgetName: string, linkedData: LinkedData }) {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const reposCache = useRef({});
 
-  if (!getParameters) {
+  if (!isWidget(widgetName)) {
     throw new Error('bad widget');
   }
 
-  const parameters = use(cache(getParameters)());
+  const parameters = use(widgetParameterDefinitions(widgetName));
 
   const [values, setValues] = useState(() => {
     const values: Record<string, string> = {};
@@ -29,7 +28,7 @@ export function WidgetParameters ({ widgetName }: { widgetName: string }) {
   });
 
   return (
-    <ParametersContext.Provider value={{ reposCache: reposCache.current }}>
+    <ParametersContext.Provider value={{ linkedData }}>
       <div className="flex items-start gap-4 mt-4">
         {Object.entries(parameters).map(([key, config]) => {
           const rawValue = values[key];

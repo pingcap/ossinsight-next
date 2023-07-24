@@ -7,7 +7,9 @@ declare module '@ossinsight/widgets' {
 
   const parameterDefinitions: Record<string, () => Promise<import('./index').ParameterDefinitions>>;
 
+  const metadataGenerators: Record<string, () => Promise<import('./index').MetadataGenerator<any>>>;
+
   export default widgets;
 
-  export { visualizers, datasourceFetchers, parameterDefinitions };
+  export { visualizers, datasourceFetchers, parameterDefinitions, metadataGenerators };
 }

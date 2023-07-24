@@ -1,7 +1,8 @@
 import {RemoteSelector} from './RemoteSelector'
 import {faker} from '@faker-js/faker';
 import {useState} from "react";
-import clsx from 'clsx'
+import './style.scss';
+import {RemoteSelectItem} from "./RemoteSelectItem";
 
 faker.seed(0);
 
@@ -25,25 +26,15 @@ export const Default = {
   args: {
     getRemoteOptions: testSearch,
     renderInput(props) {
-      return <input className='border rounded outline-none px-2 py-1 text-gray-700' {...props}
-                    type={undefined} />
+      return <input className='TextInput' {...props} type={undefined} />
     },
-    renderList(props) {
-      return <ul {...props} />
+    renderListItem({item, ...props}) {
+      return (
+        <RemoteSelectItem key={item} {...props}>
+          {item}
+        </RemoteSelectItem>
+      )
     },
-    renderListItem(props) {
-      return <li onClick={props.onClick} className={clsx(props.selected && 'bg-gray-200')}
-                 key={props.item}>{props.item}</li>
-    },
-    renderEmpty() {
-      return 'Empty result'
-    },
-    renderLoading() {
-      return 'Loading options...'
-    },
-    renderError(error) {
-      return `Error: ${error}`
-    }
   },
 };
 

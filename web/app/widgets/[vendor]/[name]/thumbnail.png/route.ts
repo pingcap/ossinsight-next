@@ -1,4 +1,5 @@
-import widgets, { datasourceFetchers, visualizers } from '@ossinsight/widgets';
+import { isWidget, widgetDatasourceFetcher, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
+import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
@@ -10,12 +11,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   const name = `@ossinsight/widget-${decodeURIComponent(paramName)}`;
 
-  const meta = widgets[name];
-  if (!meta) {
+  if (!isWidget(name)) {
     notFound();
   }
-  const datasource = await datasourceFetchers[name];
-  const visualizer = await visualizers[name]();
+  const datasource = await widgetDatasourceFetcher(name);
+  const visualizer = await widgetVisualizer(name);
 
   const parameters: any = {};
   request.nextUrl.searchParams.forEach((value, key) => {
@@ -25,6 +25,10 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     parameters[key] = value;
   });
 
+
+  const paramDef = await widgetParameterDefinitions(name);
+  const linkedData = await resolveParameters(paramDef, parameters);
+
   const data = await datasource({
     runtime: 'server',
     parameters,
@@ -32,14 +36,17 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   const width = request.nextUrl.searchParams.get('width');
   const height = request.nextUrl.searchParams.get('height');
+  const devicePixelRatio = request.nextUrl.searchParams.get('dpr');
 
   const buffer = await render({
     type: visualizer.type,
     data,
     visualizer: visualizer.default,
-    width: parseSize(width, 400, 1920) ?? 400,
-    height: parseSize(height, 400, 1920) ?? 400,
+    width: parseSize(width, 120, 1920) ?? 400,
+    height: parseSize(height, 120, 1920) ?? 400,
+    dpr: parseSize(devicePixelRatio, 1, 3) ?? 2,
     parameters,
+    linkedData,
   });
 
   return new NextResponse(buffer, {

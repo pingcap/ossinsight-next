@@ -1,3 +1,4 @@
+import { LinkedData } from './parameters/resolver';
 
 export type ParserConfig = {
   type: 'json'
@@ -9,6 +10,5 @@ export interface WidgetVisualizationProps {
   visualizer: any;
   data: any;
   parameters: any;
-  onSizeChange?: any;
-  onColorSchemeChange?: any;
+  linkedData: LinkedData
 }

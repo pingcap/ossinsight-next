@@ -2,21 +2,33 @@ import { VisualizeFunction, VisualizerModule } from '@ossinsight/widgets-types';
 import { EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
+import { LinkedData } from '../../parameters/resolver';
 
 interface EChartsComponentProps {
   data: any;
   visualizer: VisualizeFunction<EChartsOption, any, any>;
   parameters: any;
-  onSizeChange?: VisualizerModule<any, any, any, any>['onSizeChange'];
-  onColorSchemeChange?: VisualizerModule<any, any, any, any>['onColorSchemeChange'];
+  linkedData: LinkedData;
 }
 
-function EChartsComponent ({ data, visualizer, parameters, onSizeChange }: EChartsComponentProps) {
+function EChartsComponent ({ data, visualizer, parameters, linkedData }: EChartsComponentProps) {
   const echartsRef = useRef<EChartsType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    echartsRef.current = init(containerRef.current!, null, {});
+    const ec = echartsRef.current = init(containerRef.current!, null, {});
+
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      ec.resize({
+        width,
+        height,
+      });
+    });
+    ro.observe(containerRef.current!);
+    return () => {
+      ro.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -29,7 +41,7 @@ function EChartsComponent ({ data, visualizer, parameters, onSizeChange }: EChar
       width,
       height,
       getRepo (id: number): any {
-        return {};
+        return linkedData.repos[String(id)];
       },
       getUser (id: number): any {
         return {};
@@ -55,7 +67,10 @@ function EChartsComponent ({ data, visualizer, parameters, onSizeChange }: EChar
 
 
   return (
-    <div className="WidgetContainer WidgetContainer-echarts" ref={containerRef} />
+    <div
+      className="WidgetContainer WidgetContainer-echarts"
+      ref={containerRef}
+    />
   );
 }
 

@@ -5,12 +5,18 @@ export interface AvatarSkeletonProps {
 }
 
 export function AvatarSkeleton ({ size = 8 }: AvatarSkeletonProps) {
+  const sizeValue = `${(size || 8) * 0.25}rem`;
+
   return (
     <span
       className='block rounded-full skeleton'
       style={{
-        width: `${size * 0.25}rem`,
-        height: `${size * 0.25}rem`,
+        width: sizeValue,
+        height: sizeValue,
+        minWidth: sizeValue,
+        minHeight: sizeValue,
+        maxWidth: sizeValue,
+        maxHeight: sizeValue,
       }}
     />
   )

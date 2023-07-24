@@ -2,18 +2,19 @@ import { createCanvas } from '@napi-rs/canvas';
 import { EChartsVisualizationConfig, VisualizeFunction } from '@ossinsight/widgets-types';
 import { init } from 'echarts';
 import * as colors from 'tailwindcss/colors';
+import { LinkedData } from '../../parameters/resolver';
 
-export default function renderEcharts (width: number, height: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any) {
+export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any, linkedData: LinkedData) {
   const canvas = createCanvas(width, height);
 
   const option = visualizer(data, {
     parameters,
     theme: { colors },
     runtime: 'server',
-    width,
-    height,
+    width: width * dpr,
+    height: width * dpr,
     getRepo (id: number): any {
-      return {};
+      return linkedData.repos[String(id)];
     },
     getUser (id: number): any {
       return {};
@@ -27,8 +28,9 @@ export default function renderEcharts (width: number, height: number, visualizer
   });
 
   const echarts = init(canvas as any, undefined, {
-    width,
-    height,
+    width: width,
+    height: height,
+    devicePixelRatio: dpr,
   });
 
   echarts.setOption({ ...option, animation: false });
