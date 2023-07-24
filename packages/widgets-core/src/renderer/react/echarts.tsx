@@ -54,15 +54,6 @@ function EChartsComponent ({ data, visualizer, parameters, linkedData }: ECharts
       },
     });
     echartsRef.current!.setOption(option);
-
-    const resizeObserver = new ResizeObserver(() => {
-      const { clientWidth: width, clientHeight: height } = containerRef.current!;
-      // echartsRef.current!.resize({ width, height });
-      onSizeChange && onSizeChange(echartsRef.current, option, width, height);
-    });
-    resizeObserver.observe(containerRef.current!);
-
-    return () => resizeObserver.disconnect();
   }, [data, visualizer, parameters]);
 
 

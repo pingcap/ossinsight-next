@@ -222,6 +222,30 @@ importers:
         specifier: workspace:^
         version: link:../packages/widgets-utils
 
+  widgets/analyze-repo-recent-commits:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-repo-recent-issues:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-repo-recent-pull-requests:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-repo-recent-stars:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-repo-stars-history:
     devDependencies:
       '@ossinsight/widgets-parent':
