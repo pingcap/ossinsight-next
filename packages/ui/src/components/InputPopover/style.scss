@@ -1,7 +1,7 @@
 
 .InputPopper {
   &-content {
-    @apply bg-white rounded shadow-lg p-2;
+    @apply bg-popover rounded shadow-lg p-2;
     transform-origin: var(--radix-popover-content-transform-origin);
     animation-duration: 0.5s;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);

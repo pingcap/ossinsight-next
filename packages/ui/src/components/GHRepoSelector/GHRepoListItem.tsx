@@ -6,7 +6,7 @@ export function GHRepoListItem ({ item, ...props }: RemoteSelectorListItemProps<
   return (
     <RemoteSelectItem {...props}>
       <GHAvatar name={item.fullName} size={4} />
-      <span className="text-gray-700 overflow-hidden whitespace-nowrap text-ellipsis">
+      <span className="overflow-hidden whitespace-nowrap text-ellipsis">
         {item.fullName}
       </span>
     </RemoteSelectItem>

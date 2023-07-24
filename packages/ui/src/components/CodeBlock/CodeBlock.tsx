@@ -1,11 +1,11 @@
 'use client';
 
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/github-dark-dimmed.css';
 import { HTMLAttributes, useEffect, useId, useState } from 'react';
 import { CopyButton } from './CopyButton';
 import type { HighlightRequest, HighlightResponse } from './highlight.worker';
 
-const worker = new Worker(new URL('./highlight.worker.ts', import.meta.url));
+const worker = typeof Worker !== 'undefined' ? new Worker(new URL('./highlight.worker.ts', import.meta.url)) : undefined;
 
 export interface CodeBlockProps {
   code: string;
@@ -54,7 +54,7 @@ export function CodeBlock ({ code, language }: CodeBlockProps) {
   }
 
   return (
-    <div className="relative bg-gray-50 rounded">
+    <div className="relative bg-control rounded hljs">
       <pre className="text-xs">
         <code className="block overflow-x-auto p-4" {...codeProps} />
       </pre>

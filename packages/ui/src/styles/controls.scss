@@ -1,10 +1,10 @@
-$color: #FFE895;
+@import "theme";
 
 @mixin control-shadow {
   @apply outline-none rounded;
 
   &:focus {
-    box-shadow: $color 0 0 2px 0;
+    box-shadow: $color-primary 0 0 2px 0;
   }
 }
 
@@ -12,6 +12,6 @@ $color: #FFE895;
   @apply border;
 
   &:focus {
-    border-color: $color;
+    border-color: $color-primary;
   }
 }

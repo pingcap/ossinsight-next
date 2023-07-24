@@ -26,7 +26,7 @@ addEventListener('message', (ev: MessageEvent<HighlightRequest>) => {
     const result = hljs.highlightAuto(code, languageSubset);
     postMessage({
       id,
-      result: result.value,
+      result: result.value.replace(/class="hljs-tag">/g, 'class="hljs-doctag">'),
     } satisfies HighlightResponse);
   } catch (error) {
     postMessage({

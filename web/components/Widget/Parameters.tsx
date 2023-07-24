@@ -35,7 +35,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
           const value = rawValue == null ? null : parsers[config.type](values[key]);
           return (
             <div key={key} className="flex flex-col gap-2">
-              <span className="text-sm text-gray-400">
+              <span className="text-sm">
                 {config.title ?? key}
               </span>
               <ParamInput
@@ -50,7 +50,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
         })}
       </div>
       <div className="mt-2">
-        <button className="rounded bg-gray-200 hover:bg-gray-400 text-gray-700 transition-colors px-2 py-1 text-sm" onClick={() => {
+        <button className="rounded bg-gray-200 hover:bg-gray-400 text-title transition-colors px-2 py-1 text-sm" onClick={() => {
           const usp = new URLSearchParams(values);
           push(`${pathname}?${usp.toString()}`);
         }}>

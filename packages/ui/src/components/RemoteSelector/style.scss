@@ -1,13 +1,16 @@
+@import "../../styles/theme";
+
 .RemoteSelectItem {
   .RemoteSelectItem-button {
-    @apply text-xs flex w-full items-center gap-2 p-2 cursor-pointer transition-colors;
+    @apply text-content text-xs flex w-full items-center gap-2 p-2 cursor-pointer transition-colors;
 
     &:hover, &:focus {
-      @apply bg-gray-100;
+      background-color: $list-item-focus;
     }
 
     &[data-selected=true] {
-      @apply bg-gray-200;
+      background-color: $list-item-active;
+      color: $text-color-active;
     }
   }
 }

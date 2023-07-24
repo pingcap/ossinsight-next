@@ -1,0 +1,17 @@
+$color-primary: rgb(255, 232, 149);
+
+$background-color-body: rgb(27, 27, 29);
+$background-color-toolbar: rgb(37, 37, 39);
+$background-color-popover: $background-color-toolbar;
+$background-color-control: rgb(57, 57, 59);
+
+$text-color-title: rgb(227, 227, 227);
+$text-color-subtitle: rgb(200, 200, 200);
+$text-color-content: rgb(124, 124, 124);
+$text-color-disabled: rgba(124, 124, 124, 0.7);
+$text-color-active: $text-color-subtitle;
+
+$border-color-default: rgb(81, 81, 81);
+
+$list-item-focus: rgb(67, 67, 69);
+$list-item-active: rgb(77, 77, 79);

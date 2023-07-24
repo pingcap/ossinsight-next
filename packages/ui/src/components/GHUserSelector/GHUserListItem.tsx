@@ -7,7 +7,7 @@ export function GHUserListItem ({ item, ...props }: RemoteSelectorListItemProps<
   return (
     <RemoteSelectItem {...props}>
       <GHAvatar name={item.login} size={4} />
-      <span className="text-gray-700 overflow-hidden whitespace-nowrap text-ellipsis">
+      <span className="overflow-hidden whitespace-nowrap text-ellipsis">
         {item.login}
       </span>
     </RemoteSelectItem>

@@ -6,9 +6,9 @@ export default function Home () {
 
   return (
     <main className="container mx-auto py-4">
-      <h1 className="text-3xl font-bold mb-4">This project is in development</h1>
-      <h2 className="text-xl mb-2">Widgets list</h2>
-      <p className="text-sm text-gray-400 mb-2">All widgets will have default parameter <code>repo_id=41986369</code> (pingcap/tidb)</p>
+      <h1 className="text-3xl font-bold mb-4 text-title">This project is in development</h1>
+      <h2 className="text-xl mb-2 text-subtitle">Widgets list</h2>
+      <p className="text-sm mb-2">All widgets will have default parameter <code>repo_id=41986369</code> (pingcap/tidb)</p>
       <ul className="flex justify-between gap-2 flex-wrap">
         {widgetNames().map(name => (
           <li key={name}>

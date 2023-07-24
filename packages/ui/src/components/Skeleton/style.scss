@@ -1,13 +1,22 @@
+@import "../../styles/theme";
+
 .skeleton {
   animation: skeleton-keyframes 1.6s ease-in-out infinite alternate;
 }
 
+$text-from: fade-out($text-color-subtitle, 0.7);
+$text-to: $text-color-subtitle;
+$bg-from: fade-out($text-color-content, 0.7);
+$bg-to: $text-color-content;
+
 @keyframes skeleton-keyframes {
   0% {
-    @apply bg-gray-100 text-gray-200;
+    background-color: $bg-from;
+    color: $text-from;
   }
   100% {
-    @apply bg-gray-200 text-gray-400;
+    background-color: $bg-to;
+    color: $text-to;
   }
 }
 

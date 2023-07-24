@@ -21,7 +21,7 @@ export function Tabs ({ children, ...props }: TabsProps) {
 
 function renderTabs (children: ReactElement<TabProps>[]) {
   return children.map(child => (
-    <RuiTabs.Trigger key={child.key || child.props.value} value={child.props.value} className='flex px-1 py-0.5 gap-2 items-center border-b-2 border-transparent text-sm text-gray-400 data-[state=active]:text-gray-900 data-[state=active]:border-yellow-700 transition-all'>
+    <RuiTabs.Trigger key={child.key || child.props.value} value={child.props.value} className='flex px-1 py-0.5 gap-2 items-center border-b-2 border-transparent text-sm text-content data-[state=active]:text-primary data-[state=active]:border-primary transition-all'>
       {child.props.icon}
       <span>
         {child.props.title}

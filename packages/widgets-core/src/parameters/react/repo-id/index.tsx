@@ -22,6 +22,6 @@ export function RepoIdInput ({ value, onValueChange }: { value: number, onValueC
 }
 
 function renderInput (props: RemoteSelectorInputProps) {
-  return <input className="border rounded outline-none px-2 py-1 text-gray-700" {...props}
+  return <input className="TextInput" {...props}
                 type={(props as any).type === 'button' ? undefined : (props as any).type} />;
 }

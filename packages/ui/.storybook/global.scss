@@ -3,3 +3,7 @@
 @tailwind utilities;
 
 @import '../src/styles/index.scss';
+
+html, body {
+  color: var(--text-color-content);
+}

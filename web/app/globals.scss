@@ -3,3 +3,8 @@
 @tailwind utilities;
 
 @import "@ossinsight/ui/src/styles/index";
+
+html, body {
+  background-color: var(--background-color-body);
+  color: var(--text-color-content);
+}

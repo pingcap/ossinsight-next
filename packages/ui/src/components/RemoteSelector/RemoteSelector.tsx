@@ -119,15 +119,15 @@ function defaultRenderList ({ children }: RemoteSelectorListProps) {
 }
 
 function defaultRenderLoading () {
-  return <div className="py-1 px-2 text-gray-400 text-xs">Loading...</div>;
+  return <div className="py-1 px-2 text-disabled text-xs">Loading...</div>;
 }
 
 function defaultRenderEmpty () {
-  return <div className="py-1 px-2 text-gray-400 text-xs">Empty result</div>;
+  return <div className="py-1 px-2 text-disabled text-xs">Empty result</div>;
 }
 
 function defaultRenderError (error: unknown) {
-  return <div className="py-1 px-2 text-red-700 text-xs">Failed to load</div>;
+  return <div className="py-1 px-2 text-content text-xs">Failed to load</div>;
 }
 
 const prevent = (ev: Event) => ev.preventDefault();
