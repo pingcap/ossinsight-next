@@ -3,6 +3,7 @@ import { EChartsVisualizationConfig, VisualizeFunction } from '@ossinsight/widge
 import { init } from 'echarts';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
+import '../echarts-theme';
 
 export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizeFunction<EChartsVisualizationConfig, any, any>, data: any, parameters: any, linkedData: LinkedData) {
   const canvas = createCanvas(width, height);
