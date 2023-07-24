@@ -31,7 +31,7 @@ addEventListener('message', (ev: MessageEvent<HighlightRequest>) => {
   } catch (error) {
     postMessage({
       id,
-      error: String(error?.message ?? error),
+      error: String((error as any)?.message ?? error),
     } satisfies HighlightResponse);
   }
 });
