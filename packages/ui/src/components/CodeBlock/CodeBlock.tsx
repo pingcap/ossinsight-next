@@ -19,7 +19,7 @@ export function CodeBlock ({ code, language }: CodeBlockProps) {
   useEffect(() => {
     setResult(undefined);
     if (language) {
-      worker.postMessage({
+      worker?.postMessage({
         id,
         code,
         languageSubset: [language],
