@@ -1,4 +1,4 @@
-import { VisualizeFunction } from '@ossinsight/widgets-types';
+import { VisualizeFunction, VisualizerModule } from '@ossinsight/widgets-types';
 import { EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
@@ -55,6 +55,7 @@ function EChartsComponent ({ data, visualizer, parameters, linkedData }: ECharts
     });
     echartsRef.current!.setOption(option);
   }, [data, visualizer, parameters]);
+
 
   return (
     <div
