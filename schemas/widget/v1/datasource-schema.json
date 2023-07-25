@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://ossinsight.io/schemas/widget/v1/datasource-schema",
+  "title": "OSSInsight Widget Datasource v1",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/DatasourceObject",
+      "description": "The widget has unique datasource."
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/DatasourceObject",
+        "description": "The widget has multiple datasource."
+      }
+    }
+  ],
+  "definitions": {
+    "DatasourceObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "Datasource type, only api supported now.",
+          "type": "string",
+          "enum": ["api"]
+        },
+        "url": {
+          "description": "API url to get",
+          "type": "string",
+          "format": "uri"
+        },
+        "params": {
+          "description": "Dynamic parameters mapping. Keys are url search params names and values are referencing dynamic parameter name",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        },
+        "when": {
+          "type": "array",
+          "description": "Decide when to execute the http request. All items should be provided by dynamic parameters (not url search params).",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "additionalItems": false,
+          "default": []
+        }
+      },
+      "required": ["type", "url"]
+    }
+  }
+}
