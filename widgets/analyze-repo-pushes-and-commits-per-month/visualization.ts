@@ -7,6 +7,10 @@ import {
   topBottomLayoutGrid,
   utils,
   timeAxis,
+  valueAxis,
+  axisTooltip,
+  bar as barSeries,
+  dataZoom,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -29,15 +33,6 @@ export default function (
   const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
   const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
 
-  const defaultCompareInput: [any, any] = [
-    main && {
-      id: 'main',
-    },
-    vs && {
-      id: 'vs',
-    },
-  ];
-
   const dataset = compare(input, (data, name) => ({
     id: name,
     source: data,
@@ -50,77 +45,31 @@ export default function (
       ({ id }) => timeAxis<'x'>(id, { gridId: id }, undefined, input),
       !!vs
     ),
-    yAxis: utils.template(({ id }) => ({
-      id,
-      gridId: id,
-      type: 'value',
-      axisLabel: {
-        formatter: format,
-      },
-    }), !!vs),
+    yAxis: utils.template(({ id }) =>
+      valueAxis<'y'>(id, { name: 'Count', gridId: id })
+    ),
     series: compare([main, vs], (data, name) => [
-      {
-        datasetId: name,
-        type: 'bar',
-        name: data.fullName,
-        encode: {
-          x: 'event_month',
-          y: 'pushes',
-        },
+      barSeries('event_month', 'pushes', {
         xAxisId: name,
         yAxisId: name,
-        showSymbol: false,
-        barMaxWidth: 4,
         emphasis: { focus: 'series' },
-      },
-      {
         datasetId: name,
-        type: 'bar',
-        name: data.fullName,
-        encode: {
-          x: 'event_month',
-          y: 'commits',
-        },
+        barMaxWidth: 4,
+      }),
+      barSeries('event_month', 'commits', {
         xAxisId: name,
         yAxisId: name,
-        showSymbol: false,
-        barMaxWidth: 4,
         emphasis: { focus: 'series' },
-      },
+        datasetId: name,
+        barMaxWidth: 4,
+      }),
     ]).flatMap((x) => [x[0], x[1]] as const),
-    dataZoom: {
-      show: true,
-      left: 8,
-      right: 8,
-      realtime: true,
-      xAxisId: compare(defaultCompareInput, ({ id }) => id),
-    },
-    tooltip: {
-      show: true,
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-      },
-    },
+    dataZoom: dataZoom(),
+    tooltip: axisTooltip('cross'),
     legend: {
       show: true,
     },
   };
-}
-
-const units = ['', 'k', 'm', 'b'];
-
-function format(value: number) {
-  if (value === 0) {
-    return '0';
-  }
-  let i = 0;
-  while (value % 1000 === 0 && i < units.length) {
-    value = value / 1000;
-    i++;
-  }
-
-  return `${value}${units[i]}`;
 }
 
 export const type = 'echarts';
