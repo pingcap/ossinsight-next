@@ -14,12 +14,12 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
   /**
    * The container width when executing the visualization function.
    */
-  width: number
+  width: number;
 
   /**
    * The container height when executing the visualization function.
    */
-  height: number
+  height: number;
 
   getRepo (id: number): { id: number, fullName: string } | undefined;
 
@@ -76,7 +76,13 @@ export interface RepoIdParameterDefinition extends BaseParameterDefinition {
   type: 'repo-id';
 }
 
-export type ParameterDefinition = RepoIdParameterDefinition; // | Others;
+export interface UserIdParameterDefinition extends BaseParameterDefinition {
+  type: 'user-id';
+}
+
+export type ParameterDefinition =
+  RepoIdParameterDefinition
+  | UserIdParameterDefinition; // | Others;
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
 

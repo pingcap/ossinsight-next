@@ -1,7 +1,7 @@
 import { WidgetContext } from '@ossinsight/widgets-types';
 import jp from 'jsonpath/jsonpath.js';
 import { ParserConfig } from '../types';
-import { HttpRequestError } from './error';
+import { HttpRequestError } from '../utils/errors';
 
 export interface ApiDatasourceConfig {
   type: 'api';
