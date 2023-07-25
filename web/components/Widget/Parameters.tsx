@@ -1,6 +1,7 @@
 'use client';
 
 import { isWidget, widgetParameterDefinitions } from '@/utils/widgets';
+import { Button } from '@ossinsight/ui/src/components/Button';
 import parsers from '@ossinsight/widgets-core/src/parameters/parser';
 import { ParamInput } from '@ossinsight/widgets-core/src/parameters/react';
 import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
@@ -50,12 +51,12 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
         })}
       </div>
       <div className="mt-2">
-        <button className="rounded bg-gray-200 hover:bg-gray-400 text-title transition-colors px-2 py-1 text-sm" onClick={() => {
+        <Button variant='primary' onClick={() => {
           const usp = new URLSearchParams(values);
           push(`${pathname}?${usp.toString()}`);
         }}>
           Update
-        </button>
+        </Button>
       </div>
     </ParametersContext.Provider>
   );

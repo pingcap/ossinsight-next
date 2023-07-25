@@ -12,6 +12,8 @@ module.exports = {
     extend: {
       colors: {
         primary: 'var(--color-primary)',
+        'primary-reverse': 'var(--color-primary-reverse)',
+        'primary-highlighted': 'var(--color-primary-highlighted)',
       },
       backgroundColor: {
         body: 'var(--background-color-body)',

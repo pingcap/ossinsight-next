@@ -3,6 +3,8 @@
 
 :root {
   --color-primary: #{$color-primary};
+  --color-primary-highlighted: #{$color-primary-highlighted};
+  --color-primary-reverse: #{$color-primary-reverse};
 
   --background-color-body: #{$background-color-body};
   --background-color-toolbar: #{$background-color-toolbar};

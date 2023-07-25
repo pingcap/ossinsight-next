@@ -43,7 +43,7 @@
     "tailwindcss": "3.3.3"
   },
   "scripts": {
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev --no-open -p 6006",
     "build-storybook": "storybook build"
   }
 }

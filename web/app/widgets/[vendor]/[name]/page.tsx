@@ -1,18 +1,18 @@
-import Widget, { WidgetParameters } from '@/components/Widget';
-import { isWidget, widgetDatasourceFetcher, widgetMeta, widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
-import { ShareBlock } from '@ossinsight/ui/src/components/ShareBlock';
+import Parameters from '@/app/widgets/[vendor]/[name]/parameters';
+import Share from '@/app/widgets/[vendor]/[name]/share';
+import ServerWidget from '@/app/widgets/[vendor]/[name]/widget';
+import { isWidget, widgetMeta, widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
+import { ChartSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
-import { use } from 'react';
+import { Suspense } from 'react';
 import * as colors from 'tailwindcss/colors';
 
 type Props = { params: { vendor: string, name: string }, searchParams: Record<string, string> };
 
-const DOMAIN = 'https://ossinsight-next.vercel.app';
-
-export default async function Page ({ params, searchParams }: Props) {
+export default function Page ({ params, searchParams }: Props) {
   if (params.vendor !== 'official') {
     notFound();
   }
@@ -21,57 +21,26 @@ export default async function Page ({ params, searchParams }: Props) {
   if (!isWidget(name)) {
     notFound();
   }
-  const fetcher = widgetDatasourceFetcher(name);
 
-  const paramDef = await widgetParameterDefinitions(name);
-  const linkedData = await resolveParameters(paramDef, searchParams);
+  const linkedData = widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams));
 
-  const data = await fetcher({
-    runtime: 'server',
-    parameters: searchParams,
-  });
-
-  const generateMetadata = await widgetMetadataGenerator(name);
-
-  const { title } = generateMetadata({
-    theme: { colors },
-    parameters: searchParams,
-    runtime: 'server',
-    width: 0,
-    height: 0,
-    getRepo (id: number): any {
-      return linkedData.repos[String(id)];
-    },
-    getUser (id: number): any {
-      return {};
-    },
-    getCollection (id: number): any {
-      return {};
-    },
-    getOrg (id: number): any {
-      return {};
-    },
-  });
-
-  const usp = new URLSearchParams(searchParams);
-  const imageUsp = new URLSearchParams(usp);
-  imageUsp.set('width', '640')
-  imageUsp.set('height', '480')
-  imageUsp.set('dpr', '2')
+  const signature = JSON.stringify({ ...params, searchParams });
 
   return (
     <main className="container mx-auto py-4 max-w-screen-lg">
       <h1 className="text-3xl font-bold mb-4 text-title">Widget landing page prototype</h1>
       <div className="p-4 border-dashed border-2 rounded-2xl">
-        <WidgetParameters widgetName={name} linkedData={linkedData} />
+        <Suspense key={signature} fallback="loading...">
+          <Parameters name={name} linkedDataPromise={linkedData} />
+        </Suspense>
       </div>
-      <Widget name={name} params={searchParams} data={data} linkedData={linkedData} />
+      <Suspense key={signature} fallback={<ChartSkeleton style={{ aspectRatio: '16 / 9' }} />}>
+        <ServerWidget name={name} searchParams={searchParams} linkedDataPromise={linkedData} />
+      </Suspense>
       <div className="p-4 border-dashed border-2 rounded-2xl">
-        <ShareBlock
-          title={title ?? 'Untitled'}
-          url={`${DOMAIN}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
-          thumbnailUrl={`${DOMAIN}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
-        />
+        <Suspense key={signature} fallback="loading...">
+          <Share name={name} params={params} searchParams={searchParams} linkedDataPromise={linkedData} />
+        </Suspense>
       </div>
     </main>
   );
