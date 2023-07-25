@@ -10,6 +10,9 @@ import {
   valueAxis,
   axisTooltip,
   formatMonth,
+  bar as barSeries,
+  line as lineSeries,
+  dataZoom,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -112,60 +115,31 @@ export default function (
       !!vs
     ),
     series: compare([main, vs], (data, name) => [
-      {
+      barSeries('event_month', 'additions', {
         datasetId: name,
-        type: 'bar',
-        name: data.fullName,
-        encode: {
-          x: 'event_month',
-          y: 'additions',
-        },
         stack: `stack-${name}`,
         color: '#57ab5a',
         xAxisId: name,
         yAxisId: `${name}-diff`,
-        showSymbol: false,
         barMaxWidth: 8,
-        emphasis: { focus: 'series' },
-      },
-      {
+      }),
+      barSeries('event_month', 'deletions', {
         datasetId: name,
-        type: 'bar',
-        name: data.fullName,
-        encode: {
-          x: 'event_month',
-          y: 'deletions',
-        },
         stack: `stack-${name}`,
         color: '#e5534b',
         xAxisId: name,
         yAxisId: `${name}-diff`,
-        showSymbol: false,
         barMaxWidth: 8,
-        emphasis: { focus: 'series' },
-      },
-      {
+      }),
+      lineSeries('event_month', 'total', {
         datasetId: name,
-        type: 'line',
-        name: data.fullName,
-        encode: {
-          x: 'event_month',
-          y: 'total',
-        },
+        showSymbol: false,
+        color: '#cc6b2c',
         xAxisId: name,
         yAxisId: `${name}-total`,
-        color: '#cc6b2c',
-        showSymbol: false,
-        emphasis: { focus: 'series' },
-      },
+      }),
     ]).flatMap((x) => [x[0], x[1], x[2]] as const),
-    dataZoom: {
-      show: true,
-      left: 8,
-      right: 8,
-      realtime: true,
-      xAxisId: compare(defaultCompareInput, ({ id }) => id),
-    },
+    dataZoom: dataZoom(undefined, !!vs),
     tooltip: axisTooltip('cross', {
       formatter: (params) => {
         const [add, del, total] = params;
