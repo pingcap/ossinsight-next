@@ -1,5 +1,7 @@
 import './globals.scss'
+import { SiteHeader } from '@ossinsight/ui/src/components/SiteHeader';
 import type { Metadata } from 'next'
+import config from '../site.config';
 // import { Inter } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -19,6 +21,7 @@ export default function RootLayout({
       <body
         // className={inter.className}
       >
+      <SiteHeader {...config.header} />
       {children}
       </body>
     </html>
