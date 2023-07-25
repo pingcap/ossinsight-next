@@ -46,28 +46,6 @@ export default function (
   return {
     dataset,
     grid: topBottomLayoutGrid(!!vs),
-    // xAxis: compare(defaultCompareInput, ({ id }) => ({
-    //   id,
-    //   gridId: id,
-    //   type: 'category',
-    //   axisLabel: {
-    //     formatter: (value: string) => {
-    //       const [year, month] = value.split('-');
-    //       return `${year}/${month}`;
-    //     },
-    //   },
-    // })),
-    // xAxis: utils.template(({ id }) => ({
-    //   id,
-    //   gridId: id,
-    //   type: 'category',
-    //   axisLabel: {
-    //     formatter: (value: string) => {
-    //       const [year, month] = value.split('-');
-    //       return `${year}/${month}`;
-    //     },
-    //   },
-    // }), !!vs),
     xAxis: utils.template(
       ({ id }) => timeAxis<'x'>(id, { gridId: id }, undefined, input),
       !!vs
@@ -80,14 +58,6 @@ export default function (
         formatter: format,
       },
     }), !!vs),
-    // yAxis: compare(defaultCompareInput, ({ id }) => ({
-    //   id,
-    //   gridId: id,
-    //   type: 'value',
-    //   axisLabel: {
-    //     formatter: format,
-    //   },
-    // })),
     series: compare([main, vs], (data, name) => [
       {
         datasetId: name,

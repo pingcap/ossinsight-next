@@ -159,6 +159,9 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+      human-format:
+        specifier: ^1.2.0
+        version: 1.2.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -248,6 +251,12 @@ importers:
       '@ossinsight/widgets-utils':
         specifier: workspace:^
         version: link:../packages/widgets-utils
+
+  widgets/analyze-repo-loc-per-month:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
 
   widgets/analyze-repo-pushes-and-commits-per-month:
     devDependencies:
@@ -7497,6 +7506,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /human-format@1.2.0:
+    resolution: {integrity: sha512-GIjOefWusTiXEPezbuI59uc1G2SNMpym6w1wNfoWAG6QrTsWueuauR5We0xHHuzoJKIYTwwNtTEy0ahyji5KXw==}
+    engines: {node: '>=4'}
+    dev: false
 
   /human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}

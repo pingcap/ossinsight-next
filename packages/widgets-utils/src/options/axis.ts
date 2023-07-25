@@ -1,6 +1,7 @@
 import merge from 'deepmerge';
 import { DateTime } from 'luxon';
 import _ from 'lodash';
+import format from 'human-format';
 
 import type { OptionId } from 'echarts/types/src/util/types';
 import type { XAXisOption, YAXisOption } from 'echarts/types/dist/shared';
@@ -77,5 +78,30 @@ export function timeAxis<T extends 'x' | 'y'>(
       .plus({ month: 1 })
       .toJSDate(),
     minInterval: 3600 * 24 * 1000 * 28,
+  });
+}
+
+export function valueAxis<T extends 'x' | 'y'>(
+  id?: OptionId,
+  option: AxisOption<T, ValueAxisBaseOption> = {}
+): AxisOption<T> {
+  const small = false; // ! Different from the original
+  return merge<AxisOption<T>>(option, {
+    id,
+    type: 'value',
+    axisLabel: {
+      formatter: (value) => format(value),
+      margin: 8,
+    },
+    splitNumber: small ? 3 : (undefined as any),
+    axisPointer: {
+      label: {
+        precision: 0,
+      },
+    },
+    nameTextStyle: {
+      opacity: small ? 0 : 1,
+      align: filterEnum(option.position ?? 'left', ['left', 'right']),
+    },
   });
 }

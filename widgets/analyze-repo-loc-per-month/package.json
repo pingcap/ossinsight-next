@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-repo-loc-per-month",
+  "version": "1.0.0",
+  "description": "Show the lines of code changed of a GitHub repository monthly.",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": ["Repository"],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^"
+  }
+}

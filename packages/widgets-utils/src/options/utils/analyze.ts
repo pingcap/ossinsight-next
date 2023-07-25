@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 // TODO
 interface AnalyzeTemplateParams<T> {
   id: 'main' | 'vs';
@@ -16,5 +18,5 @@ export function template<P, T = any>(
     result.push(fp({ id: 'vs' }, 1));
   }
 
-  return result;
+  return _.flatMap(result);
 }
