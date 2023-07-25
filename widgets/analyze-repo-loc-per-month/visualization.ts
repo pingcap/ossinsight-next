@@ -166,19 +166,4 @@ export default function (
   };
 }
 
-const units = ['', 'k', 'm', 'b'];
-
-function format(value: number) {
-  if (value === 0) {
-    return '0';
-  }
-  let i = 0;
-  while (value % 1000 === 0 && i < units.length) {
-    value = value / 1000;
-    i++;
-  }
-
-  return `${value}${units[i]}`;
-}
-
 export const type = 'echarts';
