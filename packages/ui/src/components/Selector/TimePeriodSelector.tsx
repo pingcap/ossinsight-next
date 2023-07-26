@@ -1,21 +1,7 @@
 import * as React from 'react';
 
 import { useSimpleSelect } from './Select';
-
-const PERIOD_OPTIONS = [
-  {
-    key: 'last_1_year',
-    title: 'Last 1 year',
-  },
-  {
-    key: 'last_3_year',
-    title: 'Last 3 years',
-  },
-  {
-    key: 'all_times',
-    title: 'All times',
-  },
-];
+import { PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
 
 export interface TimePeriodSelectorProps {
   onValueChange?: (newValue: string) => void;
