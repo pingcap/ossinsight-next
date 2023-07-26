@@ -159,10 +159,25 @@ importers:
 
   packages/widgets-utils:
     dependencies:
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      human-format:
+        specifier: ^1.2.0
+        version: 1.2.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      luxon:
+        specifier: ^3.3.0
+        version: 3.3.0
       tailwindcss:
         specifier: 3.3.3
         version: 3.3.3
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
       echarts:
         specifier: ^5.4.3
         version: 5.4.3
@@ -239,6 +254,18 @@ importers:
       '@ossinsight/widgets-utils':
         specifier: workspace:^
         version: link:../packages/widgets-utils
+
+  widgets/analyze-repo-loc-per-month:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-repo-pushes-and-commits-per-month:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
 
   widgets/analyze-repo-recent-commits:
     devDependencies:
@@ -7551,6 +7578,11 @@ packages:
       - supports-color
     dev: true
 
+  /human-format@1.2.0:
+    resolution: {integrity: sha512-GIjOefWusTiXEPezbuI59uc1G2SNMpym6w1wNfoWAG6QrTsWueuauR5We0xHHuzoJKIYTwwNtTEy0ahyji5KXw==}
+    engines: {node: '>=4'}
+    dev: false
+
   /human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
@@ -8285,7 +8317,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -8321,6 +8352,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /luxon@3.3.0:
+    resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
+    engines: {node: '>=12'}
+    dev: false
 
   /lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}

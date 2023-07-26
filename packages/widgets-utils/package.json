@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
+    "@types/lodash": "^4.14.195",
     "echarts": "^5.4.3"
   },
   "peerDependencies": {
     "echarts": "^5.4.3",
     "tailwindcss": "3.3.3"
   },
-  "optionalDependencies": {
+  "dependencies": {
+    "deepmerge": "^4.3.1",
+    "human-format": "^1.2.0",
+    "lodash": "^4.17.21",
+    "luxon": "^3.3.0"
   }
 }
