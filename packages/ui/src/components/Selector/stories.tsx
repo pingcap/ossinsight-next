@@ -1,0 +1,72 @@
+import { Meta, StoryObj } from '@storybook/react';
+import { Select, SelectItem, SelectGroup, SelectSeparator } from './Select';
+import { TimeZoneSelector } from './TimeZoneSelector';
+import { TimePeriodSelector } from './TimePeriodSelector';
+
+function Container(props: any) {
+  const { useSimpleSelect = false, children, ...rest } = props;
+
+  if (useSimpleSelect) {
+    return <>{children}</>;
+  }
+
+  return <Select {...rest}>{children}</Select>;
+}
+
+export default {
+  title: 'Components/Selector',
+  component: Container,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {},
+} satisfies Meta<typeof Select>;
+
+export const Default = {
+  args: {
+    defaultValue: 'banana',
+    label: 'custom label',
+    children: [
+      <SelectGroup label='Fruits'>
+        <SelectItem key='apple' value='apple'>
+          Apple
+        </SelectItem>
+        <SelectItem key='banana' value='banana'>
+          Banana
+        </SelectItem>
+        <SelectItem key='blueberry' value='blueberry'>
+          Blueberry
+        </SelectItem>
+        <SelectItem key='grapes' value='grapes'>
+          Grapes
+        </SelectItem>
+        <SelectItem key='pineapple' value='pineapple'>
+          Pineapple
+        </SelectItem>
+      </SelectGroup>,
+      <SelectSeparator key='s-1' className='SelectSeparator' />,
+      <SelectItem key='1' value='1'>
+        Item 1
+      </SelectItem>,
+      <SelectItem key='2' value='2' disabled>
+        Item 2(disabled)
+      </SelectItem>,
+      <SelectItem value='3'>Item 3</SelectItem>,
+    ],
+  },
+} satisfies StoryObj<typeof Select>;
+
+export const TimeZone = {
+  args: {
+    useSimpleSelect: true,
+    children: [<TimeZoneSelector showLabel />],
+  },
+} satisfies StoryObj<any>;
+
+export const TimePeriod = {
+  args: {
+    useSimpleSelect: true,
+    children: [<TimePeriodSelector showLabel />],
+  },
+} satisfies StoryObj<any>;
