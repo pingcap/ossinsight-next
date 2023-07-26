@@ -1,0 +1,21 @@
+@import "../../styles/controls";
+
+.Tag {
+  @apply inline-block px-2 py-0.5 rounded-full border text-xs select-none transition;
+
+  color: var(--tag-color);
+  border-color: var(--tag-border-color);
+  background-color: var(--background-color-body);
+
+  &-selected {
+    background-color: var(--tag-background-color);
+    border-color: var(--tag-color);
+  }
+
+  &-interactive {
+    @apply cursor-pointer outline-none;
+    &:focus {
+      box-shadow: var(--tag-color) 0 0 0 2px;
+    }
+  }
+}

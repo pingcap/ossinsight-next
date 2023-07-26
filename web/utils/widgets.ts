@@ -1,4 +1,5 @@
 import { cachedImport } from '@/utils/cache';
+import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
 import { MetadataGenerator, VisualizerModule, WidgetContext, WidgetMeta } from '@ossinsight/widgets-types';
 
@@ -29,3 +30,34 @@ export function widgetVisualizer<Type extends string, VisualizationResult, Data,
 export function widgetParameterDefinitions (name: string) {
   return cachedImport(parameterDefinitions[name]);
 }
+
+export function filteredWidgetsNames ({ search, tags }: WidgetsFilterConfig) {
+  return Object.entries(widgets)
+    .filter(([name, meta]) => {
+      const texts = [
+        name.toLowerCase(),
+        meta.name.toLowerCase(),
+        meta.description?.toLowerCase(),
+        ...(meta.keywords ?? []).flatMap(keyword => keyword.toLowerCase()),
+      ].filter(v => v != null) as string[];
+
+      let found = true;
+
+      if (search) {
+        found = texts.some(text => text.includes(search.toLowerCase()));
+      } else {
+        found &&= true;
+      }
+
+      if (tags.length > 0) {
+        found = tags.some(tag => meta.keywords?.includes(tag));
+      } else {
+        found &&= true;
+      }
+
+      return found;
+    })
+    .map(([name]) => name);
+}
+
+export const allWidgetKeywords = Array.from(new Set(Object.values(widgets).flatMap(meta => meta.keywords ?? []))).sort();

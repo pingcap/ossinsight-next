@@ -1,16 +1,23 @@
+import Filter from '@/app/filter';
 import { WidgetPreview } from '@/components/Widget';
-import { widgetNames } from '@/utils/widgets';
+import { filteredWidgetsNames } from '@/utils/widgets';
 import Link from 'next/link';
 
-export default function Home () {
+export default function Home ({ searchParams }: { searchParams: any }) {
+
+  const config = {
+    search: searchParams['q'] ?? '',
+    tags: (typeof searchParams['tag'] === 'string' ? [searchParams['tag']] : searchParams['tag']) ?? [],
+  };
 
   return (
     <main className="container mx-auto py-4">
       <h1 className="text-3xl font-bold mb-4 text-title">This project is in development</h1>
       <h2 className="text-xl mb-2 text-subtitle">Widgets list</h2>
-      <p className="text-sm mb-2">All widgets will have default parameter <code>repo_id=41986369</code> (pingcap/tidb)</p>
-      <ul className="flex justify-between gap-2 flex-wrap">
-        {widgetNames().map(name => (
+      <Filter config={config} />
+      <p className="text-sm mt-2">All widgets will have default parameter <code>repo_id=41986369</code> (pingcap/tidb)</p>
+      <ul className="mt-2 flex justify-between gap-2 flex-wrap">
+        {filteredWidgetsNames(config).map(name => (
           <li key={name}>
             <Link className="block w-min" href={`/widgets/official/${getName(name)}?repo_id=41986369`}>
               <WidgetPreview name={name} />
