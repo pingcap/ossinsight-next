@@ -14,6 +14,9 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
   };
   const results = await Promise.allSettled(Object.entries(definitions).map(([name, def]) => {
     let param = params[name];
+    if (param == null) {
+      return Promise.resolve();
+    }
     const parse = parsers[def.type];
     param = parse?.(param) ?? param;
     switch (def.type) {
