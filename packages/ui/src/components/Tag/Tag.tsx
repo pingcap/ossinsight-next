@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { HTMLAttributes } from 'react';
+import { CSSProperties, HTMLAttributes } from 'react';
 import * as tailwindColors from 'tailwindcss/colors';
 import { getVariantClasses } from '../../utils/variants';
 
@@ -7,9 +7,9 @@ type defaultColors = typeof colors[number]
 
 declare module 'react' {
   interface CSSProperties {
-    '--tag-color': string;
-    '--tag-border-color': string;
-    '--tag-background-color': string;
+    '--tag-color'?: string;
+    '--tag-border-color'?: string;
+    '--tag-background-color'?: string;
   }
 }
 
@@ -41,7 +41,7 @@ export function Tag ({ variant = 'gray', selected, style, className, onSelected,
   );
 }
 
-function resolveStyles (color: TagProps['variant']) {
+function resolveStyles (color: 'primary' | defaultColors): CSSProperties {
   if (color === 'primary') {
     return {
       '--tag-color': 'var(--color-primary)',
