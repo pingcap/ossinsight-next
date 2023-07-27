@@ -9,6 +9,7 @@ import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 import * as colors from 'tailwindcss/colors';
+import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
 
 type Props = { params: { vendor: string, name: string }, searchParams: Record<string, string> };
 
@@ -83,6 +84,14 @@ export async function generateMetadata ({ params, searchParams }: Props): Promis
     getOrg (id: number): any {
       return {};
     },
+    getTimeParams(): any { 
+      const { DEFAULT_ZONE } = generateZoneOptions();
+
+      return {
+        zone: searchParams?.zone || DEFAULT_ZONE,
+        period: searchParams?.period || PERIOD_OPTIONS[0],
+      };
+    }
   });
 
   twitterImageUsp.set('width', '800');

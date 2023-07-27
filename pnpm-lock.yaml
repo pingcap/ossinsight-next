@@ -202,6 +202,9 @@ importers:
       '@ossinsight/widgets-core':
         specifier: workspace:^
         version: link:../packages/widgets-core
+      '@ossinsight/widgets-utils':
+        specifier: workspace:^
+        version: link:../packages/widgets-utils
       '@types/node':
         specifier: 20.4.2
         version: 20.4.2
