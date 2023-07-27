@@ -12,7 +12,7 @@ export function TwitterButton ({ text, url, tags }: TwitterButtonProps) {
     const usp = new URLSearchParams();
     usp.set('text', text);
     usp.set('url', url);
-    if (tags?.length > 0) {
+    if (tags && tags?.length > 0) {
       usp.set('hashtags', tags.join(','));
     }
     usp.set('via', 'OSSInsight');
