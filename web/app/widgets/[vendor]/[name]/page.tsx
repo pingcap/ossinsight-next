@@ -85,9 +85,7 @@ export async function generateMetadata ({ params, searchParams }: Props): Promis
     },
   });
 
-  twitterImageUsp.set('width', '800');
-  twitterImageUsp.set('height', '418');
-  twitterImageUsp.set('dpr', '2');
+  twitterImageUsp.set('image_size', 'twitter:summary_large_image');
 
   return {
     title: title ?? decodeURIComponent(params.name),

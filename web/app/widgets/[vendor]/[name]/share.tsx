@@ -30,16 +30,12 @@ export default async function Share ({ name, params, searchParams, linkedDataPro
   });
 
   const usp = new URLSearchParams(searchParams);
-  const imageUsp = new URLSearchParams(usp);
-  imageUsp.set('width', '640');
-  imageUsp.set('height', '480');
-  imageUsp.set('dpr', '2');
 
   return (
     <ShareBlock
       title={title ?? 'Untitled'}
       url={`${DOMAIN}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
-      thumbnailUrl={`${DOMAIN}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
+      thumbnailUrl={`${DOMAIN}/widgets/${params.vendor}/${params.name}/thumbnail.png?${usp.toString()}`}
       keywords={keywords}
     />
   );

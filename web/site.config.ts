@@ -21,8 +21,8 @@ export default defineSiteConfig({
         label: 'Live',
         items: [
           { label: '2D Version', href: 'https://live.ossinsight.io' },
-          { label: '3D Version - GitHub City', href: 'https://live.ossinsight.io/3d' }
-        ]
+          { label: '3D Version - GitHub City', href: 'https://live.ossinsight.io/3d' },
+        ],
       },
       {
         label: 'Blog',
@@ -39,13 +39,27 @@ export default defineSiteConfig({
           { label: 'About OSS Insight', href: '/docs/about' },
           {
             label: 'About TiDB Cloud',
-            href: 'https://en.pingcap.com/tidb-cloud?utm_source=ossinsight&utm_medium=referral'
+            href: 'https://en.pingcap.com/tidb-cloud?utm_source=ossinsight&utm_medium=referral',
           },
           { label: 'How do we implement OSS Insight?', href: '/blog/why-we-choose-tidb-to-support-ossinsight' },
           { label: 'Report an Issue', href: 'https://github.com/pingcap/ossinsight/issues' },
-        ]
+        ],
       },
       'spacer',
     ],
+  },
+  sizes: {
+    'default': {
+      width: 640,
+      height: 480,
+    },
+    'preview_image': {
+      width: 320,
+      height: 240,
+    },
+    'twitter:summary_large_image': {
+      width: 800,
+      height: 418,
+    },
   },
 });
