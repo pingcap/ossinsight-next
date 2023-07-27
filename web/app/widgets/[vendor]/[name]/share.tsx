@@ -9,7 +9,7 @@ export default async function Share ({ name, params, searchParams, linkedDataPro
   const generateMetadata = await widgetMetadataGenerator(name);
   const linkedData = await linkedDataPromise;
 
-  const { title } = generateMetadata({
+  const { title, keywords } = generateMetadata({
     theme: { colors },
     parameters: searchParams,
     runtime: 'server',
@@ -40,6 +40,7 @@ export default async function Share ({ name, params, searchParams, linkedDataPro
       title={title ?? 'Untitled'}
       url={`${DOMAIN}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
       thumbnailUrl={`${DOMAIN}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
+      keywords={keywords}
     />
   );
 }

@@ -5,21 +5,27 @@ import ImageIcon from 'bootstrap-icons/icons/image.svg';
 import MarkdownIcon from 'bootstrap-icons/icons/markdown.svg';
 import { CodeBlock } from '../CodeBlock';
 import { Tab, Tabs } from '../Tabs';
+import { TwitterButton } from './TwitterButton';
 
 export interface ShareBlockProps {
   title: string;
   url: string;
   thumbnailUrl: string;
+  keywords?: string[];
 }
 
 export function ShareBlock ({
   title: blockTitle,
   url,
   thumbnailUrl,
+  keywords,
 }: ShareBlockProps) {
   return (
     <div>
-      <Tabs>
+      <div className='flex items-center justify-center gap-4'>
+        <TwitterButton text={blockTitle} tags={keywords} url={url} />
+      </div>
+      <Tabs className='mt-2'>
         <Tab value="Markdown" title="markdown" icon={<MarkdownIcon />}>
           <CodeBlock language="markdown" code={`[![${blockTitle}](${thumbnailUrl})](${url})`} />
         </Tab>

@@ -21,5 +21,7 @@ export const Default = {
     title: 'OSSInsight Next',
     url: 'https://ossinsight-next.vercel.app',
     thumbnailUrl: 'https://ossinsight.io/img/logo.svg',
+    description: 'OSSInsight Next is next version of OSSInsight',
+    keywords: ['OSSInsight'],
   },
 } satisfies StoryObj<typeof ShareBlock>;
