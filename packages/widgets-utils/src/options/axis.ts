@@ -105,3 +105,16 @@ export function valueAxis<T extends 'x' | 'y'>(
     },
   });
 }
+
+export function categoryAxis<T extends 'x' | 'y'>(
+  id?: OptionId,
+  option: AxisOption<T, CategoryAxisBaseOption> = {}
+): AxisOption<T> {
+  return merge<AxisOption<T>>(option, {
+    id,
+    type: 'category',
+    nameTextStyle: {
+      align: filterEnum(option.position ?? 'left', ['left', 'right']),
+    },
+  });
+}

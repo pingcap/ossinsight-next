@@ -134,6 +134,9 @@ importers:
       '@ossinsight/widgets-types':
         specifier: workspace:^
         version: link:../widgets-types
+      '@ossinsight/widgets-utils':
+        specifier: workspace:^
+        version: link:../widgets-utils
       '@types/jsonpath':
         specifier: ^0.2.0
         version: 0.2.0
