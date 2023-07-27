@@ -1,27 +1,32 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { Select, SelectItem, SelectGroup, SelectSeparator } from './Select';
+import {
+  Select as SlectComponent,
+  SelectItem,
+  SelectGroup,
+  SelectSeparator,
+} from './Select';
 import { TimeZoneSelector } from './TimeZoneSelector';
 import { TimePeriodSelector } from './TimePeriodSelector';
 
-function Container(props: any) {
+function Select(props: any) {
   const { useSimpleSelect = false, children, ...rest } = props;
 
   if (useSimpleSelect) {
     return <>{children}</>;
   }
 
-  return <Select {...rest}>{children}</Select>;
+  return <SlectComponent {...rest}>{children}</SlectComponent>;
 }
 
 export default {
   title: 'Components/Selector',
-  component: Container,
+  component: Select,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof Select>;
+} satisfies Meta<typeof SlectComponent>;
 
 export const Default = {
   args: {
@@ -57,16 +62,16 @@ export const Default = {
   },
 } satisfies StoryObj<typeof Select>;
 
-export const TimeZone = {
-  args: {
-    useSimpleSelect: true,
-    children: [<TimeZoneSelector showLabel />],
-  },
-} satisfies StoryObj<any>;
+// export const TimeZone = {
+//   args: {
+//     useSimpleSelect: true,
+//     children: [<TimeZoneSelector showLabel />],
+//   },
+// } satisfies StoryObj<any>;
 
-export const TimePeriod = {
-  args: {
-    useSimpleSelect: true,
-    children: [<TimePeriodSelector showLabel />],
-  },
-} satisfies StoryObj<any>;
+// export const TimePeriod = {
+//   args: {
+//     useSimpleSelect: true,
+//     children: [<TimePeriodSelector showLabel />],
+//   },
+// } satisfies StoryObj<any>;

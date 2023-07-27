@@ -18,7 +18,10 @@ export function TimePeriodSelect({
 
   return (
     <>
-      <TimePeriodSelector onValueChange={handleValueChange} />
+      <TimePeriodSelector
+        defaultValue={value}
+        onValueChange={handleValueChange}
+      />
     </>
   );
 }
@@ -39,7 +42,10 @@ export function TimeZoneSelect({
 
   return (
     <>
-      <TimeZoneSelector onValueChange={handleValueChange} />
+      <TimeZoneSelector
+        defaultValue={value}
+        onValueChange={handleValueChange}
+      />
     </>
   );
 }
