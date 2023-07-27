@@ -1,8 +1,12 @@
+import config from '@/site.config';
+import { resolveImageSizeConfig } from '@/utils/siteConfig';
 import { isWidget, widgetDatasourceFetcher, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
+
+const EXCLUDED_PARAMETERS = ['image_size'];
 
 export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
   if (vendor !== 'official') {
@@ -19,12 +23,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   const parameters: any = {};
   request.nextUrl.searchParams.forEach((value, key) => {
-    if (['widget', 'height'].includes(key)) {
+    if (EXCLUDED_PARAMETERS.includes(key)) {
       return;
     }
     parameters[key] = value;
   });
-
 
   const paramDef = await widgetParameterDefinitions(name);
   const linkedData = await resolveParameters(paramDef, parameters);
@@ -34,17 +37,16 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     parameters,
   });
 
-  const width = request.nextUrl.searchParams.get('width');
-  const height = request.nextUrl.searchParams.get('height');
-  const devicePixelRatio = request.nextUrl.searchParams.get('dpr');
+  const size = request.nextUrl.searchParams.get('image_size') ?? 'default';
+  const { width, height, dpr } = resolveImageSizeConfig(config, size);
 
   const buffer = await render({
     type: visualizer.type,
     data,
     visualizer: visualizer.default,
-    width: parseSize(width, 120, 1920) ?? 400,
-    height: parseSize(height, 120, 1920) ?? 400,
-    dpr: parseSize(devicePixelRatio, 1, 3) ?? 2,
+    width,
+    height,
+    dpr: dpr ?? 2,
     parameters,
     linkedData,
   });

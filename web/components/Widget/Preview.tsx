@@ -2,14 +2,12 @@ import { widgetMeta } from '@/utils/widgets';
 import { WidgetMeta } from '@ossinsight/widgets-types';
 import Image from 'next/image';
 
-const dpr = typeof devicePixelRatio === 'undefined' ? 2 : devicePixelRatio;
-
 export function WidgetPreview ({ name }: { name: string }) {
   const widget = widgetMeta(name);
 
   return (
     <div className="rounded-md overflow-hidden bg-popover border w-[320px] transition-shadow hover:shadow-lg">
-      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?repo_id=41986369&width=320&height=240&dpr=${dpr}`} alt="preview" />
+      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?repo_id=41986369&image_size=preview_image`} alt="preview" />
       <div className="p-4 border-t bg-toolbar">
         <h2 className="text-lg font-bold text-title">{getName(widget.name)}</h2>
         {widget.keywords?.length && (
