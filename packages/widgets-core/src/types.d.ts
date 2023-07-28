@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { LinkedData } from './parameters/resolver';
 
 export type ParserConfig = {
@@ -10,5 +11,10 @@ export interface WidgetVisualizationProps {
   visualizer: any;
   data: any;
   parameters: any;
-  linkedData: LinkedData
+  linkedData: LinkedData;
+}
+
+export interface WidgetReactVisualizationProps extends WidgetVisualizationProps {
+  className?: string;
+  style?: CSSProperties;
 }

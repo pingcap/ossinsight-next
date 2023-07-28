@@ -2,10 +2,14 @@
 
 import { widgetVisualizer } from '@/utils/widgets';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
-import { use } from 'react';
+import { CSSProperties, use } from 'react';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
 
-export default function Widget ({ name, params, data, linkedData }: { name: string, params: Record<string, string>, data: any, linkedData: LinkedData }) {
+export interface WidgetProps {
+  className?: string, style?: CSSProperties, name: string, params: Record<string, string>, data: any, linkedData: LinkedData
+}
+
+export default function Widget ({ className, style, name, params, data, linkedData }: WidgetProps) {
   const widget = use(widgetVisualizer(name));
 
   if (isEmptyData(data)) {
@@ -13,7 +17,7 @@ export default function Widget ({ name, params, data, linkedData }: { name: stri
   }
 
   return (
-    <WidgetVisualization type={widget.type} visualizer={widget.default} data={data} parameters={params} linkedData={linkedData} />
+    <WidgetVisualization className={className} style={style} type={widget.type} visualizer={widget.default} data={data} parameters={params} linkedData={linkedData} />
   );
 }
 

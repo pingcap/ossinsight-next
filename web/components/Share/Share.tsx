@@ -1,12 +1,11 @@
+import siteConfig from '@/site.config';
 import { widgetMetadataGenerator } from '@/utils/widgets';
 import { ShareBlock } from '@ossinsight/ui/src/components/ShareBlock';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import * as colors from 'tailwindcss/colors';
 import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
 
-const DOMAIN = 'https://ossinsight-next.vercel.app';
-
-export default async function Share ({ name, params, searchParams, linkedDataPromise }: { name: string, params: any, searchParams: any, linkedDataPromise: Promise<LinkedData> }) {
+export async function Share ({ name, params, searchParams, linkedDataPromise }: { name: string, params: any, searchParams: any, linkedDataPromise: Promise<LinkedData> }) {
   const generateMetadata = await widgetMetadataGenerator(name);
   const linkedData = await linkedDataPromise;
 
@@ -43,8 +42,8 @@ export default async function Share ({ name, params, searchParams, linkedDataPro
   return (
     <ShareBlock
       title={title ?? 'Untitled'}
-      url={`${DOMAIN}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
-      thumbnailUrl={`${DOMAIN}/widgets/${params.vendor}/${params.name}/thumbnail.png?${usp.toString()}`}
+      url={`${siteConfig.host}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
+      thumbnailUrl={`${siteConfig.host}/widgets/${params.vendor}/${params.name}/thumbnail.png?${usp.toString()}`}
       keywords={keywords}
     />
   );
