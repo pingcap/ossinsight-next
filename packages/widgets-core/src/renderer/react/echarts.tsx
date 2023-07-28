@@ -1,18 +1,19 @@
-import { VisualizeFunction, VisualizerModule } from '@ossinsight/widgets-types';
+import { VisualizeFunction } from '@ossinsight/widgets-types';
 import { EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
-import  '../echarts-theme';
+import { WidgetReactVisualizationProps } from '../../types';
+import '../echarts-theme';
 
-interface EChartsComponentProps {
+interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
   visualizer: VisualizeFunction<EChartsOption, any, any>;
   parameters: any;
   linkedData: LinkedData;
 }
 
-function EChartsComponent ({ data, visualizer, parameters, linkedData }: EChartsComponentProps) {
+function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData }: EChartsComponentProps) {
   const echartsRef = useRef<EChartsType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -57,10 +58,10 @@ function EChartsComponent ({ data, visualizer, parameters, linkedData }: ECharts
     echartsRef.current!.setOption(option);
   }, [data, visualizer, parameters]);
 
-
   return (
     <div
-      className="WidgetContainer WidgetContainer-echarts"
+      className={className}
+      style={style}
       ref={containerRef}
     />
   );

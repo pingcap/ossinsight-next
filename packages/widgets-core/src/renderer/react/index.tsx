@@ -1,17 +1,16 @@
 import { lazy } from 'react';
-import { WidgetVisualizationProps } from '../../types';
+import { WidgetReactVisualizationProps } from '../../types';
 
 const ECharts = lazy(() => import('./echarts'));
 
-
-export default function WidgetVisualization ({ type, visualizer, parameters, data, linkedData }: WidgetVisualizationProps) {
+export default function WidgetVisualization ({ ...props }: WidgetReactVisualizationProps) {
   let el;
-  switch (type) {
+  switch (props.type) {
     case 'echarts':
-      el = <ECharts data={data} visualizer={visualizer} parameters={parameters} linkedData={linkedData} />;
+      el = <ECharts {...props} />;
       break;
     default:
-      throw new Error(`visualize type '${type}' not supported.`);
+      throw new Error(`visualize type '${props.type}' not supported.`);
   }
 
   return el;

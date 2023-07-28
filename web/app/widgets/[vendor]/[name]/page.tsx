@@ -1,6 +1,5 @@
-import Parameters from '@/app/widgets/[vendor]/[name]/parameters';
-import Share from '@/app/widgets/[vendor]/[name]/share';
-import ServerWidget from '@/app/widgets/[vendor]/[name]/widget';
+import { Share } from '@/components/Share';
+import { ServerWidget, ServerParameters } from '@/components/Widget/server';
 import { isWidget, widgetMeta, widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
 import { ChartSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
@@ -31,11 +30,11 @@ export default function Page ({ params, searchParams }: Props) {
       <h1 className="text-3xl font-bold mb-4 text-title">Widget landing page prototype</h1>
       <div className="p-4 border-dashed border-2 rounded-2xl">
         <Suspense key={signature} fallback="loading...">
-          <Parameters name={name} linkedDataPromise={linkedData} />
+          <ServerParameters name={name} linkedDataPromise={linkedData} />
         </Suspense>
       </div>
-      <Suspense key={signature} fallback={<ChartSkeleton style={{ aspectRatio: '16 / 9' }} />}>
-        <ServerWidget name={name} searchParams={searchParams} linkedDataPromise={linkedData} />
+      <Suspense key={signature} fallback={<ChartSkeleton className="WidgetContainer" />}>
+        <ServerWidget className="WidgetContainer" name={name} searchParams={searchParams} linkedDataPromise={linkedData} />
       </Suspense>
       <div className="p-4 border-dashed border-2 rounded-2xl">
         <Suspense key={signature} fallback="loading...">
