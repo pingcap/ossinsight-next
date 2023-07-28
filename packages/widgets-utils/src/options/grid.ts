@@ -3,7 +3,6 @@ import { OptionId } from 'echarts/types/src/util/types';
 
 export function grid(id: OptionId, option: GridOption = {}): GridOption {
   return {
-    top: 32,
     left: 8,
     right: 16,
     containLabel: true,
