@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
+import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
 import '../echarts-theme';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
@@ -54,6 +55,14 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       getOrg (id: number): any {
         return {};
       },
+      getTimeParams(): any {
+        const { DEFAULT_ZONE } = generateZoneOptions();
+
+        return {
+          zone: parameters?.zone || DEFAULT_ZONE,
+          period: parameters?.period || PERIOD_OPTIONS[0],
+        };
+      }
     });
     echartsRef.current!.setOption(option);
   }, [data, visualizer, parameters]);

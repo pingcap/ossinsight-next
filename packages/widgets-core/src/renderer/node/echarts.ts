@@ -2,6 +2,7 @@ import { createCanvas } from '@napi-rs/canvas';
 import { EChartsVisualizationConfig, VisualizeFunction } from '@ossinsight/widgets-types';
 import { init } from 'echarts';
 import * as colors from 'tailwindcss/colors';
+import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
 import { LinkedData } from '../../parameters/resolver';
 import '../echarts-theme';
 
@@ -26,6 +27,14 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     getOrg (id: number): any {
       return {};
     },
+    getTimeParams(): any { 
+      const { DEFAULT_ZONE } = generateZoneOptions();
+
+      return {
+        zone: parameters?.zone || DEFAULT_ZONE,
+        period: parameters?.period || PERIOD_OPTIONS[0],
+      };
+    }
   });
 
   const echarts = init(canvas as any, 'dark', {

@@ -27,7 +27,9 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
 
   getCollection (id: number): any;
 
-  getOrg (id: number): any;
+  getOrg(id: number): any;
+  
+  getTimeParams (): { zone: string, period: string };
 }
 
 export type EChartsVisualizationConfig = EChartsOption;
@@ -80,9 +82,19 @@ export interface UserIdParameterDefinition extends BaseParameterDefinition {
   type: 'user-id';
 }
 
+export interface TimePeriodParameterDefinition extends BaseParameterDefinition {
+  type: 'time-period';
+}
+
+export interface TimeZoneParameterDefinition extends BaseParameterDefinition {
+  type: 'time-zone';
+}
+
 export type ParameterDefinition =
-  RepoIdParameterDefinition
-  | UserIdParameterDefinition; // | Others;
+  | RepoIdParameterDefinition
+  | UserIdParameterDefinition
+  | TimeZoneParameterDefinition
+  | TimePeriodParameterDefinition; // | Others;
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
 
