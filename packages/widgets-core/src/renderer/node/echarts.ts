@@ -47,9 +47,9 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
   echarts.setOption({ ...option, animation: false });
 
   if (dynamicHeight) {
-    const realCanvas = createCanvas(width, height);
+    const realCanvas = createCanvas(width * dpr, height * dpr);
     const ctx = realCanvas.getContext('2d');
-    ctx.drawImage(canvas, 0, 0, width * dpr, height* dpr, 0, 0, width, height);
+    ctx.drawImage(canvas, 0, 0, width * dpr, height * dpr, 0, 0, width * dpr, height * dpr);
     canvas = realCanvas;
   }
 

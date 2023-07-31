@@ -17,3 +17,7 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     title: 'Issues',
   },
 ];
+
+export function activityDisplayName (key: string) {
+  return ACTIVITY_TYPE_OPTIONS.find(a => a.key === key)?.title ?? 'Unknown';
+}

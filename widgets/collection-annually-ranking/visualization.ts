@@ -1,11 +1,13 @@
 import type { EChartsVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { activityDisplayName } from '@ossinsight/widgets-utils/src/ui';
 
 type Params = { activity: string, collection_id: string }
-type Input = { event_year: string, rank: number, repo_id: number, repo_name: string, total: number }[]
+type Input = { event_year: number, rank: number, repo_id: number, repo_name: string, total: number }[]
 
 export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EChartsVisualizationConfig {
-  const repos = getAllRepos(input);
+  let repos = getAllRepos(input);
   const collection = ctx.getCollection(Number(ctx.parameters.collection_id));
+  const isSuperSmallImage = ctx.runtime === 'server' && ctx.width < 960;
 
   return {
     grid: {
@@ -19,14 +21,16 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EC
       interval: 1,
       min: 1,
       inverse: true,
-      axisPointer: { show: true, type: 'shadow', snap: true, label: { precision: 0 }, triggerTooltip: false },
+      splitLine: { show: !isSuperSmallImage },
+      axisLabel: { show: !isSuperSmallImage },
+      axisPointer: { show: true, type: 'shadow', snap: true, label: { show: true, precision: 0 }, triggerTooltip: false },
     },
     xAxis: {
       type: 'time',
-      axisLabel: { formatter: (p: string | number) => String(p), showMaxLabel: true },
+      axisLabel: { formatter: (p: string | number) => String(p), showMaxLabel: true, show: !isSuperSmallImage },
       minInterval: 1,
       position: 'top',
-      splitLine: { show: true },
+      splitLine: { show: !isSuperSmallImage },
       offset: 28,
       axisLine: { show: false },
       axisTick: { show: false },
@@ -46,20 +50,22 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EC
         ],
       })),
     ],
-    series: repos.map(repo => ({
+    series: repos.map((repo, index) => ({
       type: 'line',
       id: repo,
       name: repo,
       datasetId: repo,
       encode: { x: 'event_year', y: 'rank' },
-      smooth: true,
+      smooth: !isSuperSmallImage,
       lineStyle: {
-        width: 3,
+        width: isSuperSmallImage ? (index < 5 ? 3 : 0) : 3,
+        cap: 'round',
+        join: 'round'
       },
-      symbolSize: 8,
+      symbolSize: isSuperSmallImage ? 0 : 8,
       symbol: 'circle',
       endLabel: {
-        show: true,
+        show: isSuperSmallImage ? (index < 5) : true,
         offset: [12, 0],
         width: 96,
         fontSize: 14,
@@ -86,23 +92,30 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EC
       },
 
     })),
-    title: {
+    title: [{
       id: 'title',
-      text: `${collection?.name ?? 'undefined'} - ${ctx.parameters.activity}`,
-    },
+      text: isSuperSmallImage ? `${collection?.name ?? 'undefined'}` : `${collection?.name ?? 'undefined'} - ${activityDisplayName(ctx.parameters.activity)} Ranking Yearly`,
+    }, {
+      id: 'subtitle',
+      show: isSuperSmallImage,
+      text: isSuperSmallImage ? `${activityDisplayName(ctx.parameters.activity)} Ranking Yearly` : '',
+      top: 24,
+      textStyle: {
+        fontSize: 10,
+        color: '#7c7c7c'
+      }
+    }],
   };
 }
 
 export const type = 'echarts';
 
 function getAllRepos (input: Input) {
-  const set = new Set<string>();
-  input.forEach((item) => {
-    set.add(item.repo_name);
-  });
-  return [...set];
+  const maxYear = input.reduce((max, i) => Math.max(max, i.event_year), 0);
+  return input.filter(i => i.event_year === maxYear).sort((a, b) => a.rank - b.rank).map(i => i.repo_name);
 }
 
-export function computeDynamicHeight (input: Input, ctx: WidgetVisualizerContext<Params>) {
-  return getAllRepos(input).length * 36 + 128;
+export function computeDynamicHeight (input: Input) {
+  const all = getAllRepos(input).length;
+  return all * 36 + 128;
 }
