@@ -1,4 +1,4 @@
-.WidgetContainer {
+.WidgetContainer:not(.Widget-dynamicHeight) {
   aspect-ratio: 16 / 9;
   overflow: hidden;
 }

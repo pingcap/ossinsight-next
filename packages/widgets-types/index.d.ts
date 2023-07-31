@@ -28,7 +28,7 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
   getCollection (id: number): any;
 
   getOrg(id: number): any;
-  
+
   getTimeParams (): { zone: string, period: string };
 }
 
@@ -64,6 +64,8 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
    * @param colorScheme new color scheme
    */
   onColorSchemeChange?: (instance: VisualizerInstance, result: VisualizationResult, colorScheme: 'light' | 'dark') => void;
+
+  computeDynamicHeight?: (data: Data) => number
 }
 
 export interface BaseParameterDefinition {
@@ -82,6 +84,10 @@ export interface UserIdParameterDefinition extends BaseParameterDefinition {
   type: 'user-id';
 }
 
+export interface CollectionIdParameterDefinition extends BaseParameterDefinition {
+  type: 'collection-id';
+}
+
 export interface TimePeriodParameterDefinition extends BaseParameterDefinition {
   type: 'time-period';
 }
@@ -90,11 +96,19 @@ export interface TimeZoneParameterDefinition extends BaseParameterDefinition {
   type: 'time-zone';
 }
 
+
+export interface ActivityTypeParameterDefinition extends BaseParameterDefinition {
+  type: 'activity-type';
+  enums?: string[];
+}
+
 export type ParameterDefinition =
   | RepoIdParameterDefinition
   | UserIdParameterDefinition
+  | CollectionIdParameterDefinition
   | TimeZoneParameterDefinition
-  | TimePeriodParameterDefinition; // | Others;
+  | TimePeriodParameterDefinition
+  | ActivityTypeParameterDefinition; // | Others;
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
 

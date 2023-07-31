@@ -1,4 +1,4 @@
-import { VisualizeFunction } from '@ossinsight/widgets-types';
+import { VisualizeFunction, VisualizerModule } from '@ossinsight/widgets-types';
 import { EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
@@ -9,7 +9,7 @@ import '../echarts-theme';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
-  visualizer: VisualizeFunction<EChartsOption, any, any>;
+  visualizer: VisualizerModule<'echarts', EChartsOption, any, any>;
   parameters: any;
   linkedData: LinkedData;
 }
@@ -37,7 +37,7 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
   useEffect(() => {
     const { clientWidth: width, clientHeight: height } = containerRef.current!;
 
-    const option = visualizer(data, {
+    const option = visualizer.default(data, {
       runtime: 'client',
       parameters,
       theme: { colors },
@@ -47,10 +47,10 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
         return linkedData.repos[String(id)];
       },
       getUser (id: number): any {
-        return {};
+        return linkedData.users[String(id)];
       },
       getCollection (id: number): any {
-        return {};
+        return linkedData.collections[String(id)];
       },
       getOrg (id: number): any {
         return {};

@@ -43,7 +43,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   const buffer = await render({
     type: visualizer.type,
     data,
-    visualizer: visualizer.default,
+    visualizer,
     width,
     height,
     dpr: dpr ?? 2,

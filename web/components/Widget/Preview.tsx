@@ -1,13 +1,15 @@
-import { widgetMeta } from '@/utils/widgets';
+import { widgetMeta, widgetParameterDefinitions } from '@/utils/widgets';
 import { WidgetMeta } from '@ossinsight/widgets-types';
 import Image from 'next/image';
 
-export function WidgetPreview ({ name }: { name: string }) {
+export async function WidgetPreview ({ name }: { name: string }) {
   const widget = widgetMeta(name);
+  const imageUsp = new URLSearchParams(await dynamicParameters(name));
+  imageUsp.set('image_size', 'preview_image')
 
   return (
     <div className="rounded-md overflow-hidden bg-popover border w-[320px] transition-shadow hover:shadow-lg">
-      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?repo_id=41986369&image_size=preview_image`} alt="preview" />
+      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
       <div className="p-4 border-t bg-toolbar">
         <h2 className="text-lg font-bold text-title">{getName(widget.name)}</h2>
         {widget.keywords?.length && (
@@ -41,4 +43,17 @@ function renderAuthor (meta: WidgetMeta) {
     return <b>@{meta.author.name ?? 'unknown'}</b>;
   }
 }
+
+
+export async function dynamicParameters (name: string) {
+  const params = await widgetParameterDefinitions(name);
+  const usp = Object.entries(params).reduce((usp, [key, config]) => {
+    if (config.default != null) {
+      usp.set(key, String(config.default))
+    }
+    return usp;
+  }, new URLSearchParams())
+  return usp.toString()
+}
+
 
