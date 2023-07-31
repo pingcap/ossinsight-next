@@ -31,7 +31,7 @@ export function ShareBlock ({
         </Tab>
         <Tab value="HTML" title="HTML" icon={<HTMLIcon />}>
           <CodeBlock code={`<a href="${url}" target="_blank">
-  <img src="${thumbnailUrl}" width="640" height="480" alt="${blockTitle}">
+  <img src="${thumbnailUrl}" width="960" height="auto" alt="${blockTitle}">
 </a>`} language="html" />
         </Tab>
         <Tab value="image" title="Thumbnail" icon={<ImageIcon />}>

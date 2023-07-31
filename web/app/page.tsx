@@ -1,10 +1,9 @@
 import Filter from '@/app/filter';
-import { WidgetPreview } from '@/components/Widget';
-import { filteredWidgetsNames } from '@/utils/widgets';
+import { dynamicParameters, WidgetPreview } from '@/components/Widget';
+import { filteredWidgetsNames, widgetParameterDefinitions } from '@/utils/widgets';
 import Link from 'next/link';
 
-export default function Home ({ searchParams }: { searchParams: any }) {
-
+export default async function Home ({ searchParams }: { searchParams: any }) {
   const config = {
     search: searchParams['q'] ?? '',
     tags: (typeof searchParams['tag'] === 'string' ? [searchParams['tag']] : searchParams['tag']) ?? [],
@@ -17,13 +16,13 @@ export default function Home ({ searchParams }: { searchParams: any }) {
       <Filter config={config} />
       <p className="text-sm mt-2">All widgets will have default parameter <code>repo_id=41986369</code> (pingcap/tidb)</p>
       <ul className="mt-2 flex justify-between gap-2 flex-wrap">
-        {filteredWidgetsNames(config).map(name => (
+        {await Promise.all(filteredWidgetsNames(config).map(async name => (
           <li key={name}>
-            <Link className="block w-min" href={`/widgets/official/${getName(name)}?repo_id=41986369`}>
+            <Link className="block w-min" href={`/widgets/official/${getName(name)}?${await dynamicParameters(name)}`}>
               <WidgetPreview name={name} />
             </Link>
           </li>
-        ))}
+        )))}
       </ul>
     </main>
   );

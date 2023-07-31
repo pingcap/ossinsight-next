@@ -6,5 +6,5 @@ export interface ParametersContextValues {
 }
 
 export const ParametersContext = createContext<ParametersContextValues>({
-  linkedData: { repos: {}, users: {} },
+  linkedData: { repos: {}, users: {}, collections: {} },
 });

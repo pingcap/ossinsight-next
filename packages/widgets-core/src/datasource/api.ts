@@ -1,5 +1,6 @@
 import { WidgetContext } from '@ossinsight/widgets-types';
 import jp from 'jsonpath/jsonpath.js';
+import { parseTemplate } from 'url-template';
 import { ParserConfig } from '../types';
 import { HttpRequestError } from '../utils/errors';
 
@@ -16,7 +17,8 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
     return null;
   }
 
-  const url = new URL(config.url);
+  const template = parseTemplate(config.url);
+  const url = new URL(template.expand(ctx.parameters));
   setUrlParams(url, config.params ?? {}, ctx.parameters);
 
   const response = await fetch(url);

@@ -38,12 +38,24 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   });
 
   const size = request.nextUrl.searchParams.get('image_size') ?? 'default';
-  const { width, height, dpr } = resolveImageSizeConfig(config, size);
+  let width: number;
+  let height: number;
+  let dpr: number | undefined;
+  if (size === 'auto' && visualizer.computeDynamicHeight) {
+    width = 960;
+    height = visualizer.computeDynamicHeight(data);
+    dpr = 2;
+  } else {
+    const resolved = resolveImageSizeConfig(config, size);
+    width = resolved.width;
+    height = resolved.height;
+    dpr = resolved.dpr;
+  }
 
   const buffer = await render({
     type: visualizer.type,
     data,
-    visualizer: visualizer.default,
+    visualizer,
     width,
     height,
     dpr: dpr ?? 2,

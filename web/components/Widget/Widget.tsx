@@ -6,18 +6,32 @@ import { CSSProperties, use } from 'react';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
 
 export interface WidgetProps {
-  className?: string, style?: CSSProperties, name: string, params: Record<string, string>, data: any, linkedData: LinkedData
+  className?: string,
+  style?: CSSProperties,
+  name: string,
+  params: Record<string, string>,
+  data: any,
+  linkedData: LinkedData
 }
 
 export default function Widget ({ className, style, name, params, data, linkedData }: WidgetProps) {
-  const widget = use(widgetVisualizer(name));
+  const visualizer = use(widgetVisualizer(name));
+  const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
 
   if (isEmptyData(data)) {
     return <p>Empty data</p>;
   }
 
   return (
-    <WidgetVisualization className={className} style={style} type={widget.type} visualizer={widget.default} data={data} parameters={params} linkedData={linkedData} />
+    <WidgetVisualization
+      className={dynamicHeight ? `Widget-dynamicHeight ${className}` : className}
+      style={{ height: dynamicHeight, ...style }}
+      type={visualizer.type}
+      visualizer={visualizer}
+      data={data}
+      parameters={params}
+      linkedData={linkedData}
+    />
   );
 }
 

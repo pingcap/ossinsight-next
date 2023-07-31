@@ -7,6 +7,7 @@ import {
 } from './Select';
 import { TimeZoneSelector } from './TimeZoneSelector';
 import { TimePeriodSelector } from './TimePeriodSelector';
+import { ActivityTypeSelector } from './ActivityTypeSelector';
 
 function Select(props: any) {
   const { useSimpleSelect = false, children, ...rest } = props;
@@ -73,5 +74,12 @@ export const Default = {
 //   args: {
 //     useSimpleSelect: true,
 //     children: [<TimePeriodSelector showLabel />],
+//   },
+// } satisfies StoryObj<any>;
+
+// export const ActivityType = {
+//   args: {
+//     useSimpleSelect: true,
+//     children: [<ActivityTypeSelector showLabel />],
 //   },
 // } satisfies StoryObj<any>;
