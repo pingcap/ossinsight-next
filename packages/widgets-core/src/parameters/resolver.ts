@@ -41,7 +41,11 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
         if (param) {
           return collectionsPromise
             .then(res => res.find(collection => collection.id === param))
-            .then(collection => linkedData.collections[param] = collection);
+            .then(collection => {
+              if (collection) {
+                linkedData.collections[param] = collection;
+              }
+            });
         }
     }
 

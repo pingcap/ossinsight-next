@@ -1,4 +1,4 @@
-import { ACTIVITY_TYPE_OPTIONS } from '@ossinsight/widgets-utils/src/ui/activity';
+import { ACTIVITY_TYPE_OPTIONS, ActivityTypeOption } from '@ossinsight/widgets-utils/src/ui/activity';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useSimpleSelect } from './Select';
@@ -15,7 +15,7 @@ export function ActivityTypeSelector (props: ActivityTypeSelectorProps) {
 
   const options = useMemo(() => {
     if (props.enums) {
-      return props.enums.map(key => ACTIVITY_TYPE_OPTIONS.find(op => op.key === key)).filter(Boolean);
+      return props.enums.map(key => ACTIVITY_TYPE_OPTIONS.find(op => op.key === key)).filter(Boolean) as ActivityTypeOption[];
     }
     return ACTIVITY_TYPE_OPTIONS;
   }, [props.enums]);
