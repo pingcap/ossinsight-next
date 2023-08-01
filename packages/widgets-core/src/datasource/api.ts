@@ -1,4 +1,4 @@
-import { WidgetContext } from '@ossinsight/widgets-types';
+import { WidgetBaseContext } from '@ossinsight/widgets-types';
 import jp from 'jsonpath/jsonpath.js';
 import { parseTemplate } from 'url-template';
 import { ParserConfig } from '../types';
@@ -12,7 +12,7 @@ export interface ApiDatasourceConfig {
   when?: string[];
 }
 
-export default async function executeApiDatasource (config: ApiDatasourceConfig, ctx: WidgetContext) {
+export default async function executeApiDatasource (config: ApiDatasourceConfig, ctx: WidgetBaseContext) {
   if (!allExists(config.when, ctx.parameters)) {
     return null;
   }

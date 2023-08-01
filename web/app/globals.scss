@@ -8,3 +8,24 @@ html, body {
   background-color: var(--background-color-body);
   color: var(--text-color-content);
 }
+
+:root {
+  --site-header-height: 60px;
+}
+
+.min-h-page {
+  min-height: calc(100vh - var(--site-header-height));
+}
+
+.max-h-page {
+  max-height: calc(100vh - var(--site-header-height));
+}
+
+.h-page {
+  height: calc(100vh - var(--site-header-height));
+}
+
+.top-header {
+  top: var(--site-header-height);
+}
+

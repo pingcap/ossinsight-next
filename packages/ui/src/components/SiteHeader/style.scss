@@ -15,7 +15,8 @@
 }
 
 .SiteHeader {
-  @apply flex items-center sticky top-0 w-full bg-toolbar px-4 py-2 gap-2 border-b text-subtitle text-sm overflow-x-auto;
+  @apply flex items-center sticky top-0 w-full bg-toolbar px-4 py-2 gap-2 border-b text-subtitle text-sm overflow-x-auto z-10;
+  height: var(--site-header-height);
 
   &-menu {
     > ul {

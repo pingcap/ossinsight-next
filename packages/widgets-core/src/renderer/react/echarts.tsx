@@ -6,6 +6,7 @@ import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
 import '../echarts-theme';
+import { createLinkedDataContext } from '../../utils/context';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
@@ -43,18 +44,7 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       theme: { colors },
       width,
       height,
-      getRepo (id: number): any {
-        return linkedData.repos[String(id)];
-      },
-      getUser (id: number): any {
-        return linkedData.users[String(id)];
-      },
-      getCollection (id: number): any {
-        return linkedData.collections[String(id)];
-      },
-      getOrg (id: number): any {
-        return {};
-      },
+      ...createLinkedDataContext(linkedData),
       getTimeParams(): any {
         const { DEFAULT_ZONE } = generateZoneOptions();
 
