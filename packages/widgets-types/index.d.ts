@@ -1,16 +1,29 @@
 import type { EChartsOption } from 'echarts';
 import type * as colors from 'tailwindcss/colors';
 
-export interface WidgetContext<P extends Record<string, any> = Record<string, any>> {
+export interface BasicContext {
+  theme: {
+    colors: typeof colors
+  };
+  getTimeParams (): { zone: string, period: string };
+}
+
+export interface WidgetBaseContext<P extends Record<string, any> = Record<string, any>> {
   runtime: 'server' | 'client';
   parameters: P;
 }
 
-export interface WidgetVisualizerContext<P extends Record<string, any> = Record<string, any>> extends WidgetContext<P> {
-  theme: {
-    colors: typeof colors
-  };
+export interface LinkedDataContext {
+  getRepo (id: number): { id: number, fullName: string } | undefined;
 
+  getUser (id: number): any;
+
+  getCollection (id: number): any;
+
+  getOrg(id: number): any;
+}
+
+export interface WidgetVisualizerContext<P extends Record<string, any> = Record<string, any>> extends WidgetBaseContext<P>, BasicContext, LinkedDataContext {
   /**
    * The container width when executing the visualization function.
    */
@@ -20,16 +33,6 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
    * The container height when executing the visualization function.
    */
   height: number;
-
-  getRepo (id: number): { id: number, fullName: string } | undefined;
-
-  getUser (id: number): any;
-
-  getCollection (id: number): any;
-
-  getOrg(id: number): any;
-
-  getTimeParams (): { zone: string, period: string };
 }
 
 export type EChartsVisualizationConfig = EChartsOption;

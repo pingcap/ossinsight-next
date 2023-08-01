@@ -25,7 +25,8 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   return (
     <WidgetVisualization
       className={dynamicHeight ? `Widget-dynamicHeight ${className}` : className}
-      style={{ height: dynamicHeight, ...style }}
+      dynamicHeight={dynamicHeight}
+      style={style}
       type={visualizer.type}
       visualizer={visualizer}
       data={data}

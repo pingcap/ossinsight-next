@@ -1,6 +1,6 @@
-import type { WidgetContext } from '@ossinsight/widgets-types';
+import type { WidgetBaseContext } from '@ossinsight/widgets-types';
 
-export default async function executeDatasource (config: any, ctx: WidgetContext) {
+export default async function executeDatasource (config: any, ctx: WidgetBaseContext) {
   try {
     if (config instanceof Array) {
       return Promise.all(config.map(c => executeDatasource(c, ctx)));

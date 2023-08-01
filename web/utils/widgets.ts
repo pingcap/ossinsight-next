@@ -1,7 +1,7 @@
 import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
-import { MetadataGenerator, VisualizerModule, WidgetContext, WidgetMeta } from '@ossinsight/widgets-types';
+import { MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta } from '@ossinsight/widgets-types';
 
 export function isWidget (name: string) {
   return !!widgets[name];
@@ -19,7 +19,7 @@ export function widgetMetadataGenerator<P> (name: string): Promise<MetadataGener
   return cachedImport(metadataGenerators[name]);
 }
 
-export function widgetDatasourceFetcher (name: string): (context: WidgetContext) => Promise<any> {
+export function widgetDatasourceFetcher (name: string): (context: WidgetBaseContext) => Promise<any> {
   return datasourceFetchers[name];
 }
 

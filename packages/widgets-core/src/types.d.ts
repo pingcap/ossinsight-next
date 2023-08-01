@@ -12,6 +12,7 @@ export interface WidgetVisualizationProps {
   data: any;
   parameters: any;
   linkedData: LinkedData;
+  dynamicHeight?: number;
 }
 
 export interface WidgetReactVisualizationProps extends WidgetVisualizationProps {
