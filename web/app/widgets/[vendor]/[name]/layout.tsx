@@ -13,8 +13,8 @@ export default function Layout ({ parameters, share, children }: Params) {
         <h2 className="text-md text-subtitle font-bold mb-2">Widget configuration</h2>
         {parameters}
       </aside>
-      <main className="lg:flex-[3] lg:max-h-screen lg:flex lg:flex-col overflow-x-hidden order-1 lg:order-3">
-        <div className="lg:h-[calc(100%-150px)] p-2">
+      <main className="lg:flex-[3] lg:max-h-page lg:flex lg:flex-col overflow-x-hidden order-1 lg:order-3">
+        <div className="lg:max-h-[calc(100vh-210px)] lg:min-h-[calc(100vh-210px)] p-2 overflow-hidden">
           {children}
         </div>
         <div className="h-[150px] bg-toolbar border-t p-2">

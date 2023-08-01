@@ -30,7 +30,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
 
   return (
     <ParametersContext.Provider value={{ linkedData }}>
-      <div className="flex items-start gap-4 mt-4">
+      <div className="flex flex-col items-start gap-4 mt-4">
         {Object.entries(parameters).map(([key, config]) => {
           const rawValue = values[key];
           const value = rawValue == null ? null : parsers[config.type](values[key]);
@@ -50,8 +50,8 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
           );
         })}
       </div>
-      <div className="mt-2">
-        <Button variant='primary' onClick={() => {
+      <div className="mt-4">
+        <Button variant='primary' className='w-full' onClick={() => {
           const usp = new URLSearchParams(values);
           push(`${pathname}?${usp.toString()}`);
         }}>

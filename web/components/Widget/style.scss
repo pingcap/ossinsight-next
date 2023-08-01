@@ -1,4 +1,4 @@
-.WidgetContainer:not(.Widget-dynamicHeight) {
+.WidgetContainer {
   @apply w-full h-full;
   overflow: hidden;
 }

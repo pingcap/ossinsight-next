@@ -22,10 +22,12 @@ export function ShareBlock ({
 }: ShareBlockProps) {
   return (
     <div>
-      <div className='flex items-center justify-center gap-4'>
-        <TwitterButton text={blockTitle} tags={keywords} url={url} />
-      </div>
-      <Tabs className='mt-2'>
+      <Tabs className="mt-2">
+        <Tab value="Social media" title="Social media" icon={null}>
+          <div className="flex items-center justify-center gap-4">
+            <TwitterButton text={blockTitle} tags={keywords} url={url} />
+          </div>
+        </Tab>
         <Tab value="Markdown" title="markdown" icon={<MarkdownIcon />}>
           <CodeBlock language="markdown" code={`[![${blockTitle}](${thumbnailUrl})](${url})`} />
         </Tab>
