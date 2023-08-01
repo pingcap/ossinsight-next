@@ -3,6 +3,7 @@
 import HTMLIcon from 'bootstrap-icons/icons/code-slash.svg';
 import ImageIcon from 'bootstrap-icons/icons/image.svg';
 import MarkdownIcon from 'bootstrap-icons/icons/markdown.svg';
+import SocialMediaIcon from 'bootstrap-icons/icons/send.svg';
 import { CodeBlock } from '../CodeBlock';
 import { Tab, Tabs } from '../Tabs';
 import { TwitterButton } from './TwitterButton';
@@ -23,7 +24,7 @@ export function ShareBlock ({
   return (
     <div>
       <Tabs className="mt-2">
-        <Tab value="Social media" title="Social media" icon={null}>
+        <Tab value="Social media" title="Social media" icon={<SocialMediaIcon />}>
           <div className="flex items-center justify-center gap-4">
             <TwitterButton text={blockTitle} tags={keywords} url={url} />
           </div>

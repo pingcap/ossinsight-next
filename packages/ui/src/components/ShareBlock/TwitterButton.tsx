@@ -1,4 +1,3 @@
-import { ur } from '@faker-js/faker';
 import { useMemo } from 'react';
 
 export interface TwitterButtonProps {
@@ -18,10 +17,10 @@ export function TwitterButton ({ text, url, tags }: TwitterButtonProps) {
     usp.set('via', 'OSSInsight');
 
     return `https://twitter.com/intent/tweet?${usp.toString()}`;
-  }, [text, ur, JSON.stringify(tags)]);
+  }, [text, url, JSON.stringify(tags)]);
 
   return (
-    <a className="block bg-control rounded-full p-2 cursor-pointer" href={link} target='_blank'>
+    <a className="block bg-control rounded-full p-2 cursor-pointer" href={link} target="_blank">
       <svg viewBox="0 0 24 24" aria-hidden="true" className="text-[rgb(29,155,240)] w-[24px] h-[24px] fill-current">
         <g>
           <path
