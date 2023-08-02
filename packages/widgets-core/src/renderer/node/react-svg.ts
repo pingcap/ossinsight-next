@@ -10,7 +10,8 @@ export default async function renderSvg (width: number, height: number, dpr: num
     ...createWidgetContext('server', parameters, linkedData),
   });
 
-  const svg = await import('../../../node_modules/react-dom/server').then(module => module.renderToString(option));
+  // @ts-ignore
+  const svg = await import('../../../node_modules/react-dom/server.node.js').then((module) => module.renderToString(option));
   const image = await loadImage(`data:image/svg+xml;base64,${btoa(svg)}`);
 
   width *= dpr;
