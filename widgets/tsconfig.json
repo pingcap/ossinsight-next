@@ -5,7 +5,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "module": "ESNext"
+    "module": "ESNext",
+    "jsx": "react-jsx"
   },
-  "include": ["*/visualization.ts", "*/metadata.ts"]
+  "include": ["*/visualization.ts", "*/metadata.ts", "*/visualization.tsx"]
 }
