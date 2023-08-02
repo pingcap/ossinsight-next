@@ -131,7 +131,7 @@ export function RemoteSelector<Item> ({
 
   if (value.length > 0) {
     if (!renderSelectedItems) {
-      return defaultRenderSelectedItem({ item: items[0], getItemText, onClear: () => onSelect(undefined, null)})
+      return defaultRenderSelectedItem({ item: items[0], getItemText, onClear: () => onSelect?.(undefined, null)})
     }
     return renderSelectedItems(value);
   } else {

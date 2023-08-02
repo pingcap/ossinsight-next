@@ -3,7 +3,7 @@ import { CollectionInfo, CollectionSelector } from '@ossinsight/ui/src/component
 import { useCallback, useContext } from 'react';
 import { ParametersContext } from '../context';
 
-export function CollectionIdInput ({ value, onValueChange }: { value: number, onValueChange: (newValue: number) => void }) {
+export function CollectionIdInput ({ value, onValueChange }: { value: number, onValueChange: (newValue: number | undefined) => void }) {
   const { linkedData } = useContext(ParametersContext);
 
   const handleCollectionChange = useCallback((collection: CollectionInfo | undefined) => {
