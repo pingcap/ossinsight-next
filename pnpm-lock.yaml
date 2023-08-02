@@ -335,15 +335,9 @@ importers:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:..
-      '@primer/octicons-react':
-        specifier: ^19.5.0
-        version: 19.5.0(react@18.2.0)
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
-      next:
-        specifier: 13.4.10
-        version: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
 
   widgets/collection-annually-ranking:
     devDependencies:
@@ -2382,15 +2376,6 @@ packages:
       schema-utils: 3.3.0
       source-map: 0.7.4
       webpack: 5.88.2(@swc/core@1.3.70)(esbuild@0.18.14)
-    dev: true
-
-  /@primer/octicons-react@19.5.0(react@18.2.0):
-    resolution: {integrity: sha512-8GZCcoyGz0CYhW+zi0yMsrn2qSBzZp4dbRomesAhtOzJLxKGZMyFd7VSp7mEYCCujMSCj/8faKgzyj7UrL6/3w==}
-    engines: {node: '>=8'}
-    peerDependencies:
-      react: '>=16.3'
-    dependencies:
-      react: 18.2.0
     dev: true
 
   /@radix-ui/number@1.0.1:
@@ -8388,7 +8373,7 @@ packages:
     dependencies:
       copy-anything: 2.0.6
       parse-node-version: 1.0.1
-      tslib: 2.6.0
+      tslib: 2.6.1
     optionalDependencies:
       errno: 0.1.8
       graceful-fs: 4.2.11
@@ -10989,6 +10974,10 @@ packages:
 
   /tslib@2.6.0:
     resolution: {integrity: sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==}
+
+  /tslib@2.6.1:
+    resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}
+    dev: true
 
   /tsutils@3.21.0(typescript@5.1.6):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}

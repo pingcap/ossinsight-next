@@ -1,4 +1,3 @@
-/// <reference types="next" />
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { Flex, Span } from '@ossinsight/widgets-utils/src/react-html';
 import type { ReactElement, ReactNode } from 'react';
@@ -11,7 +10,7 @@ export default function Component ({ input: [overview], ctx }: { input: Input, c
   return (
     <Flex className="w-full h-full text-content flex-col px-4" gap={2}>
       <Flex items="stretch" gap={8}>
-        <img src={avatar} style={{ width: 64, height: 64, borderRadius: 32 }} />
+        <img alt="" src={avatar} style={{ width: 64, height: 64, borderRadius: 32 }} />
         <Flex className="flex-col justify-between">
           <Span className="text-white font-bold flex-1 flex items-center" style={{ fontSize: 24 }}>{user.login}</Span>
           <Span className="flex-1 flex items-center">TODO: bio</Span>

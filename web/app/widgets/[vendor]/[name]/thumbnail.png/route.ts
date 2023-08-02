@@ -3,6 +3,7 @@ import { resolveImageSizeConfig } from '@/utils/siteConfig';
 import { isWidget, widgetDatasourceFetcher, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
+import { NextURL } from 'next/dist/server/web/next-url';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -20,6 +21,12 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   }
   const datasource = await widgetDatasourceFetcher(name);
   const visualizer = await widgetVisualizer(name);
+
+  if (['react-html'].includes(visualizer.type)) {
+    const newUrl = new NextURL(request.nextUrl);
+    newUrl.pathname = newUrl.pathname.replace('thumbnail.png', 'edge__thumbnail.png');
+    return NextResponse.redirect(newUrl);
+  }
 
   const parameters: any = {};
   request.nextUrl.searchParams.forEach((value, key) => {
@@ -63,26 +70,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     linkedData,
   });
 
-  if (visualizer.type === 'react-html') {
-    return buffer;
-  }
-
   return new NextResponse(buffer as any, {
     headers: {
       'Content-Type': 'image/png',
     },
   });
 }
-
-function parseSize (raw: string | undefined | null, min: number, max: number) {
-  const val = Number(raw);
-  if (isFinite(val)) {
-    return Math.max(Math.min(val, max), min);
-  }
-
-  return undefined;
-}
-
-// export const runtime = 'edge';
 
 export const dynamic = 'force-dynamic';
