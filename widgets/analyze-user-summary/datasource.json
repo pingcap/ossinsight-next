@@ -1,0 +1,15 @@
+[
+  {
+    "type": "api",
+    "url": "https://api.ossinsight.io/q/personal-overview",
+    "parser": {
+      "type": "json",
+      "extract": "$.data[*]",
+      "single": true
+    },
+    "params": {
+      "userId": "user_id"
+    },
+    "when": ["user_id"]
+  }
+]

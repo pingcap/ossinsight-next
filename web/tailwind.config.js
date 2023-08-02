@@ -7,6 +7,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     '../packages/*/src/**/*.{js,ts,jsx,tsx,mdx}',
+    '../widgets/*/*.{ts,tsx}'
   ],
   theme: {
     extend: {

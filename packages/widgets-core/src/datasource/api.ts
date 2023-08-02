@@ -29,7 +29,13 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
 
   const data = await response.json();
 
-  return jp.query(data, config.parser.extract);
+  const res = jp.query(data, config.parser.extract);
+  console.log(config.parser);
+  if (config.parser.single) {
+    return res[0];
+  } else {
+    return res;
+  }
 }
 
 function allExists (required: string[] | undefined, params: Record<string, string>): boolean {

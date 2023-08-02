@@ -13,6 +13,9 @@ export default async function render ({ type, width, height, dpr, visualizer, pa
     case 'echarts': {
       return await import('./echarts').then(module => module.default(width, height, dpr, visualizer, data, parameters, linkedData));
     }
+    case 'react-html': {
+      return await import('./react-html').then(module => module.default(width, height, dpr, visualizer, data, parameters, linkedData));
+    }
     default:
       throw new Error(`visualize type '${type}' not supported.`);
   }

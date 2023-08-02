@@ -1,12 +1,12 @@
-import { VisualizeFunction, VisualizerModule } from '@ossinsight/widgets-types';
+import { VisualizerModule } from '@ossinsight/widgets-types';
+import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
 import { EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
-import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
+import { createWidgetContext } from '../../utils/context';
 import '../echarts-theme';
-import { createLinkedDataContext } from '../../utils/context';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
@@ -39,20 +39,9 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
     const { clientWidth: width, clientHeight: height } = containerRef.current!;
 
     const option = visualizer.default(data, {
-      runtime: 'client',
-      parameters,
-      theme: { colors },
       width,
       height,
-      ...createLinkedDataContext(linkedData),
-      getTimeParams(): any {
-        const { DEFAULT_ZONE } = generateZoneOptions();
-
-        return {
-          zone: parameters?.zone || DEFAULT_ZONE,
-          period: parameters?.period || PERIOD_OPTIONS[0],
-        };
-      }
+      ...createWidgetContext('client', parameters, linkedData),
     });
     echartsRef.current!.setOption(option);
   }, [data, visualizer, parameters]);

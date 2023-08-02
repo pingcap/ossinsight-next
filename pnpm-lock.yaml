@@ -127,6 +127,9 @@ importers:
       '@napi-rs/canvas':
         specifier: ^0.1.41
         version: 0.1.41
+      next:
+        specifier: ^13.4.10
+        version: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -193,6 +196,12 @@ importers:
       '@types/lodash':
         specifier: ^4.14.195
         version: 4.14.195
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      csstype:
+        specifier: ^3.1.2
+        version: 3.1.2
       echarts:
         specifier: ^5.4.3
         version: 5.4.3
@@ -320,6 +329,21 @@ importers:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:..
+
+  widgets/analyze-user-summary:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@primer/octicons-react':
+        specifier: ^19.5.0
+        version: 19.5.0(react@18.2.0)
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      next:
+        specifier: 13.4.10
+        version: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
 
   widgets/collection-annually-ranking:
     devDependencies:
@@ -2358,6 +2382,15 @@ packages:
       schema-utils: 3.3.0
       source-map: 0.7.4
       webpack: 5.88.2(@swc/core@1.3.70)(esbuild@0.18.14)
+    dev: true
+
+  /@primer/octicons-react@19.5.0(react@18.2.0):
+    resolution: {integrity: sha512-8GZCcoyGz0CYhW+zi0yMsrn2qSBzZp4dbRomesAhtOzJLxKGZMyFd7VSp7mEYCCujMSCj/8faKgzyj7UrL6/3w==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: '>=16.3'
+    dependencies:
+      react: 18.2.0
     dev: true
 
   /@radix-ui/number@1.0.1:

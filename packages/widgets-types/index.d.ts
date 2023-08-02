@@ -5,6 +5,7 @@ export interface BasicContext {
   theme: {
     colors: typeof colors
   };
+
   getTimeParams (): { zone: string, period: string };
 }
 
@@ -16,11 +17,11 @@ export interface WidgetBaseContext<P extends Record<string, any> = Record<string
 export interface LinkedDataContext {
   getRepo (id: number): { id: number, fullName: string } | undefined;
 
-  getUser (id: number): any;
+  getUser (id: number): { id: number, login: string };
 
   getCollection (id: number): any;
 
-  getOrg(id: number): any;
+  getOrg (id: number): any;
 }
 
 export interface WidgetVisualizerContext<P extends Record<string, any> = Record<string, any>> extends WidgetBaseContext<P>, BasicContext, LinkedDataContext {
@@ -68,7 +69,7 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
    */
   onColorSchemeChange?: (instance: VisualizerInstance, result: VisualizationResult, colorScheme: 'light' | 'dark') => void;
 
-  computeDynamicHeight?: (data: Data) => number
+  computeDynamicHeight?: (data: Data) => number;
 }
 
 export interface BaseParameterDefinition {
@@ -98,7 +99,6 @@ export interface TimePeriodParameterDefinition extends BaseParameterDefinition {
 export interface TimeZoneParameterDefinition extends BaseParameterDefinition {
   type: 'time-zone';
 }
-
 
 export interface ActivityTypeParameterDefinition extends BaseParameterDefinition {
   type: 'activity-type';

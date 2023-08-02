@@ -63,7 +63,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     linkedData,
   });
 
-  return new NextResponse(buffer, {
+  if (visualizer.type === 'react-html') {
+    return buffer;
+  }
+
+  return new NextResponse(buffer as any, {
     headers: {
       'Content-Type': 'image/png',
     },
@@ -78,5 +82,7 @@ function parseSize (raw: string | undefined | null, min: number, max: number) {
 
   return undefined;
 }
+
+// export const runtime = 'edge';
 
 export const dynamic = 'force-dynamic';
