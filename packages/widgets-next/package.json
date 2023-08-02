@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "next": "^13.4.10"
+    "next": "^13.4.12"
   },
   "peerDependencies": {
-    "next": "^13.4.10"
+    "next": "^13.4.12"
   },
   "dependencies": {
     "webpack-virtual-modules": "^0.5.0"
