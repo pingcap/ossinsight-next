@@ -8,5 +8,11 @@
   "vs_repo_id": {
     "type": "repo-id",
     "title": "Comparing Repo"
+  },
+  "activity": {
+    "type": "activity-type",
+    "title": "Activity type",
+    "enums": ["analyze-stars", "pull-request-creators", "issue-creators"],
+    "default": "analyze-stars"
   }
 }
