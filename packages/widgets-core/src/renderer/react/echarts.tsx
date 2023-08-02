@@ -6,6 +6,7 @@ import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { PERIOD_OPTIONS, generateZoneOptions } from '@ossinsight/widgets-utils/src/ui';
 import '../echarts-theme';
+import '../echarts-map';
 import { createLinkedDataContext } from '../../utils/context';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {

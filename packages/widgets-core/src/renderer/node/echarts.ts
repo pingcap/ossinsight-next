@@ -4,6 +4,7 @@ import { init } from 'echarts';
 import { LinkedData } from '../../parameters/resolver';
 import { createWidgetContext } from '../../utils/context';
 import '../echarts-theme';
+import '../echarts-map';
 
 export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData) {
   const dynamicHeight = visualizer.computeDynamicHeight?.(data);

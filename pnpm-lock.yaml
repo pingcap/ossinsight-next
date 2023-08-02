@@ -114,6 +114,9 @@ importers:
 
   packages/widgets-core:
     dependencies:
+      '@geo-maps/countries-land-10km':
+        specifier: ^0.6.0
+        version: 0.6.0
       echarts:
         specifier: ^5.4.3
         version: 5.4.3
@@ -316,6 +319,12 @@ importers:
         version: link:../../packages/widgets-types
 
   widgets/analyze-repo-stars-history:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-repo-stars-map:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
@@ -1955,6 +1964,10 @@ packages:
       '@floating-ui/dom': 1.4.5
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@geo-maps/countries-land-10km@0.6.0:
+    resolution: {integrity: sha512-zeqaQCfAp1eNxEN0jp/3dDW/MkGxApD1eGHyIQ6u0R5BwJMMssX5YNzAmmFBl22p6KZ7ySsHK3OzvIq49zMufg==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:

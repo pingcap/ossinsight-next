@@ -13,6 +13,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@geo-maps/countries-land-10km": "^0.6.0",
     "echarts": "^5.4.3",
     "jsonpath": "^1.1.1",
     "url-template": "^3.1.0"
