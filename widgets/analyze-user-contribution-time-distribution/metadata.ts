@@ -4,7 +4,7 @@ const generateMetadata: MetadataGenerator<{ user_id: number }> = ({ parameters: 
   const user = getUser(user_id);
 
   return {
-    title: `Contribution distribution of ${user}`,
+    title: `Contribution distribution of ${user.login}`,
   }
 };
 
