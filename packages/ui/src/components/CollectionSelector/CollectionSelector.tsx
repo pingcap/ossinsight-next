@@ -10,19 +10,20 @@ export type CollectionInfo = {
   public: boolean
 }
 
-export interface CollectionSelectorProps extends Pick<RemoteSelectorProps<any>, 'renderInput'> {
+export interface CollectionSelectorProps extends Pick<RemoteSelectorProps<any>, 'id' | 'renderInput'> {
   collection: CollectionInfo | undefined;
   onCollectionSelected: (collection: CollectionInfo) => void;
 }
 
-export function CollectionSelector ({ collection, onCollectionSelected, renderInput }: CollectionSelectorProps) {
+export function CollectionSelector ({ collection, onCollectionSelected, ...props }: CollectionSelectorProps) {
   return (
     <RemoteSelector<CollectionInfo>
+      {...props}
+      executeOnMount
       getItemText={getCollectionText}
       value={collection ? [collection] : []}
       onSelect={onCollectionSelected}
       getRemoteOptions={searchCollection}
-      renderInput={renderInput}
       renderListItem={({ item, ...props }) => <RemoteSelectItem key={item.id} {...props} >{item.name}</RemoteSelectItem>}
       equals={isCollectionEquals}
     />
@@ -30,5 +31,5 @@ export function CollectionSelector ({ collection, onCollectionSelected, renderIn
 }
 
 export function searchCollection (name: string) {
-  return makeNoopCancellablePromise(collectionsPromise.then(collections => collections.filter(c => c.name.toLowerCase().includes(name.toLowerCase()))));
+  return makeNoopCancellablePromise(collectionsPromise.then(collections => collections.filter(c => name ? c.name.toLowerCase().includes(name.toLowerCase()) : true)));
 }

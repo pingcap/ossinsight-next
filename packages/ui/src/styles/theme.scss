@@ -2,16 +2,16 @@ $color-primary: rgb(255, 232, 149);
 $color-primary-darkened: fade-out($color-primary, 0.4);
 $color-primary-highlighted: lighten($color-primary, 5%);
 $color-primary-reverse: rgb(27, 27, 29);
+$color-disabled: rgba(124, 124, 124, 0.7);
 
 $background-color-body: rgb(27, 27, 29);
 $background-color-toolbar: rgb(37, 37, 39);
-$background-color-popover: $background-color-toolbar;
+$background-color-popover: rgb(47, 47, 49);
 $background-color-control: rgb(57, 57, 59);
 
 $text-color-title: #E9EaEE;
 $text-color-subtitle: rgb(200, 200, 200);
 $text-color-content: rgb(124, 124, 124);
-$text-color-disabled: rgba(124, 124, 124, 0.7);
 $text-color-active: $text-color-subtitle;
 
 $border-color-default: rgb(81, 81, 81);

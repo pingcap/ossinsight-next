@@ -3,9 +3,11 @@ import { TimePeriodSelector, TimeZoneSelector } from '@ossinsight/ui';
 import { ParametersContext } from '../context';
 
 export function TimePeriodSelect({
+  id,
   value,
   onValueChange,
 }: {
+  id: string
   value: any;
   onValueChange: (newValue: string) => void;
 }) {
@@ -19,6 +21,7 @@ export function TimePeriodSelect({
   return (
     <>
       <TimePeriodSelector
+        id={id}
         defaultValue={value}
         onValueChange={handleValueChange}
       />
@@ -27,9 +30,11 @@ export function TimePeriodSelect({
 }
 
 export function TimeZoneSelect({
+  id,
   value,
   onValueChange,
 }: {
+  id: string;
   value: any;
   onValueChange: (newValue: string) => void;
 }) {
@@ -43,6 +48,7 @@ export function TimeZoneSelect({
   return (
     <>
       <TimeZoneSelector
+        id={id}
         defaultValue={value}
         onValueChange={handleValueChange}
       />

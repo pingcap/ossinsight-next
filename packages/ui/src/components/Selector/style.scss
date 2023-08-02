@@ -1,3 +1,5 @@
+@import "../../styles/controls.scss";
+
 .SelectWrapper {
   display: inline-flex;
   flex-direction: column;
@@ -12,24 +14,12 @@
 }
 
 .SelectTrigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 0 15px;
-  font-size: 13px;
-  line-height: 1;
-  height: 35px;
-  gap: 5px;
-  background-color: var(--background-color-control);
-  color: var(--text-color-title);
-  /* box-shadow: 0 2px 10px var(--black-a7); */
+  @apply px-2 py-1 bg-control text-active text-sm transition-all inline-flex gap-1 items-center justify-center;
+  @include control-shadow;
+  @include control-border;
 }
 .SelectTrigger:hover {
   background-color: var(--background-color-popover);
-}
-.SelectTrigger:focus {
-  box-shadow: 0 0 0 2px var(--color-primary);
 }
 .SelectTrigger[data-placeholder] {
   color: var(--color-primary);
