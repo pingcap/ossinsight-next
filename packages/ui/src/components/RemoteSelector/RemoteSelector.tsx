@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, cloneElement, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { InputPopover, InputPopoverProps } from '../InputPopover';
 import { RemoteSelectedItem } from './RemoteSelectedItem';
 import { useRemoteList, UseRemoteListOptions } from './useRemoteList';
@@ -68,7 +68,7 @@ export function RemoteSelector<Item> ({
   const [focused, setFocused] = useState(false);
   const [input, setInput] = useState(() => value[0] && getItemText(value[0]) || '');
   const { items, reload, error, loading } = useRemoteList({ getRemoteOptions });
-
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (executeOnMount) {
@@ -94,6 +94,13 @@ export function RemoteSelector<Item> ({
     setOpen(open);
   }, []);
 
+  const handleClearSelect = useCallback(() => {
+    onSelect?.(undefined, null);
+    setInput('');
+    reload('');
+    setOpen(true);
+  }, [onSelect]);
+
   useEffect(() => {
     if (!open && !focused) {
       setInput('');
@@ -114,7 +121,6 @@ export function RemoteSelector<Item> ({
     const makeHandleSelectItem = (item: Item) => (ev: MouseEvent) => {
       onSelect?.(item, ev);
       setOpen(false);
-      console.log(item, ev);
     };
 
     return renderList({
@@ -131,7 +137,7 @@ export function RemoteSelector<Item> ({
 
   if (value.length > 0) {
     if (!renderSelectedItems) {
-      return defaultRenderSelectedItem({ item: items[0], getItemText, onClear: () => onSelect?.(undefined, null)})
+      return defaultRenderSelectedItem({ item: value[0], getItemText, onClear: handleClearSelect });
     }
     return renderSelectedItems(value);
   } else {
@@ -139,7 +145,7 @@ export function RemoteSelector<Item> ({
       <InputPopover
         open={open}
         onOpenChange={onOpenChange}
-        input={renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur })}
+        input={cloneElement(renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur }), { ref: inputRef })}
         popperContent={renderChildren()}
         popoverPortalProps={popoverPortalProps}
         popoverContentProps={popoverContentProps}
