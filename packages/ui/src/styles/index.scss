@@ -6,6 +6,7 @@
   --color-primary-highlighted: #{$color-primary-highlighted};
   --color-primary-reverse: #{$color-primary-reverse};
   --color-primary-darkened: #{$color-primary-darkened};
+  --color-disabled: #{$color-disabled};
 
   --background-color-body: #{$background-color-body};
   --background-color-toolbar: #{$background-color-toolbar};
@@ -15,7 +16,6 @@
   --text-color-title: #{$text-color-title};
   --text-color-subtitle: #{$text-color-subtitle};
   --text-color-content: #{$text-color-content};
-  --text-color-disabled: #{$text-color-disabled};
   --text-color-active: #{$text-color-active};
 
   --border-color-default: #{$border-color-default};

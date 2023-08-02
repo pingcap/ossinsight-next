@@ -18,6 +18,7 @@ export interface CollectionSelectorProps extends Pick<RemoteSelectorProps<any>, 
 export function CollectionSelector ({ collection, onCollectionSelected, renderInput }: CollectionSelectorProps) {
   return (
     <RemoteSelector<CollectionInfo>
+      executeOnMount
       getItemText={getCollectionText}
       value={collection ? [collection] : []}
       onSelect={onCollectionSelected}
@@ -30,5 +31,5 @@ export function CollectionSelector ({ collection, onCollectionSelected, renderIn
 }
 
 export function searchCollection (name: string) {
-  return makeNoopCancellablePromise(collectionsPromise.then(collections => collections.filter(c => c.name.toLowerCase().includes(name.toLowerCase()))));
+  return makeNoopCancellablePromise(collectionsPromise.then(collections => collections.filter(c => name ? c.name.toLowerCase().includes(name.toLowerCase()) : true)));
 }

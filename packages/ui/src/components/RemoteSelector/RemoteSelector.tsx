@@ -1,5 +1,6 @@
-import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useState } from 'react';
+import { ChangeEvent, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useEffect, useState } from 'react';
 import { InputPopover, InputPopoverProps } from '../InputPopover';
+import { RemoteSelectedItem } from './RemoteSelectedItem';
 import { useRemoteList, UseRemoteListOptions } from './useRemoteList';
 
 export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, Pick<InputPopoverProps, 'popoverContentProps' | 'popoverPortalProps'> {
@@ -7,9 +8,13 @@ export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, P
 
   getItemText?: (item: Item) => string;
 
-  onSelect? (item: Item, event: MouseEvent): void;
+  executeOnMount?: boolean;
+
+  onSelect? (item: Item | undefined, event: MouseEvent | null): void;
 
   renderInput (props: RemoteSelectorInputProps): ReactElement;
+
+  renderSelectedItems? (item: Item[]): ReactElement;
 
   renderList? (props: RemoteSelectorListProps): ReactElement;
 
@@ -28,6 +33,7 @@ export interface RemoteSelectorInputProps {
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onFocus: (event: FocusEvent<HTMLInputElement>) => void;
+  onBlur: (event: FocusEvent<HTMLInputElement>) => void;
 }
 
 export interface RemoteSelectorListProps {
@@ -44,7 +50,9 @@ export interface RemoteSelectorListItemProps<Item> {
 export function RemoteSelector<Item> ({
   value,
   getRemoteOptions,
+  executeOnMount = false,
   renderInput,
+  renderSelectedItems,
   renderList = defaultRenderList,
   renderListItem,
   renderLoading = defaultRenderLoading,
@@ -57,8 +65,16 @@ export function RemoteSelector<Item> ({
   getItemText = String,
 }: RemoteSelectorProps<Item>) {
   const [open, setOpen] = useState(false);
-  const [input, setInput] = useState(() => value[0] && getItemText(value[0]));
+  const [focused, setFocused] = useState(false);
+  const [input, setInput] = useState(() => value[0] && getItemText(value[0]) || '');
   const { items, reload, error, loading } = useRemoteList({ getRemoteOptions });
+
+
+  useEffect(() => {
+    if (executeOnMount) {
+      reload(input);
+    }
+  }, []);
 
   const onInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const value = ev.target.value;
@@ -67,7 +83,22 @@ export function RemoteSelector<Item> ({
   }, []);
 
   const onInputFocus = useCallback((ev: FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
   }, []);
+
+  const onInputBlur = useCallback((ev: FocusEvent<HTMLInputElement>) => {
+    setFocused(false);
+  }, []);
+
+  const onOpenChange = useCallback((open: boolean) => {
+    setOpen(open);
+  }, []);
+
+  useEffect(() => {
+    if (!open && !focused) {
+      setInput('');
+    }
+  }, [!open && !focused]);
 
   const renderChildren = () => {
     if (error) {
@@ -83,7 +114,7 @@ export function RemoteSelector<Item> ({
     const makeHandleSelectItem = (item: Item) => (ev: MouseEvent) => {
       onSelect?.(item, ev);
       setOpen(false);
-      setInput(getItemText(item));
+      console.log(item, ev);
     };
 
     return renderList({
@@ -98,15 +129,32 @@ export function RemoteSelector<Item> ({
     });
   };
 
+  if (value.length > 0) {
+    if (!renderSelectedItems) {
+      return defaultRenderSelectedItem({ item: items[0], getItemText, onClear: () => onSelect(undefined, null)})
+    }
+    return renderSelectedItems(value);
+  } else {
+    return (
+      <InputPopover
+        open={open}
+        onOpenChange={onOpenChange}
+        input={renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur })}
+        popperContent={renderChildren()}
+        popoverPortalProps={popoverPortalProps}
+        popoverContentProps={popoverContentProps}
+      />
+    );
+  }
+}
+
+function defaultRenderSelectedItem<Item> ({ item, onClear, getItemText }: { item: Item, getItemText: (item: Item) => string, onClear: () => void }) {
   return (
-    <InputPopover
-      open={open}
-      onOpenChange={setOpen}
-      input={renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus })}
-      popperContent={renderChildren()}
-      popoverPortalProps={popoverPortalProps}
-      popoverContentProps={popoverContentProps}
-    />
+    <RemoteSelectedItem onClear={onClear}>
+      <span className="text-subtitle text-xs">
+        {getItemText(item)}
+      </span>
+    </RemoteSelectedItem>
   );
 }
 

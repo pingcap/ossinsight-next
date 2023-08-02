@@ -14,6 +14,7 @@ module.exports = {
         primary: 'var(--color-primary)',
         'primary-reverse': 'var(--color-primary-reverse)',
         'primary-highlighted': 'var(--color-primary-highlighted)',
+        disabled: 'var(--color-disabled)',
       },
       backgroundColor: {
         body: 'var(--background-color-body)',
@@ -25,7 +26,6 @@ module.exports = {
         title: 'var(--text-color-title)',
         subtitle: 'var(--text-color-subtitle)',
         content: 'var(--text-color-content)',
-        disabled: 'var(--text-color-disabled)',
         active: 'var(--text-color-active)',
       },
       backgroundImage: {

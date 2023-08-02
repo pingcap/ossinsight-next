@@ -6,9 +6,11 @@ import { ParametersContext } from '../context';
 export function CollectionIdInput ({ value, onValueChange }: { value: number, onValueChange: (newValue: number) => void }) {
   const { linkedData } = useContext(ParametersContext);
 
-  const handleCollectionChange = useCallback((collection: CollectionInfo) => {
-    linkedData.collections[String(collection.id)] = collection;
-    onValueChange(collection.id);
+  const handleCollectionChange = useCallback((collection: CollectionInfo | undefined) => {
+    if (collection) {
+      linkedData.collections[String(collection.id)] = collection;
+    }
+    onValueChange(collection?.id);
   }, []);
 
   const collection = linkedData.collections[String(value)];
