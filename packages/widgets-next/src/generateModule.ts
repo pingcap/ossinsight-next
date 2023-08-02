@@ -22,12 +22,12 @@ const metadataGenerators = {}
     }
     if (folder.isDirectory()) {
       const pkg = path.join(widgetsPath, folder.name, 'package.json');
-      const { name, version, keywords, description, author } = require(pkg);
+      const { name, version, keywords, description, author, main, module } = require(pkg);
       const meta = { name, version, keywords, description, author };
       widgets[name] = path.resolve(widgetsPath, folder.name);
 
       const quotedName = JSON.stringify(name);
-      const visPath = JSON.stringify(path.join(name, 'visualization.ts'));
+      const visPath = JSON.stringify(path.join(name, main || module || 'visualization.ts'));
       const dataPath = JSON.stringify(path.join(name, 'datasource.json'));
       const paramsPath = JSON.stringify(path.join(name, 'params.json'));
       const metadataPath = JSON.stringify(path.join(name, 'metadata.ts'));
