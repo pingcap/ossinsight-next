@@ -3,8 +3,10 @@
 @mixin control-shadow($color: $color-primary-darkened) {
   @apply outline-none rounded;
 
+  --tw-shadow-color: #{$color};
+
   &:focus {
-    box-shadow: $color 0 0 0 2px;
+    @apply shadow-control;
   }
 }
 

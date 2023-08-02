@@ -7,12 +7,13 @@ import { ParamInput } from '@ossinsight/widgets-core/src/parameters/react';
 import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { use, useMemo, useState } from 'react';
+import { use, useId, useMemo, useState } from 'react';
 
 export function WidgetParameters ({ widgetName, linkedData }: { widgetName: string, linkedData: LinkedData }) {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const id = useId();
 
   if (!isWidget(widgetName)) {
     throw new Error('bad widget');
@@ -45,15 +46,17 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
     <ParametersContext.Provider value={{ linkedData }}>
       <div className="flex flex-col items-start gap-4 mt-4">
         {Object.entries(parameters).map(([key, config]) => {
+          const pId = `${key}-${id}`;
           const rawValue = values[key];
           const value = rawValue == null ? rawValue : parsers[config.type](values[key]);
           const showRequiredMessage = config.required && value == null;
           return (
             <div key={key} className="flex flex-col gap-2">
-              <span className={`text-sm${showRequiredMessage ? ' text-red-400' : ''}`}>
+              <label className={`text-sm${showRequiredMessage ? ' text-red-400' : ''}`} htmlFor={pId}>
                 {config.title ?? key}
-              </span>
+              </label>
               <ParamInput
+                id={pId}
                 config={config}
                 value={value}
                 onValueChange={(nv) => {

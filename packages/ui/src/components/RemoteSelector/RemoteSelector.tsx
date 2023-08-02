@@ -10,6 +10,8 @@ export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, P
 
   executeOnMount?: boolean;
 
+  id?: string;
+
   onSelect? (item: Item | undefined, event: MouseEvent | null): void;
 
   renderInput (props: RemoteSelectorInputProps): ReactElement;
@@ -30,6 +32,7 @@ export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, P
 }
 
 export interface RemoteSelectorInputProps {
+  id?: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onFocus: (event: FocusEvent<HTMLInputElement>) => void;
@@ -51,6 +54,7 @@ export function RemoteSelector<Item> ({
   value,
   getRemoteOptions,
   executeOnMount = false,
+  id,
   renderInput,
   renderSelectedItems,
   renderList = defaultRenderList,
@@ -145,7 +149,7 @@ export function RemoteSelector<Item> ({
       <InputPopover
         open={open}
         onOpenChange={onOpenChange}
-        input={cloneElement(renderInput({ value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur }), { ref: inputRef })}
+        input={cloneElement(renderInput({ id, value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur }), { ref: inputRef })}
         popperContent={renderChildren()}
         popoverPortalProps={popoverPortalProps}
         popoverContentProps={popoverContentProps}
@@ -154,9 +158,9 @@ export function RemoteSelector<Item> ({
   }
 }
 
-function defaultRenderSelectedItem<Item> ({ item, onClear, getItemText }: { item: Item, getItemText: (item: Item) => string, onClear: () => void }) {
+function defaultRenderSelectedItem<Item> ({ id, item, onClear, getItemText }: { id?: string, item: Item, getItemText: (item: Item) => string, onClear: () => void }) {
   return (
-    <RemoteSelectedItem onClear={onClear}>
+    <RemoteSelectedItem id={id} onClear={onClear}>
       <span className="text-subtitle text-xs">
         {getItemText(item)}
       </span>

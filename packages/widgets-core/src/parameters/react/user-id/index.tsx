@@ -3,7 +3,7 @@ import { GHUserSelector, RemoteUserInfo } from '@ossinsight/ui/src/components/GH
 import { useCallback, useContext } from 'react';
 import { ParametersContext } from '../context';
 
-export function UserIdInput ({ value, onValueChange }: { value: number, onValueChange: (newValue: number | undefined) => void }) {
+export function UserIdInput ({ id, value, onValueChange }: { id: string, value: number, onValueChange: (newValue: number | undefined) => void }) {
   const { linkedData } = useContext(ParametersContext);
 
   const handleUserSelected = useCallback((user: RemoteUserInfo | undefined) => {
@@ -17,6 +17,7 @@ export function UserIdInput ({ value, onValueChange }: { value: number, onValueC
 
   return (
     <GHUserSelector
+      id={id}
       user={user}
       onUserSelected={handleUserSelected}
       renderInput={renderInput}

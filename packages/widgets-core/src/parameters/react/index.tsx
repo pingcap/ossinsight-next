@@ -1,5 +1,6 @@
 import { ActivityTypeSelector } from '@ossinsight/ui/src/components/Selector/ActivityTypeSelector';
 import { ParameterDefinition } from '@ossinsight/widgets-types';
+import { useId } from 'react';
 import { CollectionIdInput } from './collection-id';
 import { RepoIdInput } from './repo-id';
 import { TimePeriodSelect, TimeZoneSelect } from './time';
@@ -14,14 +15,16 @@ const types = {
   'activity-type': ActivityTypeSelector,
 };
 
-export function ParamInput ({ config, value, onValueChange }: { config: ParameterDefinition, value: any, onValueChange: (value: any) => void }) {
+export function ParamInput ({ id, config, value, onValueChange }: { id: string, config: ParameterDefinition, value: any, onValueChange: (value: any) => void }) {
   const Component = types[config.type];
   if (!Component) {
     // throw new Error(`Parameter type ${config.type} not supported.`);
     return <span>{value}</span>;
   }
 
-  const otherProps: any = {};
+  const otherProps: any = {
+    id,
+  };
   if ('enums' in config) {
     otherProps.enums = config.enums;
   }

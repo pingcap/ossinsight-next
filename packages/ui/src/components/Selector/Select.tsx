@@ -1,33 +1,24 @@
-import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
-import { Label } from '@radix-ui/react-label';
+import CheckIcon from 'bootstrap-icons/icons/check.svg';
 import ChevronDownIcon from 'bootstrap-icons/icons/chevron-down.svg';
 import ChevronUpIcon from 'bootstrap-icons/icons/chevron-up.svg';
-import CheckIcon from 'bootstrap-icons/icons/check.svg';
 import clsx from 'clsx';
-import type { ButtonProps } from '../Button/Button';
-import { getVariantClasses } from '../../utils/variants';
-import './style.css';
+import * as React from 'react';
+import './style.scss';
 
 export const Select = React.forwardRef<
   HTMLButtonElement,
   SelectPrimitive.SelectProps & {
-    label?: string | React.ReactNode;
-  }
->(({ label, children, ...props }, forwardedRef) => {
-  const selectorId = React.useId();
-
+  id?: string
+  label?: string | React.ReactNode;
+}
+>(({ id, children, ...props }, forwardedRef) => {
   return (
-    <div className='SelectWrapper'>
-      {label && (
-        <Label htmlFor={selectorId} className='SelectTitle'>
-          {label}
-        </Label>
-      )}
+    <div className="SelectWrapper">
       <SelectPrimitive.Root {...props}>
         <SelectPrimitive.Trigger
           className={clsx('SelectTrigger')}
-          id={selectorId}
+          id={id}
           ref={forwardedRef}
         >
           <SelectPrimitive.Value />
@@ -68,7 +59,7 @@ export const SelectItem = React.forwardRef<
       ref={forwardedRef}
     >
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-      <SelectPrimitive.ItemIndicator className='SelectItemIndicator'>
+      <SelectPrimitive.ItemIndicator className="SelectItemIndicator">
         <CheckIcon />
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
@@ -78,8 +69,8 @@ export const SelectItem = React.forwardRef<
 export const SelectGroup = React.forwardRef<
   HTMLDivElement,
   SelectPrimitive.SelectGroupProps & {
-    label?: string | React.ReactNode;
-  }
+  label?: string | React.ReactNode;
+}
 >(({ children, label, className, ...props }, forwardedRef) => {
   return (
     <SelectPrimitive.Group
@@ -88,7 +79,7 @@ export const SelectGroup = React.forwardRef<
       ref={forwardedRef}
     >
       {label && (
-        <SelectPrimitive.Label className='SelectLabel'>
+        <SelectPrimitive.Label className="SelectLabel">
           {label}
         </SelectPrimitive.Label>
       )}
@@ -116,10 +107,10 @@ export type SelectParamOption<K extends string | number = string> = {
   [key: string]: any;
 };
 
-export function useSimpleSelect<T extends number | string = string>(
+export function useSimpleSelect<T extends number | string = string> (
   options: Array<SelectParamOption<T>>, // TODO support inheritance options, such as [[SelectParamOption<T>, SelectParamOption<T>], SelectParamOption<T>]
   defaultVal: SelectParamOption<T>,
-  label?: string
+  id?: string,
 ) {
   const [value, setValue] = React.useState<string>(defaultVal.key.toString());
 
@@ -131,7 +122,7 @@ export function useSimpleSelect<T extends number | string = string>(
     return (
       <>
         <Select
-          label={label}
+          id={id}
           defaultValue={defaultVal.key.toString()}
           onValueChange={onChange}
         >
