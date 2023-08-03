@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import './style.scss';
 import { WidgetsFilter } from './WidgetsFilter';
 
 export default {
@@ -21,10 +20,23 @@ export default {
 export const Default = {
   args: {
     availableTags: ['foo', 'bar', 'Repository', 'PRs', 'Stars'],
+    categoriesConfig: [
+      { name: 'C1', tags: ['foo', 'Repository', 'PRs'] },
+      { name: 'C2', tags: ['bar', 'Repository'] },
+    ],
   },
   render: (args) => {
-    const [config, setConfig] = useState({ tags: [], search: '' });
-
-    return <WidgetsFilter availableTags={args.availableTags} config={config} onConfigChange={setConfig} />;
+    return <Wrapper {...args} />;
   },
 } satisfies StoryObj<typeof WidgetsFilter>;
+
+function Wrapper (args: any) {
+  const [config, setConfig] = useState({ tags: [], search: '' });
+
+  return (
+    <>
+      <WidgetsFilter {...args} config={config} onConfigChange={setConfig} />
+      <pre>{JSON.stringify(config, undefined, 2)}</pre>
+    </>
+  );
+}

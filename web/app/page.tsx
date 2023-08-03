@@ -10,12 +10,11 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
   };
 
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 px-2">
       <h1 className="text-3xl font-bold mb-4 text-title">This project is in development</h1>
       <h2 className="text-xl mb-2 text-subtitle">Widgets list</h2>
       <Filter config={config} />
-      <p className="text-sm mt-2">All widgets will have default parameter <code>repo_id=41986369</code> (pingcap/tidb)</p>
-      <ul className="mt-2 flex justify-between gap-2 flex-wrap">
+      <ul className="mt-8 flex justify-center gap-4 flex-wrap">
         {await Promise.all(filteredWidgetsNames(config).map(async name => (
           <li key={name}>
             <Link className="block w-min" href={`/widgets/official/${getName(name)}?${await dynamicParameters(name)}`}>
