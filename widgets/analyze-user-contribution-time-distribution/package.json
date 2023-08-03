@@ -1,0 +1,13 @@
+{
+  "name": "@ossinsight/widget-analyze-user-contribution-time-distribution",
+  "version": "1.0.0",
+  "description": "You can see the total contributions in different repositories since 2011, as well as check the status of different contribution categories type by type.",
+  "type": "module",
+  "main": "visualization.tsx",
+  "keywords": ["User", "Contributions"],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^",
+    "@types/react": "18.2.15"
+  }
+}

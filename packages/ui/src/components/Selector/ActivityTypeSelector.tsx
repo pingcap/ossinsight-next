@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useSimpleSelect } from './Select';
 
 export interface ActivityTypeSelectorProps {
+  id?: string
   onValueChange?: (newValue: string) => void;
   enums?: string[];
   showLabel?: boolean;
@@ -11,7 +12,7 @@ export interface ActivityTypeSelectorProps {
 }
 
 export function ActivityTypeSelector (props: ActivityTypeSelectorProps) {
-  const { onValueChange, showLabel = false, defaultValue = 0 } = props;
+  const { onValueChange, id, defaultValue = 0 } = props;
 
   const options = useMemo(() => {
     if (props.enums) {
@@ -24,7 +25,7 @@ export function ActivityTypeSelector (props: ActivityTypeSelectorProps) {
     options,
     options.find((i) => i.key === defaultValue) ||
     options[0],
-    showLabel ? 'Activity Type' : undefined,
+    id,
   );
 
   React.useEffect(() => {

@@ -34,7 +34,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
         if (param) {
           return fetch(`https://api.ossinsight.io/gh/user/${param}`)
             .then(handleOApi)
-            .then((data) => linkedData.repos[param] = { id: param, fullName: data.full_name });
+            .then((data) => linkedData.users[param] = { id: param, login: data.login });
         }
         break;
       case 'collection-id':

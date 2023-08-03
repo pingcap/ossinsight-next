@@ -2,18 +2,21 @@ import { GHRepoSelector, RemoteRepoInfo, RemoteSelectorInputProps } from '@ossin
 import { useCallback, useContext } from 'react';
 import { ParametersContext } from '../context';
 
-export function RepoIdInput ({ value, onValueChange }: { value: number, onValueChange: (newValue: number) => void }) {
+export function RepoIdInput ({ id, value, onValueChange }: { id: string, value: number, onValueChange: (newValue: number | undefined) => void }) {
   const { linkedData } = useContext(ParametersContext);
 
-  const handleRepoChange = useCallback((repo: RemoteRepoInfo) => {
-    linkedData.repos[String(repo.id)] = repo;
-    onValueChange(repo.id);
+  const handleRepoChange = useCallback((repo: RemoteRepoInfo | undefined) => {
+    if (repo) {
+      linkedData.repos[String(repo.id)] = repo;
+    }
+    onValueChange(repo?.id);
   }, []);
 
   const repo = linkedData.repos[String(value)];
 
   return (
     <GHRepoSelector
+      id={id}
       repo={repo}
       onRepoSelected={handleRepoChange}
       renderInput={renderInput}

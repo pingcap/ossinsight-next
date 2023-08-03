@@ -1,0 +1,14 @@
+{
+  "user_id": {
+    "type": "user-id",
+    "title": "Analyzing User",
+    "required": true,
+    "default": 12960671
+  },
+  "period": {
+    "type": "time-period",
+    "title": "Period",
+    "required": true,
+    "default": "all_times"
+  }
+}

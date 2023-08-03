@@ -77,4 +77,4 @@ function format (value: number) {
   return `${value}${units[i]}`;
 }
 
-export const type = 'echarts';
+export const type = 'react-svg';

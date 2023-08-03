@@ -30,6 +30,7 @@ export function InputPopover ({ open, onOpenChange, input, popperContent, popove
           className={clsx('InputPopper-content', popoverContentProps?.className)}
           onOpenAutoFocus={preventDefault}
           align="start"
+          sideOffset={6}
         >
           {popperContent}
         </RuiPopover.Content>
