@@ -64,7 +64,7 @@ export default function (
         barMaxWidth: 4,
       }),
     ]).flatMap((x) => [x[0], x[1]] as const),
-    dataZoom: dataZoom(),
+    // dataZoom: dataZoom(),
     tooltip: axisTooltip('cross'),
     legend: {
       show: true,
