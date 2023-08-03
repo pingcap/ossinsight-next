@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-repo-company",
+  "version": "1.0.0",
+  "description": "Company information about Stargazers, Issue creators, and Pull Request creators(analyzed with the public github infomation).",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": ["Repository", "Company"],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^"
+  }
+}
