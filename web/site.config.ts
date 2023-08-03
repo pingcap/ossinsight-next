@@ -2,6 +2,9 @@ import { defineSiteConfig } from './utils/siteConfig';
 
 export default defineSiteConfig({
   host: 'https://next.ossinsight.io',
+  banner: {
+    content: 'This is the next version of **[ossinsight.io](https://ossinsight.io)**.',
+  },
   header: {
     logo: {
       src: '/logo.png',

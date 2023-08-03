@@ -1,5 +1,5 @@
 import { StaticImageData } from 'next/image';
-import { ComponentType, SVGProps } from 'react';
+import { ComponentType, CSSProperties, SVGProps } from 'react';
 
 /**
  *
@@ -28,4 +28,16 @@ export interface MenuConfig {
 
 export interface SiteHeaderConfig extends MenuConfig {
   logo: ConfigIconType;
+}
+
+export interface SiteBannerConfig {
+  style?: CSSProperties;
+
+  /**
+   * Content of banner, could be a markdown with single top-level paragraph block
+   *
+   * @see {import('./utils.ts').renderMarkdown}
+   */
+  content: string;
+  closable?: boolean;
 }
