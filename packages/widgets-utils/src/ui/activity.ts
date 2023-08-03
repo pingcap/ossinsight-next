@@ -21,7 +21,7 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     title: 'Issue Creators',
   },
   {
-    key: 'analyze-stars',
+    key: 'stars',
     title: 'Stars',
   }
 ];

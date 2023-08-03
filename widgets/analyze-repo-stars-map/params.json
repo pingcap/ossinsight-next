@@ -12,7 +12,7 @@
   "activity": {
     "type": "activity-type",
     "title": "Activity type",
-    "enums": ["analyze-stars", "pull-request-creators", "issue-creators"],
-    "default": "analyze-stars"
+    "enums": ["stars", "pull-request-creators", "issue-creators"],
+    "default": "stars"
   }
 }
