@@ -75,24 +75,27 @@ export default function (
       id: name,
       source: transformLocData(data),
     })),
-    grid: topBottomLayoutGrid(),
+    grid: topBottomLayoutGrid(!!vs),
     dataZoom: dataZoom(),
     legend: legend({ top: 32, left: 'center' }),
-    xAxis: utils.template(({ id }) => timeAxis<'x'>(id, { gridId: id })),
-    yAxis: utils.template(({ id }) => [
-      valueAxis<'y'>(`${id}-size`, {
-        gridId: id,
-        position: 'left',
-        name: 'New / PRs',
-        max: maxAllSizeValue,
-      }),
-      valueAxis<'y'>(`${id}-total`, {
-        gridId: id,
-        position: 'right',
-        name: 'Total / PRs',
-        max: maxTotalValue,
-      }),
-    ]),
+    xAxis: utils.template(({ id }) => timeAxis<'x'>(id, { gridId: id }), !!vs),
+    yAxis: utils.template(
+      ({ id }) => [
+        valueAxis<'y'>(`${id}-size`, {
+          gridId: id,
+          position: 'left',
+          name: 'New / PRs',
+          max: maxAllSizeValue,
+        }),
+        valueAxis<'y'>(`${id}-total`, {
+          gridId: id,
+          position: 'right',
+          name: 'Total / PRs',
+          max: maxTotalValue,
+        }),
+      ],
+      !!vs
+    ),
     tooltip: axisTooltip('cross'),
     series: compare([main, vs], (data, name) => [
       ...['xs', 's', 'm', 'l', 'xl'].map((size) =>
