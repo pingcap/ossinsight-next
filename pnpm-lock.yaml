@@ -321,6 +321,12 @@ importers:
         specifier: workspace:^
         version: link:..
 
+  widgets/analyze-repo-pull-requests-size:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
   widgets/analyze-repo-pushes-and-commits-per-month:
     devDependencies:
       '@ossinsight/widgets-parent':
