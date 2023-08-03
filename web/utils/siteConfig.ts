@@ -1,9 +1,10 @@
-import { SiteHeaderConfig } from '@ossinsight/ui/src/types/ui-config';
+import { SiteBannerConfig, SiteHeaderConfig } from '@ossinsight/ui/src/types/ui-config';
 
 export interface SiteConfig {
   /** @deprecated not used */
   host: string;
   header: SiteHeaderConfig;
+  banner?: SiteBannerConfig;
   sizes: Record<string, ImageSizeConfig>;
 }
 
