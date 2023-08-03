@@ -114,6 +114,9 @@ importers:
 
   packages/widgets-core:
     dependencies:
+      '@geo-maps/countries-land-10km':
+        specifier: ^0.6.0
+        version: 0.6.0
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
@@ -325,6 +328,12 @@ importers:
         version: link:../../packages/widgets-types
 
   widgets/analyze-repo-stars-history:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-repo-stars-map:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
