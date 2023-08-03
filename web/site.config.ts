@@ -1,7 +1,7 @@
 import { defineSiteConfig } from './utils/siteConfig';
 
 export default defineSiteConfig({
-  host: 'https://ossinsight-next.vercel.app',
+  host: 'https://next.ossinsight.io',
   header: {
     logo: {
       src: '/logo.png',

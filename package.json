@@ -1,8 +1,8 @@
 {
   "name": "ossinsight-next",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Next version of ossinsight.io",
   "scripts": {
     "postinstall": "pnpm run build:toolchain",
     "dev": "pnpm run --filter @ossinsight/web dev",
