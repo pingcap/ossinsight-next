@@ -19,10 +19,6 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'issue-creators',
     title: 'Issue Creators',
-  },
-  {
-    key: 'stars',
-    title: 'Stars',
   }
 ];
 
