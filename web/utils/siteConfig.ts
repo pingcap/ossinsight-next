@@ -1,6 +1,7 @@
 import { SiteHeaderConfig } from '@ossinsight/ui/src/types/ui-config';
 
 export interface SiteConfig {
+  /** @deprecated not used */
   host: string;
   header: SiteHeaderConfig;
   sizes: Record<string, ImageSizeConfig>;

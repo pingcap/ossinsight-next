@@ -1,8 +1,8 @@
-import siteConfig from '@/site.config';
+import { getOrigin } from '@/components/Share/utils';
 import { widgetMetadataGenerator } from '@/utils/widgets';
 import { ShareBlock } from '@ossinsight/ui/src/components/ShareBlock';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
-import { createWidgetContext } from '../../../packages/widgets-core/src/utils/context';
+import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 
 export async function Share ({ name, params, searchParams, linkedDataPromise }: { name: string, params: any, searchParams: any, linkedDataPromise: Promise<LinkedData> }) {
   const generateMetadata = await widgetMetadataGenerator(name);
@@ -18,11 +18,13 @@ export async function Share ({ name, params, searchParams, linkedDataPromise }: 
   const imageUsp = new URLSearchParams(usp);
   imageUsp.set('image_size', 'auto');
 
+  const origin = getOrigin();
+
   return (
     <ShareBlock
       title={title ?? 'Untitled'}
-      url={`${siteConfig.host}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
-      thumbnailUrl={`${siteConfig.host}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
+      url={`${origin}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
+      thumbnailUrl={`${origin}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
       keywords={keywords}
     />
   );
