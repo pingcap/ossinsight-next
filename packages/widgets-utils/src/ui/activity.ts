@@ -16,6 +16,10 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     key: 'issues',
     title: 'Issues',
   },
+  {
+    key: 'issue-creators',
+    title: 'Issue Creators',
+  }
 ];
 
 export function activityDisplayName (key: string) {

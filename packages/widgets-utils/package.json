@@ -11,6 +11,7 @@
     "tailwindcss": "3.3.3"
   },
   "dependencies": {
+    "d3-hierarchy": "^3.1.2",
     "deepmerge": "^4.3.1",
     "human-format": "^1.2.0",
     "lodash": "^4.17.21",

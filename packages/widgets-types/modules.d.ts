@@ -13,3 +13,8 @@ declare module '@ossinsight/widgets' {
 
   export { visualizers, datasourceFetchers, parameterDefinitions, metadataGenerators };
 }
+
+
+declare module '@geo-maps/countries-land-10km' {
+  export default function (): any;
+}

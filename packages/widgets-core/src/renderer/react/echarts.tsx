@@ -7,6 +7,7 @@ import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createLinkedDataContext } from '../../utils/context';
 import '../echarts-theme';
+import '../echarts-map';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
