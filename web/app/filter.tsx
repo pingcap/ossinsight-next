@@ -1,10 +1,9 @@
 'use client';
 
+import siteConfig from '@/site.config';
 import { allWidgetKeywords } from '@/utils/widgets';
 import { WidgetsFilter, WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
-
 
 export default function Filter ({ config }: { config: WidgetsFilterConfig }) {
   const pathname = usePathname();
@@ -21,11 +20,14 @@ export default function Filter ({ config }: { config: WidgetsFilterConfig }) {
     }
     config.tags.forEach(tag => usp.append('tag', tag));
 
-    router.push(pathname + '?' + usp.toString());
+    router.push(pathname + '?' + usp.toString(), {
+      scroll: false
+    });
   };
 
   return (
     <WidgetsFilter
+      categoriesConfig={siteConfig.widgets.tags.categories}
       availableTags={allWidgetKeywords}
       config={config}
       onConfigChange={handle}

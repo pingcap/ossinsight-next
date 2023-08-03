@@ -5,6 +5,20 @@ export default defineSiteConfig({
   banner: {
     content: 'This is the next version of **[ossinsight.io](https://ossinsight.io)**.',
   },
+  widgets: {
+    tags: {
+      categories: [
+        {
+          name: 'Target',
+          tags: ['Repository', 'User', 'Collection', 'Company'],
+        },
+        {
+          name: 'Metrics',
+          tags: ['Stars', 'Pull Requests', 'Issues', 'Pushes', 'Commits', 'Contributions'],
+        },
+      ]
+    }
+  },
   header: {
     logo: {
       src: '/logo.png',

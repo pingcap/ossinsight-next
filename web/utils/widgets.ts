@@ -50,7 +50,7 @@ export function filteredWidgetsNames ({ search, tags }: WidgetsFilterConfig) {
       }
 
       if (tags.length > 0) {
-        found = tags.some(tag => meta.keywords?.includes(tag));
+        found = !tags.some(tag => !meta.keywords?.includes(tag));
       } else {
         found &&= true;
       }

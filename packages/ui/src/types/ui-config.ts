@@ -41,3 +41,24 @@ export interface SiteBannerConfig {
   content: string;
   closable?: boolean;
 }
+
+export interface SiteWidgetTagCategory {
+  key?: string;
+  name: string;
+  tags: string[];
+}
+
+export interface SiteTagDetails {
+  name: string;
+  tooltip?: string;
+  icon?: string;
+}
+
+export interface SiteWidgetsTagsConfig {
+  categories: SiteWidgetTagCategory [];
+  details?: SiteTagDetails[],
+}
+
+export interface SiteWidgetsConfig {
+  tags: SiteWidgetsTagsConfig;
+}

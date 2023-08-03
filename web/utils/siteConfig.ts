@@ -1,4 +1,4 @@
-import { SiteBannerConfig, SiteHeaderConfig } from '@ossinsight/ui/src/types/ui-config';
+import { SiteBannerConfig, SiteHeaderConfig, SiteWidgetsConfig } from '@ossinsight/ui/src/types/ui-config';
 
 export interface SiteConfig {
   /** @deprecated not used */
@@ -6,6 +6,7 @@ export interface SiteConfig {
   header: SiteHeaderConfig;
   banner?: SiteBannerConfig;
   sizes: Record<string, ImageSizeConfig>;
+  widgets: SiteWidgetsConfig;
 }
 
 export interface ImageSizeConfig {
