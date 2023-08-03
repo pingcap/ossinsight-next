@@ -10,11 +10,11 @@ export default defineSiteConfig({
       categories: [
         {
           name: 'Target',
-          tags: ['Repository', 'User', 'Category'],
+          tags: ['Repository', 'User', 'Collection', 'Company'],
         },
         {
           name: 'Metrics',
-          tags: ['Stars', 'Pull Requests', 'Issues'],
+          tags: ['Stars', 'Pull Requests', 'Issues', 'Pushes', 'Commits', 'Contributions'],
         },
       ]
     }

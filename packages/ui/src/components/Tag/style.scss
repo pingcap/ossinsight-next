@@ -3,19 +3,18 @@
 .Tag {
   @apply inline-block px-2 py-0.5 rounded-full border text-xs select-none transition;
 
-  color: var(--tag-color);
-  border-color: var(--tag-border-color);
-  background-color: var(--background-color-body);
+  color: var(--text-color-content);
+  background-color: var(--background-color-control);
 
   &-selected {
-    background-color: var(--tag-background-color);
-    border-color: var(--tag-color);
+    color: var(--text-color-active);
+    border-color: var(--text-color-active);
   }
 
   &-interactive {
     @apply cursor-pointer outline-none;
     &:focus {
-      box-shadow: var(--tag-color) 0 0 0 2px;
+      box-shadow: var(--text-color-content) 0 0 0 2px;
     }
   }
 }

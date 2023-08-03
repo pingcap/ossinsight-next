@@ -20,7 +20,9 @@ export default function Filter ({ config }: { config: WidgetsFilterConfig }) {
     }
     config.tags.forEach(tag => usp.append('tag', tag));
 
-    router.push(pathname + '?' + usp.toString());
+    router.push(pathname + '?' + usp.toString(), {
+      scroll: false
+    });
   };
 
   return (

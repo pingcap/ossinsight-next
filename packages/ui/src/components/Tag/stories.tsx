@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import './style.scss';
-import { colors, Tag } from './Tag';
+import { Tag } from './Tag';
 
 export default {
   title: 'Components/Tag',
@@ -9,8 +9,7 @@ export default {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-  },
+  argTypes: {},
 } satisfies Meta<typeof Tag>;
 
 export const Default = {

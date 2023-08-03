@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useDebouncedCallback } from '../../hooks/useDebouncedCallback';
 import { SiteWidgetsTagsConfig } from '../../types/ui-config';
-import { colors, Tag } from '../Tag';
+import { Tag } from '../Tag';
 import { useCategories } from './useCategories';
 
 export type WidgetsFilterConfig = {
@@ -54,7 +54,7 @@ export function WidgetsFilter (props: WidgetsFilterProps) {
             <h6 className="text-xs text-subtitle">{category.name}</h6>
             <div key={category.key} className="flex flex-wrap gap-2 mt-2">
               {category.tags.map((tag, index) => (
-                <Tag key={tag} variant={colors[index % colors.length]} selected={config?.tags.includes(tag)} onSelected={makeHandleSelect(tag)}>
+                <Tag key={tag} selected={config?.tags.includes(tag)} onSelected={makeHandleSelect(tag)}>
                   {tag}
                 </Tag>
               ))}

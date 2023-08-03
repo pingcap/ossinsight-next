@@ -51,7 +51,6 @@ export interface SiteWidgetTagCategory {
 export interface SiteTagDetails {
   name: string;
   tooltip?: string;
-  color?: string;
   icon?: string;
 }
 
