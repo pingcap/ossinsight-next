@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-repo-pull-requests-size-per-month",
+  "version": "1.0.0",
+  "description": "Show the pull requests history of a GitHub repository monthly.",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": ["Repository", "Pull requests"],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^"
+  }
+}
