@@ -12,6 +12,7 @@ import {
   DimensionLoose,
   OptionEncodeValue,
 } from 'echarts/types/src/util/types';
+import deepmerge from 'deepmerge';
 
 export function bar(
   x: OptionEncodeValue,
@@ -151,4 +152,22 @@ export function scatters(
       ...commonOptions,
     },
   ];
+}
+
+export function lineArea(
+  x: OptionEncodeValue,
+  y: OptionEncodeValue,
+  yAxis: string,
+  option: LineSeriesOption = {}
+) {
+  return line(
+    x,
+    y,
+    deepmerge(option, {
+      showSymbol: false,
+      emphasis: { focus: 'series' },
+      areaStyle: {},
+      yAxisId: yAxis,
+    })
+  );
 }

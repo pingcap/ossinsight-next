@@ -324,6 +324,12 @@ importers:
         specifier: workspace:^
         version: link:..
 
+  widgets/analyze-repo-issue-opened-and-closed:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
   widgets/analyze-repo-loc-per-month:
     devDependencies:
       '@ossinsight/widgets-parent':
