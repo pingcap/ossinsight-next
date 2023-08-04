@@ -15,6 +15,7 @@
     "deepmerge": "^4.3.1",
     "human-format": "^1.2.0",
     "lodash": "^4.17.21",
-    "luxon": "^3.3.0"
+    "luxon": "^3.3.0",
+    "pretty-ms": "^8.0.0"
   }
 }

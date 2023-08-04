@@ -118,3 +118,24 @@ export function categoryAxis<T extends 'x' | 'y'>(
     },
   });
 }
+
+export function logAxis<T extends 'x' | 'y'>(
+  id?: OptionId,
+  option: AxisOption<T, LogAxisBaseOption> = {}
+): AxisOption<T> {
+  // TODO
+  // const small = isSmall();
+  return merge<AxisOption<T>>(option, {
+    id,
+    type: 'log',
+    nameTextStyle: {
+      // opacity: small ? 0 : 1,
+      opacity: 1,
+      align: filterEnum(option.position ?? 'left', ['left', 'right']),
+    },
+    // splitNumber: small ? 3 : undefined as any,
+    axisLabel: {
+      margin: 8,
+    },
+  });
+}

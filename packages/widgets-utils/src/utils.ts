@@ -1,3 +1,5 @@
+export * as prettyMs from 'pretty-ms';
+
 export function upBound(num: number): number {
   if (num === 0) {
     return 0;
