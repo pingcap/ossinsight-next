@@ -46,6 +46,7 @@ function getMin(data: DataPoint[]): number {
     ) ?? Number.MAX_SAFE_INTEGER
   );
 }
+
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -137,22 +138,5 @@ export default function (
 
   return option;
 }
-
-const units = ['', 'k', 'm', 'b'];
-
-function format(value: number) {
-  if (value === 0) {
-    return '0';
-  }
-  let i = 0;
-  while (value % 1000 === 0 && i < units.length) {
-    value = value / 1000;
-    i++;
-  }
-
-  return `${value}${units[i]}`;
-}
-
-const fmt = (val: number) => `${val} PRs`;
 
 export const type = 'echarts';
