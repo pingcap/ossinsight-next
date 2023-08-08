@@ -139,3 +139,23 @@ export function logAxis<T extends 'x' | 'y'>(
     },
   });
 }
+
+export function recentStatsChartXAxis<T extends 'x'>(
+  id?: OptionId,
+  option: AxisOption<T, ValueAxisBaseOption> = {}
+): AxisOption<T> {
+  return merge<AxisOption<T>>(option, {
+    type: 'time',
+    axisLine: {
+      show: false,
+    },
+    splitLine: {
+      show: true,
+      lineStyle: {
+        type: 'solid',
+        // width: 4,
+      },
+      interval: 'auto',
+    },
+  });
+}

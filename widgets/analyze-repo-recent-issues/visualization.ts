@@ -2,6 +2,10 @@ import type {
   EChartsVisualizationConfig,
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
+import {
+  recentStatsChartXAxis,
+  recentStatsLineSeries,
+} from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
   repo_id: string;
@@ -33,35 +37,81 @@ export default function (
     dataset: {
       source: [...main.sort((a, b) => a.idx - b.idx)],
     },
-    xAxis: {
-      type: 'time',
-    },
+    xAxis: recentStatsChartXAxis(),
     yAxis: {
       type: 'value',
+      show: false,
     },
     series: [
-      {
-        type: 'line',
-        showSymbol: false,
-        encode: {
-          x: 'current_period_day',
-          y: 'current_period_opened_day_issues',
-        },
-        smooth: true,
-        color: ctx.theme.colors.green['400'],
-        name: 'Opened',
-      },
-      {
-        type: 'line',
-        showSymbol: false,
-        encode: {
-          x: 'current_period_day',
-          y: 'current_period_closed_day_issues',
-        },
-        smooth: true,
-        color: ctx.theme.colors.indigo['400'],
-        name: 'Merged',
-      },
+      // {
+      //   type: 'line',
+      //   showSymbol: false,
+      //   encode: {
+      //     x: 'current_period_day',
+      //     y: 'current_period_opened_day_issues',
+      //   },
+      //   smooth: true,
+      //   color: ctx.theme.colors.green['400'],
+      //   name: 'Opened',
+      // },
+      // {
+      //   type: 'line',
+      //   showSymbol: false,
+      //   encode: {
+      //     x: 'current_period_day',
+      //     y: 'current_period_closed_day_issues',
+      //   },
+      //   smooth: true,
+      //   color: ctx.theme.colors.indigo['400'],
+      //   name: 'Merged',
+      // },
+      recentStatsLineSeries(
+        'current_period_day',
+        'current_period_opened_day_issues',
+        {
+          name: 'Opened',
+          lineStyle: {
+            color: {
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0.75,
+                  color: '#7378FF', // color at 75%
+                },
+                {
+                  offset: 1,
+                  color: '#A0A3FB', // color at 100%
+                },
+              ],
+            },
+          },
+        }
+      ),
+      recentStatsLineSeries(
+        'current_period_day',
+        'current_period_closed_day_issues',
+        {
+          name: 'Merged',
+          lineStyle: {
+            type: 'dashed',
+            color: {
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                {
+                  offset: 0.5,
+                  color: '#A0A3FB', // color at 100%
+                },
+              ],
+            },
+          },
+        }
+      ),
     ],
     tooltip: {
       show: true,

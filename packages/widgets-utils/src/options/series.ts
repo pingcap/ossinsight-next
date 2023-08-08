@@ -171,3 +171,33 @@ export function lineArea(
     })
   );
 }
+
+export function recentStatsLineSeries(
+  x: OptionEncodeValue,
+  y: OptionEncodeValue,
+  option: LineSeriesOption = {}
+): LineSeriesOption {
+  return deepmerge(
+    {
+      type: 'line',
+      encode: {
+        x,
+        y,
+      },
+      lineStyle: {
+        // width: 4,
+        color: {
+          type: 'linear',
+          x: 0,
+          y: 0,
+          x2: 0,
+          y2: 1,
+          global: false,
+        },
+      },
+      showSymbol: false,
+      smooth: true,
+    },
+    option
+  );
+}
