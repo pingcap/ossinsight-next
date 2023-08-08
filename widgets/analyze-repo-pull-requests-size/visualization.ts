@@ -7,6 +7,7 @@ import {
   legend,
   topBottomLayoutGrid,
   dataZoom,
+  parseParams2DataZoomOpt,
   timeAxis,
   utils,
   valueAxis,
@@ -14,12 +15,13 @@ import {
   bar,
   line,
 } from '@ossinsight/widgets-utils/src/options';
+import type { DataZoomOptType } from '@ossinsight/widgets-utils/src/options';
 import { upBound } from '@ossinsight/widgets-utils/src/options/utils';
 
 type Params = {
   repo_id: string;
   vs_repo_id?: string;
-};
+} & DataZoomOptType;
 
 type DataPoint = {
   all_size: number;
@@ -76,7 +78,7 @@ export default function (
       source: transformLocData(data),
     })),
     grid: topBottomLayoutGrid(!!vs),
-    dataZoom: dataZoom(),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters)),
     legend: legend({ top: 32, left: 'center' }),
     xAxis: utils.template(({ id }) => timeAxis<'x'>(id, { gridId: id }), !!vs),
     yAxis: utils.template(

@@ -24,3 +24,15 @@ export function dataZoom(
     ...option,
   };
 }
+
+export function parseParams2DataZoomOpt(parameters: Record<string, any>) {
+  const start_date = parameters?.start_date;
+  const end_date = parameters?.end_date;
+
+  return {
+    startValue: start_date ? new Date(start_date) : undefined,
+    endValue: end_date ? new Date(end_date) : undefined,
+  };
+}
+
+export type DataZoomOptType = ReturnType<typeof parseParams2DataZoomOpt>;

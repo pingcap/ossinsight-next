@@ -6,24 +6,23 @@ import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
   topBottomLayoutGrid,
   dataZoom,
+  parseParams2DataZoomOpt,
   timeAxis,
-  logAxis,
   utils,
   axisTooltip,
-  formatMonth,
-  boxplot,
   line,
   lineArea,
   legend,
   valueAxis,
 } from '@ossinsight/widgets-utils/src/options';
+import type { DataZoomOptType } from '@ossinsight/widgets-utils/src/options';
 import { prettyMs } from '@ossinsight/widgets-utils/src/utils';
 import { upBound } from '@ossinsight/widgets-utils/src/options/utils';
 
 type Params = {
   repo_id: string;
   vs_repo_id?: string;
-};
+} & DataZoomOptType;
 
 type DataPoint = {
   event_month: string;
@@ -85,7 +84,7 @@ export default function (
       source: aggregate(data),
     })),
     grid: topBottomLayoutGrid(!!vs),
-    dataZoom: dataZoom(),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters)),
     legend: legend(),
     xAxis: utils.template(({ id }) => timeAxis<'x'>(id, { gridId: id }), !!vs),
     yAxis: utils.template(
