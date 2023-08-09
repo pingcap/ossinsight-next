@@ -6,7 +6,7 @@ import { cloneElement, use, useEffect, useMemo, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createWidgetContext } from '../../utils/context';
-import { CardHeading, Label, LabelValue } from './builtin';
+import { CardHeading, Label, LabelValue, AvatarLabel } from './builtin';
 import render from './index';
 
 interface ComposeComponentProps extends WidgetReactVisualizationProps {
@@ -94,6 +94,16 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
             return <CardHeading key={i} className="absolute" style={props} title={parameters.title} subtitle={parameters.subtitle} />;
           case 'builtin:label':
             return <Label key={i} className="absolute" style={props} label={parameters.label} />;
+          case 'builtin:avatar-label':
+            return (
+              <AvatarLabel
+                key={i}
+                className='absolute'
+                style={props}
+                label={parameters.label}
+                imgSrc={parameters.imgSrc}
+              />
+            );
           default: {
             const el = render({
               dynamicHeight: undefined,
