@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
-import { createLinkedDataContext } from '../../utils/context';
+import { createLinkedDataContext, createWidgetContext } from '../../utils/context';
 import '../echarts-theme';
 import '../echarts-map';
 
@@ -40,20 +40,10 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
     const { clientWidth: width, clientHeight: height } = containerRef.current!;
 
     const option = visualizer.default(data, {
-      runtime: 'client',
-      parameters,
-      theme: { colors },
+      ...createWidgetContext('client', parameters, linkedData),
       width,
       height,
-      ...createLinkedDataContext(linkedData),
-      getTimeParams (): any {
-        const { DEFAULT_ZONE } = generateZoneOptions();
-
-        return {
-          zone: parameters?.zone || DEFAULT_ZONE,
-          period: parameters?.period || PERIOD_OPTIONS[0],
-        };
-      },
+      dpr: devicePixelRatio,
     });
     echartsRef.current!.setOption(option);
   }, [data, visualizer, parameters]);

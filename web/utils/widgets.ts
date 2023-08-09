@@ -34,6 +34,9 @@ export function widgetParameterDefinitions (name: string) {
 export function filteredWidgetsNames ({ search, tags }: WidgetsFilterConfig) {
   return Object.entries(widgets)
     .filter(([name, meta]) => {
+      if (meta.private) {
+        return false;
+      }
       const texts = [
         name.toLowerCase(),
         meta.name.toLowerCase(),

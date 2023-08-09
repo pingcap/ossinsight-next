@@ -417,6 +417,36 @@ importers:
         specifier: workspace:^
         version: link:..
 
+  widgets/compose-last-28-days-stats:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.3.0
+
+  widgets/internal-card-heading:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
+  widgets/internal-label-value:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -2280,6 +2310,7 @@ packages:
   /@napi-rs/canvas@0.1.41:
     resolution: {integrity: sha512-JjdMfKyXox09KgC3fNB4+x0M/rwufIWrfcBDU0BuF6jKVhlSSSNy7D2WEX4zs5NgWHeiArHCXLtJ0dW6KyK7GQ==}
     engines: {node: '>= 10'}
+    requiresBuild: true
     optionalDependencies:
       '@napi-rs/canvas-android-arm64': 0.1.41
       '@napi-rs/canvas-darwin-arm64': 0.1.41
@@ -4730,6 +4761,10 @@ packages:
 
   /@types/lodash@4.14.195:
     resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
+    dev: true
+
+  /@types/luxon@3.3.1:
+    resolution: {integrity: sha512-XOS5nBcgEeP2PpcqJHjCWhUCAzGfXIU8ILOSLpx2FhxqMW9KdxgCGXNOEKGVBfveKtIpztHzKK5vSRVLyW/NqA==}
     dev: true
 
   /@types/mdast@3.0.12:
@@ -8678,7 +8713,6 @@ packages:
   /luxon@3.3.0:
     resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
     engines: {node: '>=12'}
-    dev: false
 
   /lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}

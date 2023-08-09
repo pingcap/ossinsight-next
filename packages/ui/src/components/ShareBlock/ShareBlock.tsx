@@ -13,6 +13,7 @@ export interface ShareBlockProps {
   url: string;
   thumbnailUrl: string;
   keywords?: string[];
+  imageWidth: number;
 }
 
 export function ShareBlock ({
@@ -20,6 +21,7 @@ export function ShareBlock ({
   url,
   thumbnailUrl,
   keywords,
+  imageWidth,
 }: ShareBlockProps) {
   return (
     <div>
@@ -34,7 +36,7 @@ export function ShareBlock ({
         </Tab>
         <Tab value="HTML" title="HTML" icon={<HTMLIcon />}>
           <CodeBlock code={`<a href="${url}" target="_blank">
-  <img src="${thumbnailUrl}" width="960" height="auto" alt="${blockTitle}">
+  <img src="${thumbnailUrl}" style="border-radius: 12px; box-shadow: 0px 4px 4px 0px rgba(36, 39, 56, 0.25)" width="${imageWidth}" height="auto" alt="${blockTitle}">
 </a>`} language="html" />
         </Tab>
         <Tab value="image" title="Thumbnail" icon={<ImageIcon />}>

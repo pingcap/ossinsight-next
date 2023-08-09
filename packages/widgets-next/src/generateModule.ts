@@ -22,8 +22,8 @@ const metadataGenerators = {}
     }
     if (folder.isDirectory()) {
       const pkg = path.join(widgetsPath, folder.name, 'package.json');
-      const { name, version, keywords, description, author, main, module } = require(pkg);
-      const meta = { name, version, keywords, description, author };
+      const { name, version, private: privateVal, keywords, description, author, main, module } = require(pkg);
+      const meta = { name, version, private: privateVal, keywords, description, author };
       widgets[name] = path.resolve(widgetsPath, folder.name);
 
       const quotedName = JSON.stringify(name);

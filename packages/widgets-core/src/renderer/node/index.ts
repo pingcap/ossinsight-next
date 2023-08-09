@@ -14,6 +14,8 @@ export default async function render ({ type, width, height, dpr, visualizer, pa
       return await import('./echarts').then(module => module.default(width, height, dpr, visualizer, data, parameters, linkedData));
     case 'react-svg':
       return await import('./react-svg').then(module => module.default(width, height, dpr, visualizer, data, parameters, linkedData));
+    case 'compose':
+      return await import('./compose').then(module => module.default(width, height, dpr, visualizer, data, parameters, linkedData));
     default:
       throw new Error(`visualize type '${type}' not supported.`);
   }

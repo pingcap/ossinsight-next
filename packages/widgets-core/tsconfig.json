@@ -7,7 +7,11 @@
     "skipLibCheck": true,
     "declaration": true,
     "jsx": "react-jsx",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "@ossinsight/widgets-types/modules",
+      "react/canary"
+    ]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

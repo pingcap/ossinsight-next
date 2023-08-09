@@ -2,7 +2,7 @@ import { registerTheme } from 'echarts';
 
 function registerThemeDark (bg = true) {
   const contrastColor = 'rgb(200, 200, 200)';
-  const bgColor = 'rgb(27, 27, 29)';
+  const bgColor = 'rgb(31, 30, 40)';
   const boxColor = 'rgb(37, 37, 39)';
   const borderColor = 'rgb(81, 81, 81)';
   const axisCommon = function () {

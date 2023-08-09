@@ -35,6 +35,7 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
   const { title, description, keywords } = generateMetadata({
     width: 0,
     height: 0,
+    dpr: 1,
     ...createWidgetContext('server', searchParams, linkedData),
   });
 

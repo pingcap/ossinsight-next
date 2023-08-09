@@ -79,5 +79,9 @@ export default defineSiteConfig({
       width: 800,
       height: 418,
     },
+    'aspect-4-1': {
+      width: 436 * 2,
+      height: 132 * 2,
+    }
   },
 });

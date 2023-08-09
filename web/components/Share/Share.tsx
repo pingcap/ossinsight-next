@@ -1,5 +1,5 @@
 import { getOrigin } from '@/components/Share/utils';
-import { widgetMetadataGenerator } from '@/utils/widgets';
+import { widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
 import { ShareBlock } from '@ossinsight/ui/src/components/ShareBlock';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
@@ -12,6 +12,7 @@ export async function Share ({ name, params, searchParams, linkedDataPromise }: 
     ...createWidgetContext('client', searchParams, linkedData),
     width: 0,
     height: 0,
+    dpr: 1,
   });
 
   const usp = new URLSearchParams(searchParams);
@@ -20,12 +21,15 @@ export async function Share ({ name, params, searchParams, linkedDataPromise }: 
 
   const origin = getOrigin();
 
+  const { width } = await widgetVisualizer(name);
+
   return (
     <ShareBlock
       title={title ?? 'Untitled'}
       url={`${origin}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
       thumbnailUrl={`${origin}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
       keywords={keywords}
+      imageWidth={width ?? 960}
     />
   );
 }
