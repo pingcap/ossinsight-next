@@ -11,12 +11,14 @@ import {
   axisTooltip,
   bar as barSeries,
   dataZoom,
+  parseParams2DataZoomOpt,
 } from '@ossinsight/widgets-utils/src/options';
+import type { DataZoomOptType } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
   repo_id: string;
   vs_repo_id?: string;
-};
+} & DataZoomOptType;
 
 type DataPoint = {
   commits: number;
@@ -64,7 +66,7 @@ export default function (
         barMaxWidth: 4,
       }),
     ]).flatMap((x) => [x[0], x[1]] as const),
-    dataZoom: dataZoom(),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters)),
     tooltip: axisTooltip('cross'),
     legend: {
       show: true,

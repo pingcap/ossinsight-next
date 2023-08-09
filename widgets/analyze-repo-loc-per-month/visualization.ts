@@ -13,12 +13,14 @@ import {
   bar as barSeries,
   line as lineSeries,
   dataZoom,
+  parseParams2DataZoomOpt,
 } from '@ossinsight/widgets-utils/src/options';
+import type { DataZoomOptType } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
   repo_id: string;
   vs_repo_id?: string;
-};
+} & DataZoomOptType;
 
 type DataPoint = {
   additions: number;
@@ -139,7 +141,7 @@ export default function (
         yAxisId: `${name}-total`,
       }),
     ]).flatMap((x) => [x[0], x[1], x[2]] as const),
-    dataZoom: dataZoom(undefined, !!vs),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters), !!vs),
     tooltip: axisTooltip('cross', {
       formatter: (params) => {
         const [add, del, total] = params;

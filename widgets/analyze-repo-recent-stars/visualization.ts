@@ -2,6 +2,10 @@ import type {
   EChartsVisualizationConfig,
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
+import {
+  recentStatsChartXAxis,
+  recentStatsLineSeries,
+} from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
   repo_id: string;
@@ -29,21 +33,36 @@ export default function (
     dataset: {
       source: [...main.sort((a, b) => a.idx - b.idx)],
     },
-    xAxis: {
-      type: 'time',
-    },
+    xAxis: recentStatsChartXAxis(),
     yAxis: {
       type: 'value',
+      show: false,
     },
-    series: {
-      type: 'bar',
-      encode: {
-        x: 'current_period_day',
-        y: 'current_period_day_stars',
-      },
-      color: ctx.theme.colors.orange['400'],
-      name: 'Stars',
-    },
+    series: recentStatsLineSeries(
+      'current_period_day',
+      'current_period_day_stars',
+      {
+        name: 'Stars',
+        lineStyle: {
+          color: {
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0.75,
+                color: '#ED5C53', // color at 75%
+              },
+              {
+                offset: 1,
+                color: '#CE7974', // color at 100%
+              },
+            ],
+          },
+        },
+      }
+    ),
     tooltip: {
       show: true,
       trigger: 'axis',
