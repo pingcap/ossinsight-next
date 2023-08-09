@@ -1,5 +1,5 @@
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { useMemo } from 'react';
+import { ForwardedRef, forwardRef, useMemo } from 'react';
 
 type Params = {
   user_id: number
@@ -50,7 +50,7 @@ const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 // const TIME_NAMES = ['0a', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12p', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 const TIME_NAMES = Array(24).fill(0).map((_, i) => i);
 
-const TimeDistribution = ({ title, size, gap, offset, data }: TimeDistributionProps) => {
+const TimeDistribution = forwardRef(({ title, size, gap, offset, data }: TimeDistributionProps, ref: ForwardedRef<SVGSVGElement>) => {
   const max = useMemo(() => {
     return data.reduce((max, cur) => Math.max(max, cur.cnt), 0);
   }, [data]);
@@ -62,7 +62,9 @@ const TimeDistribution = ({ title, size, gap, offset, data }: TimeDistributionPr
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height + paddingTop}
-         viewBox={`${-paddingLeft} -${paddingTop} ${width + paddingLeft} ${height + paddingTop}`} display="block">
+         viewBox={`${-paddingLeft} -${paddingTop} ${width + paddingLeft} ${height + paddingTop}`} display="block"
+         ref={ref}
+    >
       <g id="title">
         <text textAnchor="middle" x={width / 2 - paddingLeft / 2} y={8 - paddingTop} fontSize={14} fill="#dadada" fontWeight="bold">
           {title}
@@ -142,7 +144,7 @@ const TimeDistribution = ({ title, size, gap, offset, data }: TimeDistributionPr
       </g>
     </svg>
   );
-};
+});
 
 const contributeDistributionColors = ['#2C2C2C', '#00480D', '#017420', '#34A352', '#6CDE8C', '#B5FFC9'];
 

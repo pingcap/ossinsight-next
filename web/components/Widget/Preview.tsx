@@ -9,7 +9,9 @@ export async function WidgetPreview ({ name }: { name: string }) {
 
   return (
     <div className="rounded-md relative overflow-hidden bg-popover border w-[320px] transition-shadow hover:shadow-lg">
-      <Image className="block" loading="lazy" width={320} height={240} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
+      <div className='flex items-center justify-center bg-body' style={{ height: 240 }}>
+        <Image className="block" loading="lazy" width={320} height={240} quality={100} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
+      </div>
       <div className='w-full h-[72px]'/>
       <div className="p-2 border-t bg-toolbar absolute bottom-0 left-0 w-full translate-y-[calc(100%-72px)] hover:translate-y-0 transition">
         <h2 className="text-lg font-bold text-title">{formatName(getName(widget.name))}</h2>

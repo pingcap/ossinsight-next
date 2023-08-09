@@ -5,6 +5,7 @@ export interface BasicContext {
   theme: {
     colors: typeof colors
   };
+
   getTimeParams (): { zone: string, period: string };
 }
 
@@ -20,7 +21,7 @@ export interface LinkedDataContext {
 
   getCollection (id: number): any;
 
-  getOrg(id: number): any;
+  getOrg (id: number): any;
 }
 
 export interface WidgetVisualizerContext<P extends Record<string, any> = Record<string, any>> extends WidgetBaseContext<P>, BasicContext, LinkedDataContext {
@@ -33,15 +34,30 @@ export interface WidgetVisualizerContext<P extends Record<string, any> = Record<
    * The container height when executing the visualization function.
    */
   height: number;
+
+  dpr: number;
 }
 
 export type EChartsVisualizationConfig = EChartsOption;
+
+export type WidgetComposeItem = {
+  widget: string
+  parameters: Record<string, any>
+  data: any
+  left: number
+  top: number
+  width: number
+  height: number
+}
+
+export type ComposeVisualizationConfig = WidgetComposeItem[]
 
 export type VisualizeFunction<R, D, P> = (data: D, ctx: WidgetVisualizerContext<P>) => R
 
 export interface WidgetMeta {
   name: string;
   description?: string;
+  private?: boolean;
   version: string;
   keywords?: string[];
   author?: string | Partial<{ email: string, name: string, url: string }>;
@@ -68,7 +84,10 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
    */
   onColorSchemeChange?: (instance: VisualizerInstance, result: VisualizationResult, colorScheme: 'light' | 'dark') => void;
 
-  computeDynamicHeight?: (data: Data) => number
+  computeDynamicHeight?: (data: Data) => number;
+
+  width?: number;
+  height?: number;
 }
 
 export interface BaseParameterDefinition {
@@ -98,7 +117,6 @@ export interface TimePeriodParameterDefinition extends BaseParameterDefinition {
 export interface TimeZoneParameterDefinition extends BaseParameterDefinition {
   type: 'time-zone';
 }
-
 
 export interface ActivityTypeParameterDefinition extends BaseParameterDefinition {
   type: 'activity-type';

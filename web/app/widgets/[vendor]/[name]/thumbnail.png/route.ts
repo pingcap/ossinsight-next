@@ -63,7 +63,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     linkedData,
   });
 
-  return new NextResponse(buffer, {
+  return new NextResponse(buffer.toBuffer('image/png'), {
     headers: {
       'Content-Type': 'image/png',
     },

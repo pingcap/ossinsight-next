@@ -9,6 +9,8 @@ export default async function executeDatasource (config: any, ctx: WidgetBaseCon
     switch (config.type) {
       case 'api':
         return import('./api').then(module => module.default(config, ctx));
+      case 'ref':
+        return import('./ref').then(module => module.default(config, ctx));
     }
   } catch (e) {
     console.error(e)

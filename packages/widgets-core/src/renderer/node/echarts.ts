@@ -12,7 +12,8 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
 
   const option = visualizer.default(data, {
     width: width * dpr,
-    height: width * dpr,
+    height: height * dpr,
+    dpr,
     ...createWidgetContext('server', parameters, linkedData),
   });
 
@@ -31,5 +32,5 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     canvas = realCanvas;
   }
 
-  return canvas.toBuffer('image/png');
+  return canvas;
 }
