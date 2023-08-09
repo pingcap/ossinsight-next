@@ -3,6 +3,10 @@ import type {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 
+import {
+  simpleGrid,
+} from '@ossinsight/widgets-utils/src/options';
+
 type Params = {
   repo_id: string;
 };
@@ -54,7 +58,7 @@ export default function (
       (current_period_merged_prs + current_period_opened_prs)) *
     100;
 
-  const progressSize = Math.min(ctx.width || 100, ctx.height || 100) * 0.1;
+  const progressSize = Math.min(ctx.width || 100, ctx.height || 100) * 0.15;
 
   return {
     series: [
@@ -64,6 +68,7 @@ export default function (
         endAngle: -270,
         min: 0,
         max: 100,
+        radius: '100%',
         itemStyle: {
           color: '#5972F8',
           // shadowColor: 'rgba(139, 163, 248, 1)',

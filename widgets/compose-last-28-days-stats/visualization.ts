@@ -16,7 +16,7 @@ export default function ([[issues], [prs], [commits], [stars]]: Input, ctx: Widg
   const HEIGHT = ctx.height;
   const SPACING = 8 * ctx.dpr;
   const PADDING = 18 * ctx.dpr;
-  const HEADER_HEIGHT = 48;
+  const HEADER_HEIGHT = 24 * ctx.dpr;
   const HORIZONTAL_SPACING = 32 * ctx.dpr;
 
   //  | PADDING | **LABEL** | SPC | **CHART** | H_S | **LABEL** | SPC | **CHART** | PADDING |

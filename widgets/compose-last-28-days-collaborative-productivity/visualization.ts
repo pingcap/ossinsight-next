@@ -8,6 +8,7 @@ type Params = {
 type Input = [[any[]], [any[]], [any[]]]
 
 export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
+  console.log(ctx);
   const end = DateTime.fromISO(issues[0].current_period_day);
   const start = DateTime.fromISO(issues[issues.length - 1].current_period_day);
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
@@ -15,11 +16,12 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
   const SPACING = 8 * ctx.dpr;
-  const HEADER_HEIGHT = 48;
+  const HEADER_HEIGHT = 24 * ctx.dpr;
   const PADDING = 18 * ctx.dpr;
 
-  const CHILD_WIDTH = (WIDTH - (PADDING + SPACING) * 2) / 3;
-  const CHILD_HEIGHT = HEIGHT - HEADER_HEIGHT - PADDING;
+  const LABEL_HEIGHT = 16 * ctx.dpr;
+  const CHILD_WIDTH = (WIDTH - (PADDING + SPACING + LABEL_HEIGHT) * 2) / 3;
+  const CHILD_HEIGHT = HEIGHT - HEADER_HEIGHT - LABEL_HEIGHT - PADDING;
 
   return [
     {
@@ -35,11 +37,44 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       height: HEADER_HEIGHT,
     },
     {
+      widget: 'builtin:label',
+      data: undefined,
+      parameters: {
+        label: 'PR Merged Ratio'
+      },
+      left: PADDING + LABEL_HEIGHT,
+      top: HEADER_HEIGHT,
+      width: CHILD_WIDTH,
+      height: LABEL_HEIGHT,
+    },
+    {
+      widget: 'builtin:label',
+      data: undefined,
+      parameters: {
+        label: 'Issue Closed Ratio'
+      },
+      left: PADDING + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
+      top: HEADER_HEIGHT,
+      width: CHILD_WIDTH,
+      height: LABEL_HEIGHT,
+    },
+    {
+      widget: 'builtin:label',
+      data: undefined,
+      parameters: {
+        label: 'PR Reviewed Ratio'
+      },
+      left: PADDING + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
+      top: HEADER_HEIGHT,
+      width: CHILD_WIDTH,
+      height: LABEL_HEIGHT,
+    },
+    {
       widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
       data: [prs],
       parameters: ctx.parameters,
-      left: PADDING,
-      top: HEADER_HEIGHT,
+      left: PADDING + LABEL_HEIGHT,
+      top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
       height: CHILD_HEIGHT
     },
@@ -47,8 +82,8 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
       data: [issues],
       parameters: ctx.parameters,
-      left: PADDING + CHILD_WIDTH + SPACING,
-      top: HEADER_HEIGHT,
+      left: PADDING + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
+      top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
       height: CHILD_HEIGHT
     },
@@ -56,8 +91,8 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
       data: [reviews],
       parameters: ctx.parameters,
-      left: PADDING + (CHILD_WIDTH + SPACING) * 2,
-      top: HEADER_HEIGHT,
+      left: PADDING + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
+      top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
       height: CHILD_HEIGHT
     }
