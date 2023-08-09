@@ -97,8 +97,8 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
               style: props,
               parameters,
               linkedData,
-              type: resolvedVisualizers[i].type,
-              visualizer: resolvedVisualizers[i],
+              type: resolvedVisualizers[i]!.type,
+              visualizer: resolvedVisualizers[i]!,
               data,
             });
 
