@@ -64,11 +64,12 @@ export default function (
       },
       left: PADDING,
       top:
+        5 +
         HEADER_HEIGHT +
         SPACING +
-        ((CHILD_HEIGHT + SPACING) / sortedContributors.length) * index,
+        (CHILD_HEIGHT / sortedContributors.length) * index,
       width: CHILD_WIDTH,
-      height: CHILD_HEIGHT / (sortedContributors.length + 1),
+      height: (CHILD_HEIGHT - 20) / (sortedContributors.length + 1),
     })),
     {
       widget: '@ossinsight/widget-analyze-repo-recent-top-contributors',
