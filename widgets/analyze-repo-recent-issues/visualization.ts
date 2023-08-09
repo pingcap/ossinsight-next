@@ -4,7 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 import {
   recentStatsChartXAxis,
-  recentStatsLineSeries,
+  recentStatsLineSeries, simpleGrid,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -42,6 +42,7 @@ export default function (
       type: 'value',
       show: false,
     },
+    grid: simpleGrid(2),
     series: [
       // {
       //   type: 'line',
@@ -66,10 +67,11 @@ export default function (
       //   name: 'Merged',
       // },
       recentStatsLineSeries(
-        'current_period_day',
+        'idx',
         'current_period_opened_day_issues',
         {
-          name: 'Opened',
+          name: 'Current period',
+          color: '#7378FF',
           lineStyle: {
             color: {
               x: 0,
@@ -91,10 +93,11 @@ export default function (
         }
       ),
       recentStatsLineSeries(
-        'current_period_day',
-        'current_period_closed_day_issues',
+        'idx',
+        'last_period_closed_day_issues',
         {
-          name: 'Merged',
+          name: 'Last period',
+          color: '#A0A3FB80',
           lineStyle: {
             type: 'dashed',
             color: {
@@ -105,7 +108,7 @@ export default function (
               colorStops: [
                 {
                   offset: 0.5,
-                  color: '#A0A3FB', // color at 100%
+                  color: '#A0A3FB80', // color at 100%
                 },
               ],
             },
@@ -114,7 +117,7 @@ export default function (
       ),
     ],
     tooltip: {
-      show: true,
+      show: false,
       trigger: 'axis',
       axisPointer: {
         type: 'line',

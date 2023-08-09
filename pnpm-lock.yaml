@@ -417,7 +417,7 @@ importers:
         specifier: workspace:^
         version: link:..
 
-  widgets/compose-last-28-days-stats:
+  widgets/compose-last-28-days-collaborative-productivity:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
@@ -429,23 +429,17 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
 
-  widgets/internal-card-heading:
+  widgets/compose-last-28-days-stats:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:..
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
-
-  widgets/internal-label-value:
-    devDependencies:
-      '@ossinsight/widgets-parent':
-        specifier: workspace:^
-        version: link:..
-      '@types/react':
-        specifier: 18.2.15
-        version: 18.2.15
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.3.0
 
 packages:
 

@@ -54,7 +54,9 @@ export default function (
       (current_period_merged_prs + current_period_opened_prs)) *
     100;
 
-  const option = {
+  const progressSize = Math.min(ctx.width || 100, ctx.height || 100) * 0.1;
+
+  return {
     series: [
       {
         type: 'gauge',
@@ -72,19 +74,19 @@ export default function (
         progress: {
           show: true,
           roundCap: true,
-          width: 40,
+          width: progressSize,
         },
-        pointer: false,
+        pointer: { show: false },
         axisLine: {
           roundCap: true,
           lineStyle: {
-            width: 40,
+            width: progressSize,
             color: [[1, '#CDD8F5']],
           },
         },
-        axisTick: false,
-        splitLine: false,
-        axisLabel: false,
+        axisTick: { show: false },
+        splitLine: { show: false },
+        axisLabel: { show: false },
         title: {
           show: false,
         },
@@ -105,8 +107,6 @@ export default function (
       },
     ],
   };
-
-  return option;
 }
 
 export const type = 'echarts';

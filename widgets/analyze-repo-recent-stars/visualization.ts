@@ -4,7 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 import {
   recentStatsChartXAxis,
-  recentStatsLineSeries,
+  recentStatsLineSeries, simpleGrid,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -38,8 +38,9 @@ export default function (
       type: 'value',
       show: false,
     },
-    series: recentStatsLineSeries(
-      'current_period_day',
+    grid: simpleGrid(2),
+    series: [recentStatsLineSeries(
+      'idx',
       'current_period_day_stars',
       {
         name: 'Stars',
@@ -62,9 +63,31 @@ export default function (
           },
         },
       }
-    ),
+    ), recentStatsLineSeries(
+      'idx',
+      'last_period_day_stars',
+      {
+        name: 'Last period',
+        color: '#CE797480',
+        lineStyle: {
+          type: 'dashed',
+          color: {
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 1,
+                color: '#CE797480', // color at 100%
+              },
+            ],
+          },
+        },
+      }
+    ),],
     tooltip: {
-      show: true,
+      show: false,
       trigger: 'axis',
       axisPointer: {
         type: 'line',
