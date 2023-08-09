@@ -20,8 +20,10 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
   const PADDING = 18 * ctx.dpr;
 
   const LABEL_HEIGHT = 16 * ctx.dpr;
-  const CHILD_WIDTH = (WIDTH - (PADDING + SPACING + LABEL_HEIGHT) * 2) / 3;
+  const CHILD_WIDTH = (WIDTH - (SPACING + LABEL_HEIGHT) * 2) / 3;
   const CHILD_HEIGHT = HEIGHT - HEADER_HEIGHT - LABEL_HEIGHT - PADDING;
+
+  const H_OFFSET = WIDTH - (CHILD_WIDTH * 3 + (SPACING + LABEL_HEIGHT) * 2)
 
   return [
     {
@@ -42,7 +44,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       parameters: {
         label: 'PR Merged Ratio'
       },
-      left: PADDING + LABEL_HEIGHT,
+      left: H_OFFSET + LABEL_HEIGHT,
       top: HEADER_HEIGHT,
       width: CHILD_WIDTH,
       height: LABEL_HEIGHT,
@@ -53,7 +55,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       parameters: {
         label: 'Issue Closed Ratio'
       },
-      left: PADDING + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
+      left: H_OFFSET + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
       top: HEADER_HEIGHT,
       width: CHILD_WIDTH,
       height: LABEL_HEIGHT,
@@ -64,7 +66,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       parameters: {
         label: 'PR Reviewed Ratio'
       },
-      left: PADDING + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
+      left: H_OFFSET + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
       top: HEADER_HEIGHT,
       width: CHILD_WIDTH,
       height: LABEL_HEIGHT,
@@ -73,7 +75,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
       data: [prs],
       parameters: ctx.parameters,
-      left: PADDING + LABEL_HEIGHT,
+      left: H_OFFSET + LABEL_HEIGHT,
       top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
       height: CHILD_HEIGHT
@@ -82,7 +84,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
       data: [issues],
       parameters: ctx.parameters,
-      left: PADDING + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
+      left: H_OFFSET + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
       top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
       height: CHILD_HEIGHT
@@ -91,7 +93,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
       data: [reviews],
       parameters: ctx.parameters,
-      left: PADDING + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
+      left: H_OFFSET + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
       top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
       height: CHILD_HEIGHT
