@@ -24,3 +24,13 @@ export function topBottomLayoutGrid(vs?: boolean) {
     },
   ];
 }
+
+export function simpleGrid (padding: number): GridOption {
+  return {
+    left: padding,
+    top: padding,
+    right: padding,
+    bottom: padding,
+    containLabel: false,
+  };
+}

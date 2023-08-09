@@ -3,6 +3,10 @@ import type {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 
+import {
+  simpleGrid,
+} from '@ossinsight/widgets-utils/src/options';
+
 type Params = {
   repo_id: string;
 };
@@ -21,7 +25,7 @@ type Input = [DataPoint[], DataPoint[] | undefined];
 
 export default function (
   data: Input,
-  ctx: WidgetVisualizerContext<Params>
+  ctx: WidgetVisualizerContext<Params>,
 ): EChartsVisualizationConfig {
   const [main, vs] = data;
 
@@ -35,6 +39,7 @@ export default function (
     yAxis: {
       type: 'value',
     },
+    grid: simpleGrid(2),
     series: {
       type: 'bar',
       encode: {

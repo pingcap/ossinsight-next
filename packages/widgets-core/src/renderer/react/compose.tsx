@@ -1,10 +1,12 @@
+'use client';
+
 import { visualizers } from '@ossinsight/widgets';
 import { ComposeVisualizationConfig, VisualizerModule } from '@ossinsight/widgets-types';
 import { cloneElement, use, useEffect, useMemo, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createWidgetContext } from '../../utils/context';
-import { CardHeading, LabelValue } from './builtin';
+import { CardHeading, Label, LabelValue } from './builtin';
 import render from './index';
 
 interface ComposeComponentProps extends WidgetReactVisualizationProps {
@@ -50,7 +52,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
       height,
       dpr,
     });
-  }, [size.width, size.height]);
+  }, [size.width, size.height, dpr]);
 
   const itemNames = useMemo(() => {
     return items.map(i => i.widget).join(',');
@@ -90,6 +92,8 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
             return <LabelValue key={i} className="absolute" style={props} label={parameters.label} value={parameters.value} />;
           case 'builtin:card-heading':
             return <CardHeading key={i} className="absolute" style={props} title={parameters.title} subtitle={parameters.subtitle} />;
+          case 'builtin:label':
+            return <Label key={i} className="absolute" style={props} label={parameters.label} />;
           default: {
             const el = render({
               dynamicHeight: undefined,

@@ -145,8 +145,14 @@ export function recentStatsChartXAxis<T extends 'x'>(
   option: AxisOption<T, ValueAxisBaseOption> = {}
 ): AxisOption<T> {
   return merge<AxisOption<T>>(option, {
-    type: 'time',
+    type: 'category',
     axisLine: {
+      show: false,
+    },
+    axisLabel: {
+      show: false
+    },
+    axisTick: {
       show: false,
     },
     splitLine: {

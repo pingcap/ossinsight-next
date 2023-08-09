@@ -3,8 +3,9 @@ import type {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 import {
+  grid,
   recentStatsChartXAxis,
-  recentStatsLineSeries,
+  recentStatsLineSeries, simpleGrid,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -42,12 +43,14 @@ export default function (
       type: 'value',
       show: false,
     },
+    grid: simpleGrid(2),
     series: [
       recentStatsLineSeries(
-        'current_period_day',
+        'idx',
         'current_period_opened_day_prs',
         {
-          name: 'Opened',
+          name: 'Current period',
+          color: '#D1F935',
           lineStyle: {
             color: {
               x: 0,
@@ -69,10 +72,11 @@ export default function (
         }
       ),
       recentStatsLineSeries(
-        'current_period_day',
-        'current_period_merged_day_prs',
+        'idx',
+        'last_period_merged_day_prs',
         {
-          name: 'Merged',
+          name: 'Last period',
+          color: '#BCCE7480',
           lineStyle: {
             type: 'dashed',
             color: {
@@ -83,7 +87,7 @@ export default function (
               colorStops: [
                 {
                   offset: 1,
-                  color: '#BCCE74', // color at 100%
+                  color: '#BCCE7480', // color at 100%
                 },
               ],
             },
@@ -114,7 +118,7 @@ export default function (
       // },
     ],
     tooltip: {
-      show: true,
+      show: false,
       trigger: 'axis',
       axisPointer: {
         type: 'line',
