@@ -45,7 +45,7 @@ export function renderLabelValue (canvas: Canvas, props: BuiltinProps<{ label: s
   ctx.fillText(label, left, top, width);
 
   const measured = ctx.measureText(label);
-  const fontHeight = measured.fontBoundingBoxAscent + measured.fontBoundingBoxDescent
+  const fontHeight = measured.fontBoundingBoxAscent + measured.fontBoundingBoxDescent;
 
   ctx.font = `bold ${24 * dpr}px`;
   ctx.fillStyle = 'white';

@@ -37,7 +37,7 @@ export default async function renderCompose (width: number, height: number, dpr:
             width: item.width,
             height: item.height,
           },
-        })
+        });
         continue;
       case 'builtin:card-heading':
         renderCardHeader(canvas, {

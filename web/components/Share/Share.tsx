@@ -1,5 +1,5 @@
 import { getOrigin } from '@/components/Share/utils';
-import { widgetMeta, widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
+import { widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
 import { ShareBlock } from '@ossinsight/ui/src/components/ShareBlock';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';

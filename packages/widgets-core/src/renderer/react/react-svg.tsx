@@ -1,6 +1,6 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import clsx from 'clsx';
-import { cloneElement, CSSProperties, ReactElement, useEffect, useRef, useState } from 'react';
+import { cloneElement, ReactElement, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createWidgetContext } from '../../utils/context';
@@ -46,6 +46,6 @@ export default function Svg ({ visualizer, data, parameters, linkedData, classNa
       ...el.props.style,
       ...style,
     },
-    ref: containerRef
-  })
+    ref: containerRef,
+  });
 }
