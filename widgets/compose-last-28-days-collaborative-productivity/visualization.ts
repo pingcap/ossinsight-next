@@ -8,7 +8,6 @@ type Params = {
 type Input = [[any[]], [any[]], [any[]]]
 
 export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
-  console.log(ctx);
   const end = DateTime.fromISO(issues[0].current_period_day);
   const start = DateTime.fromISO(issues[issues.length - 1].current_period_day);
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;

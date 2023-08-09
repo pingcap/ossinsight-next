@@ -8,7 +8,6 @@ type BuiltinProps<P extends Record<string, any>> = {
 
 export function CardHeading ({ className, style, title, subtitle }: BuiltinProps<{ title: ReactNode, subtitle: ReactNode }>) {
   const id = useId();
-  console.log(id, style)
   return (
     <div id={id} className={clsx(className, 'flex items-center justify-between')} style={style}>
       <span style={{ fontSize: 14, lineHeight: 1, fontWeight: 'bold', color: 'rgba(193, 193, 193, 1)' }}>
