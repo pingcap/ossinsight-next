@@ -3,7 +3,7 @@ import { visualizers } from '@ossinsight/widgets';
 import { VisualizerModule, WidgetComposeItem } from '@ossinsight/widgets-types';
 import { LinkedData } from '../../parameters/resolver';
 import { createWidgetContext } from '../../utils/context';
-import { renderCardHeader, renderLabelValue } from './builtin';
+import { renderCardHeader, renderLabelValue, renderAvatarLabel } from './builtin';
 import render from './index';
 
 export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData) {
@@ -43,6 +43,19 @@ export default async function renderCompose (width: number, height: number, dpr:
         renderCardHeader(canvas, {
           title: item.parameters.title,
           subtitle: item.parameters.subtitle,
+          box: {
+            dpr,
+            left: item.left,
+            top: item.top,
+            width: item.width,
+            height: item.height,
+          },
+        });
+        continue;
+      case 'builtin:avatar-label':
+        await renderAvatarLabel(canvas, {
+          label: item.parameters.label,
+          imgSrc: item.parameters.imgSrc,
           box: {
             dpr,
             left: item.left,

@@ -36,3 +36,45 @@ export function Label ({ className, style, label }: BuiltinProps<{ label: ReactN
     </div>
   );
 }
+
+export function AvatarLabel({
+  className,
+  style,
+  label,
+  imgSrc,
+  lineHeight = 20,
+}: BuiltinProps<{ label: string; imgSrc: string; lineHeight?: number }>) {
+  return (
+    <div
+      className={clsx(className, 'flex flex-row items-center gap-1')}
+      style={style}
+    >
+      <div
+        className={clsx(
+          `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
+          `h-[${lineHeight}px] w-[${lineHeight}px]`
+        )}
+        style={{
+          height: `${lineHeight}px`,
+          width: `${lineHeight}px`,
+        }}
+      >
+        <img
+          className='h-full w-full rounded-[inherit] object-cover'
+          src={imgSrc}
+          alt={label}
+        />
+      </div>
+      <span
+        style={{
+          fontSize: 12,
+          lineHeight: 1,
+          fontWeight: 'bold',
+          color: 'white',
+        }}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}

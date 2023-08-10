@@ -1,4 +1,4 @@
-import { Canvas } from '@napi-rs/canvas';
+import { Canvas, loadImage } from '@napi-rs/canvas';
 
 type BuiltinProps<P> = {
   box: {
@@ -50,6 +50,35 @@ export function renderLabelValue (canvas: Canvas, props: BuiltinProps<{ label: s
   ctx.font = `bold ${24 * dpr}px`;
   ctx.fillStyle = 'white';
   ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
+
+  ctx.restore();
+}
+
+export async function renderAvatarLabel(
+  canvas: Canvas,
+  props: BuiltinProps<{ label: string; imgSrc: string }>
+) {
+  const {
+    label,
+    box: { dpr, left, height, top, width },
+    imgSrc,
+  } = props;
+
+  const ctx = canvas.getContext('2d');
+  ctx.save();
+  ctx.strokeStyle = 'none';
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'start';
+
+  ctx.font = `normal ${12 * dpr}px`;
+  ctx.fillStyle = 'white';
+  ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
+
+  const buffer = await fetch(imgSrc).then((res) => res.arrayBuffer());
+  const avatar = await loadImage(buffer, {
+    alt: 'label',
+  });
+  ctx.drawImage(avatar, left, top + 2 * dpr, 20 * dpr, 20 * dpr);
 
   ctx.restore();
 }

@@ -2,7 +2,7 @@ import type {
   EChartsVisualizationConfig,
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
-import { axisTooltip } from '@ossinsight/widgets-utils/src/options';
+import { axisTooltip, simpleGrid } from '@ossinsight/widgets-utils/src/options';
 import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 
 type Params = {
@@ -38,29 +38,21 @@ export default function (
       id: name,
       source: data.sort((a, b) => a.events - b.events),
     })),
+    grid: simpleGrid(2),
     xAxis: {
       type: 'value',
       show: false,
     },
     yAxis: {
       type: 'category',
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLabel: {
-        // align: 'left',
-        formatter: function (value) {
-          return '{' + value + '| } {value|' + value + '}';
-        },
-        rich,
-      },
+      show: false,
     },
     series: [
       {
         type: 'bar',
+        itemStyle: {
+          borderRadius: 10,
+        },
         encode: {
           x: 'events',
           y: 'actor_login',
