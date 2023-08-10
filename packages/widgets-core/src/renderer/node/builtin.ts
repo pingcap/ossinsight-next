@@ -75,7 +75,6 @@ export async function renderAvatarLabel(
   ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
 
   const buffer = await fetch(imgSrc).then((res) => res.arrayBuffer());
-  console.log(`imgSrc`, imgSrc);
   const avatar = await loadImage(buffer, {
     alt: 'label',
   });

@@ -54,6 +54,10 @@ export function AvatarLabel({
           `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
           `h-[${lineHeight}px] w-[${lineHeight}px]`
         )}
+        style={{
+          height: `${lineHeight}px`,
+          width: `${lineHeight}px`,
+        }}
       >
         <img
           className='h-full w-full rounded-[inherit] object-cover'
