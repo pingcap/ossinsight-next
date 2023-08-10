@@ -22,7 +22,6 @@ export default async function renderCompose (width: number, height: number, dpr:
     dpr,
     ...createWidgetContext('server', parameters, linkedData),
   });
-  let i = 0;
 
   for (let item of option) {
     switch (item.widget) {
@@ -64,6 +63,8 @@ export default async function renderCompose (width: number, height: number, dpr:
             height: item.height,
           },
         });
+        continue;
+      case 'builtin:label':
         continue;
       default: {
         const visualizer = await visualizers[item.widget]();

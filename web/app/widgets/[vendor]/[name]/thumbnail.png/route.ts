@@ -70,13 +70,5 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   });
 }
 
-function parseSize (raw: string | undefined | null, min: number, max: number) {
-  const val = Number(raw);
-  if (isFinite(val)) {
-    return Math.max(Math.min(val, max), min);
-  }
-
-  return undefined;
-}
-
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-cache';
