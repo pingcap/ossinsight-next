@@ -9,7 +9,7 @@
   },
   {
     "type": "ref",
-    "widget": "@ossinsight/widget-analyze-repo-recent-commits"
+    "widget": "@ossinsight/widget-analyze-repo-recent-contributors"
   },
   {
     "type": "ref",
