@@ -1,4 +1,4 @@
-import { Canvas, loadImage } from '@napi-rs/canvas';
+import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
 
 type BuiltinProps<P> = {
   box: {
@@ -74,12 +74,22 @@ export async function renderAvatarLabel(
   ctx.fillStyle = 'white';
   label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
 
-  const buffer = await fetch(imgSrc).then((res) => res.arrayBuffer());
-  const avatar = await loadImage(buffer, {
-    alt: 'label',
-  });
-  ctx.drawImage(avatar, left, top + 2 * dpr, 20 * dpr, 20 * dpr);
-
-  ctx.restore();
+  try {
+    const buffer = await fetch(imgSrc, { cache: 'force-cache' }).then((res) => res.arrayBuffer());
+    const avatar = await loadImage(buffer, {
+      alt: 'label',
+    });
+    let circlePath = new Path2D();
+    circlePath.arc(left + 10 * dpr, top + 12 * dpr, 10 * dpr, 0, 2 * Math.PI);
+    ctx.clip(circlePath);
+    ctx.drawImage(avatar, left, top + 2 * dpr, 20 * dpr, 20 * dpr);
+  } catch {
+    ctx.fillStyle = 'rgb(37, 37, 39)';
+    ctx.lineWidth = dpr;
+    ctx.beginPath();
+    ctx.arc(left + 10 * dpr, top + 12 * dpr, 10 * dpr, 0, 2 * Math.PI);
+    ctx.fill();
+  } finally {
+    ctx.restore();
+  }
 }
-
