@@ -30,29 +30,3 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
 function getName (name: string) {
   return name.replace(/^@ossinsight\/widget-/, '');
 }
-
-// TODO - add SEO, extract to separate file
-export const metadata = {
-  openGraph: {
-    title: 'Widgets List',
-    description: 'This project is in development',
-    url: 'https://next.ossinsight.io/',
-    siteName: 'OSS Insight',
-    images: [
-      {
-        url: '/seo-widgets-homepage.jpeg',
-        width: 800,
-        height: 600,
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Widgets List',
-    description: 'This project is in development',
-    creator: '@ossinsight',
-    images: ['/seo-widgets-homepage.jpeg'],
-  },
-};
