@@ -1,0 +1,18 @@
+{
+  "name": "@ossinsight/widget-currently-working-on",
+  "version": "1.0.0",
+  "description": "All personal activities happened on all public repositories in GitHub since 2011. You can check each specific activity type by type with a timeline.",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": [
+    "User",
+    "Reposiory",
+    "Contributions"
+  ],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^",
+    "@types/luxon": "^3.3.1",
+    "luxon": "^3.3.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "start": {
+    "required": true
+  },
+  "end": {
+    "required": true
+  },
+  "axis_field": {
+    "required": true
+  },
+  "value_field": {
+    "required": true
+  },
+  "label_field": {
+    "required": true
+  },
+  "label_order": {
+  }
+}

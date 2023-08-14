@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { EventTypeSelector } from './EventTypeSelector';
 import {
   Select as SlectComponent,
   SelectItem,
@@ -83,3 +84,10 @@ export const Default = {
 //     children: [<ActivityTypeSelector showLabel />],
 //   },
 // } satisfies StoryObj<any>;
+
+// export const EventType = {
+//   args: {
+//     useSimpleSelect: true,
+//     children: [<EventTypeSelector showLabel/>]
+//   }
+// } satisfies StoryObj<any>

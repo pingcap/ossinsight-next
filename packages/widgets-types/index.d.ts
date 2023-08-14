@@ -17,7 +17,7 @@ export interface WidgetBaseContext<P extends Record<string, any> = Record<string
 export interface LinkedDataContext {
   getRepo (id: number): { id: number, fullName: string } | undefined;
 
-  getUser (id: number): any;
+  getUser (id: number): { id: number, login: string } | undefined;
 
   getCollection (id: number): any;
 
