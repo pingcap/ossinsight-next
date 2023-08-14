@@ -411,13 +411,7 @@ importers:
         specifier: 18.2.15
         version: 18.2.15
 
-  widgets/collection-annually-ranking:
-    devDependencies:
-      '@ossinsight/widgets-parent':
-        specifier: workspace:^
-        version: link:..
-
-  widgets/compose-last-28-days-collaborative-productivity:
+  widgets/basic-bubbles-chart:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
@@ -425,11 +419,20 @@ importers:
       '@types/luxon':
         specifier: ^3.3.1
         version: 3.3.1
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
       luxon:
         specifier: ^3.3.0
         version: 3.3.0
 
-  widgets/compose-last-28-days-contributors:
+  widgets/collection-annually-ranking:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-last-28-days-collaborative-productivity:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
@@ -454,6 +457,18 @@ importers:
         version: 3.3.0
 
   widgets/compose-recent-top-contributors:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.3.0
+
+  widgets/currently-working-on:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^

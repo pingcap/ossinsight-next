@@ -25,12 +25,12 @@ export function topBottomLayoutGrid(vs?: boolean) {
   ];
 }
 
-export function simpleGrid (padding: number): GridOption {
+export function simpleGrid (padding: number, containLabel = false): GridOption {
   return {
     left: padding,
     top: padding,
     right: padding,
     bottom: padding,
-    containLabel: false,
+    containLabel: containLabel,
   };
 }

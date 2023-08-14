@@ -1,6 +1,6 @@
 import { ActivityTypeSelector } from '@ossinsight/ui/src/components/Selector/ActivityTypeSelector';
+import { EventTypeSelector } from '@ossinsight/ui/src/components/Selector/EventTypeSelector';
 import { ParameterDefinition } from '@ossinsight/widgets-types';
-import { useId } from 'react';
 import { CollectionIdInput } from './collection-id';
 import { RepoIdInput } from './repo-id';
 import { TimePeriodSelect, TimeZoneSelect } from './time';
@@ -13,6 +13,7 @@ const types = {
   'time-period': TimePeriodSelect,
   'time-zone': TimeZoneSelect,
   'activity-type': ActivityTypeSelector,
+  'event-type': EventTypeSelector,
 };
 
 export function ParamInput ({ id, config, value, onValueChange }: { id: string, config: ParameterDefinition, value: any, onValueChange: (value: any) => void }) {
