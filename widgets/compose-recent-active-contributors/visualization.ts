@@ -757,7 +757,7 @@ export default function (
         title: 'Active Contributors',
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
-      grid(5, 15,
+      grid(5, 20,
         ...sortedContributors
           .map(item => widget('builtin:avatar-label', undefined, {
             label: '', imgSrc: item.contributor
