@@ -56,10 +56,10 @@ export function renderLabelValue (canvas: Canvas, props: BuiltinProps<{ label: s
 
 export async function renderAvatarLabel(
   canvas: Canvas,
-  props: BuiltinProps<{ label: string; imgSrc: string }>
+  props: BuiltinProps<{ label?: string; imgSrc: string }>
 ) {
   const {
-    label,
+    label = '',
     box: { dpr, left, height, top, width },
     imgSrc,
   } = props;
@@ -72,7 +72,7 @@ export async function renderAvatarLabel(
 
   ctx.font = `normal ${12 * dpr}px`;
   ctx.fillStyle = 'white';
-  ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
+  label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
 
   const buffer = await fetch(imgSrc).then((res) => res.arrayBuffer());
   const avatar = await loadImage(buffer, {
