@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-repo-recent-contributors",
+  "version": "1.0.0",
+  "description": "[Last 28 days Stats] Show the recent contributors of a GitHub repository.",
+  "keywords": ["Repository", "Contributors"],
+  "author": "OSSInsight",
+  "type": "module",
+  "main": "visualization.ts",
+  "devDependencies": {
+    "@ossinsight/widgets-types": "workspace:^"
+  }
+}

@@ -89,7 +89,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
       {items.map(({ parameters, widget, data, ...props }, i) => {
         switch (widget) {
           case 'builtin:label-value':
-            return <LabelValue key={i} className="absolute" style={props} label={parameters.label} value={parameters.value} />;
+            return <LabelValue key={i} className="absolute" style={{ ...props, zIndex: 1 }} label={parameters.label} value={parameters.value} />;
           case 'builtin:card-heading':
             return <CardHeading key={i} className="absolute" style={props} title={parameters.title} subtitle={parameters.subtitle} />;
           case 'builtin:label':

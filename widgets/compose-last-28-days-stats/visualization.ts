@@ -8,7 +8,7 @@ type Params = {
 
 type Input = [[any[]], [any[]], [any[]], [any[]]]
 
-export default function ([[issues], [prs], [commits], [stars]]: Input, ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
+export default function ([[issues], [prs], [contributors], [stars]]: Input, ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
   const end = DateTime.fromISO(issues[0].current_period_day);
   const start = DateTime.fromISO(issues[issues.length - 1].current_period_day);
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
@@ -38,7 +38,7 @@ export default function ([[issues], [prs], [commits], [stars]]: Input, ctx: Widg
         item('@ossinsight/widget-analyze-repo-recent-pull-requests', 'PRs created', 'current_period_opened_prs', prs),
       ).gap(HORIZONTAL_SPACING).flex(),
       horizontal(
-        item('@ossinsight/widget-analyze-repo-recent-commits', 'Commits', 'current_period_commits', commits),
+        item('@ossinsight/widget-analyze-repo-recent-contributors', 'Active Contributors', 'current_period_contributors', contributors),
         item('@ossinsight/widget-analyze-repo-recent-issues', 'Issues Opened', 'current_period_opened_issues', issues),
       ).gap(HORIZONTAL_SPACING).flex(),
     ).padding([0, PADDING, PADDING]).gap(SPACING),
