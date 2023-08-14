@@ -23,7 +23,7 @@ export default async function renderCompose (width: number, height: number, dpr:
     ...createWidgetContext('server', parameters, linkedData),
   });
 
-  for (let item of option) {
+  const all = option.map(async (item) => {
     switch (item.widget) {
       case 'builtin:label-value':
         renderLabelValue(canvas, {
@@ -37,7 +37,7 @@ export default async function renderCompose (width: number, height: number, dpr:
             height: item.height,
           },
         });
-        continue;
+        break;
       case 'builtin:card-heading':
         renderCardHeader(canvas, {
           title: item.parameters.title,
@@ -50,7 +50,7 @@ export default async function renderCompose (width: number, height: number, dpr:
             height: item.height,
           },
         });
-        continue;
+        break;
       case 'builtin:avatar-label':
         await renderAvatarLabel(canvas, {
           label: item.parameters.label,
@@ -63,16 +63,18 @@ export default async function renderCompose (width: number, height: number, dpr:
             height: item.height,
           },
         });
-        continue;
+        break;
       case 'builtin:label':
-        continue;
+        break;
       default: {
         const visualizer = await visualizers[item.widget]();
         const subCanvas = await render({ width: item.width / dpr, height: item.height / dpr, dpr: dpr, visualizer, data: item.data, parameters: item.parameters, linkedData, type: visualizer.type });
         ctx.drawImage(subCanvas, item.left, item.top, item.width, item.height);
       }
     }
-  }
+  });
+
+  await Promise.all(all);
 
   return canvas;
 }

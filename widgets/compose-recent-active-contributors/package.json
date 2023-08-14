@@ -1,0 +1,21 @@
+{
+  "name": "@ossinsight/widget-compose-recent-active-contributors",
+  "version": "1.0.0",
+  "description": "Show the recent active contributors of a GitHub repository.",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": [
+    "Repository",
+    "Contributors"
+  ],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^",
+    "@types/lodash": "^4.14.195",
+    "@types/luxon": "^3.3.1",
+    "luxon": "^3.3.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}

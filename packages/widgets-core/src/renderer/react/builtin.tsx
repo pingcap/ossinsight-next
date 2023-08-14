@@ -40,13 +40,15 @@ export function Label ({ className, style, label }: BuiltinProps<{ label: ReactN
 export function AvatarLabel({
   className,
   style,
-  label,
-  imgSrc,
+  label = '',
+  imgSrc = '',
   lineHeight = 20,
-}: BuiltinProps<{ label: string; imgSrc: string; lineHeight?: number }>) {
+}: BuiltinProps<{ label?: string; imgSrc?: string; lineHeight?: number }>) {
   return (
     <div
-      className={clsx(className, 'flex flex-row items-center gap-1')}
+      className={clsx(className, 'flex flex-row items-center', {
+        ['gap-1']: !!label,
+      })}
       style={style}
     >
       <div
@@ -59,11 +61,13 @@ export function AvatarLabel({
           width: `${lineHeight}px`,
         }}
       >
-        <img
-          className='h-full w-full rounded-[inherit] object-cover'
-          src={imgSrc}
-          alt={label}
-        />
+        {imgSrc && (
+          <img
+            className='h-full w-full rounded-[inherit] object-cover'
+            src={imgSrc}
+            alt={label}
+          />
+        )}
       </div>
       <span
         style={{
