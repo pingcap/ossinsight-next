@@ -31,7 +31,7 @@ export default function (
       id: name,
       source: data,
     })),
-    // grid: simpleGrid(2),
+    grid: { ...simpleGrid(2), containLabel: true },
     xAxis: {
       type: 'time',
       axisLine: {
@@ -98,6 +98,12 @@ export default function (
     },
     legend: {
       show: true,
+      left: 0,
+      icon: 'circle',
+      itemStyle: {
+        color: '#E47C42',
+      },
+      formatter: (name) => `Count all different types of events triggered by activity(pull a request,etc.) on GitHub in ${name}`
     },
   };
 }
