@@ -738,6 +738,7 @@ export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
+  // TODO - update this to use the input data
   const inputItems = MOCK_INPUT;
   const end = DateTime.fromISO(inputItems[0].contribution_date);
   const start = DateTime.fromISO(
@@ -751,8 +752,6 @@ export default function (
   const PADDING = autoSize(ctx, 36);
   const HEADER_HEIGHT = autoSize(ctx, 48);
   const HORIZONTAL_SPACING = autoSize(ctx, 28);
-
-  console.log('WIDTH', WIDTH);
 
   const uniqueContributors = _.uniqBy(inputItems, 'contributor');
   const sortedContributors = _.orderBy(
