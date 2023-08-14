@@ -366,6 +366,12 @@ importers:
         specifier: workspace:^
         version: link:../../packages/widgets-types
 
+  widgets/analyze-repo-recent-contributors:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-repo-recent-issues:
     devDependencies:
       '@ossinsight/widgets-types':
