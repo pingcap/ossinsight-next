@@ -17,19 +17,44 @@ export interface BaseLayout {
   layout: string;
   padding?: Spacing;
   gap?: number;
+
   // fixed size on axis, default is flexible (undefined)
+  // after compute: computed size, used by parent flex layout.
   size?: number;
-  // like flex-grow, if size not set. default to `1`
+
+  // like flex-grow, if size not set. default to `1`, used by parent flex layout.
   grow?: number;
+
+  // TODO: impl if needed
+  // // used by parent grid layout, default to 1
+  // colSpan?: number;
+  // rowSpan?: number;
+  //
+  // // used by parent grid layout, need to be provided before compute
+  // col?: number;
+  // row?: number;
+
   children: Layout[];
 }
 
-export interface VerticalLayout extends BaseLayout {
-  layout: 'vertical';
+export interface FlexBaseLayout extends BaseLayout {
+  layout: 'flex';
+  direction: 'vertical' | 'horizontal';
 }
 
-export interface HorizontalLayout extends BaseLayout {
-  layout: 'horizontal';
+export interface VerticalLayout extends FlexBaseLayout {
+  direction: 'vertical';
+}
+
+export interface HorizontalLayout extends FlexBaseLayout {
+  direction: 'horizontal';
+}
+
+export interface GridLayout extends BaseLayout {
+  layout: 'grid';
+  cols: number;
+  rows: number;
+  children: Layout[];
 }
 
 export interface WidgetLayout extends BaseLayout {
@@ -39,13 +64,23 @@ export interface WidgetLayout extends BaseLayout {
   data: any;
 }
 
-export type Layout = VerticalLayout | HorizontalLayout | WidgetLayout;
+export type Layout = VerticalLayout | HorizontalLayout | GridLayout | WidgetLayout;
 
-export class LayoutBuilder<L extends Layout> {
+export class LayoutBuilder<L extends BaseLayout> {
   layout: L;
 
   constructor (layout: L) {
     this.layout = layout;
+  }
+
+  gap (size: number) {
+    this.layout.gap = size;
+    return this;
+  }
+
+  padding (padding: Spacing) {
+    this.layout.padding = padding;
+    return this;
   }
 
   fix (size: number) {
@@ -60,20 +95,12 @@ export class LayoutBuilder<L extends Layout> {
     return this;
   }
 
-  gap (size: number) {
-    this.layout.gap = size;
-    return this;
-  }
-
-  padding (padding: Spacing) {
-    this.layout.padding = padding;
-    return this;
-  }
 }
 
 export function vertical (...children: Array<Layout | LayoutBuilder<any>>): LayoutBuilder<VerticalLayout> {
   return new LayoutBuilder({
-    layout: 'vertical',
+    layout: 'flex',
+    direction: 'vertical',
     padding: 0,
     gap: 0,
     size: undefined,
@@ -84,11 +111,25 @@ export function vertical (...children: Array<Layout | LayoutBuilder<any>>): Layo
 
 export function horizontal (...children: Array<Layout | LayoutBuilder<any>>): LayoutBuilder<HorizontalLayout> {
   return new LayoutBuilder({
-    layout: 'horizontal',
+    layout: 'flex',
+    direction: 'horizontal',
     padding: 0,
     gap: 0,
     size: undefined,
     grow: undefined,
+    children: children.map(l => l instanceof LayoutBuilder ? l.layout : l),
+  });
+}
+
+export function grid (rows: number, cols: number, ...children: Array<Layout | LayoutBuilder<any>>): LayoutBuilder<GridLayout> {
+  return new LayoutBuilder({
+    layout: 'grid',
+    padding: 0,
+    gap: 0,
+    size: undefined,
+    grow: undefined,
+    rows,
+    cols,
     children: children.map(l => l instanceof LayoutBuilder ? l.layout : l),
   });
 }
@@ -122,11 +163,10 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
         parameters: layout.parameters,
         data: layout.data,
       }];
-    case 'vertical':
-    case 'horizontal': {
+    case 'flex': {
       let restSize: number;
 
-      if (layout.layout === 'vertical') {
+      if (layout.direction === 'vertical') {
         restSize = height - padding.top - padding.bottom - layout.gap * (layout.children.length - 1);
       } else {
         restSize = width - padding.left - padding.right - layout.gap * (layout.children.length - 1);
@@ -135,10 +175,10 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
       let flexibleChildren: Array<{ index: number, grow: number }> = [];
       for (let i = 0; i < layout.children.length; i++) {
         let child = layout.children[i];
-        if (child.size > 0) {
+        if ('size' in child && child.size > 0) {
           restSize -= child.size;
         } else {
-          flexibleChildren.push({ index: i, grow: child.grow > 0 ? child.grow : 1 });
+          flexibleChildren.push({ index: i, grow: 'grow' in child && child.grow > 0 ? child.grow : 1 });
         }
       }
       if (restSize > 0 && flexibleChildren.length > 0) {
@@ -153,7 +193,7 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
         }
       }
 
-      if (layout.layout === 'vertical') {
+      if (layout.direction === 'vertical') {
         let sum = 0;
         return layout.children.flatMap((child, i) => {
           const result = computeLayout(child, left + padding.left, top + padding.top + gap * i + sum, width - padding.left - padding.right, child.size);
@@ -168,6 +208,27 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
           return result;
         });
       }
+    }
+    case 'grid': {
+      const { rows, cols } = layout;
+      const cellWidth = (width - padding.left - padding.right - gap * (cols - 1)) / cols;
+      const cellHeight = (height - padding.top - padding.bottom - gap * (rows - 1)) / rows;
+
+      let k = 0;
+      const items: WidgetComposeItem[] = [];
+      rootFor: for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+          if (k >= layout.children.length) {
+            break rootFor;
+          }
+          const cellTop = top + padding.top + (gap + cellHeight) * i;
+          const cellLeft = left + padding.left + (gap + cellWidth) * j;
+
+          items.push(...computeLayout(layout.children[k], cellLeft, cellTop, cellWidth, cellHeight));
+          k++;
+        }
+      }
+      return items;
     }
     default:
       console.warn(`unknown layout type ${layout}`);

@@ -1,16 +1,7 @@
-import type {
-  ComposeVisualizationConfig,
-  WidgetVisualizerContext,
-} from '@ossinsight/widgets-types';
-import { DateTime } from 'luxon';
+import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { autoSize, computeLayout, grid, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import _ from 'lodash';
-import {
-  autoSize,
-  computeLayout,
-  horizontal,
-  vertical,
-  widget,
-} from '@ossinsight/widgets-utils/src/compose';
+import { DateTime } from 'luxon';
 
 type Params = {
   repo_id: string;
@@ -736,13 +727,13 @@ const MOCK_INPUT: DataPoint[] = [
 
 export default function (
   [contributors]: Input,
-  ctx: WidgetVisualizerContext<Params>
+  ctx: WidgetVisualizerContext<Params>,
 ): ComposeVisualizationConfig {
   // TODO - update this to use the input data
   const inputItems = MOCK_INPUT;
   const end = DateTime.fromISO(inputItems[0].contribution_date);
   const start = DateTime.fromISO(
-    inputItems[inputItems.length - 1].contribution_date
+    inputItems[inputItems.length - 1].contribution_date,
   );
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
 
@@ -757,7 +748,7 @@ export default function (
   const sortedContributors = _.orderBy(
     uniqueContributors,
     'contribution_date',
-    'desc'
+    'desc',
   );
   const chunkedContributors = _.chunk(sortedContributors, CHUNK_SIZE);
 
@@ -767,41 +758,18 @@ export default function (
         title: 'Active Contributors',
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
-      horizontal(
-        ...chunkedContributors.map((chunk) => {
-          if (chunk.length < CHUNK_SIZE) {
-            const diff = CHUNK_SIZE - chunk.length;
-            for (let i = 0; i < diff; i++) {
-              chunk.push({
-                contributor: '',
-                total_contributions: 0,
-                contribution_date: '',
-              });
-            }
-          }
-          return vertical(
-            ...chunk.map((item) => {
-              return widget('builtin:avatar-label', undefined, {
-                label: '',
-                imgSrc: item.contributor
-                  ? `https://github.com/${item.contributor}.png`
-                  : '',
-              });
-            })
-          )
-            .gap(HORIZONTAL_SPACING)
-            .flex();
-        })
-      )
-        .gap(HORIZONTAL_SPACING)
-        .flex()
-    )
-      .padding([0, PADDING, PADDING])
-      .gap(SPACING),
+      grid(5, 10,
+        ...sortedContributors
+          .map(item => widget('builtin:avatar-label', undefined, {
+            label: '', imgSrc: item.contributor
+              ? `https://github.com/${item.contributor}.png`
+              : '',
+          }))).gap(autoSize(ctx, 4)),
+    ).padding([0, PADDING, PADDING / 2, PADDING]),
     0,
     0,
     WIDTH,
-    HEIGHT
+    HEIGHT,
   );
 }
 
