@@ -1,4 +1,5 @@
 import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { autoSize, computeLayout, horizontal, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -14,134 +15,39 @@ export default function ([[issues], [prs], [commits], [stars]]: Input, ctx: Widg
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const SPACING = 8 * ctx.dpr;
-  const PADDING = 18 * ctx.dpr;
-  const HEADER_HEIGHT = 24 * ctx.dpr;
-  const HORIZONTAL_SPACING = 32 * ctx.dpr;
+  const SPACING = autoSize(ctx, 16);
+  const PADDING = autoSize(ctx, 36);
+  const HEADER_HEIGHT = autoSize(ctx, 48);
+  const HORIZONTAL_SPACING = autoSize(ctx, 64);
 
-  //  | PADDING | **LABEL** | SPC | **CHART** | H_S | **LABEL** | SPC | **CHART** | PADDING |
-  //  | PADDING | **CHILD**                   | H_S | **CHILD                     | PADDING |
-  const CHILD_WIDTH = (WIDTH - 2 * PADDING - HORIZONTAL_SPACING) / 2;
+  const item = (name: string, label: string, valueKey: string, data: any) => (
+    horizontal(
+      widget('builtin:label-value', undefined, { label: label, value: data[0][valueKey] })
+        .flex(0.3),
+      widget(name, [data], ctx.parameters)
+        .flex(0.7),
+    ).gap(SPACING)
+  );
 
-  //  --------
-  //  HEADER
-  //  --------
-  //  SPACING
-  //  --------
-  //  CHILD
-  //  --------
-  //  SPACING
-  //  --------
-  //  CHILD
-  //  --------
-  //  PADDING
-  //  --------
-  const CHILD_HEIGHT = (HEIGHT - HEADER_HEIGHT - SPACING * 2 - PADDING) / 2;
+  return computeLayout(
+    vertical(
+      widget('builtin:card-heading', undefined, { title: 'Last 28 Days Stats', subtitle: `Date: ${subtitle}` })
+        .fix(HEADER_HEIGHT),
+      horizontal(
+        item('@ossinsight/widget-analyze-repo-recent-stars', 'Stars earned', 'current_period_stars', stars),
+        item('@ossinsight/widget-analyze-repo-recent-pull-requests', 'PRs created', 'current_period_opened_prs', prs),
+      ).gap(HORIZONTAL_SPACING).flex(),
+      horizontal(
+        item('@ossinsight/widget-analyze-repo-recent-commits', 'Commits', 'current_period_commits', commits),
+        item('@ossinsight/widget-analyze-repo-recent-issues', 'Issues Opened', 'current_period_opened_issues', issues),
+      ).gap(HORIZONTAL_SPACING).flex(),
+    ).padding([0, PADDING, PADDING]).gap(SPACING),
+    0,
+    0,
+    WIDTH,
+    HEIGHT,
+  );
 
-  const LABEL_WIDTH = (CHILD_WIDTH - SPACING) * 0.3;
-  const CHART_WIDTH = CHILD_WIDTH - SPACING - LABEL_WIDTH;
-
-  const CHART_0_LEFT = PADDING + LABEL_WIDTH + SPACING;
-  const CHART_1_LEFT = PADDING + CHILD_WIDTH + HORIZONTAL_SPACING + LABEL_WIDTH + SPACING
-
-  return [
-    {
-      widget: 'builtin:card-heading',
-      data: undefined,
-      parameters: {
-        title: 'Last 28 Days Stats',
-        subtitle: `Date: ${subtitle}`,
-      },
-      left: PADDING,
-      top: 0,
-      width: WIDTH - 2 * PADDING,
-      height: HEADER_HEIGHT,
-    },
-    {
-      widget: 'builtin:label-value',
-      data: undefined,
-      parameters: {
-        label: 'Star earned',
-        value: stars[0].current_period_stars,
-      },
-      left: PADDING,
-      top: HEADER_HEIGHT + SPACING,
-      width: LABEL_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: 'builtin:label-value',
-      data: undefined,
-      parameters: {
-        label: 'Commits',
-        value: commits[0].current_period_commits,
-      },
-      left: PADDING,
-      top: HEADER_HEIGHT + SPACING + CHILD_HEIGHT + SPACING,
-      width: LABEL_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: 'builtin:label-value',
-      data: undefined,
-      parameters: {
-        label: 'PR Created',
-        value: prs[0].current_period_opened_prs,
-      },
-      left: PADDING + CHILD_WIDTH + HORIZONTAL_SPACING,
-      top: HEADER_HEIGHT + SPACING,
-      width: LABEL_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: 'builtin:label-value',
-      data: undefined,
-      parameters: {
-        label: 'Issue Opened',
-        value: issues[0].current_period_opened_issues,
-      },
-      left: PADDING + CHILD_WIDTH + HORIZONTAL_SPACING,
-      top: HEADER_HEIGHT + SPACING + CHILD_HEIGHT + SPACING,
-      width: LABEL_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-stars',
-      data: [stars],
-      parameters: ctx.parameters,
-      left: CHART_0_LEFT,
-      top: HEADER_HEIGHT + SPACING,
-      width: CHART_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests',
-      data: [prs],
-      parameters: ctx.parameters,
-      left: CHART_1_LEFT,
-      top: HEADER_HEIGHT + SPACING,
-      width: CHART_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-commits',
-      data: [commits],
-      parameters: ctx.parameters,
-      left: CHART_0_LEFT,
-      top: HEADER_HEIGHT + SPACING + SPACING + CHILD_HEIGHT,
-      width: CHART_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-issues',
-      data: [issues],
-      parameters: ctx.parameters,
-      left: CHART_1_LEFT,
-      top: HEADER_HEIGHT + SPACING + SPACING + CHILD_HEIGHT,
-      width: CHART_WIDTH,
-      height: CHILD_HEIGHT,
-    },
-  ];
 }
 
 export const type = 'compose';

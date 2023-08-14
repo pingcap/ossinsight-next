@@ -1,18 +1,39 @@
-import { widgetMeta, widgetParameterDefinitions } from '@/utils/widgets';
+import { widgetMeta, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
 import { WidgetMeta } from '@ossinsight/widgets-types';
 import Image from 'next/image';
 
-export async function WidgetPreview ({ name }: { name: string }) {
+export async function WidgetPreview ({ name, card }: { name: string, card?: boolean }) {
   const widget = widgetMeta(name);
   const imageUsp = new URLSearchParams(await dynamicParameters(name));
-  imageUsp.set('image_size', 'preview_image')
+
+  if (card) {
+    const { width, height } = await widgetVisualizer(name);
+    return (
+      <Image
+        className="block"
+        style={{
+          borderRadius: 12,
+          boxShadow: '0px 4px 4px 0px rgba(36, 39, 56, 0.25)',
+          border: '2px solid #464459'
+        }}
+        loading="lazy"
+        width={width! + 6}
+        height={height! + 6}
+        quality={100}
+        src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
+        alt="preview"
+      />
+    );
+  }
+
+  imageUsp.set('image_size', 'preview_image');
 
   return (
     <div className="rounded-md relative overflow-hidden bg-popover border w-[320px] transition-shadow hover:shadow-lg">
-      <div className='flex items-center justify-center bg-body' style={{ height: 240 }}>
+      <div className="flex items-center justify-center bg-body" style={{ height: 240 }}>
         <Image className="block" loading="lazy" width={320} height={240} quality={100} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
       </div>
-      <div className='w-full h-[72px]'/>
+      <div className="w-full h-[72px]" />
       <div className="p-2 border-t bg-toolbar absolute bottom-0 left-0 w-full translate-y-[calc(100%-72px)] hover:translate-y-0 transition">
         <h2 className="text-lg font-bold text-title">{formatName(getName(widget.name))}</h2>
         {widget.keywords?.length && (
@@ -53,16 +74,15 @@ function renderAuthor (meta: WidgetMeta) {
   }
 }
 
-
 export async function dynamicParameters (name: string) {
   const params = await widgetParameterDefinitions(name);
   const usp = Object.entries(params).reduce((usp, [key, config]) => {
     if (config.default != null) {
-      usp.set(key, String(config.default))
+      usp.set(key, String(config.default));
     }
     return usp;
-  }, new URLSearchParams())
-  return usp.toString()
+  }, new URLSearchParams());
+  return usp.toString();
 }
 
 

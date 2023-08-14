@@ -23,8 +23,8 @@ export function CardHeading ({ className, style, title, subtitle }: BuiltinProps
 export function LabelValue ({ className, style, label, value }: BuiltinProps<{ label: ReactNode, value: ReactNode }>) {
   return (
     <div className={clsx(className, 'flex flex-col items-start gap-1')} style={style}>
-      <span style={{ fontSize: 12, lineHeight: 1, color: 'white' }}>{label}</span>
-      <span style={{ fontSize: 24, lineHeight: 1, fontWeight: 'bold', color: 'white' }}>{value}</span>
+      <span style={{ fontSize: 12, lineHeight: 1, color: 'white', overflow: 'visible', whiteSpace: 'nowrap' }}>{label}</span>
+      <span style={{ fontSize: 24, lineHeight: 1, fontWeight: 'bold', color: 'white', overflow: 'visible', whiteSpace: 'nowrap' }}>{value}</span>
     </div>
   );
 }

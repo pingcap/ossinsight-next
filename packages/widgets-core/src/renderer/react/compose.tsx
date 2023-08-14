@@ -16,7 +16,7 @@ interface ComposeComponentProps extends WidgetReactVisualizationProps {
   linkedData: LinkedData;
 }
 
-const dpr = typeof devicePixelRatio === 'number' ? devicePixelRatio : 1;
+const dpr = typeof devicePixelRatio === 'number' ? devicePixelRatio : 2;
 
 export default function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData }: ComposeComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);

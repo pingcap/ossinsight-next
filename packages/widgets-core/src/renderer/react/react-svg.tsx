@@ -17,7 +17,7 @@ export default function Svg ({ visualizer, data, parameters, linkedData, classNa
   const [size, setSize] = useState(() => ({
     width: 0,
     height: 0,
-    dpr: typeof devicePixelRatio === 'number' ? devicePixelRatio : 1,
+    dpr: typeof devicePixelRatio === 'number' ? devicePixelRatio : 2,
   }));
 
   useEffect(() => {
