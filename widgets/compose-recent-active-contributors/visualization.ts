@@ -750,7 +750,6 @@ export default function (
     'contribution_date',
     'desc',
   );
-  const chunkedContributors = _.chunk(sortedContributors, CHUNK_SIZE);
 
   return computeLayout(
     vertical(
@@ -758,7 +757,7 @@ export default function (
         title: 'Active Contributors',
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
-      grid(5, 10,
+      grid(5, 15,
         ...sortedContributors
           .map(item => widget('builtin:avatar-label', undefined, {
             label: '', imgSrc: item.contributor
