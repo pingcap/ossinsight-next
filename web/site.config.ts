@@ -7,16 +7,7 @@ export default defineSiteConfig({
   },
   widgets: {
     tags: {
-      categories: [
-        {
-          name: 'Target',
-          tags: ['Repository', 'User', 'Collection', 'Company'],
-        },
-        {
-          name: 'Metrics',
-          tags: ['Stars', 'Pull Requests', 'Issues', 'Pushes', 'Commits', 'Contributions'],
-        },
-      ]
+      filters: ['Stars', 'Pull Requests', 'Issues', 'Pushes', 'Commits', 'Contributions']
     }
   },
   header: {

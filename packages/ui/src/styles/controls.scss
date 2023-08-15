@@ -5,7 +5,7 @@
 
   --tw-shadow-color: #{$color};
 
-  &:focus {
+  &:focus, &:focus-within {
     @apply shadow-control;
   }
 }
@@ -13,7 +13,7 @@
 @mixin control-border($color: $color-primary) {
   @apply border;
 
-  &:focus {
+  &:focus, &:focus-within {
     border-color: $color;
   }
 }

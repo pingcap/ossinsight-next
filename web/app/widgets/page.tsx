@@ -1,18 +1,20 @@
-import Filter from '@/app/filter';
+import Filter from '@/app/widgets/Filter';
 import { dynamicParameters, WidgetPreview } from '@/components/Widget';
-import { filteredWidgetsNames, widgetParameterDefinitions } from '@/utils/widgets';
+import { filteredWidgetsNames } from '@/utils/widgets';
+import Heading from './Heading.mdx';
 import Link from 'next/link';
 
 export default async function Home ({ searchParams }: { searchParams: any }) {
   const config = {
     search: searchParams['q'] ?? '',
-    tags: (typeof searchParams['tag'] === 'string' ? [searchParams['tag']] : searchParams['tag']) ?? [],
+    tag: (typeof searchParams['tag'] === 'string' ? searchParams['tag'] : undefined),
   };
 
   return (
     <main className="container mx-auto py-4 px-2">
-      <h1 className="text-3xl font-bold mb-4 text-title">This project is in development</h1>
-      <h2 className="text-xl mb-2 text-subtitle">Widgets list</h2>
+      <article className='prose prose-invert max-w-none'>
+        <Heading />
+      </article>
       <Filter config={config} />
       <ul className="mt-8 flex justify-center gap-4 flex-wrap">
         {await Promise.all(filteredWidgetsNames(config).map(async name => (

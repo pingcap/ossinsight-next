@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdx-js/loader": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
     "@napi-rs/canvas": "^0.1.41",
+    "@next/mdx": "13.4.12",
     "@ossinsight/widgets-core": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",
     "@types/node": "20.4.2",
@@ -23,6 +26,7 @@
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "remark-breaks": "^3.0.3",
     "tailwindcss": "3.3.3",
     "typescript": "^5.1.6"
   },
@@ -30,6 +34,8 @@
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-next": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/mdx": "^2.0.5",
     "bootstrap-icons": "^1.10.5",
     "sass": "^1.63.6"
   }

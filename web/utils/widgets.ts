@@ -31,7 +31,7 @@ export function widgetParameterDefinitions (name: string) {
   return cachedImport(parameterDefinitions[name]);
 }
 
-export function filteredWidgetsNames ({ search, tags }: WidgetsFilterConfig) {
+export function filteredWidgetsNames ({ search, tag = '🔥Popular' }: WidgetsFilterConfig) {
   return Object.entries(widgets)
     .filter(([name, meta]) => {
       if (meta.private) {
@@ -52,8 +52,8 @@ export function filteredWidgetsNames ({ search, tags }: WidgetsFilterConfig) {
         found &&= true;
       }
 
-      if (tags.length > 0) {
-        found = !tags.some(tag => !meta.keywords?.includes(tag));
+      if (tag && tag !== 'All') {
+        found = !!meta.keywords?.includes(tag)
       } else {
         found &&= true;
       }
@@ -62,5 +62,3 @@ export function filteredWidgetsNames ({ search, tags }: WidgetsFilterConfig) {
     })
     .map(([name]) => name);
 }
-
-export const allWidgetKeywords = Array.from(new Set(Object.values(widgets).flatMap(meta => meta.keywords ?? []))).sort();

@@ -1,5 +1,7 @@
-const {withWidgets} = require("@ossinsight/widgets-next");
-const withSvgr = require('next-plugin-svgr')
+import {withWidgets} from "@ossinsight/widgets-next";
+import createMDX from "@next/mdx";
+import withSvgr from "next-plugin-svgr";
+import remarkBreaks from "remark-breaks";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -25,4 +27,10 @@ const nextConfig = {
 }
 
 
-module.exports = withWidgets(withSvgr(nextConfig))
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkBreaks]
+  }
+});
+
+export default withWidgets(withSvgr(withMDX(nextConfig)));

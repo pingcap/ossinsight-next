@@ -4,6 +4,30 @@
   .TextInput {
     @apply px-2 py-1 bg-control text-active text-sm transition-all;
     @include control-shadow;
-    @include control-border;
+
+    input, textarea {
+      @apply text-sm bg-control outline-none;
+    }
+
+    ::placeholder {
+      @apply text-disabled text-xs;
+    }
+
+    &-lg {
+      @apply px-4 py-2 text-base;
+
+      input, textarea {
+        @apply text-base;
+      }
+
+      ::placeholder {
+        @apply text-lg;
+      }
+    }
+
+    &:not(.TextInput-borderless) {
+      @include control-border;
+    }
+
   }
 }

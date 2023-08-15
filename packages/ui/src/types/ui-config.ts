@@ -55,7 +55,7 @@ export interface SiteTagDetails {
 }
 
 export interface SiteWidgetsTagsConfig {
-  categories: SiteWidgetTagCategory [];
+  filters: string[],
   details?: SiteTagDetails[],
 }
 
