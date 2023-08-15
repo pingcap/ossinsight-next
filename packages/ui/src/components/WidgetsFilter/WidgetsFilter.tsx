@@ -62,7 +62,6 @@ export function WidgetsFilter (props: WidgetsFilterProps) {
           <input className="flex-1" value={search} onChange={handleSearchChange} placeholder="Search" />
         </label>
       </div>
-
     </div>
   );
 }

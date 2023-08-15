@@ -14,6 +14,7 @@ const nextConfig = {
       },
     ]
   },
+  pageExtensions: ['ts', 'tsx', 'mdx'],
   experimental: {
     externalDir: true,
     serverComponentsExternalPackages: ['@napi-rs/canvas'],

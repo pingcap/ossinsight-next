@@ -1,8 +1,9 @@
-import Filter from '@/app/widgets/Filter';
 import { dynamicParameters, WidgetPreview } from '@/components/Widget';
+import { Filter } from '@/components/Widget';
 import { filteredWidgetsNames } from '@/utils/widgets';
-import Heading from './Heading.mdx';
+import { Metadata } from 'next';
 import Link from 'next/link';
+import Heading from './Heading.mdx';
 
 export default async function Home ({ searchParams }: { searchParams: any }) {
   const config = {
@@ -12,7 +13,7 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
 
   return (
     <main className="container mx-auto py-4 px-2">
-      <article className='prose prose-invert max-w-none'>
+      <article className="prose prose-invert max-w-none">
         <Heading />
       </article>
       <Filter config={config} />
@@ -32,3 +33,21 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
 function getName (name: string) {
   return name.replace(/^@ossinsight\/widget-/, '');
 }
+
+export const metadata = {
+  title: 'Customize GitHub Widgets: Data Insight, Social Sharing | OSS Insight',
+  description: 'Description: Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
+  keywords: [
+    'GitHub widgets',
+    'Custom widgets',
+    'Widget creator',
+    'Personalized widgets',
+    'GitHub profile enhancement',
+    'Share widgets',
+    'Online presence',
+    'Customization tools',
+  ],
+  twitter: {
+    card: 'summary_large_image',
+  },
+} satisfies Metadata;

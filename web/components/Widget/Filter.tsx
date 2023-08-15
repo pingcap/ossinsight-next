@@ -4,7 +4,7 @@ import siteConfig from '@/site.config';
 import { WidgetsFilter, WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export default function Filter ({ config }: { config: WidgetsFilterConfig }) {
+export function Filter ({ config }: { config: WidgetsFilterConfig }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
