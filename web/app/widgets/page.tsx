@@ -1,5 +1,4 @@
-import { dynamicParameters, WidgetPreview } from '@/components/Widget';
-import { Filter } from '@/components/Widget';
+import { dynamicParameters, Filter, WidgetPreview } from '@/components/Widget';
 import { filteredWidgetsNames } from '@/utils/widgets';
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -12,8 +11,8 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
   };
 
   return (
-    <main className="container mx-auto py-4 px-2">
-      <article className="prose prose-invert max-w-none">
+    <main className="container mx-auto py-16 px-2">
+      <article className="mb-4 prose prose-invert max-w-none">
         <Heading />
       </article>
       <Filter config={config} />
@@ -28,10 +27,6 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
       </ul>
     </main>
   );
-}
-
-function getName (name: string) {
-  return name.replace(/^@ossinsight\/widget-/, '');
 }
 
 export const metadata = {
@@ -51,3 +46,7 @@ export const metadata = {
     card: 'summary_large_image',
   },
 } satisfies Metadata;
+
+function getName (name: string) {
+  return name.replace(/^@ossinsight\/widget-/, '');
+}

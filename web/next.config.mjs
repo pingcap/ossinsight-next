@@ -1,7 +1,6 @@
 import {withWidgets} from "@ossinsight/widgets-next";
 import createMDX from "@next/mdx";
 import withSvgr from "next-plugin-svgr";
-import remarkBreaks from "remark-breaks";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -39,7 +38,7 @@ const nextConfig = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkBreaks]
+    remarkPlugins: []
   }
 });
 
