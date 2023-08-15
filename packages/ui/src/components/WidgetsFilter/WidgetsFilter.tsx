@@ -58,7 +58,7 @@ export function WidgetsFilter (props: WidgetsFilterProps) {
           ))}
         </div>
         <label className="w-full lg:max-w-xs lg:min-w-min flex-1 flex items-center gap-1 TextInput TextInput-lg TextInput-borderless">
-          <SearchIcon className="text-disabled min-w-max" width={14} height={14} />
+          <SearchIcon className="text-disabled max-w-max min-w-max" width={14} height={14} />
           <input className="flex-1" value={search} onChange={handleSearchChange} placeholder="Search" />
         </label>
       </div>
