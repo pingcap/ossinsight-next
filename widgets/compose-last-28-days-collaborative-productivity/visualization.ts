@@ -1,15 +1,29 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import type {
+  ComposeVisualizationConfig,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
 type Params = {
-  repo_id: string
-}
+  repo_id: string;
+};
 
-type Input = [[any[]], [any[]], [any[]]]
+type DataPoint = {
+  issue_closed_ratio: number;
+  pr_merged_ratio: number;
+  pr_reviewed_ratio: number;
+};
 
-export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
-  const end = DateTime.fromISO(issues[0].current_period_day);
-  const start = DateTime.fromISO(issues[issues.length - 1].current_period_day);
+type Input = [DataPoint[]];
+
+export default function (
+  [input]: Input,
+  ctx: WidgetVisualizerContext<Params>
+): ComposeVisualizationConfig {
+  const today = new Date();
+  const prior30 = new Date(new Date().setDate(today.getDate() - 30));
+  const end = DateTime.fromISO(today.toISOString());
+  const start = DateTime.fromISO(prior30.toISOString());
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
 
   const WIDTH = ctx.width;
@@ -22,7 +36,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
   const CHILD_WIDTH = (WIDTH - (SPACING + LABEL_HEIGHT) * 2) / 3;
   const CHILD_HEIGHT = HEIGHT - HEADER_HEIGHT - LABEL_HEIGHT - PADDING;
 
-  const H_OFFSET = WIDTH - (CHILD_WIDTH * 3 + (SPACING + LABEL_HEIGHT) * 2)
+  const H_OFFSET = WIDTH - (CHILD_WIDTH * 3 + (SPACING + LABEL_HEIGHT) * 2);
 
   return [
     {
@@ -41,7 +55,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: 'builtin:label',
       data: undefined,
       parameters: {
-        label: 'PR Merged Ratio'
+        label: 'PR Merged Ratio',
       },
       left: H_OFFSET + LABEL_HEIGHT,
       top: HEADER_HEIGHT,
@@ -52,7 +66,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: 'builtin:label',
       data: undefined,
       parameters: {
-        label: 'Issue Closed Ratio'
+        label: 'Issue Closed Ratio',
       },
       left: H_OFFSET + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
       top: HEADER_HEIGHT,
@@ -63,7 +77,7 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       widget: 'builtin:label',
       data: undefined,
       parameters: {
-        label: 'PR Reviewed Ratio'
+        label: 'PR Reviewed Ratio',
       },
       left: H_OFFSET + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
       top: HEADER_HEIGHT,
@@ -71,32 +85,35 @@ export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisuali
       height: LABEL_HEIGHT,
     },
     {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
-      data: [prs],
-      parameters: ctx.parameters,
+      widget:
+        '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+      data: [input],
+      parameters: { ...ctx.parameters, activity: 'pr-merged-ratio' },
       left: H_OFFSET + LABEL_HEIGHT,
       top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
-      height: CHILD_HEIGHT
+      height: CHILD_HEIGHT,
     },
     {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
-      data: [issues],
-      parameters: ctx.parameters,
+      widget:
+        '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+      data: [input],
+      parameters: { ...ctx.parameters, activity: 'issue-closed-ratio' },
       left: H_OFFSET + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
       top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
-      height: CHILD_HEIGHT
+      height: CHILD_HEIGHT,
     },
     {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
-      data: [reviews],
-      parameters: ctx.parameters,
+      widget:
+        '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+      data: [input],
+      parameters: { ...ctx.parameters, activity: 'pr-reviewed-ratio' },
       left: H_OFFSET + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
       top: HEADER_HEIGHT + LABEL_HEIGHT,
       width: CHILD_WIDTH,
-      height: CHILD_HEIGHT
-    }
+      height: CHILD_HEIGHT,
+    },
   ];
 }
 export const type = 'compose';

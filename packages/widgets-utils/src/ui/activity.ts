@@ -19,7 +19,19 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'issue-creators',
     title: 'Issue Creators',
-  }
+  },
+  {
+    key: 'issue-closed-ratio',
+    title: 'Issue Closed Ratio',
+  },
+  {
+    key: 'pr-merged-ratio',
+    title: 'PR Merged Ratio',
+  },
+  {
+    key: 'pr-reviewed-ratio',
+    title: 'PR Reviewed Ratio',
+  },
 ];
 
 export function activityDisplayName (key: string) {

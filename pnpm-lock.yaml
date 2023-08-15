@@ -360,6 +360,12 @@ importers:
         specifier: workspace:^
         version: link:..
 
+  widgets/analyze-repo-recent-collaborative-productivity-metrics:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-repo-recent-commits:
     devDependencies:
       '@ossinsight/widgets-types':
@@ -379,12 +385,6 @@ importers:
         version: link:../../packages/widgets-types
 
   widgets/analyze-repo-recent-pull-requests:
-    devDependencies:
-      '@ossinsight/widgets-types':
-        specifier: workspace:^
-        version: link:../../packages/widgets-types
-
-  widgets/analyze-repo-recent-pull-requests-merged-ratio:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
