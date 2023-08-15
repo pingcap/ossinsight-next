@@ -11,7 +11,7 @@ type Params = {
 };
 
 type DataPoint = {
-  count: number;
+  events: number;
   event_month: string;
 };
 
@@ -61,7 +61,7 @@ export default function (
       name: data.fullName,
       encode: {
         x: 'event_month',
-        y: 'total',
+        y: 'events',
       },
       lineStyle: {
         color: '#E47C42',
