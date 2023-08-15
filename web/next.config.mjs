@@ -5,6 +5,15 @@ import remarkBreaks from "remark-breaks";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/widgets',
+        permanent: false,
+      },
+    ]
+  },
   experimental: {
     externalDir: true,
     serverComponentsExternalPackages: ['@napi-rs/canvas'],
