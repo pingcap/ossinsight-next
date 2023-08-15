@@ -31,7 +31,7 @@ export function renderCardHeader (canvas: Canvas, props: BuiltinProps<{ title: s
   ctx.restore();
 }
 
-export function renderLabelValue (canvas: Canvas, props: BuiltinProps<{ label: string, value: string }>) {
+export function renderLabelValue (canvas: Canvas, props: BuiltinProps<{ label: string, value?: string }>) {
   const { label, box: { dpr, left, height, top, width }, value } = props;
 
   const ctx = canvas.getContext('2d');
@@ -49,7 +49,7 @@ export function renderLabelValue (canvas: Canvas, props: BuiltinProps<{ label: s
 
   ctx.font = `bold ${24 * dpr}px`;
   ctx.fillStyle = 'white';
-  ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
+  value && ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
 
   ctx.restore();
 }

@@ -25,6 +25,7 @@ export default async function renderCompose (width: number, height: number, dpr:
 
   const all = option.map(async (item) => {
     switch (item.widget) {
+      case 'builtin:label':
       case 'builtin:label-value':
         renderLabelValue(canvas, {
           label: item.parameters.label,
@@ -63,8 +64,6 @@ export default async function renderCompose (width: number, height: number, dpr:
             height: item.height,
           },
         });
-        break;
-      case 'builtin:label':
         break;
       default: {
         const visualizer = await visualizers[item.widget]();

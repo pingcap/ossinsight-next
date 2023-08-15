@@ -30,7 +30,7 @@ export default function (
   const datapoint = main[0];
   const percentage = datapoint[type];
 
-  const progressSize = Math.min(ctx.width || 100, ctx.height || 100) * 0.15;
+  const progressSize = Math.min(ctx.width || 100, ctx.height || 100) * 0.1;
 
   return {
     series: [
