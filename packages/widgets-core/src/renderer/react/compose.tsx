@@ -120,8 +120,8 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
               ...el.props,
               key: i,
               style: {
-                position: 'absolute',
                 ...el.props.style,
+                position: 'absolute',
               },
             });
           }
