@@ -36,16 +36,11 @@ export default function (
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const SPACING = autoSize(ctx, 16);
   const PADDING = autoSize(ctx, 36);
   const HEADER_HEIGHT = autoSize(ctx, 48);
-  const HORIZONTAL_SPACING = autoSize(ctx, 28);
 
   const uniqueContributors = _.uniqBy(contributors, 'actor_login');
   const sortedContributors = _.orderBy(uniqueContributors, 'events', 'desc');
-
-  console.log('contributors', contributors);
-  console.log('sortedContributors', sortedContributors);
 
   return computeLayout(
     vertical(
