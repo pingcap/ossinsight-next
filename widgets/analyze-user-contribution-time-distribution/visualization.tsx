@@ -1,5 +1,5 @@
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { ForwardedRef, forwardRef, useMemo } from 'react';
+import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 
 type Params = {
   user_id: number
@@ -41,6 +41,8 @@ interface TimeDistributionProps {
   gap: number;
   offset: number;
   data: Array<DataPoint>;
+  className?: string;
+  style?: CSSProperties;
 }
 
 const times = Array(24).fill(0).map((_, i) => i);
@@ -50,7 +52,7 @@ const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 // const TIME_NAMES = ['0a', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12p', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 const TIME_NAMES = Array(24).fill(0).map((_, i) => i);
 
-const TimeDistribution = forwardRef(({ title, size, gap, offset, data }: TimeDistributionProps, ref: ForwardedRef<SVGSVGElement>) => {
+const TimeDistribution = forwardRef(({ title, size, gap, offset, data, className, style }: TimeDistributionProps, ref: ForwardedRef<SVGSVGElement>) => {
   const max = useMemo(() => {
     return data.reduce((max, cur) => Math.max(max, cur.cnt), 0);
   }, [data]);
@@ -62,7 +64,9 @@ const TimeDistribution = forwardRef(({ title, size, gap, offset, data }: TimeDis
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height + paddingTop}
-         viewBox={`${-paddingLeft} -${paddingTop} ${width + paddingLeft} ${height + paddingTop}`} display="block"
+         viewBox={`${-paddingLeft - 16} -${paddingTop + 16} ${width + paddingLeft + 16} ${height + paddingTop + 16}`} display="block"
+         className={className}
+         style={{ ...style, backgroundColor: 'rgb(36, 35, 49)' }}
          ref={ref}
     >
       <g id="title">

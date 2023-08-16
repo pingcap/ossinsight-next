@@ -7,14 +7,16 @@ export interface TagProps extends HTMLAttributes<HTMLSpanElement> {
   color?: string;
   selected?: boolean;
   onSelected?: () => void;
+  shape?: 'capsule' | 'contained';
+  size?: 'lg';
 }
 
-export function Tag ({ selected, style, className, onSelected, ...props }: TagProps) {
+export function Tag ({ selected, style, className, onSelected, shape = 'capsule', size, ...props }: TagProps) {
   return (
     <span
       className={clsx(
         'Tag',
-        getVariantClasses('Tag', [selected && 'selected', onSelected && 'interactive']),
+        getVariantClasses('Tag', [shape, size, selected && 'selected', onSelected && 'interactive']),
         className,
       )}
       style={style}

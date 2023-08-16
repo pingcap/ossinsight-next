@@ -1,8 +1,19 @@
-const {withWidgets} = require("@ossinsight/widgets-next");
-const withSvgr = require('next-plugin-svgr')
+import {withWidgets} from "@ossinsight/widgets-next";
+import createMDX from "@next/mdx";
+import withSvgr from "next-plugin-svgr";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/widgets',
+        permanent: false,
+      },
+    ]
+  },
+  pageExtensions: ['ts', 'tsx', 'mdx'],
   experimental: {
     externalDir: true,
     serverComponentsExternalPackages: ['@napi-rs/canvas'],
@@ -25,4 +36,10 @@ const nextConfig = {
 }
 
 
-module.exports = withWidgets(withSvgr(nextConfig))
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: []
+  }
+});
+
+export default withWidgets(withSvgr(withMDX(nextConfig)));

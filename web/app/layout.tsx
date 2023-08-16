@@ -1,7 +1,7 @@
 import { SiteBanner } from '@ossinsight/ui/src/components/SiteBanner';
 import { SiteHeader } from '@ossinsight/ui/src/components/SiteHeader';
 import type { Metadata } from 'next';
-import config from '../site.config';
+import config from '@/site.config';
 import './globals.scss';
 // import { Inter } from 'next/font/google'
 

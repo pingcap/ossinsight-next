@@ -13,7 +13,7 @@ export default async function renderCompose (width: number, height: number, dpr:
 
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = 'rgb(31, 30, 40)';
+  ctx.fillStyle = 'rgb(36, 35, 49)';
   ctx.fillRect(0, 0, width * dpr, height * dpr);
 
   const option: WidgetComposeItem[] = visualizer.default(data, {

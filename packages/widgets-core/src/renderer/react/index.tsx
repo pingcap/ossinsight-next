@@ -26,18 +26,6 @@ export default function WidgetVisualization ({ dynamicHeight, ...props }: Widget
         {cloneElement(el, { ...props, style: { ...props.style, height: dynamicHeight } })}
       </div>
     );
-  } else if (props.visualizer.width && props.visualizer.height) {
-    // put fixed size widget in center
-    el = (
-      <div
-        className="w-full h-full flex items-center justify-center p-4 overflow-auto"
-        style={{
-          background: 'radial-gradient(50.4% 48.07% at 50.4% 51.93%, #6760A4 0%, rgb(31,30,40) 100%)',
-        }}
-      >
-        {el}
-      </div>
-    );
   }
 
   return el;

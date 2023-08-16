@@ -82,7 +82,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
         }),
         borderRadius: 18,
         overflow: 'hidden',
-        background: 'rgb(31, 30, 40)',
+        background: 'rgb(36, 35, 49)',
         boxShadow: '0px 4px 4px 0px rgba(36, 39, 56, 0.25)',
       }}
     >
@@ -120,8 +120,8 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
               ...el.props,
               key: i,
               style: {
-                position: 'absolute',
                 ...el.props.style,
+                position: 'absolute',
               },
             });
           }

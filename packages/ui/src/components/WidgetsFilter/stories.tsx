@@ -6,13 +6,13 @@ export default {
   title: 'Components/WidgetsFilter',
   component: WidgetsFilter,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
   tags: ['autodocs'],
   argTypes: {},
   decorators: [
     (Story: any) => {
-      return <div className="max-w-[400px]"><Story /></div>;
+      return <div><Story /></div>;
     },
   ],
 } satisfies Meta<typeof WidgetsFilter>;
@@ -20,10 +20,6 @@ export default {
 export const Default = {
   args: {
     availableTags: ['foo', 'bar', 'Repository', 'PRs', 'Stars'],
-    categoriesConfig: [
-      { name: 'C1', tags: ['foo', 'Repository', 'PRs'] },
-      { name: 'C2', tags: ['bar', 'Repository'] },
-    ],
   },
   render: (args) => {
     return <Wrapper {...args} />;
@@ -31,7 +27,7 @@ export const Default = {
 } satisfies StoryObj<typeof WidgetsFilter>;
 
 function Wrapper (args: any) {
-  const [config, setConfig] = useState({ tags: [], search: '' });
+  const [config, setConfig] = useState({ tag: 'Featured', search: '' });
 
   return (
     <>
