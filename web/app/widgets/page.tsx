@@ -16,10 +16,10 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
         <Heading />
       </article>
       <Filter config={config} />
-      <ul className="mt-8 flex justify-center gap-4 flex-wrap">
+      <ul className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {await Promise.all(filteredWidgetsNames(config).map(async name => (
-          <li key={name}>
-            <Link className="block w-min" href={`/widgets/official/${getName(name)}?${await dynamicParameters(name)}`}>
+          <li key={name} className='col-span-1'>
+            <Link className="block" href={`/widgets/official/${getName(name)}?${await dynamicParameters(name)}`}>
               <WidgetPreview name={name} />
             </Link>
           </li>

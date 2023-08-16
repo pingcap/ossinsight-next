@@ -1,5 +1,6 @@
 'use client';
 
+import siteConfig from '@/site.config';
 import { widgetVisualizer } from '@/utils/widgets';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { CSSProperties, use } from 'react';
@@ -25,6 +26,8 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   return (
     <WidgetVisualization
       className={dynamicHeight ? `Widget-dynamicHeight ${className}` : className}
+      width={siteConfig.sizes.default.width}
+      height={siteConfig.sizes.default.height}
       dynamicHeight={dynamicHeight}
       style={style}
       type={visualizer.type}

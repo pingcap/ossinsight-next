@@ -1,53 +1,24 @@
-import { widgetMeta, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
+import { widgetMeta, widgetParameterDefinitions } from '@/utils/widgets';
 import { WidgetMeta } from '@ossinsight/widgets-types';
+import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg'
+
 import Image from 'next/image';
 
-export async function WidgetPreview ({ name, card }: { name: string, card?: boolean }) {
+export async function WidgetPreview ({ name }: { name: string }) {
   const widget = widgetMeta(name);
   const imageUsp = new URLSearchParams(await dynamicParameters(name));
-
-  if (card) {
-    const { width, height } = await widgetVisualizer(name);
-    return (
-      <Image
-        className="block"
-        style={{
-          borderRadius: 12,
-          boxShadow: '0px 4px 4px 0px rgba(36, 39, 56, 0.25)',
-          border: '2px solid #464459'
-        }}
-        loading="lazy"
-        width={width! + 6}
-        height={height! + 6}
-        quality={100}
-        src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
-        alt="preview"
-      />
-    );
-  }
 
   imageUsp.set('image_size', 'preview_image');
 
   return (
-    <div className="rounded-md relative overflow-hidden bg-popover border w-[320px] transition-shadow hover:shadow-lg">
-      <div className="flex items-center justify-center bg-body" style={{ height: 240 }}>
-        <Image className="block" loading="lazy" width={320} height={240} quality={100} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
-      </div>
-      <div className="w-full h-[72px]" />
-      <div className="p-2 border-t bg-toolbar absolute bottom-0 left-0 w-full translate-y-[calc(100%-72px)] hover:translate-y-0 transition">
+    <div className="group rounded-md relative overflow-hidden bg-popover border w-full transition-shadow hover:shadow-lg">
+      <div className="flex flex-col items-center bg-body p-4 gap-4" style={{ height: 270 }}>
         <h2 className="text-lg font-bold text-title">{formatName(getName(widget.name))}</h2>
-        {widget.keywords?.length && (
-          <ul className="mt-2 flex gap-2 items-center flex-wrap">
-            {widget.keywords.map(keyword => (
-              <li key={keyword} className="px-1 py-0.5 rounded bg-control text-subtitle text-xs">{keyword}</li>
-            ))}
-          </ul>
-        )}
-        <div className="mt-2 flex items-center gap-2 text-subtitle text-sm">
-          {renderAuthor(widget)}
-          <span className="text-sm text-disabled">v{widget.version}</span>
-        </div>
-        <p className="mt-1 text-sm text-content line-clamp-3 text-ellipsis">{widget.description}</p>
+        <Image className="block shadow-xl rounded-xl" loading="lazy" width={320} height={180} quality={100} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
+      </div>
+      <div className='absolute bottom-0 left-0 w-full h-10 flex items-center justify-center gap-2 text-white transition-transform transform-gpu translate-y-full group-hover:translate-y-0' style={{ background: 'linear-gradient(98deg, #562FF2 0%, #6041DE 100%)' }}>
+        edit it
+        <ArrowUpRightIcon />
       </div>
     </div>
   );

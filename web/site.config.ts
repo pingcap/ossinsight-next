@@ -59,12 +59,12 @@ export default defineSiteConfig({
   },
   sizes: {
     'default': {
-      width: 640,
-      height: 480,
+      width: 800,
+      height: 418,
     },
     'preview_image': {
-      width: 320,
-      height: 240,
+      width: 480,
+      height: 270,
     },
     'twitter:summary_large_image': {
       width: 800,
