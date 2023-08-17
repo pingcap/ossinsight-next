@@ -7,8 +7,9 @@
       "extract": "$.data[*]"
     },
     "params": {
-      "repoId": "repo_id"
+      "repoId": "repo_id",
+      "limit": "limit"
     },
-    "when": ["repo_id"]
+    "when": ["repo_id", "limit"]
   }
 ]

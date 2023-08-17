@@ -5,6 +5,7 @@ import { CollectionIdInput } from './collection-id';
 import { RepoIdInput } from './repo-id';
 import { TimePeriodSelect, TimeZoneSelect } from './time';
 import { UserIdInput } from './user-id';
+import {LimitInput} from './limit';
 
 const types = {
   'repo-id': RepoIdInput,
@@ -14,6 +15,7 @@ const types = {
   'time-zone': TimeZoneSelect,
   'activity-type': ActivityTypeSelector,
   'event-type': EventTypeSelector,
+  limit: LimitInput,
 };
 
 export function ParamInput ({ id, config, value, onValueChange }: { id: string, config: ParameterDefinition, value: any, onValueChange: (value: any) => void }) {

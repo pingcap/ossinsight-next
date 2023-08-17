@@ -13,6 +13,7 @@ const parsers: Record<string, (value: string) => unknown> = {
   'activity-type': parseActivityType,
   'collection-id': parseCollectionId,
   'event-type': parseEventType,
+  'limit': parseUserId,
 };
 
 export default parsers;

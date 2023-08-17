@@ -1,104 +1,90 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import type {
+  ComposeVisualizationConfig,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
+import {
+  autoSize,
+  computeLayout,
+  horizontal,
+  vertical,
+  widget,
+} from '@ossinsight/widgets-utils/src/compose';
 
 type Params = {
-  repo_id: string
-}
+  repo_id: string;
+  activity?: string;
+};
 
-type Input = [[any[]], [any[]], [any[]]]
+type DataPoint = {
+  issue_closed_ratio: number;
+  pr_merged_ratio: number;
+  pr_reviewed_ratio: number;
+};
 
-export default function ([[prs], [issues], [reviews]]: Input, ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
-  const end = DateTime.fromISO(issues[0].current_period_day);
-  const start = DateTime.fromISO(issues[issues.length - 1].current_period_day);
+type Input = [DataPoint[]];
+
+export default function (
+  [input]: Input,
+  ctx: WidgetVisualizerContext<Params>
+): ComposeVisualizationConfig {
+  const today = new Date();
+  const prior30 = new Date(new Date().setDate(today.getDate() - 30));
+  const end = DateTime.fromISO(today.toISOString());
+  const start = DateTime.fromISO(prior30.toISOString());
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const SPACING = 8 * ctx.dpr;
-  const HEADER_HEIGHT = 24 * ctx.dpr;
-  const PADDING = 18 * ctx.dpr;
+  const SPACING = autoSize(ctx, 16);
+  const PADDING = autoSize(ctx, 36);
+  const HEADER_HEIGHT = autoSize(ctx, 48);
+  const HORIZONTAL_SPACING = autoSize(ctx, 16);
 
-  const LABEL_HEIGHT = 16 * ctx.dpr;
-  const CHILD_WIDTH = (WIDTH - (SPACING + LABEL_HEIGHT) * 2) / 3;
-  const CHILD_HEIGHT = HEIGHT - HEADER_HEIGHT - LABEL_HEIGHT - PADDING;
+  const item = (name: string, label: string, params: Params, data: any) =>
+    vertical(
+      widget('builtin:label', undefined, { label: label }).flex(0.1),
+      widget(name, [data], params).flex(0.9)
+    ).gap(SPACING);
 
-  const H_OFFSET = WIDTH - (CHILD_WIDTH * 3 + (SPACING + LABEL_HEIGHT) * 2)
-
-  return [
-    {
-      widget: 'builtin:card-heading',
-      data: undefined,
-      parameters: {
+  return computeLayout(
+    vertical(
+      widget('builtin:card-heading', undefined, {
         title: 'Collaborative Productivity',
         subtitle: `Date: ${subtitle}`,
-      },
-      left: PADDING,
-      top: 0,
-      width: WIDTH - 2 * PADDING,
-      height: HEADER_HEIGHT,
-    },
-    {
-      widget: 'builtin:label',
-      data: undefined,
-      parameters: {
-        label: 'PR Merged Ratio'
-      },
-      left: H_OFFSET + LABEL_HEIGHT,
-      top: HEADER_HEIGHT,
-      width: CHILD_WIDTH,
-      height: LABEL_HEIGHT,
-    },
-    {
-      widget: 'builtin:label',
-      data: undefined,
-      parameters: {
-        label: 'Issue Closed Ratio'
-      },
-      left: H_OFFSET + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
-      top: HEADER_HEIGHT,
-      width: CHILD_WIDTH,
-      height: LABEL_HEIGHT,
-    },
-    {
-      widget: 'builtin:label',
-      data: undefined,
-      parameters: {
-        label: 'PR Reviewed Ratio'
-      },
-      left: H_OFFSET + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
-      top: HEADER_HEIGHT,
-      width: CHILD_WIDTH,
-      height: LABEL_HEIGHT,
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
-      data: [prs],
-      parameters: ctx.parameters,
-      left: H_OFFSET + LABEL_HEIGHT,
-      top: HEADER_HEIGHT + LABEL_HEIGHT,
-      width: CHILD_WIDTH,
-      height: CHILD_HEIGHT
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
-      data: [issues],
-      parameters: ctx.parameters,
-      left: H_OFFSET + LABEL_HEIGHT + CHILD_WIDTH + SPACING,
-      top: HEADER_HEIGHT + LABEL_HEIGHT,
-      width: CHILD_WIDTH,
-      height: CHILD_HEIGHT
-    },
-    {
-      widget: '@ossinsight/widget-analyze-repo-recent-pull-requests-merged-ratio',
-      data: [reviews],
-      parameters: ctx.parameters,
-      left: H_OFFSET + LABEL_HEIGHT + (CHILD_WIDTH + SPACING) * 2,
-      top: HEADER_HEIGHT + LABEL_HEIGHT,
-      width: CHILD_WIDTH,
-      height: CHILD_HEIGHT
-    }
-  ];
+      }).fix(HEADER_HEIGHT),
+      horizontal(
+        item(
+          '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+          'PR Merged Ratio',
+          { ...ctx.parameters, activity: 'pr-merged-ratio' },
+          input
+        ),
+        item(
+          '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+          'Issue Closed Ratio',
+          { ...ctx.parameters, activity: 'issue-closed-ratio' },
+          input
+        ),
+        item(
+          '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+          'PR Reviewed Ratio',
+          { ...ctx.parameters, activity: 'pr-reviewed-ratio' },
+          input
+        )
+      )
+        .gap(HORIZONTAL_SPACING)
+        .flex()
+    )
+      .padding([0, PADDING, PADDING])
+      .gap(SPACING),
+    0,
+    0,
+    WIDTH,
+    HEIGHT
+  );
 }
+
 export const type = 'compose';
 export const width = 325 * 1.5;
 export const height = 130 * 1.5;
