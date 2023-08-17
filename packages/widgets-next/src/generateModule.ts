@@ -22,6 +22,10 @@ const metadataGenerators = {}
     }
     if (folder.isDirectory()) {
       const pkg = path.join(widgetsPath, folder.name, 'package.json');
+      if (!fs.existsSync(pkg)) {
+        return
+      }
+
       const { name, version, private: privateVal, keywords, description, author, main, module } = require(pkg);
       const meta = { name, version, private: privateVal, keywords, description, author };
       widgets[name] = path.resolve(widgetsPath, folder.name);
