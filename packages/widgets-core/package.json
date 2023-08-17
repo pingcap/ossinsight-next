@@ -7,6 +7,7 @@
     "@ossinsight/widgets-types": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",
     "@types/jsonpath": "^0.2.0",
+    "@types/luxon": "^3.3.1",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "react": "18.2.0",
@@ -18,6 +19,7 @@
     "clsx": "^2.0.0",
     "echarts": "^5.4.3",
     "jsonpath": "^1.1.1",
+    "luxon": "^3.3.0",
     "react-dom": "18.2.0",
     "url-template": "^3.1.0"
   },

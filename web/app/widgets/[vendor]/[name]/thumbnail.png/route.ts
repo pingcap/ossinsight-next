@@ -1,6 +1,7 @@
 import config from '@/site.config';
 import { resolveImageSizeConfig } from '@/utils/siteConfig';
 import { isWidget, widgetDatasourceFetcher, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
+import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
 import { notFound } from 'next/navigation';
@@ -18,7 +19,8 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   if (!isWidget(name)) {
     notFound();
   }
-  const datasource = await widgetDatasourceFetcher(name);
+  const datasource = widgetDatasourceFetcher(name);
+  const params = await widgetParameterDefinitions(name);
   const visualizer = await widgetVisualizer(name);
 
   const parameters: any = {};
@@ -28,6 +30,8 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     }
     parameters[key] = value;
   });
+
+  Object.assign(parameters, resolveExpressions(params));
 
   const paramDef = await widgetParameterDefinitions(name);
   const linkedData = await resolveParameters(paramDef, parameters);

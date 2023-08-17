@@ -123,13 +123,19 @@ export interface ActivityTypeParameterDefinition extends BaseParameterDefinition
   enums?: string[];
 }
 
+export interface DateParameterDefinition extends BaseParameterDefinition {
+  type: 'day' | 'month';
+  expression?: string;
+}
+
 export type ParameterDefinition =
   | RepoIdParameterDefinition
   | UserIdParameterDefinition
   | CollectionIdParameterDefinition
   | TimeZoneParameterDefinition
   | TimePeriodParameterDefinition
-  | ActivityTypeParameterDefinition; // | Others;
+  | ActivityTypeParameterDefinition
+  | DateParameterDefinition; // | Others;
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
 

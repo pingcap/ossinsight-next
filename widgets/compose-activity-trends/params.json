@@ -7,10 +7,12 @@
   },
   "from": {
     "type": "month",
-    "title": "From"
+    "title": "Start date",
+    "expression": "T-2year"
   },
   "to": {
     "type": "month",
-    "title": "To"
+    "title": "End date",
+    "expression": "T+1month"
   }
 }

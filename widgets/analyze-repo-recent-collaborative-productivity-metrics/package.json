@@ -2,6 +2,7 @@
   "name": "@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics",
   "version": "1.0.0",
   "description": "[Last 28 days Stats] Show the recent collaborative productivity metrics.",
+  "private": true,
   "keywords": [
     "Repository"
   ],

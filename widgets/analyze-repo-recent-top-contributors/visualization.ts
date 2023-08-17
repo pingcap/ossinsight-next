@@ -22,23 +22,12 @@ export default function (
 ): EChartsVisualizationConfig {
   const [main, vs] = data;
 
-  const rich = main.reduce((acc, cur) => {
-    acc[cur.actor_login] = {
-      height: 40,
-      // align: 'left',
-      backgroundColor: {
-        image: `https://github.com/${cur.actor_login}.png`,
-      },
-    };
-    return acc;
-  }, {} as Record<string, any>);
-
   return {
     dataset: compare(data, (data, name) => ({
       id: name,
       source: data.sort((a, b) => a.events - b.events),
     })),
-    grid: simpleGrid(2),
+    grid: simpleGrid(0),
     xAxis: {
       type: 'value',
       show: false,
@@ -50,6 +39,9 @@ export default function (
     series: [
       {
         type: 'bar',
+        name: 'Contributions',
+        barCategoryGap: 0,
+        barWidth: 10,
         itemStyle: {
           borderRadius: 10,
         },
@@ -75,6 +67,16 @@ export default function (
         },
       },
     ],
+    legend: {
+      right: 0,
+      bottom: 0,
+      icon: 'circle',
+      selector: false,
+      padding: 6,
+      itemWidth: 8,
+      itemHeight: 8,
+      selectedMode: false,
+    },
     tooltip: axisTooltip('none'),
   };
 }

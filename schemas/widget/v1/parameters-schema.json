@@ -12,7 +12,8 @@
           "user-id",
           "org-id",
           "collection-id",
-          "date",
+          "day",
+          "month",
           "time",
           "datetime",
           "event-type",
@@ -44,6 +45,9 @@
         }
       },
       "default": {
+      },
+      "expression": {
+        "type": "string"
       }
     },
     "required": ["type", "title"],
