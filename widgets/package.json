@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "This package is used to provide common dependencies.",
   "scripts": {
-    "lint": "eslint -c .eslintrc ."
+    "lint": "eslint --debug -c .eslintrc ."
   },
   "dependencies": {
     "@ossinsight/widgets-types": "workspace:^",

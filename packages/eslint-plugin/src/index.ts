@@ -2,10 +2,8 @@ import { parseWithPointers } from '@stoplight/json';
 import type { ESLint, Linter } from 'eslint';
 import fs from 'fs';
 import { validateRefDatasource } from './rules/datasource-ref';
-import { ajv, transformJsonSchemaErrorObject } from './utils';
-
-const datasourceSchema = ajv.compile(require('../../../schemas/widget/v1/datasource-schema.json'));
-const paramsSchema = ajv.compile(require('../../../schemas/widget/v1/parameters-schema.json'));
+import { validateDatasourceSchema } from './rules/datasource-schema';
+import { validateParamsSchema } from './rules/params-schema';
 
 const plugin: ESLint.Plugin = {
   processors: {
@@ -20,15 +18,9 @@ const plugin: ESLint.Plugin = {
       postprocess (messages: Linter.LintMessage[][], filename: string): Linter.LintMessage[] {
         const source = fs.readFileSync(filename, { encoding: 'utf-8' });
         const result = parseWithPointers(source);
-        const res = paramsSchema(result.data);
 
-        if (res) {
-          return [].concat(...messages);
-        }
-
-        return ([] as Linter.LintMessage[])
-          .concat(...messages)
-          .concat(...transformJsonSchemaErrorObject('ossinsight/params-schema', result, paramsSchema.errors));
+        return validateParamsSchema(result)
+          .concat(...messages);
       },
     },
     'datasource': {
@@ -42,7 +34,6 @@ const plugin: ESLint.Plugin = {
       postprocess (messages: Linter.LintMessage[][], filename: string): Linter.LintMessage[] {
         const source = fs.readFileSync(filename, { encoding: 'utf-8' });
         const result = parseWithPointers(source);
-        const res = datasourceSchema(result.data);
 
         function validateDatasource (datasource: any, i: number | undefined): Linter.LintMessage[] {
           if (datasource instanceof Array) {
@@ -57,30 +48,13 @@ const plugin: ESLint.Plugin = {
           }
         }
 
-        const validatorMessages = validateDatasource(result.data, undefined);
-
-        if (res) {
-          return validatorMessages.concat(...messages);
-        }
-
-        return validatorMessages
-          .concat(...messages)
-          .concat(...transformJsonSchemaErrorObject('ossinsight/datasource-schema', result, datasourceSchema.errors));
+        return validateDatasourceSchema(result)
+          .concat(validateDatasource(result.data, undefined))
+          .concat(...messages);
       },
     },
   },
-  rules: {
-    'ossinsight/params-schema': {
-      create () {
-        return {};
-      },
-    },
-    'ossinsight/datasource-schema': {
-      create () {
-        return {};
-      },
-    },
-  },
+  rules: {},
   configs: {
     'recommended': {
       overrides: [
