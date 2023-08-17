@@ -91,5 +91,5 @@ function parseValue (rawValue: any, config: ParameterDefinition) {
       return rawValue;
     }
   }
-  return parsers[config.type](rawValue, config);
+  return parsers[config.type](rawValue, config as any);
 }

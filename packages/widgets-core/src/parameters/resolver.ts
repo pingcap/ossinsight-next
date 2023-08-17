@@ -21,7 +21,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
       return Promise.resolve();
     }
     const parse = parsers[def.type];
-    param = parse?.(param, def) ?? param;
+    param = parse?.(param, def as any) ?? param;
     switch (def.type) {
       case 'repo-id':
         if (param) {

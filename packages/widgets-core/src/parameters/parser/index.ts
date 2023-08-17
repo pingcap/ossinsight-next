@@ -1,4 +1,4 @@
-import { ParameterDefinition } from '@ossinsight/widgets-types';
+import { ExtractParameterType, ParameterDefinition, ParameterDefinitionMap, ParameterDefinitions } from '@ossinsight/widgets-types';
 import parseActivityType from './activity-type';
 import parseCollectionId from './collection-id';
 import parseDate from './date';
@@ -7,7 +7,11 @@ import parseRepoId from './repo-id';
 import * as parseTime from './time';
 import parseUserId from './user-id';
 
-const parsers: Record<string, (value: string, config: ParameterDefinition) => unknown> = {
+type Parsers = {
+  [K in keyof ParameterDefinitionMap]: (value: string, config: ParameterDefinitionMap[K]) => ExtractParameterType<ParameterDefinitionMap[K]>
+}
+
+const parsers: Parsers = {
   'repo-id': parseRepoId,
   'user-id': parseUserId,
   'time-zone': parseTime.parseTimeZone,

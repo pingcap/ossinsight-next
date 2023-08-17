@@ -1,7 +1,7 @@
-export function parseTimeZone(zone: string): number {
+export function parseTimeZone(zone: string): string {
   const parsed = Number(zone);
   if (isFinite(parsed) && Number.isSafeInteger(parsed)) {
-    return parsed;
+    return String(parsed);
   }
   throw new Error(`${zone} is not a valid zone`);
 }

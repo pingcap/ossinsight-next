@@ -35,7 +35,7 @@ export function TimeZoneSelect({
   onValueChange,
 }: {
   id: string;
-  value: any;
+  value: string;
   onValueChange: (newValue: string) => void;
 }) {
   const handleValueChange = React.useCallback(
