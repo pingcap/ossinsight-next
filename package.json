@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "pnpm run build:toolchain",
     "dev": "pnpm run --filter @ossinsight/web dev",
-    "build:toolchain": "rm -fr ./widgets/analyze-repo-recent-pull-requests-merged-ratio/ && pnpm run --filter @ossinsight/widgets-next build"
+    "build:toolchain": "pnpm run --filter @ossinsight/widgets-next build"
   },
   "keywords": [],
   "author": "",
