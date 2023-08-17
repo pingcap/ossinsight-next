@@ -4,7 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
-  topBottomLayoutGrid,
+  parseParams2GridOpt,
   utils,
   timeAxis,
   valueAxis,
@@ -92,7 +92,7 @@ export default function (
 
   return {
     dataset,
-    grid: topBottomLayoutGrid(!!vs),
+    grid: parseParams2GridOpt(ctx),
     xAxis: utils.template(
       ({ id }) => timeAxis<'x'>(id, { gridId: id }, undefined, input),
       !!vs
@@ -141,7 +141,7 @@ export default function (
         yAxisId: `${name}-total`,
       }),
     ]).flatMap((x) => [x[0], x[1], x[2]] as const),
-    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters), !!vs),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters), !!vs, ctx.runtime),
     tooltip: axisTooltip('cross', {
       formatter: (params) => {
         const [add, del, total] = params;

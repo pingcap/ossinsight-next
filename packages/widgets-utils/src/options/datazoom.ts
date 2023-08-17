@@ -1,17 +1,13 @@
 import type { EChartsOption } from 'echarts';
-// import { isSmall } from './sizes';
 import { template } from './utils';
-
-// TODO
-function isSmall() {
-  return false;
-}
 
 export function dataZoom(
   option: EChartsOption['dataZoom'] = undefined,
-  vs?: boolean
+  vs?: boolean,
+  runtime?: string
 ): EChartsOption['dataZoom'] {
-  if (isSmall()) {
+  const isServer = runtime === 'server';
+  if (isServer) {
     return { show: false };
   }
 

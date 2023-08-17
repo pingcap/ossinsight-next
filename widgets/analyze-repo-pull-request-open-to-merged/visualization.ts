@@ -4,7 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
-  topBottomLayoutGrid,
+  parseParams2GridOpt,
   dataZoom,
   parseParams2DataZoomOpt,
   timeAxis,
@@ -83,8 +83,8 @@ export default function (
       id: name,
       source: data,
     })),
-    grid: topBottomLayoutGrid(!!vs),
-    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters)),
+    grid: parseParams2GridOpt(ctx),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters), !!vs, ctx.runtime),
     xAxis: utils.template(({ id }) => timeAxis<'x'>(id, { gridId: id }), !!vs),
     yAxis: utils.template(
       ({ id }) =>

@@ -4,7 +4,6 @@ import type {
 } from '@ossinsight/widgets-types';
 import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
-  topBottomLayoutGrid,
   dataZoom,
   parseParams2DataZoomOpt,
   timeAxis,
@@ -14,6 +13,7 @@ import {
   lineArea,
   legend,
   valueAxis,
+  parseParams2GridOpt,
 } from '@ossinsight/widgets-utils/src/options';
 import type { DataZoomOptType } from '@ossinsight/widgets-utils/src/options';
 import { prettyMs } from '@ossinsight/widgets-utils/src/utils';
@@ -75,6 +75,8 @@ export default function (
   const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
   const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
 
+  const runtime = ctx.runtime;
+
   const maxAllValue = getMaxAllValue(input);
   const maxTotalValue = getmMaxTotalValue(input);
 
@@ -83,8 +85,8 @@ export default function (
       id: name,
       source: aggregate(data),
     })),
-    grid: topBottomLayoutGrid(!!vs),
-    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters)),
+    grid: parseParams2GridOpt(ctx),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters), !!vs, runtime),
     legend: legend(),
     xAxis: utils.template(({ id }) => timeAxis<'x'>(id, { gridId: id }), !!vs),
     yAxis: utils.template(

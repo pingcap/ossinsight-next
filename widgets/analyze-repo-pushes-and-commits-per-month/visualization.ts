@@ -4,7 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
-  topBottomLayoutGrid,
+  parseParams2GridOpt,
   utils,
   timeAxis,
   valueAxis,
@@ -42,7 +42,7 @@ export default function (
 
   return {
     dataset,
-    grid: topBottomLayoutGrid(!!vs),
+    grid: parseParams2GridOpt(ctx),
     xAxis: utils.template(
       ({ id }) => timeAxis<'x'>(id, { gridId: id }, undefined, input),
       !!vs
@@ -66,7 +66,7 @@ export default function (
         barMaxWidth: 4,
       }),
     ]).flatMap((x) => [x[0], x[1]] as const),
-    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters)),
+    dataZoom: dataZoom(parseParams2DataZoomOpt(ctx.parameters), !!vs, ctx.runtime),
     tooltip: axisTooltip('cross'),
     legend: {
       show: true,
