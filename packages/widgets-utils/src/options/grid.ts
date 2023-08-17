@@ -11,15 +11,17 @@ export function grid(id: OptionId, option: GridOption = {}): GridOption {
   };
 }
 
-export function topBottomLayoutGrid(vs?: boolean) {
-  if (!vs) return grid('main');
+export function topBottomLayoutGrid(vs?: boolean, options?: GridOption) {
+  if (!vs) return { ...grid('main'), ...options };
   return [
     {
       ...grid('main'),
+      ...options,
       bottom: '55%',
     },
     {
       ...grid('vs'),
+      ...options,
       top: '55%',
     },
   ];

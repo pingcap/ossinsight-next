@@ -10,6 +10,7 @@ import {
   heatmap,
   visualMap,
   itemTooltip,
+  simpleGrid,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -103,6 +104,8 @@ export default function (
   const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
   const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
 
+  const runtime = ctx.runtime;
+
   const { zone, period } = ctx.getTimeParams();
   const prepareDataWithZone = prepareData(parseInt(zone));
 
@@ -113,7 +116,10 @@ export default function (
 
   const option = {
     dataset,
-    grid: topBottomLayoutGrid(!!vs),
+    grid: topBottomLayoutGrid(
+      !!vs,
+      runtime === 'server' ? simpleGrid(24 * ctx.dpr) : {}
+    ),
     xAxis: utils.template(
       ({ id }) =>
         categoryAxis<'x'>(id, { gridId: id, data: hours, position: 'top' }),
@@ -129,7 +135,8 @@ export default function (
       dataset
         .map((d) => d.source)
         .flat()
-        .reduce((p, c) => Math.max(p, c.pushes), 0)
+        .reduce((p, c) => Math.max(p, c.pushes), 0),
+      runtime
     ),
     series: utils.template(
       ({ id }) =>
