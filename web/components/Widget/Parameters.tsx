@@ -49,7 +49,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
         {Object.entries(parameters).map(([key, config]) => {
           const pId = `${key}-${id}`;
           const rawValue = values[key];
-          const value = rawValue == parseValue(rawValue, config);
+          const value = parseValue(rawValue, config);
           const showRequiredMessage = config.required && value == null;
           return (
             <div key={key} className="flex flex-col gap-2">

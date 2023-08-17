@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { TimePeriodSelector, TimeZoneSelector } from '@ossinsight/ui';
-import { ParametersContext } from '../context';
 
 export function TimePeriodSelect({
   id,
@@ -49,7 +48,7 @@ export function TimeZoneSelect({
     <>
       <TimeZoneSelector
         id={id}
-        defaultValue={value}
+        value={value}
         onValueChange={handleValueChange}
       />
     </>
