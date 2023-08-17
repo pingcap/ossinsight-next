@@ -2,23 +2,51 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "https://ossinsight.io/schemas/widget/v1/datasource-schema",
   "title": "OSSInsight Widget Datasource v1",
-  "oneOf": [
-    {
-      "$ref": "#/definitions/DatasourceObject",
-      "description": "The widget has unique datasource."
-    },
-    {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/DatasourceObject",
-        "description": "The widget has multiple datasource."
-      }
+  "if": {
+    "type": "array"
+  },
+  "then": {
+    "type": "array",
+    "items": {
+      "$ref": "#/definitions/DatasourceObject"
     }
-  ],
+  },
+  "else": {
+    "$ref": "#/definitions/DatasourceObject"
+  },
   "definitions": {
     "DatasourceObject": {
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "api"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/ApiDatasource"
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "ref"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/RefDatasource"
+          }
+        }
+      ]
+    },
+    "ApiDatasource": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "type": {
           "description": "Datasource type, only api supported now.",
@@ -27,8 +55,10 @@
         },
         "url": {
           "description": "API url to get",
-          "type": "string",
-          "format": "uri"
+          "type": "string"
+        },
+        "parser": {
+          "type": "object"
         },
         "params": {
           "description": "Dynamic parameters mapping. Keys are url search params names and values are referencing dynamic parameter name",
@@ -45,11 +75,30 @@
             "type": "string"
           },
           "uniqueItems": true,
-          "additionalItems": false,
           "default": []
         }
       },
-      "required": ["type", "url"]
+      "required": ["type", "url", "parser", "params"],
+      "additionalProperties": false
+    },
+    "RefDatasource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ref"
+        },
+        "widget": {
+          "type": "string"
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["type", "widget"],
+      "additionalProperties": false
     }
   }
 }
