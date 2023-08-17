@@ -90,10 +90,10 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
   height?: number;
 }
 
-const NEVER_SYMBOL = Symbol('NEVER');
+const SYMBOL_FOR_TYPING = Symbol('SYMBOL_FOR_TYPING');
 
 export interface BaseParameterDefinition<T> {
-  [NEVER_SYMBOL]?: T
+  [SYMBOL_FOR_TYPING]?: T
   type: string;
   title?: string;
   description?: string;
@@ -143,18 +143,7 @@ export interface DateParameterDefinition extends BaseParameterDefinition<string>
 
 export type ExtractParameterType<T extends BaseParameterDefinition> = T extends BaseParameterDefinition<infer E> ? E : never;
 
-let x: ExtractParameterType<DateParameterDefinition> = 3;
-
-export type ParameterDefinition =
-  | RepoIdParameterDefinition
-  | UserIdParameterDefinition
-  | CollectionIdParameterDefinition
-  | TimeZoneParameterDefinition
-  | TimePeriodParameterDefinition
-  | ActivityTypeParameterDefinition
-  | EventTypeParameterDefinition
-  | LimitParameterDefinition
-  | DateParameterDefinition; // | Others;
+export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefinitionMap];
 
 export interface ParameterDefinitionMap {
   'repo-id': RepoIdParameterDefinition
