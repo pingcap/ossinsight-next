@@ -1,0 +1,7 @@
+{
+  "name": "@ossinsight/cli",
+  "private": true,
+  "scripts": {
+    "build": "echo hi"
+  }
+}

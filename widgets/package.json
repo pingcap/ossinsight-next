@@ -3,8 +3,15 @@
   "private": true,
   "version": "1.0.0",
   "description": "This package is used to provide common dependencies.",
+  "scripts": {
+    "lint": "eslint --debug -c .eslintrc ."
+  },
   "dependencies": {
     "@ossinsight/widgets-types": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^"
+  },
+  "devDependencies": {
+    "eslint-plugin-ossinsight": "workspace:^",
+    "eslint": "8.45.0"
   }
 }

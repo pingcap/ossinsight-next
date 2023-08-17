@@ -7,7 +7,21 @@
     "type": "object",
     "properties": {
       "type": {
-        "enum": ["repo-id", "user-id", "org-id", "collection-id", "date", "time", "datetime"]
+        "enum": [
+          "repo-id",
+          "user-id",
+          "org-id",
+          "collection-id",
+          "date",
+          "time",
+          "datetime",
+          "event-type",
+          "activity-type",
+          "time-period",
+          "time-zone",
+          "luxon-datetime",
+          "string"
+        ]
       },
       "title": {
         "type": "string"
@@ -15,6 +29,19 @@
       "required": {
         "type": "boolean",
         "default": false
+      },
+      "enums": {
+        "type": "array",
+        "items": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        }
       },
       "default": {
       }
