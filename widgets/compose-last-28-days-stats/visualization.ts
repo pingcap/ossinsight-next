@@ -16,7 +16,7 @@ export default function ([[issues], [prs], [contributors], [stars]]: Input, ctx:
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
   const SPACING = autoSize(ctx, 16);
-  const PADDING = autoSize(ctx, 36);
+  const PADDING = autoSize(ctx, 24);
   const HEADER_HEIGHT = autoSize(ctx, 48);
   const HORIZONTAL_SPACING = autoSize(ctx, 64);
 

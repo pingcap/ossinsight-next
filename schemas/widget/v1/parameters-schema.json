@@ -12,7 +12,8 @@
           "user-id",
           "org-id",
           "collection-id",
-          "date",
+          "day",
+          "month",
           "time",
           "datetime",
           "event-type",
@@ -20,6 +21,7 @@
           "time-period",
           "time-zone",
           "luxon-datetime",
+          "limit",
           "string"
         ]
       },
@@ -44,6 +46,9 @@
         }
       },
       "default": {
+      },
+      "expression": {
+        "type": "string"
       }
     },
     "required": ["type", "title"],

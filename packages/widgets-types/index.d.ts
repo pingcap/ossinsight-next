@@ -90,7 +90,10 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
   height?: number;
 }
 
-export interface BaseParameterDefinition {
+const SYMBOL_FOR_TYPING = Symbol('SYMBOL_FOR_TYPING');
+
+export interface BaseParameterDefinition<T> {
+  [SYMBOL_FOR_TYPING]?: T
   type: string;
   title?: string;
   description?: string;
@@ -98,38 +101,62 @@ export interface BaseParameterDefinition {
   default?: unknown;
 }
 
-export interface RepoIdParameterDefinition extends BaseParameterDefinition {
+export interface RepoIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'repo-id';
 }
 
-export interface UserIdParameterDefinition extends BaseParameterDefinition {
+export interface UserIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'user-id';
 }
 
-export interface CollectionIdParameterDefinition extends BaseParameterDefinition {
+export interface CollectionIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'collection-id';
 }
 
-export interface TimePeriodParameterDefinition extends BaseParameterDefinition {
+export interface TimePeriodParameterDefinition extends BaseParameterDefinition<string> {
   type: 'time-period';
 }
 
-export interface TimeZoneParameterDefinition extends BaseParameterDefinition {
+export interface TimeZoneParameterDefinition extends BaseParameterDefinition<string> {
   type: 'time-zone';
 }
 
-export interface ActivityTypeParameterDefinition extends BaseParameterDefinition {
+export interface ActivityTypeParameterDefinition extends BaseParameterDefinition<string> {
   type: 'activity-type';
   enums?: string[];
 }
 
-export type ParameterDefinition =
-  | RepoIdParameterDefinition
-  | UserIdParameterDefinition
-  | CollectionIdParameterDefinition
-  | TimeZoneParameterDefinition
-  | TimePeriodParameterDefinition
-  | ActivityTypeParameterDefinition; // | Others;
+export interface EventTypeParameterDefinition extends BaseParameterDefinition<string> {
+  type: 'event-type';
+  enums?: string[];
+}
+
+export interface LimitParameterDefinition extends BaseParameterDefinition<number> {
+  type: 'limit';
+  enums?: string[];
+}
+
+export interface DateParameterDefinition extends BaseParameterDefinition<string> {
+  type: 'day' | 'month';
+  expression?: string;
+}
+
+export type ExtractParameterType<T extends BaseParameterDefinition> = T extends BaseParameterDefinition<infer E> ? E : never;
+
+export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefinitionMap];
+
+export interface ParameterDefinitionMap {
+  'repo-id': RepoIdParameterDefinition
+  'user-id': UserIdParameterDefinition
+  'collection-id': CollectionIdParameterDefinition
+  'time-zone': TimeZoneParameterDefinition
+  'time-period': TimePeriodParameterDefinition
+  'activity-type': ActivityTypeParameterDefinition
+  'event-type': EventTypeParameterDefinition
+  'limit': LimitParameterDefinition
+  'day': DateParameterDefinition
+  'month': DateParameterDefinition
+}
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
 

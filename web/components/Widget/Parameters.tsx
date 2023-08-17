@@ -6,6 +6,7 @@ import parsers from '@ossinsight/widgets-core/src/parameters/parser';
 import { ParamInput } from '@ossinsight/widgets-core/src/parameters/react';
 import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { ParameterDefinition } from '@ossinsight/widgets-types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { use, useId, useMemo, useState } from 'react';
 
@@ -48,7 +49,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
         {Object.entries(parameters).map(([key, config]) => {
           const pId = `${key}-${id}`;
           const rawValue = values[key];
-          const value = rawValue == null ? rawValue : parsers[config.type](values[key]);
+          const value = parseValue(rawValue, config);
           const showRequiredMessage = config.required && value == null;
           return (
             <div key={key} className="flex flex-col gap-2">
@@ -82,4 +83,13 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
       </div>
     </ParametersContext.Provider>
   );
+}
+
+function parseValue (rawValue: any, config: ParameterDefinition) {
+  if (rawValue == null) {
+    if (!('expression' in config)) {
+      return rawValue;
+    }
+  }
+  return parsers[config.type](rawValue, config as any);
 }

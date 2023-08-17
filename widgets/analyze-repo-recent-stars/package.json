@@ -1,6 +1,7 @@
 {
   "name": "@ossinsight/widget-analyze-repo-recent-stars",
   "version": "1.0.0",
+  "private": true,
   "description": "[Last 28 days Stats] Show the recent star history of a GitHub repository.",
   "keywords": ["Repository", "Stars"],
   "author": "OSSInsight",

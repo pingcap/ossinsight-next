@@ -7,7 +7,9 @@
       "extract": "$.data[*]"
     },
     "params": {
-      "repoId": "repo_id"
+      "repoId": "repo_id",
+      "from": "from",
+      "to": "to"
     },
     "when": ["repo_id"]
   }

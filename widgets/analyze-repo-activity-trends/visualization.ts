@@ -8,6 +8,8 @@ import { simpleGrid } from '@ossinsight/widgets-utils/src/options';
 type Params = {
   repo_id: string;
   vs_repo_id?: string;
+  from: string;
+  to: string;
 };
 
 type DataPoint = {
@@ -31,7 +33,7 @@ export default function (
       id: name,
       source: data,
     })),
-    grid: { ...simpleGrid(2), containLabel: true },
+    grid: { ...simpleGrid(0, true), top: 8, left: 8, right: 8 },
     xAxis: {
       type: 'time',
       axisLine: {
@@ -39,6 +41,14 @@ export default function (
       },
       axisTick: {
         show: false,
+      },
+      axisLabel: {
+        fontSize: 8,
+        color: '#777',
+        hideOverlap: true,
+        showMinLabel: false,
+        showMaxLabel: false,
+        verticalAlign: 'middle',
       },
       splitLine: {
         show: true,
@@ -52,6 +62,7 @@ export default function (
       show: false,
       type: 'value',
       axisLabel: {
+        show: false,
         formatter: format,
       },
     },
@@ -65,6 +76,7 @@ export default function (
       },
       lineStyle: {
         color: '#E47C42',
+        width: 1,
       },
       showSymbol: false,
       areaStyle: {
@@ -98,10 +110,16 @@ export default function (
     },
     legend: {
       show: true,
+      top: 0,
       left: 0,
       icon: 'circle',
       itemStyle: {
         color: '#E47C42',
+      },
+      itemWidth: 8,
+      itemHeight: 8,
+      textStyle: {
+        fontSize: 10,
       },
       formatter: (name) => `Count all different types of events triggered by activity(pull a request,etc.) on GitHub in ${name}`
     },

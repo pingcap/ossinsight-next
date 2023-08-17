@@ -36,7 +36,7 @@ export default function (
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const PADDING = autoSize(ctx, 36);
+  const PADDING = autoSize(ctx, 24);
   const HEADER_HEIGHT = autoSize(ctx, 48);
 
   const uniqueContributors = _.uniqBy(contributors, 'actor_login');
