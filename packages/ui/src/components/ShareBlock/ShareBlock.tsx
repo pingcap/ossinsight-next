@@ -14,6 +14,7 @@ export interface ShareBlockProps {
   thumbnailUrl: string;
   keywords?: string[];
   imageWidth: number;
+  themedImage?: boolean;
 }
 
 export function ShareBlock ({
@@ -22,6 +23,7 @@ export function ShareBlock ({
   thumbnailUrl,
   keywords,
   imageWidth,
+  themedImage = false,
 }: ShareBlockProps) {
   return (
     <div>
@@ -32,12 +34,10 @@ export function ShareBlock ({
           </div>
         </Tab>
         <Tab value="Markdown" title="markdown" icon={<MarkdownIcon />}>
-          <CodeBlock language="markdown" code={`[![${blockTitle}](${thumbnailUrl})](${url})`} />
+          <CodeBlock language={themedImage ? 'html' : 'markdown'} code={markdownCode(themedImage, blockTitle, url, thumbnailUrl, imageWidth)} />
         </Tab>
         <Tab value="HTML" title="HTML" icon={<HTMLIcon />}>
-          <CodeBlock code={`<a href="${url}" target="_blank">
-  <img src="${thumbnailUrl}" style="border-radius: 12px; box-shadow: 0px 4px 4px 0px rgba(36, 39, 56, 0.25)" width="${imageWidth}" height="auto" alt="${blockTitle}">
-</a>`} language="html" />
+          <CodeBlock code={htmlCode(themedImage, blockTitle, url, thumbnailUrl, imageWidth)} language="html" />
         </Tab>
         <Tab value="image" title="Thumbnail" icon={<ImageIcon />}>
           <CodeBlock code={`${thumbnailUrl}`} />
@@ -47,3 +47,24 @@ export function ShareBlock ({
   );
 }
 
+
+function markdownCode (themed: boolean, title: string, url: string, thumbnailUrl: string, width: number) {
+  if (!themed) {
+    return `[![${title}](${thumbnailUrl})](${url})`;
+  }
+  return `<a href="${url}" target="_blank" style="display: block" align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="${thumbnailUrl}&color_scheme=light" width="${width + 8}" height="auto">
+    <img alt=${JSON.stringify(title)} src="${thumbnailUrl}&color_scheme=light" width="${width + 8}" height="auto">
+  </picture>
+</a>`
+}
+
+function htmlCode (themed: boolean, title: string, url: string, thumbnailUrl: string, width: number) {
+  if (!themed) {
+    return `<a href="${url}" target="_blank">
+  <img src="${thumbnailUrl}" style="border-radius: 12px; box-shadow: 0px 4px 4px 0px rgba(36, 39, 56, 0.25)" width="${width}" height="auto" alt="${title}">
+</a>`
+  }
+  return markdownCode(themed, title, url, thumbnailUrl, width);
+}

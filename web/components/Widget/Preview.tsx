@@ -1,6 +1,6 @@
 import { widgetMeta, widgetParameterDefinitions } from '@/utils/widgets';
 import { WidgetMeta } from '@ossinsight/widgets-types';
-import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg'
+import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
 
 import Image from 'next/image';
 
@@ -14,9 +14,17 @@ export async function WidgetPreview ({ name }: { name: string }) {
     <div className="group rounded-md relative overflow-hidden bg-popover border w-full transition-shadow hover:shadow-lg">
       <div className="flex flex-col items-center bg-body p-4 gap-4" style={{ height: 270 }}>
         <h2 className="text-lg font-bold text-title">{formatName(getName(widget.name))}</h2>
-        <Image className="block shadow-xl rounded-xl" loading="lazy" width={320} height={180} quality={100} src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`} alt="preview" />
+        <Image
+          className={'block' + (!widget.name.startsWith('@ossinsight/widget-compose-') ? ' shadow-xl rounded-xl' : '')}
+          loading="lazy"
+          width={320}
+          height={180}
+          quality={100}
+          src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
+          alt="preview"
+        />
       </div>
-      <div className='absolute bottom-0 left-0 w-full h-10 flex items-center justify-center gap-2 text-white transition-transform transform-gpu translate-y-full group-hover:translate-y-0' style={{ background: 'linear-gradient(98deg, #562FF2 0%, #6041DE 100%)' }}>
+      <div className="absolute bottom-0 left-0 w-full h-10 flex items-center justify-center gap-2 text-white transition-transform transform-gpu translate-y-full group-hover:translate-y-0" style={{ background: 'linear-gradient(98deg, #562FF2 0%, #6041DE 100%)' }}>
         edit it
         <ArrowUpRightIcon />
       </div>
