@@ -1,6 +1,7 @@
 import { Share } from '@/components/Share';
 import { widgetParameterDefinitions } from '@/utils/widgets';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import type { WidgetPageProps } from '../utils';
 import { widgetPageParams, widgetSignature } from '../utils';
