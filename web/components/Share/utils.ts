@@ -6,10 +6,10 @@ export function getOrigin () {
     return location.origin;
   }
 
-  const referer = headers().get('referer');
-  if (!referer) {
+  const host = headers().get('host');
+  if (!host) {
     return siteConfig.host;
   }
 
-  return (new URL(referer)).origin;
+  return + /^localhost:/.test(host) ? 'http://' + host : 'https://' + host;
 }

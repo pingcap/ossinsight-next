@@ -9,9 +9,9 @@ import render from './index';
 export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
   width = (visualizer.width ?? width);
   height = (visualizer.height ?? height);
-  let canvas = createCanvas((width + 8) * dpr, (height + 12) * dpr);
-  const offX = 4 * dpr;
-  const offY = 0;
+  let canvas = createCanvas((width + 16) * dpr, (height + 16) * dpr);
+  const offX = 8 * dpr;
+  const offY = 8 * dpr;
 
   const ctx = canvas.getContext('2d');
 
