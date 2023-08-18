@@ -60,9 +60,6 @@ export default function (
   const PADDING = autoSize(ctx, 24);
   const HEADER_HEIGHT = autoSize(ctx, 48);
 
-  const uniqueContributors = _.uniqBy(contributors, 'actor_login');
-  const sortedContributors = _.orderBy(uniqueContributors, 'events', 'desc');
-
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
@@ -72,7 +69,7 @@ export default function (
       grid(
         rows,
         cols,
-        ...sortedContributors.map((item) =>
+        ...contributors.map((item) =>
           widget('builtin:avatar-label', undefined, {
             label: '',
             size: size,
