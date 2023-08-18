@@ -174,7 +174,7 @@ function registerThemeLight () {
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: '#2c2c2c',
+          color: '#d8d8d8',
           width: 0.5,
         },
       },
