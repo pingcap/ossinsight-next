@@ -3,7 +3,7 @@ import { VisualizerModule } from '@ossinsight/widgets-types';
 import { LinkedData } from '../../parameters/resolver';
 import { createWidgetContext } from '../../utils/context';
 
-export default async function renderSvg (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData) {
+export default async function renderSvg (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
   width = visualizer.width ?? width;
   height = visualizer.height ?? height;
 
@@ -41,7 +41,7 @@ export default async function renderSvg (width: number, height: number, dpr: num
   }
 
   ctx.save();
-  ctx.fillStyle = 'rgb(31, 30, 40)';
+  ctx.fillStyle = colorScheme === 'light' ? 'white' : 'rgb(31, 30, 40)';
   ctx.rect(0, 0, width, height);
   ctx.fill();
   ctx.restore();
