@@ -29,7 +29,7 @@ export default async function Home ({ searchParams }: {
 
 export const metadata = {
   title: 'Customize GitHub Widgets: Data Insight, Social Sharing | OSS Insight',
-  description: 'Description: Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
+  description: 'Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
   keywords: [
     'GitHub widgets',
     'Custom widgets',
@@ -42,7 +42,7 @@ export const metadata = {
   ],
   openGraph: {
     title: 'Customize GitHub Widgets: Data Insight, Social Sharing | OSS Insight',
-    description: 'Description: Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
+    description: 'Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
     images: [
       {
         url: '/seo-widgets-homepage.jpeg',
@@ -54,7 +54,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Customize GitHub Widgets: Data Insight, Social Sharing | OSS Insight',
-    description: 'Description: Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
+    description: 'Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
     images: ['/seo-widgets-homepage.jpeg'],
   },
 } satisfies Metadata;
