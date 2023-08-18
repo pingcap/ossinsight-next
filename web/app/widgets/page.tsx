@@ -40,8 +40,22 @@ export const metadata = {
     'Online presence',
     'Customization tools',
   ],
+  openGraph: {
+    title: 'Customize GitHub Widgets: Data Insight, Social Sharing | OSS Insight',
+    description: 'Description: Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
+    images: [
+      {
+        url: '/seo-widgets-homepage.jpeg',
+        width: 1200,
+        height: 675,
+      },
+    ],
+  },
   twitter: {
     card: 'summary_large_image',
+    title: 'Customize GitHub Widgets: Data Insight, Social Sharing | OSS Insight',
+    description: 'Description: Unlock the power of customization with our GitHub widget creator. Design unique and eye-catching widgets to enhance your GitHub profile, blog, and more. Share your personalized creations effortlessly!',
+    images: ['/seo-widgets-homepage.jpeg'],
   },
 } satisfies Metadata;
 
