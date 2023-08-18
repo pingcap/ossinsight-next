@@ -54,7 +54,7 @@ function markdownCode (themed: boolean, title: string, url: string, thumbnailUrl
   }
   return `<a href="${url}" target="_blank" style="display: block" align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="${thumbnailUrl}&color_scheme=light" width="${width + 8}" height="auto">
+    <source media="(prefers-color-scheme: dark)" srcset="${thumbnailUrl}&color_scheme=dark" width="${width + 8}" height="auto">
     <img alt=${JSON.stringify(title)} src="${thumbnailUrl}&color_scheme=light" width="${width + 8}" height="auto">
   </picture>
 </a>`
