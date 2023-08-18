@@ -1,10 +1,11 @@
-import { dynamicParameters, Filter, WidgetPreview } from '@/components/Widget';
-import { filteredWidgetsNames } from '@/utils/widgets';
+import { Filter, WidgetsList } from '@/components/Widget';
+import { filteredWidgetsNames, nonPopularWidgetsNames } from '@/utils/widgets';
 import { Metadata } from 'next';
-import Link from 'next/link';
 import Heading from './Heading.mdx';
 
-export default async function Home ({ searchParams }: { searchParams: any }) {
+export default async function Home ({ searchParams }: {
+  searchParams: any
+}) {
   const config = {
     search: searchParams['q'] ?? '',
     tag: (typeof searchParams['tag'] === 'string' ? searchParams['tag'] : undefined),
@@ -16,15 +17,12 @@ export default async function Home ({ searchParams }: { searchParams: any }) {
         <Heading />
       </article>
       <Filter config={config} />
-      <ul className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {await Promise.all(filteredWidgetsNames(config).map(async name => (
-          <li key={name} className='col-span-1'>
-            <Link className="block" href={`/widgets/official/${getName(name)}?${await dynamicParameters(name)}`}>
-              <WidgetPreview name={name} />
-            </Link>
-          </li>
-        )))}
-      </ul>
+      <section className='grid grid-cols-1 divide-dashed divide-y-4'>
+        <WidgetsList className='py-8' widgets={filteredWidgetsNames(config)} />
+        {!config.tag && (
+          <WidgetsList className='py-8' widgets={nonPopularWidgetsNames()} />
+        )}
+      </section>
     </main>
   );
 }
@@ -47,6 +45,3 @@ export const metadata = {
   },
 } satisfies Metadata;
 
-function getName (name: string) {
-  return name.replace(/^@ossinsight\/widget-/, '');
-}

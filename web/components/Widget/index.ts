@@ -6,3 +6,4 @@ export default Widget;
 export * from './Parameters';
 export * from './Preview';
 export * from './Filter';
+export * from './List';
