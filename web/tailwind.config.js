@@ -36,6 +36,9 @@ module.exports = {
       borderColor: {
         DEFAULT: 'var(--border-color-default)',
       },
+      divideColor: {
+        DEFAULT: 'var(--divide-color-default)',
+      },
       boxShadow: {
         control: '0 0 0 2px var(--tw-shadow-color)',
       },

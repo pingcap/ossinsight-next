@@ -62,3 +62,14 @@ export function filteredWidgetsNames ({ search, tag = '🔥Popular' }: WidgetsFi
     })
     .map(([name]) => name);
 }
+
+export function nonPopularWidgetsNames () {
+  return Object.entries(widgets)
+    .filter(([, meta]) => {
+      if (meta.private) {
+        return false;
+      }
+      return !meta.keywords?.includes('🔥Popular')
+    })
+    .map(([name]) => name);
+}
