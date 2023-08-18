@@ -42,8 +42,8 @@ export function AvatarLabel({
   style,
   label = '',
   imgSrc = '',
-  lineHeight = 20,
-}: BuiltinProps<{ label?: string; imgSrc?: string; lineHeight?: number }>) {
+  size = 20,
+}: BuiltinProps<{ label?: string; imgSrc?: string; size?: number }>) {
   return (
     <div
       className={clsx(className, 'flex flex-row items-center', {
@@ -54,11 +54,11 @@ export function AvatarLabel({
       <div
         className={clsx(
           `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
-          `h-[${lineHeight}px] w-[${lineHeight}px]`
+          `h-[${size}px] w-[${size}px]`
         )}
         style={{
-          height: `${lineHeight}px`,
-          width: `${lineHeight}px`,
+          height: `${size}px`,
+          width: `${size}px`,
         }}
       >
         {imgSrc && (
