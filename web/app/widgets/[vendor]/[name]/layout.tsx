@@ -11,7 +11,7 @@ export default function Layout ({ parameters, share, children }: Params) {
   return (
     <div className='flex flex-col lg:flex-row min-h-page lg:max-h-page'>
       <aside className='lg:flex-1 p-4 bg-toolbar lg:max-h-page lg:min-h-page overflow-y-auto sticky top-header lg:border-r order-2'>
-        <NextLink href='/widgets' className='Button Button-secondary inline-flex items-center gap-1 mb-2'>
+        <NextLink href='/widgets' className='Button Button-secondary inline-flex items-center gap-1 mb-4'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'

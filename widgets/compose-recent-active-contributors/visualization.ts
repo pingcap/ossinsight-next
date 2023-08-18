@@ -26,6 +26,7 @@ type Input = [DataPoint[]];
 
 const calcGridCfg = (limit: number) => {
   switch (limit) {
+    case 50:
     case 100:
       return {
         rows: 5,
