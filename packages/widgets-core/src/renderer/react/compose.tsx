@@ -52,7 +52,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
       height,
       dpr,
     });
-  }, [size.width, size.height, dpr]);
+  }, [size.width, size.height, dpr, data]);
 
   const itemNames = useMemo(() => {
     return items.map(i => i.widget).join(',');
