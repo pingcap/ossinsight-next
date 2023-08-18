@@ -102,6 +102,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
                 style={props}
                 label={parameters.label}
                 imgSrc={parameters.imgSrc}
+                size={parameters.size}
               />
             );
           default: {

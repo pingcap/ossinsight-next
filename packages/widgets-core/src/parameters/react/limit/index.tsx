@@ -1,28 +1,30 @@
 import * as React from 'react';
+import { useMemo } from 'react';
+import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
 
 export function LimitInput({
   id,
-  value,
   onValueChange,
+  defaultValue = '30',
 }: {
   id: string;
-  value: number;
+  defaultValue?: string | number;
   onValueChange: (newValue: number | undefined) => void;
 }) {
-  const handleInputChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = Number(event.target.value);
-      onValueChange(newValue);
-    },
-    [onValueChange]
+  const options = [
+    { key: '30', title: '30' },
+    { key: '100', title: '100' },
+  ];
+
+  const { select: limitSelect, value: limit } = useSimpleSelect(
+    options,
+    options.find((i) => i.key === String(defaultValue)) || options[0],
+    id
   );
 
-  return (
-    <input
-      className='TextInput'
-      id={id}
-      value={value}
-      onChange={handleInputChange}
-    />
-  );
+  React.useEffect(() => {
+    onValueChange && onValueChange(Number(limit));
+  }, [limit]);
+
+  return <>{limitSelect}</>;
 }

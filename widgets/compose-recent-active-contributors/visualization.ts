@@ -24,6 +24,24 @@ type DataPoint = {
 
 type Input = [DataPoint[]];
 
+const calcGridCfg = (limit: number) => {
+  switch (limit) {
+    case 100:
+      return {
+        rows: 5,
+        cols: 20,
+        size: 20,
+      };
+    case 30:
+    default:
+      return {
+        rows: 3,
+        cols: 10,
+        size: 40,
+      };
+  }
+};
+
 export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -33,6 +51,9 @@ export default function (
   const end = DateTime.fromISO(today.toISOString());
   const start = DateTime.fromISO(prior30.toISOString());
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
+
+  const limit = ctx.parameters.limit || '30';
+  const { rows, cols, size } = calcGridCfg(Number(limit));
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -49,11 +70,12 @@ export default function (
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
       grid(
-        5,
-        20,
+        rows,
+        cols,
         ...sortedContributors.map((item) =>
           widget('builtin:avatar-label', undefined, {
             label: '',
+            size: size,
             imgSrc: item.actor_login
               ? `https://github.com/${item.actor_login}.png`
               : '',

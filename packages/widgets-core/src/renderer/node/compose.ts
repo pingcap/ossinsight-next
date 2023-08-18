@@ -56,6 +56,7 @@ export default async function renderCompose (width: number, height: number, dpr:
         await renderAvatarLabel(canvas, {
           label: item.parameters.label,
           imgSrc: item.parameters.imgSrc,
+          size: item.parameters.size,
           box: {
             dpr,
             left: item.left,
