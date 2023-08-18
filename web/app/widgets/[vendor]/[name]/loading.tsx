@@ -1,5 +1,7 @@
-import { ChartSkeleton } from '@ossinsight/ui/src/components/Skeleton';
+import Loader from '@/components/Widget/loading';
 
 export default function Loading () {
-  return <ChartSkeleton className="WidgetContainer" />;
+  return (
+    <Loader />
+  );
 }
