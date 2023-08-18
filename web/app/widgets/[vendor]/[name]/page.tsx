@@ -3,6 +3,7 @@ import { widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { Suspense } from 'react';
 import { makeLinkedData, widgetPageParams, WidgetPageProps } from './utils';
 
 export default function page (props: WidgetPageProps) {
@@ -10,7 +11,9 @@ export default function page (props: WidgetPageProps) {
   const linkedData = makeLinkedData(name, props.searchParams);
 
   return (
-    <ServerWidget className="WidgetContainer" name={name} searchParams={props.searchParams} linkedDataPromise={linkedData} />
+    <Suspense>
+      <ServerWidget className="WidgetContainer" name={name} searchParams={props.searchParams} linkedDataPromise={linkedData} />
+    </Suspense>
   );
 }
 

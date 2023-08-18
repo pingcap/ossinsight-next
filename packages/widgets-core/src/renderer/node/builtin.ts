@@ -1,6 +1,7 @@
 import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
 
 type BuiltinProps<P> = {
+  colorScheme?: string
   box: {
     dpr: number;
     left: number;
@@ -27,12 +28,12 @@ export function renderCardHeader(
 
   ctx.textAlign = 'start';
   ctx.font = `bold ${14 * dpr}px`;
-  ctx.fillStyle = 'rgb(193,193,193)';
+  ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(62, 62, 63)' : 'rgb(193,193,193)';
   ctx.fillText(title, left, top + height / 2, width);
 
   ctx.textAlign = 'end';
   ctx.font = `normal italic ${12 * dpr}px`;
-  ctx.fillStyle = 'rgb(124,124,124)';
+  ctx.fillStyle =props.colorScheme === 'light' ? 'rgb(121, 121, 121)' : 'rgb(124,124,124)';
   ctx.fillText(subtitle, left + width, top + height / 2, width);
 
   ctx.restore();
@@ -55,7 +56,7 @@ export function renderLabelValue(
   ctx.textAlign = 'start';
 
   ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white';
   ctx.fillText(label, left, top, width);
 
   const measured = ctx.measureText(label);
@@ -63,7 +64,7 @@ export function renderLabelValue(
     measured.fontBoundingBoxAscent + measured.fontBoundingBoxDescent;
 
   ctx.font = `bold ${24 * dpr}px`;
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white'
   value && ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
 
   ctx.restore();
@@ -86,7 +87,7 @@ export async function renderAvatarLabel(
   ctx.textAlign = 'start';
 
   ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white';
   label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
 
   try {
@@ -107,7 +108,7 @@ export async function renderAvatarLabel(
     ctx.clip(circlePath);
     ctx.drawImage(avatar, left, top + 2 * dpr, size * dpr, size * dpr);
   } catch {
-    ctx.fillStyle = 'rgb(37, 37, 39)';
+    ctx.fillStyle = props.colorScheme === 'light' ? '#f7f8f9' : 'rgb(37, 37, 39)';
     ctx.lineWidth = dpr;
     ctx.beginPath();
     ctx.arc(

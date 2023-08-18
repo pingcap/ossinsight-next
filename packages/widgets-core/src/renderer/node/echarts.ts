@@ -6,7 +6,7 @@ import { createWidgetContext } from '../../utils/context';
 import '../echarts-theme';
 import '../echarts-map';
 
-export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData) {
+export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
   const dynamicHeight = visualizer.computeDynamicHeight?.(data);
   let canvas = createCanvas(width, dynamicHeight ?? height);
 
@@ -17,7 +17,7 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     ...createWidgetContext('server', parameters, linkedData),
   });
 
-  const echarts = init(canvas as any, 'dark', {
+  const echarts = init(canvas as any, colorScheme, {
     width: width,
     height: dynamicHeight ?? height,
     devicePixelRatio: dpr,
