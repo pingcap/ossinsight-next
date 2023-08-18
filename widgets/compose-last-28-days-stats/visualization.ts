@@ -38,8 +38,8 @@ export default function ([[issues], [prs], [contributors], [stars]]: Input, ctx:
         item('@ossinsight/widget-analyze-repo-recent-pull-requests', 'PRs created', 'current_period_opened_prs', prs),
       ).gap(HORIZONTAL_SPACING).flex(),
       horizontal(
-        item('@ossinsight/widget-analyze-repo-recent-contributors', 'Active Contributors', 'current_period_contributors', contributors),
-        item('@ossinsight/widget-analyze-repo-recent-issues', 'Issues Opened', 'current_period_opened_issues', issues),
+        item('@ossinsight/widget-analyze-repo-recent-contributors', 'Contributors', 'current_period_contributors', contributors),
+        item('@ossinsight/widget-analyze-repo-recent-issues', 'Issues opened', 'current_period_opened_issues', issues),
       ).gap(HORIZONTAL_SPACING).flex(),
     ).padding([0, PADDING, PADDING]).gap(SPACING),
     0,

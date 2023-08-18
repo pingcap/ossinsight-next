@@ -6,14 +6,14 @@ import { createWidgetContext } from '../../utils/context';
 import { renderCardHeader, renderLabelValue, renderAvatarLabel } from './builtin';
 import render from './index';
 
-export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData) {
+export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
   width = visualizer.width ?? width;
   height = visualizer.height ?? height;
   let canvas = createCanvas(width * dpr, height * dpr);
 
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = 'rgb(36, 35, 49)';
+  ctx.fillStyle = colorScheme === 'light' ? '#ffffff' : 'rgb(36, 35, 49)';
   ctx.fillRect(0, 0, width * dpr, height * dpr);
 
   const option: WidgetComposeItem[] = visualizer.default(data, {
@@ -28,6 +28,7 @@ export default async function renderCompose (width: number, height: number, dpr:
       case 'builtin:label':
       case 'builtin:label-value':
         renderLabelValue(canvas, {
+          colorScheme,
           label: item.parameters.label,
           value: item.parameters.value,
           box: {
@@ -41,6 +42,7 @@ export default async function renderCompose (width: number, height: number, dpr:
         break;
       case 'builtin:card-heading':
         renderCardHeader(canvas, {
+          colorScheme,
           title: item.parameters.title,
           subtitle: item.parameters.subtitle,
           box: {
@@ -54,6 +56,7 @@ export default async function renderCompose (width: number, height: number, dpr:
         break;
       case 'builtin:avatar-label':
         await renderAvatarLabel(canvas, {
+          colorScheme,
           label: item.parameters.label,
           imgSrc: item.parameters.imgSrc,
           box: {
@@ -67,7 +70,7 @@ export default async function renderCompose (width: number, height: number, dpr:
         break;
       default: {
         const visualizer = await visualizers[item.widget]();
-        const subCanvas = await render({ width: item.width / dpr, height: item.height / dpr, dpr: dpr, visualizer, data: item.data, parameters: item.parameters, linkedData, type: visualizer.type });
+        const subCanvas = await render({ width: item.width / dpr, height: item.height / dpr, dpr: dpr, visualizer, data: item.data, parameters: item.parameters, linkedData, type: visualizer.type, colorScheme });
         ctx.drawImage(subCanvas, item.left, item.top, item.width, item.height);
       }
     }

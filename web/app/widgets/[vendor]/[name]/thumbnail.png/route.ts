@@ -7,7 +7,7 @@ import render from '@ossinsight/widgets-core/src/renderer/node';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
-const EXCLUDED_PARAMETERS = ['image_size'];
+const EXCLUDED_PARAMETERS = ['image_size', 'color_scheme'];
 
 export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
   if (vendor !== 'official') {
@@ -41,6 +41,8 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     parameters,
   });
 
+  const colorScheme = request.nextUrl.searchParams.get('color_scheme') ?? 'dark';
+
   const size = request.nextUrl.searchParams.get('image_size') ?? 'default';
   let width: number;
   let height: number;
@@ -65,6 +67,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     dpr: dpr ?? 2,
     parameters,
     linkedData,
+    colorScheme,
   });
 
   return new NextResponse(buffer.toBuffer('image/png'), {
