@@ -24,6 +24,27 @@ type DataPoint = {
 
 type Input = [DataPoint[]];
 
+const calcGridCfg = (limit: number) => {
+  switch (limit) {
+    case 50:
+    case 100:
+      return {
+        rows: 5,
+        cols: 20,
+        size: 20,
+      };
+    case 5:
+    case 10:
+    case 30:
+    default:
+      return {
+        rows: 3,
+        cols: 10,
+        size: 40,
+      };
+  }
+};
+
 export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -34,13 +55,13 @@ export default function (
   const start = DateTime.fromISO(prior30.toISOString());
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
 
+  const limit = ctx.parameters.limit || '30';
+  const { rows, cols, size } = calcGridCfg(Number(limit));
+
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
   const PADDING = autoSize(ctx, 24);
   const HEADER_HEIGHT = autoSize(ctx, 48);
-
-  const uniqueContributors = _.uniqBy(contributors, 'actor_login');
-  const sortedContributors = _.orderBy(uniqueContributors, 'events', 'desc');
 
   return computeLayout(
     vertical(
@@ -49,11 +70,12 @@ export default function (
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
       grid(
-        5,
-        20,
-        ...sortedContributors.map((item) =>
+        rows,
+        cols,
+        ...contributors.map((item) =>
           widget('builtin:avatar-label', undefined, {
             label: '',
+            size: size,
             imgSrc: item.actor_login
               ? `https://github.com/${item.actor_login}.png`
               : '',
