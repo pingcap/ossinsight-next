@@ -14,8 +14,6 @@ export async function ServerWidgetInfo ({ name, linkedDataPromise, searchParams 
     dpr: 0,
   });
 
-  console.log(metadata)
-
   return (
     <>
       <h1 className='text-lg text-title font-bold mb-2'>{metadata.title}</h1>

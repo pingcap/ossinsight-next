@@ -115,6 +115,7 @@ export interface CollectionIdParameterDefinition extends BaseParameterDefinition
 
 export interface TimePeriodParameterDefinition extends BaseParameterDefinition<string> {
   type: 'time-period';
+  enums?: string[];
 }
 
 export interface TimeZoneParameterDefinition extends BaseParameterDefinition<string> {

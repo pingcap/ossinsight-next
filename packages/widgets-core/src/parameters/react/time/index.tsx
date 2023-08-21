@@ -1,12 +1,15 @@
+import { ParameterDefinition, TimePeriodParameterDefinition } from '@ossinsight/widgets-types';
 import * as React from 'react';
 import { TimePeriodSelector, TimeZoneSelector } from '@ossinsight/ui';
 
 export function TimePeriodSelect({
   id,
+  enums,
   value,
   onValueChange,
 }: {
   id: string
+  enums?: string[];
   value: any;
   onValueChange: (newValue: string) => void;
 }) {
@@ -21,6 +24,7 @@ export function TimePeriodSelect({
     <>
       <TimePeriodSelector
         id={id}
+        enums={enums}
         defaultValue={value}
         onValueChange={handleValueChange}
       />
