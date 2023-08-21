@@ -17,7 +17,7 @@ export function CopyButton ({ className, content }: { className: string, content
   }, [content]);
 
   return (
-    <button className={clsx('border bg-toolbar rounded opacity-60 hover:opacity-100 transition-opacity px-2 py-1 text-active flex gap-2 items-center text-sm', className)} onClick={handleCopy} type="button">
+    <button className={clsx('border bg-toolbar rounded hover:text-active transition-colors px-2 py-1 text-content flex gap-2 items-center text-sm', className)} onClick={handleCopy} type="button">
       {checked ? <ClipboardCheckIcon width={14} height={14} /> : <ClipboardIcon width={14} height={14} />}
       {checked ? 'Copied!' : 'Copy'}
     </button>
