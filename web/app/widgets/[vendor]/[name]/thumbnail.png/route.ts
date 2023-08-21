@@ -68,6 +68,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     parameters,
     linkedData,
     colorScheme,
+    sizeName: size,
   });
 
   return new NextResponse(buffer.toBuffer('image/png'), {

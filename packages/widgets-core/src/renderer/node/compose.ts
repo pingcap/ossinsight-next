@@ -6,7 +6,7 @@ import { createWidgetContext } from '../../utils/context';
 import { renderAvatarLabel, renderCardHeader, renderLabelValue } from './builtin';
 import render from './index';
 
-export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
+export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string, sizeName?: string) {
   width = (visualizer.width ?? width);
   height = (visualizer.height ?? height);
   let canvas = createCanvas((width + 16) * dpr, (height + 16) * dpr);
@@ -24,7 +24,7 @@ export default async function renderCompose (width: number, height: number, dpr:
   ctx.shadowOffsetY = 4 * dpr;
   ctx.shadowBlur = 4 * dpr;
   ctx.beginPath();
-  ctx.moveTo(offX, offY)
+  ctx.moveTo(offX, offY);
   ctx.roundRect(offX, offY, width * dpr, height * dpr, 12 * dpr);
   ctx.fill();
   ctx.restore();
@@ -92,5 +92,34 @@ export default async function renderCompose (width: number, height: number, dpr:
 
   await Promise.all(all);
 
-  return canvas;
+  if (sizeName === 'twitter:summary_large_image') {
+    const twitterCanvas = createCanvas(800, 418);
+    let idealWidth = canvas.width;
+    let idealHeight = canvas.height;
+
+    if (idealWidth > 800) {
+      idealHeight *= 800 / idealWidth;
+      idealWidth = 800;
+    }
+
+    if (idealHeight > 418) {
+      idealWidth *= 418 / idealHeight;
+      idealHeight = 418;
+    }
+
+    const tCtx = twitterCanvas.getContext('2d');
+    tCtx.fillStyle = 'rgb(31, 30, 40)';
+    tCtx.beginPath();
+    tCtx.rect(0, 0, 800, 418);
+    tCtx.fill();
+    tCtx.restore();
+
+    const y = (418 - idealHeight) / 2;
+    const x = (800 - idealWidth) / 2;
+
+    tCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, x, y, idealWidth, idealHeight);
+    return twitterCanvas;
+  } else {
+    return canvas;
+  }
 }

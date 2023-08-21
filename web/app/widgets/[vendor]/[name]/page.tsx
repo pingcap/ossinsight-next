@@ -44,19 +44,23 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
 
   twitterImageUsp.set('image_size', 'twitter:summary_large_image');
 
+  const finalTitle = (title ?? decodeURIComponent(params.name)) + ' | OSSInsight';
+  const finalDescription = description || widget.description;
+  const finalKeywords =  ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []);
+
   return {
-    title: (title ?? decodeURIComponent(params.name)) + ' | OSSInsight',
-    description: description || widget.description,
-    keywords: ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []),
+    title: finalTitle,
+    description: finalDescription,
+    keywords: finalKeywords,
     openGraph: {
-      title: title ?? decodeURIComponent(params.name),
-      description: description ?? widget.description,
+      title: finalTitle,
+      description: finalDescription,
       tags: (widget.keywords ?? []).concat(keywords ?? []),
       images: [`${protocol}://${host}/widgets/${params.vendor}/${params.name}/thumbnail.png?${usp.toString()}`],
     },
     twitter: {
-      title: title ?? decodeURIComponent(params.name),
-      description: description ?? widget.description,
+      title: finalTitle,
+      description: finalDescription,
       card: 'summary_large_image',
       images: [`${protocol}://${host}/widgets/${params.vendor}/${params.name}/thumbnail.png?${twitterImageUsp.toString()}`],
     },
