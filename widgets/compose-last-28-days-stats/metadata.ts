@@ -4,7 +4,7 @@ const generateMetadata: MetadataGenerator<{ repo_id: string, vs_repo_id?: string
   const repo = getRepo(Number(repo_id));
 
   return {
-    title: `Performance Stats of ${repo} - Last 28 days`
+    title: `Performance Stats of ${repo.fullName} - Last 28 days`
   }
 };
 
