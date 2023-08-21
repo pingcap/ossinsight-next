@@ -5,10 +5,10 @@ import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
 export function LimitInput({
   id,
   onValueChange,
-  defaultValue = '30',
+  value = '30',
 }: {
   id: string;
-  defaultValue?: string | number;
+  value?: string | number;
   onValueChange: (newValue: number | undefined) => void;
 }) {
   const options = [
@@ -21,7 +21,7 @@ export function LimitInput({
 
   const { select: limitSelect, value: limit } = useSimpleSelect(
     options,
-    options.find((i) => i.key === String(defaultValue)) || options[0],
+    options.find((i) => i.key === String(value)) || options[0],
     id
   );
 
