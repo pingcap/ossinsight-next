@@ -167,18 +167,18 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
       let restSize: number;
 
       if (layout.direction === 'vertical') {
-        restSize = height - padding.top - padding.bottom - layout.gap * (layout.children.length - 1);
+        restSize = height - padding.top - padding.bottom - gap * (layout.children.length - 1);
       } else {
-        restSize = width - padding.left - padding.right - layout.gap * (layout.children.length - 1);
+        restSize = width - padding.left - padding.right - gap * (layout.children.length - 1);
       }
 
       let flexibleChildren: Array<{ index: number, grow: number }> = [];
       for (let i = 0; i < layout.children.length; i++) {
         let child = layout.children[i];
-        if ('size' in child && child.size > 0) {
+        if ('size' in child &&  child.size && child.size > 0) {
           restSize -= child.size;
         } else {
-          flexibleChildren.push({ index: i, grow: 'grow' in child && child.grow > 0 ? child.grow : 1 });
+          flexibleChildren.push({ index: i, grow: 'grow' in child && child.grow && child.grow > 0 ? child.grow : 1 });
         }
       }
       if (restSize > 0 && flexibleChildren.length > 0) {
@@ -196,15 +196,17 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
       if (layout.direction === 'vertical') {
         let sum = 0;
         return layout.children.flatMap((child, i) => {
-          const result = computeLayout(child, left + padding.left, top + padding.top + gap * i + sum, width - padding.left - padding.right, child.size);
-          sum += child.size;
+          const size = child.size ?? 0;
+          const result = computeLayout(child, left + padding.left, top + padding.top + gap * i + sum, width - padding.left - padding.right, size);
+          sum += size;
           return result;
         });
       } else {
         let sum = 0;
         return layout.children.flatMap((child, i) => {
-          const result = computeLayout(child, left + gap * i + sum + padding.left, top + padding.top, child.size, height - padding.top - padding.bottom);
-          sum += child.size;
+          const size = child.size ?? 0;
+          const result = computeLayout(child, left + gap * i + sum + padding.left, top + padding.top, size, height - padding.top - padding.bottom);
+          sum += size;
           return result;
         });
       }
