@@ -1,13 +1,12 @@
 {
   "name": "@ossinsight/widget-compose-last-28-days-stats",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Analyze the overall repository performance in the last 28 days with stars, active contributors, pull requests, and issues.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
     "🔥Popular",
-    "Repository",
-    "Stars"
+    "Repository"
   ],
   "author": "OSSInsight",
   "devDependencies": {

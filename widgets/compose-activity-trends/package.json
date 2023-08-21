@@ -1,13 +1,12 @@
 {
   "name": "@ossinsight/widget-compose-activity-trends",
   "version": "1.0.0",
-  "description": "All personal activities happened on all public repositories in GitHub since 2011. You can check each specific activity type by type with a timeline.",
+  "description": "Analyze all different types of events triggered by activity on GitHub within a repository over the last 28 days.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
     "🔥Popular",
-    "Reposiory",
-    "Contributions"
+    "Reposiory"
   ],
   "author": "OSSInsight",
   "devDependencies": {

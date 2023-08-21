@@ -1,7 +1,9 @@
-import { MetadataGenerator, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { MetadataGenerator } from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ repo_id: string, vs_repo_id?: string }> = ({ parameters: { repo_id, vs_repo_id }, getRepo }) => {
-  return {}
+const generateMetadata: MetadataGenerator<{ collection_id: string, activity?: string }> = ({ parameters: { collection_id, activity }, getRepo, getCollection }) => {
+  return {
+    title: `Repository Annual Ranking in ${getCollection(Number(collection_id)).name}`,
+  };
 };
 
 export default generateMetadata;

@@ -1,17 +1,23 @@
-import { MetadataGenerator, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { MetadataGenerator } from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ repo_id: string, vs_repo_id?: string }> = ({ parameters: { repo_id, vs_repo_id }, getRepo }) => {
+const generateMetadata: MetadataGenerator<{ repo_id: string, vs_repo_id?: string, activity: 'stars' | 'pull-request-creators' | 'issue-creators' }> = ({ parameters: { repo_id, vs_repo_id, activity }, getRepo }) => {
   const main = getRepo(parseInt(repo_id));
   if (vs_repo_id) {
     const vs = getRepo(parseInt(vs_repo_id));
     return {
-      title: `${main.fullName} vs ${vs.fullName} | Geographical Distribution | OSSInsight`,
+      title: `${main.fullName} vs ${vs.fullName} | ${TITLE[activity]} Geographical Distribution`,
     };
   } else {
     return {
-      title: `Stargazers, Issue creators and Pull Request creators' geographical distribution around the world (analyzed with the public github infomation) of ${main.fullName} | OSSInsight`,
+      title: `${TITLE[activity]} Geographical Distribution of ${main.fullName}`,
     };
   }
+};
+
+const TITLE = {
+  'stars': 'Star',
+  'pull-request-creators': 'Pull Request Creator',
+  'issue-creators': 'Issue Creator',
 };
 
 export default generateMetadata;

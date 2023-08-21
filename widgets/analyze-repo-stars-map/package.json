@@ -1,10 +1,10 @@
 {
   "name": "@ossinsight/widget-analyze-repo-stars-map",
   "version": "1.0.0",
-  "description": "Stargazers, Issue creators and Pull Request creators' geographical distribution around the world (analyzed with the public github infomation).",
+  "description": "Visualize and compare the geographic distribution of stars worldwide.",
   "type": "module",
   "main": "visualization.ts",
-  "keywords": ["Repository", "Stars", "Map"],
+  "keywords": ["Repository", "Star", "Pull Request", "Issue", "Map"],
   "author": "OSSInsight",
   "devDependencies": {
     "@ossinsight/widgets-parent": "workspace:^"

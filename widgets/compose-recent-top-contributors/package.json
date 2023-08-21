@@ -1,13 +1,13 @@
 {
   "name": "@ossinsight/widget-compose-recent-top-contributors",
   "version": "1.0.0",
-  "description": "Show the recent top 5 contributors of a GitHub repository.",
+  "description": "Identify the top contributors with their contribution counts in a repository over the last 28 days. ",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
     "🔥Popular",
     "Repository",
-    "Stars"
+    "Contributor"
   ],
   "author": "OSSInsight",
   "devDependencies": {

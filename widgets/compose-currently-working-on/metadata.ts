@@ -4,7 +4,7 @@ const generateMetadata: MetadataGenerator<{ user_id: string }> = ({ parameters: 
   const user = getUser(Number(user_id));
 
   return {
-    title: `@${user.login}'s Contribution Activities`,
+    title: `@${user.login}'s Recent Work - Last 28 days`,
   };
 };
 

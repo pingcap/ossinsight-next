@@ -45,7 +45,7 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
   twitterImageUsp.set('image_size', 'twitter:summary_large_image');
 
   return {
-    title: title ?? decodeURIComponent(params.name),
+    title: (title ?? decodeURIComponent(params.name)) + ' | OSSInsight',
     description: description || widget.description,
     keywords: ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []),
     openGraph: {

@@ -1,10 +1,10 @@
 {
   "name": "@ossinsight/widget-analyze-user-contribution-time-distribution",
   "version": "1.0.0",
-  "description": "You can see the total contributions in different repositories since 2011, as well as check the status of different contribution categories type by type.",
+  "description": "Analyze and plot user contributions over time. Recognize peak periods of activity for different users.",
   "type": "module",
   "main": "visualization.tsx",
-  "keywords": ["User", "Contributions"],
+  "keywords": ["Developer"],
   "author": "OSSInsight",
   "devDependencies": {
     "@ossinsight/widgets-parent": "workspace:^",

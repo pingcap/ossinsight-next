@@ -4,7 +4,7 @@ const generateMetadata: MetadataGenerator<{ repo_id: string }> = ({ parameters: 
   const repo = getRepo(Number(repo_id));
 
   return {
-    title: `Activity trends for ${repo.fullName}`,
+    title: `Activity Trends of ${repo.fullName} - Last 28 days`,
   };
 };
 

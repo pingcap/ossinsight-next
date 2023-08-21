@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-analyze-repo-issue-opened-and-closed",
   "version": "1.0.0",
-  "description": "Monthly opened/closed issues and the historical totals.",
+  "description": "Analyze and compare the count of opened and closed issues within the repository. ",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [

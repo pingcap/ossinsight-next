@@ -25,7 +25,7 @@ export async function Share ({ name, params, searchParams, linkedDataPromise }: 
 
   return (
     <ShareBlock
-      title={title ?? 'Untitled'}
+      title={(title ?? 'Untitled') + ' | OSSInsight'}
       url={`${origin}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
       thumbnailUrl={`${origin}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
       keywords={keywords}

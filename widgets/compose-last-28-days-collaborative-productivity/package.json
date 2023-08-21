@@ -1,13 +1,12 @@
 {
   "name": "@ossinsight/widget-compose-last-28-days-collaborative-productivity",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Analyze the collaborative efficiency of a repository, including pull request merge rate, review rate, and issue closed rate, over the last 28 days.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
     "🔥Popular",
-    "Repository",
-    "Stars"
+    "Repository"
   ],
   "author": "OSSInsight",
   "devDependencies": {

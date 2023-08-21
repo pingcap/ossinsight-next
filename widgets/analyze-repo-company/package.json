@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-analyze-repo-company",
   "version": "1.0.0",
-  "description": "Company information about Stargazers, Issue creators, and Pull Request creators(analyzed with the public github infomation).",
+  "description": "Analyze and compare company affiliations of repository stargazers, pull request submitters, and issue creators.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": ["Repository", "Company"],

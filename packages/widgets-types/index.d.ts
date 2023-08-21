@@ -19,7 +19,7 @@ export interface LinkedDataContext {
 
   getUser (id: number): { id: number, login: string } | undefined;
 
-  getCollection (id: number): any;
+  getCollection (id: number): { id: number, name: string, public: boolean } | undefined;
 
   getOrg (id: number): any;
 }

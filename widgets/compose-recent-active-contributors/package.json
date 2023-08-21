@@ -1,13 +1,13 @@
 {
   "name": "@ossinsight/widget-compose-recent-active-contributors",
   "version": "1.0.0",
-  "description": "Show the recent active contributors of a GitHub repository.",
+  "description": "Identify the most active contributors in a repository over the past 28 days. Recognize and engage with individuals who have made significant contributions during this period.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
     "🔥Popular",
     "Repository",
-    "Contributors"
+    "Contributor"
   ],
   "author": "OSSInsight",
   "devDependencies": {

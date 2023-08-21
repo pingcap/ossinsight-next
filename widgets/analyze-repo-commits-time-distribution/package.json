@@ -1,12 +1,12 @@
 {
   "name": "@ossinsight/widget-analyze-repo-commits-time-distribution",
   "version": "1.0.0",
-  "description": "The Heat Maps below describe the number of commit events that occur at a particular point of time (UTC+0).",
+  "description": "Analyze and compare the preferred times for code submissions by individuals in repositories.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
     "Repository",
-    "Commits"
+    "Commit"
   ],
   "author": "OSSInsight",
   "devDependencies": {
