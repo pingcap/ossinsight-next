@@ -6,28 +6,52 @@ import { createWidgetContext } from '../../utils/context';
 import { renderAvatarLabel, renderCardHeader, renderLabelValue } from './builtin';
 import render from './index';
 
-export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string, sizeName?: string) {
+/**
+ *
+ * @param width
+ * @param height
+ * @param dpr
+ * @param visualizer
+ * @param data
+ * @param parameters
+ * @param linkedData
+ * @param colorScheme
+ * @param sizeName
+ * @param root indicate that the widget is a real compose type widget.
+ */
+export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string, sizeName?: string, root = false) {
+  // should wrap with shadow box if the widget is 'compose' type or the rendering context is not twitter.
+  const shouldWrap = !!(root || sizeName !== 'twitter:summary_large_image');
+
   width = (visualizer.width ?? width);
   height = (visualizer.height ?? height);
-  let canvas = createCanvas((width + 16) * dpr, (height + 16) * dpr);
-  const offX = 8 * dpr;
-  const offY = 8 * dpr;
+  const canvasWidth = (width + (shouldWrap ? 16 : 0)) * dpr;
+  const canvasHeight = (height + (shouldWrap ? 16 : 0)) * dpr;
+
+  let canvas = createCanvas(canvasWidth, canvasHeight);
+  const offX = shouldWrap ? 8 * dpr : 0;
+  const offY = shouldWrap ?  8 * dpr : 0;
 
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = colorScheme === 'light' ? 'rgba(255,255,255,0)' : 'rgba(0,0,0,0)';
-  ctx.fillRect(0, 0, width * dpr, height * dpr);
+  if (shouldWrap) {
+    ctx.fillStyle = colorScheme === 'light' ? 'rgba(255,255,255,0)' : 'rgba(0,0,0,0)';
+    ctx.fillRect(0, 0, width * dpr, height * dpr);
 
-  ctx.fillStyle = colorScheme === 'light' ? '#ffffff' : 'rgb(36, 35, 49)';
-  ctx.save();
-  ctx.shadowColor = colorScheme === 'light' ? 'rgba(219, 216, 199, 0.75)' : 'rgba(36, 39, 56, 0.25)';
-  ctx.shadowOffsetY = 4 * dpr;
-  ctx.shadowBlur = 4 * dpr;
-  ctx.beginPath();
-  ctx.moveTo(offX, offY);
-  ctx.roundRect(offX, offY, width * dpr, height * dpr, 12 * dpr);
-  ctx.fill();
-  ctx.restore();
+    ctx.fillStyle = colorScheme === 'light' ? '#ffffff' : 'rgb(36, 35, 49)';
+    ctx.save();
+    ctx.shadowColor = colorScheme === 'light' ? 'rgba(219, 216, 199, 0.75)' : 'rgba(36, 39, 56, 0.25)';
+    ctx.shadowOffsetY = 4 * dpr;
+    ctx.shadowBlur = 4 * dpr;
+    ctx.beginPath();
+    ctx.moveTo(offX, offY);
+    ctx.roundRect(offX, offY, width * dpr, height * dpr, 12 * dpr);
+    ctx.fill();
+    ctx.restore();
+  } else {
+    ctx.fillStyle = colorScheme === 'light' ? 'rgba(255,255,255,0)' : 'rgb(36, 35, 49)';
+    ctx.fillRect(0, 0, width * dpr, height * dpr);
+  }
 
   const option: WidgetComposeItem[] = visualizer.default(data, {
     width: width * dpr,
@@ -92,7 +116,7 @@ export default async function renderCompose (width: number, height: number, dpr:
 
   await Promise.all(all);
 
-  if (sizeName === 'twitter:summary_large_image') {
+  if (sizeName === 'twitter:summary_large_image' && root) {
     const twitterCanvas = createCanvas(800, 418);
     let idealWidth = canvas.width;
     let idealHeight = canvas.height;

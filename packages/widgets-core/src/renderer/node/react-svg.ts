@@ -28,7 +28,7 @@ export default async function renderSvg (width: number, height: number, dpr: num
   const { width: imageWidth, height: imageHeight } = scaleToFit(image.width, image.height, width, height);
 
   ctx.save();
-  ctx.fillStyle = colorScheme === 'light' ? 'white' : 'rgb(31, 30, 40)';
+  ctx.fillStyle = colorScheme === 'light' ? 'white' : 'rgb(36, 35, 49)';
   ctx.rect(0, 0, width, height);
   ctx.fill();
   ctx.restore();
