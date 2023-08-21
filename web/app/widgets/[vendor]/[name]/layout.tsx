@@ -3,11 +3,12 @@ import NextLink from 'next/link';
 
 type Params = {
   parameters: ReactElement
+  info: ReactElement
   share: ReactElement
   children: ReactElement
 }
 
-export default function Layout ({ parameters, share, children }: Params) {
+export default function Layout ({ parameters, info, share, children }: Params) {
   return (
     <div className='flex flex-col lg:flex-row min-h-page lg:max-h-page'>
       <aside className='lg:flex-1 p-4 bg-toolbar lg:max-h-page lg:min-h-page overflow-y-auto sticky top-header lg:border-r order-2'>
@@ -28,7 +29,8 @@ export default function Layout ({ parameters, share, children }: Params) {
           </svg>
           Back
         </NextLink>
-        <h2 className='text-md text-subtitle font-bold mb-2'>
+        {info}
+        <h2 className='text-md text-subtitle font-bold mt-8 mb-2'>
           Widget configuration
         </h2>
         {parameters}
