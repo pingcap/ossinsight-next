@@ -11,6 +11,14 @@ export const PERIOD_OPTIONS = [
     key: 'all_times',
     title: 'All times',
   },
+  {
+    key: 'past_1_year',
+    title: 'Past 1 year',
+  },
+  {
+    key: 'past_3_years',
+    title: 'Past 3 years',
+  }
 ];
 
 export type ZoneOptionType = { key: number; title: string };

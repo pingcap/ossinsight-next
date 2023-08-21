@@ -9,6 +9,7 @@
     "type": "time-period",
     "title": "Period",
     "required": true,
+    "enums": ["last_1_year", "last_3_year", "all_times"],
     "default": "last_1_year"
   },
   "zone": {
