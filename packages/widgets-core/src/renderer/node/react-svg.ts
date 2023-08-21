@@ -2,14 +2,15 @@ import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import { LinkedData } from '../../parameters/resolver';
 import { createWidgetContext } from '../../utils/context';
+import { scaleToFit } from '../../utils/vis';
 
 export default async function renderSvg (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
   width = visualizer.width ?? width;
   height = visualizer.height ?? height;
 
   const option = visualizer.default(data, {
-    width: width * dpr,
-    height: height * dpr,
+    width: width,
+    height: height,
     dpr,
     ...createWidgetContext('server', parameters, linkedData),
   });
@@ -23,29 +24,15 @@ export default async function renderSvg (width: number, height: number, dpr: num
 
   let canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
-  const aspectRatio = image.width / image.height;
 
-  let imageWidth = image.width;
-  let imageHeight = image.height;
-
-  let padding = 16;
-
-  if (imageWidth > width - padding * 2) {
-    imageWidth = width - padding * 2;
-    imageHeight = imageWidth / aspectRatio;
-  }
-
-  if (imageHeight > height - padding * 2) {
-    imageHeight = height - padding * 2;
-    imageWidth = imageHeight * aspectRatio;
-  }
+  const { width: imageWidth, height: imageHeight } = scaleToFit(image.width, image.height, width, height);
 
   ctx.save();
-  ctx.fillStyle = colorScheme === 'light' ? 'white' : 'rgb(31, 30, 40)';
+  ctx.fillStyle = colorScheme === 'light' ? 'white' : 'rgb(36, 35, 49)';
   ctx.rect(0, 0, width, height);
   ctx.fill();
   ctx.restore();
-  ctx.drawImage(image, padding + (width - imageWidth) / 2, padding + (height - imageHeight) / 2, imageWidth, imageHeight);
+  ctx.drawImage(image, (width - imageWidth) / 2, (height - imageHeight) / 2, imageWidth, imageHeight);
 
   return canvas;
 }

@@ -4,13 +4,12 @@ import type {
 } from '@ossinsight/widgets-types';
 import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
-  topBottomLayoutGrid,
   utils,
   categoryAxis,
   heatmap,
   visualMap,
   itemTooltip,
-  simpleGrid,
+  parseParams2GridOpt,
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
@@ -116,10 +115,7 @@ export default function (
 
   const option = {
     dataset,
-    grid: topBottomLayoutGrid(
-      !!vs,
-      runtime === 'server' ? simpleGrid(24 * ctx.dpr) : {}
-    ),
+    grid: parseParams2GridOpt(ctx),
     xAxis: utils.template(
       ({ id }) =>
         categoryAxis<'x'>(id, { gridId: id, data: hours, position: 'top' }),

@@ -46,7 +46,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
   return (
     <ParametersContext.Provider value={{ linkedData }}>
       <div className="flex flex-col items-start gap-4 mt-4">
-        {Object.entries(parameters).map(([key, config]) => {
+        {Object.entries(parameters).filter(([key]) => key !== 'vs_repo_id').map(([key, config]) => {
           const pId = `${key}-${id}`;
           const rawValue = values[key];
           const value = parseValue(rawValue, config);

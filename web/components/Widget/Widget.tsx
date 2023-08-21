@@ -1,8 +1,9 @@
 'use client';
 
 import siteConfig from '@/site.config';
-import { widgetVisualizer } from '@/utils/widgets';
+import { createDefaultComposeLayout, widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { CSSProperties, use } from 'react';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
 
@@ -16,7 +17,8 @@ export interface WidgetProps {
 }
 
 export default function Widget ({ className, style, name, params, data, linkedData }: WidgetProps) {
-  const visualizer = use(widgetVisualizer(name));
+  let visualizer = use(widgetVisualizer(name));
+  const generateMetadata = use(widgetMetadataGenerator(name));
   const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
 
   if (hasEmptyData(data)) {
@@ -30,6 +32,18 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   const width = visualizer.width ?? siteConfig.sizes.default.width;
   const height = dynamicHeight ?? visualizer.height ?? siteConfig.sizes.default.height;
 
+  if (visualizer.type !== 'compose') {
+    visualizer = createDefaultComposeLayout(name, data, {
+      generateMetadata,
+      ctx: {
+        ...createWidgetContext('client', params, linkedData),
+        width,
+        height,
+        dpr: devicePixelRatio,
+      },
+    });
+  }
+
   return (
     <div
       className={'w-full h-full p-4 overflow-auto' + (!dynamicHeight ? ' flex items-center justify-center' : '')}
@@ -38,7 +52,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
       }}
     >
       <div
-        className='shadow-2xl rounded-xl max-w-full overflow-hidden'
+        className="shadow-2xl rounded-xl max-w-full overflow-hidden"
         style={{
           width,
           aspectRatio: `${width} / ${height}`,
