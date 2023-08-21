@@ -19,8 +19,12 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   const visualizer = use(widgetVisualizer(name));
   const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
 
-  if (isEmptyData(data)) {
-    return <p>Empty data</p>;
+  if (hasEmptyData(data)) {
+    return (
+      <div className='w-full h-full flex items-center justify-center'>
+        <p>Whoops, failed to fetch data, refresh page or get back later.</p>
+      </div>
+    );
   }
 
   const width = visualizer.width ?? siteConfig.sizes.default.width;
@@ -59,7 +63,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   );
 }
 
-function isEmptyData (data: any) {
+function hasEmptyData (data: any) {
   if (data instanceof Array) {
     return data.findIndex(item => item != null) == -1;
   } else {
