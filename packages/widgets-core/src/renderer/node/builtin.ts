@@ -13,7 +13,7 @@ type BuiltinProps<P> = {
 
 export function renderCardHeader(
   canvas: Canvas,
-  props: BuiltinProps<{ title: string; subtitle: string }>
+  props: BuiltinProps<{ title: string; subtitle?: string }>
 ) {
   const {
     subtitle,
@@ -26,15 +26,23 @@ export function renderCardHeader(
   ctx.strokeStyle = 'none';
   ctx.textBaseline = 'middle';
 
-  ctx.textAlign = 'start';
-  ctx.font = `bold ${14 * dpr}px`;
-  ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(62, 62, 63)' : 'rgb(193,193,193)';
-  ctx.fillText(title, left, top + height / 2, width);
+  if (subtitle) {
+    ctx.textAlign = 'start';
+    ctx.font = `bold ${14 * dpr}px`;
+    ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(62, 62, 63)' : 'rgb(193,193,193)';
+    ctx.fillText(title, left, top + height / 2, width);
 
-  ctx.textAlign = 'end';
-  ctx.font = `normal italic ${12 * dpr}px`;
-  ctx.fillStyle =props.colorScheme === 'light' ? 'rgb(121, 121, 121)' : 'rgb(124,124,124)';
-  ctx.fillText(subtitle, left + width, top + height / 2, width);
+    ctx.textAlign = 'end';
+    ctx.font = `normal italic ${12 * dpr}px`;
+    ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(121, 121, 121)' : 'rgb(124,124,124)';
+    ctx.fillText(subtitle, left + width, top + height / 2, width);
+  } else {
+    ctx.textAlign = 'center';
+    ctx.font = `bold ${14 * dpr}px`;
+    ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(62, 62, 63)' : 'rgb(193,193,193)';
+    ctx.fillText(title, left + width / 2, top + height / 2, width);
+  }
+
 
   ctx.restore();
 }

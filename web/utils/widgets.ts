@@ -1,7 +1,8 @@
 import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
-import { MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta } from '@ossinsight/widgets-types';
+import { ComposeVisualizationConfig, MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { autoSize, computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 
 export function isWidget (name: string) {
   return !!widgets[name];
@@ -53,7 +54,7 @@ export function filteredWidgetsNames ({ search, tag = '🔥Popular' }: WidgetsFi
       }
 
       if (tag && tag !== 'All') {
-        found = !!meta.keywords?.includes(tag)
+        found = !!meta.keywords?.includes(tag);
       } else {
         found &&= true;
       }
@@ -69,7 +70,42 @@ export function nonPopularWidgetsNames () {
       if (meta.private) {
         return false;
       }
-      return !meta.keywords?.includes('🔥Popular')
+      return !meta.keywords?.includes('🔥Popular');
     })
     .map(([name]) => name);
+}
+
+type DefaultComposeLayoutOptions = {
+  generateMetadata: MetadataGenerator<any>
+  ctx: WidgetVisualizerContext
+  isDynamicHeight?: boolean
+}
+
+export function createDefaultComposeLayout (name: string, data: any, { generateMetadata, ctx, isDynamicHeight }: DefaultComposeLayoutOptions): VisualizerModule<'compose', ComposeVisualizationConfig, any, any> {
+  const title = generateMetadata(ctx).title;
+
+  const HEADER_HEIGHT = autoSize(ctx, 48);
+  const PADDING = autoSize(ctx, 24);
+
+  const realHeight = ctx.height + (isDynamicHeight ? HEADER_HEIGHT + PADDING : 0);
+
+  return {
+    default () {
+      return computeLayout(
+        vertical(
+          widget('builtin:card-heading', undefined, {
+            title: title,
+          })
+            .padding([0, PADDING])
+            .fix(HEADER_HEIGHT),
+          widget(name, data, ctx.parameters)
+            .padding([0, PADDING, PADDING]),
+        ),
+        0, 0,  autoSize(ctx, ctx.width), autoSize(ctx, realHeight),
+      );
+    },
+    type: 'compose',
+    width: ctx.width,
+    height: realHeight,
+  };
 }

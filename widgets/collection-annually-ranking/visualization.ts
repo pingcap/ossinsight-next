@@ -7,13 +7,14 @@ type Input = { event_year: number, rank: number, repo_id: number, repo_name: str
 export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EChartsVisualizationConfig {
   let repos = getAllRepos(input);
   const collection = ctx.getCollection(Number(ctx.parameters.collection_id));
-  const isSuperSmallImage = ctx.runtime === 'server' && ctx.width < 960;
+  const isSuperSmallImage = false;
 
   return {
     grid: {
       containLabel: true,
-      top: 72,
-      left: 24,
+      top: 0,
+      bottom: 12,
+      left: 0,
       right: 108,
     },
     yAxis: {
@@ -90,21 +91,7 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EC
       tooltip: {
         formatter: '{a}',
       },
-
     })),
-    title: [{
-      id: 'title',
-      text: isSuperSmallImage ? `${collection?.name ?? 'undefined'}` : `${collection?.name ?? 'undefined'} - ${activityDisplayName(ctx.parameters.activity)} Ranking Yearly`,
-    }, {
-      id: 'subtitle',
-      show: isSuperSmallImage,
-      text: isSuperSmallImage ? `${activityDisplayName(ctx.parameters.activity)} Ranking Yearly` : '',
-      top: 24,
-      textStyle: {
-        fontSize: 10,
-        color: '#7c7c7c'
-      }
-    }],
   };
 }
 
@@ -117,5 +104,5 @@ function getAllRepos (input: Input) {
 
 export function computeDynamicHeight (input: Input) {
   const all = getAllRepos(input).length;
-  return all * 36 + 128;
+  return all * 36;
 }

@@ -59,8 +59,8 @@ export default defineSiteConfig({
   },
   sizes: {
     'default': {
-      width: 800,
-      height: 418,
+      width: 720,
+      height: 720 * 9 / 16,
     },
     'preview_image': {
       width: 480,

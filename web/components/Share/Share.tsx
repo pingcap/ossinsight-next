@@ -29,7 +29,7 @@ export async function Share ({ name, params, searchParams, linkedDataPromise }: 
       url={`${origin}/widgets/${params.vendor}/${params.name}?${usp.toString()}`}
       thumbnailUrl={`${origin}/widgets/${params.vendor}/${params.name}/thumbnail.png?${imageUsp.toString()}`}
       keywords={keywords}
-      imageWidth={width ?? 960}
+      imageWidth={width ?? 720}
       themedImage={params.name.startsWith('compose-')}
     />
   );

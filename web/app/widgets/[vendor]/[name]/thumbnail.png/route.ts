@@ -1,13 +1,21 @@
 import config from '@/site.config';
 import { resolveImageSizeConfig } from '@/utils/siteConfig';
-import { isWidget, widgetDatasourceFetcher, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
+import { createDefaultComposeLayout, isWidget, widgetDatasourceFetcher, widgetMetadataGenerator, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
+import { Canvas } from '@napi-rs/canvas';
 import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
+import renderCompose from '@ossinsight/widgets-core/src/renderer/node/compose';
+import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
-const EXCLUDED_PARAMETERS = ['image_size', 'color_scheme'];
+const EXCLUDED_PARAMETERS = [
+  'image_size',
+  'color_scheme',
+  // Comparing feature is disabled temporary.
+  'vs_repo_id',
+];
 
 export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
   if (vendor !== 'official') {
@@ -22,6 +30,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   const datasource = widgetDatasourceFetcher(name);
   const params = await widgetParameterDefinitions(name);
   const visualizer = await widgetVisualizer(name);
+  const generateMetadata = await widgetMetadataGenerator(name);
 
   const parameters: any = {};
   request.nextUrl.searchParams.forEach((value, key) => {
@@ -46,32 +55,62 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   const size = request.nextUrl.searchParams.get('image_size') ?? 'default';
   let width: number;
   let height: number;
-  let dpr: number | undefined;
-  if (size === 'auto' && visualizer.computeDynamicHeight) {
+  let dpr: number;
+  const isDynamicHeight = !!(size === 'auto' && visualizer.computeDynamicHeight);
+  if (isDynamicHeight) {
     width = 960;
-    height = visualizer.computeDynamicHeight(data);
+    height = visualizer.computeDynamicHeight!(data);
     dpr = 2;
   } else {
     const resolved = resolveImageSizeConfig(config, size);
     width = resolved.width;
     height = resolved.height;
-    dpr = resolved.dpr;
+    dpr = resolved.dpr ?? 2;
   }
 
-  const buffer = await render({
-    type: visualizer.type,
-    data,
-    visualizer,
-    width,
-    height,
-    dpr: dpr ?? 2,
-    parameters,
-    linkedData,
-    colorScheme,
-    sizeName: size,
-  });
+  const renderCtx = {
+    ...createWidgetContext('server', parameters, linkedData),
+    width: width,
+    height: height,
+    dpr,
+  };
 
-  return new NextResponse(buffer.toBuffer('image/png'), {
+  let canvas: Canvas;
+
+  if (visualizer.type !== 'compose') {
+    // Use compose to render all others images temporary.
+    canvas = await renderCompose(
+      width,
+      height,
+      dpr,
+      createDefaultComposeLayout(name, data, {
+        generateMetadata,
+        ctx: renderCtx,
+        isDynamicHeight,
+      }),
+      data,
+      parameters,
+      linkedData,
+      colorScheme,
+      size,
+    );
+  } else {
+    canvas = await render({
+      type: visualizer.type,
+      data,
+      visualizer,
+      width,
+      height,
+      dpr: dpr,
+      parameters,
+      linkedData,
+      colorScheme,
+      sizeName: size,
+      root: true,
+    });
+  }
+
+  return new NextResponse(canvas.toBuffer('image/png'), {
     headers: {
       'Content-Type': 'image/png',
     },

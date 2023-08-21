@@ -9,13 +9,13 @@ type BuiltinProps<P extends Record<string, any>> = {
 export function CardHeading ({ className, style, title, subtitle }: BuiltinProps<{ title: ReactNode, subtitle: ReactNode }>) {
   const id = useId();
   return (
-    <div id={id} className={clsx(className, 'flex items-center justify-between')} style={style}>
+    <div id={id} className={clsx(className, 'flex items-center', subtitle ? 'justify-between' : 'justify-center')} style={style}>
       <span style={{ fontSize: 14, lineHeight: 1, fontWeight: 'bold', color: 'rgba(193, 193, 193, 1)' }}>
         {title}
       </span>
-      <span style={{ fontSize: 12, lineHeight: 1, fontStyle: 'italic', color: 'rgba(124, 124, 124, 1)' }}>
+      {subtitle && <span style={{ fontSize: 12, lineHeight: 1, fontStyle: 'italic', color: 'rgba(124, 124, 124, 1)' }}>
         {subtitle}
-      </span>
+      </span>}
     </div>
   );
 }

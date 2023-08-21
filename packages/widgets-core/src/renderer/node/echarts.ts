@@ -11,8 +11,8 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
   let canvas = createCanvas(width, dynamicHeight ?? height);
 
   const option = visualizer.default(data, {
-    width: width * dpr,
-    height: height * dpr,
+    width: width,
+    height: height,
     dpr,
     ...createWidgetContext('server', parameters, linkedData),
   });

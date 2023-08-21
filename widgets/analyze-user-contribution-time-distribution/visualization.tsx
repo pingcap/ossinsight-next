@@ -1,4 +1,6 @@
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { scaleToFit } from '@ossinsight/widgets-utils/src/utils'
+import { autoSize } from '@ossinsight/widgets-utils/src/compose/size'
 import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 
 type Params = {
@@ -29,7 +31,7 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>) {
   const user = ctx.getUser(ctx.parameters.user_id);
 
   return (
-    <TimeDistribution size={18} gap={4} data={data} offset={0} title={`@${user.login}'s Contribution time distribution (UTC +0)`} />
+    <TimeDistribution width={ctx.width} height={ctx.height} dpr={ctx.dpr} runtime={ctx.runtime} size={18} gap={4} data={data} offset={0} title={`@${user.login}'s Contribution time distribution (UTC +0)`} />
   );
 }
 
@@ -43,6 +45,10 @@ interface TimeDistributionProps {
   data: Array<DataPoint>;
   className?: string;
   style?: CSSProperties;
+  width: number;
+  height: number;
+  dpr: number;
+  runtime: 'client' | 'server'
 }
 
 const times = Array(24).fill(0).map((_, i) => i);
@@ -52,7 +58,7 @@ const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 // const TIME_NAMES = ['0a', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12p', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 const TIME_NAMES = Array(24).fill(0).map((_, i) => i);
 
-const TimeDistribution = forwardRef(({ title, size, gap, offset, data, className, style }: TimeDistributionProps, ref: ForwardedRef<SVGSVGElement>) => {
+const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, title, size, gap, offset, data, className, style }: TimeDistributionProps, ref: ForwardedRef<SVGSVGElement>) => {
   const max = useMemo(() => {
     return data.reduce((max, cur) => Math.max(max, cur.cnt), 0);
   }, [data]);
@@ -62,18 +68,15 @@ const TimeDistribution = forwardRef(({ title, size, gap, offset, data, className
   const width = size * 24 + gap * 23 + paddingLeft;
   const height = size * 7 + gap * 6 + 40;
 
+  const { width: realWidth, height: realHeight} = scaleToFit(width, height + paddingTop, autoSize({ runtime, dpr }, tw), autoSize({ runtime, dpr }, th))
+
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height + paddingTop}
+    <svg xmlns="http://www.w3.org/2000/svg" width={realWidth} height={realHeight}
          viewBox={`${-paddingLeft - 16} -${paddingTop + 16} ${width + paddingLeft + 16} ${height + paddingTop + 16}`} display="block"
          className={className}
-         style={{ ...style, backgroundColor: 'rgb(36, 35, 49)' }}
+         style={{ ...style, backgroundColor: 'transparent' }}
          ref={ref}
     >
-      <g id="title">
-        <text textAnchor="middle" x={width / 2 - paddingLeft / 2} y={8 - paddingTop} fontSize={14} fill="#dadada" fontWeight="bold">
-          {title}
-        </text>
-      </g>
       <g id="chart">
         {times.map(time => days.map(day =>
           <rect

@@ -16,3 +16,21 @@ export function upBound(num: number): number {
 
   return (Math.floor(mag / base) + 1) * base * sign;
 }
+
+/**
+ *
+ * @param sw Source width
+ * @param sh Source height
+ * @param tw Target container width
+ * @param th Target container height
+ */
+export function scaleToFit (sw: number, sh: number, tw: number, th: number): { width: number, height: number } {
+  let width = tw;
+  let height = tw * sh / sw;
+  if (height > th) {
+    width *= th / height;
+    height = th;
+  }
+
+  return { width, height };
+}
