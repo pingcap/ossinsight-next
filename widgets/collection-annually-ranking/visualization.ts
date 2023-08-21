@@ -7,7 +7,7 @@ type Input = { event_year: number, rank: number, repo_id: number, repo_name: str
 export default function (input: Input, ctx: WidgetVisualizerContext<Params>): EChartsVisualizationConfig {
   let repos = getAllRepos(input);
   const collection = ctx.getCollection(Number(ctx.parameters.collection_id));
-  const isSuperSmallImage = ctx.runtime === 'server' && ctx.width < 960;
+  const isSuperSmallImage = false;
 
   return {
     grid: {

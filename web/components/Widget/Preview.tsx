@@ -14,17 +14,17 @@ export async function WidgetPreview ({ name }: { name: string }) {
 
   return (
     <div className="group rounded-md relative overflow-hidden bg-popover border w-full transition-shadow hover:shadow-lg">
-      <div className="flex flex-col items-center bg-body p-4 gap-4" style={{ height: 270 }}>
+      <div className="flex flex-col items-center bg-body p-4 gap-4" style={{ height: 360 }}>
         <h2 className="text-lg font-bold text-title">
           <Suspense fallback='&nbsp;'>
             <WidgetName widget={name} />
           </Suspense>
         </h2>
         <Image
-          className={'block' + (!widget.name.startsWith('@ossinsight/widget-compose-') ? ' shadow-xl rounded-xl' : '')}
+          className='block'
           loading="lazy"
-          width={320}
-          height={180}
+          width={480}
+          height={270}
           quality={100}
           src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
           alt="preview"

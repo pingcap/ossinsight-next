@@ -47,9 +47,9 @@ export function parseParams2GridOpt<
   const runtime = ctx.runtime;
   const isServer = runtime === 'server';
   const dpr = ctx.dpr;
-  const defaultPadding = 24 * dpr;
+  const defaultPadding = 0;
 
-  const serverGrid = simpleGrid(defaultPadding);
+  const serverGrid = simpleGrid(defaultPadding, true);
 
   const grids = topBottomLayoutGrid(
     !!ctx.parameters.vs_repo_id,
