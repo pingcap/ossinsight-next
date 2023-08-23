@@ -19,7 +19,7 @@ import render from './index';
  * @param sizeName
  * @param root indicate that the widget is a real compose type widget.
  */
-export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string, sizeName?: string, root = false) {
+export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme: string = 'dark', sizeName?: string, root = false) {
   // should wrap with shadow box if the widget is 'compose' type or the rendering context is not twitter.
   const shouldWrap = !!(root || sizeName !== 'twitter:summary_large_image');
 

@@ -5,7 +5,7 @@ import { getTheme } from '../../utils/theme';
 type BuiltinProps<P extends Record<string, any>> = {
   style?: CSSProperties
   className?: string
-  colorScheme?: string
+  colorScheme: string
 } & P
 
 const useTheme = (colorScheme: string) => {

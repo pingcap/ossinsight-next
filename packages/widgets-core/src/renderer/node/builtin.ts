@@ -2,7 +2,7 @@ import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
 import { getTheme, themed } from '../../utils/theme';
 
 type BuiltinProps<P> = {
-  colorScheme?: string
+  colorScheme: string
   box: {
     dpr: number;
     left: number;
