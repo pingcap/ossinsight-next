@@ -94,7 +94,7 @@ export default async function renderCompose (width: number, height: number, dpr:
         });
         break;
       case 'builtin:empty':
-        await renderEmpty(canvas, { box })
+        await renderEmpty(canvas, { box, colorScheme })
         break;
       default: {
         const visualizer = await visualizers[item.widget]();

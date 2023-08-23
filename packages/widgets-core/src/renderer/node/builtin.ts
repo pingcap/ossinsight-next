@@ -152,9 +152,11 @@ export async function renderEmpty (
   const { width, height, dpr } = props.box;
   const top = (height - 48 * dpr) / 2;
 
+  const { Label } = getTheme(props.colorScheme);
+
   const ctx = canvas.getContext('2d');
 
-  const sadImage = await loadImage(`data:image/svg+xml;base64,${btoa(sad(24 * dpr, 'white'))}`);
+  const sadImage = await loadImage(`data:image/svg+xml;base64,${btoa(sad(24 * dpr, Label.color))}`);
 
   ctx.drawImage(sadImage, width / 2 - 12 * dpr, top + 24 * dpr, 24 * dpr, 24 * dpr);
 
@@ -162,7 +164,7 @@ export async function renderEmpty (
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'center';
   ctx.font = `normal ${14 * dpr}px`;
-  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white';
+  ctx.fillStyle = Label.color;
   ctx.fillText('Oooops! It\'s a Blank Canvas.', (width / 2), top + 64 * dpr, width);
   ctx.restore();
 }

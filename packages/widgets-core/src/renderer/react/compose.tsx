@@ -107,7 +107,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
               />
             );
           case 'builtin:empty':
-            return <Empty key={i} className="absolute" style={props} />
+            return <Empty key={i} className="absolute" style={props} colorScheme={colorScheme} />
           default: {
             const el = render({
               dynamicHeight: undefined,
