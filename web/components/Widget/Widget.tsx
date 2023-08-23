@@ -24,14 +24,6 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
   const { colorScheme, setColorScheme } = useColorScheme()
 
-  if (hasEmptyData(data)) {
-    return (
-      <div className='w-full h-full flex items-center justify-center'>
-        <p>Whoops, failed to fetch data, refresh page or get back later.</p>
-      </div>
-    );
-  }
-
   const width = visualizer.width ?? siteConfig.sizes.default.width;
   const height = dynamicHeight ?? visualizer.height ?? siteConfig.sizes.default.height;
 

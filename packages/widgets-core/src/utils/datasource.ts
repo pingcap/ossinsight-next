@@ -1,0 +1,1 @@
+export { isEmptyData } from '@ossinsight/widgets-utils/src/utils'

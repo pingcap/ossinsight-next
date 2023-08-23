@@ -1,4 +1,5 @@
 import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
+import sad from '../../icons/sad';
 import { getTheme, themed } from '../../utils/theme';
 
 type BuiltinProps<P> = {
@@ -12,9 +13,9 @@ type BuiltinProps<P> = {
   };
 } & P;
 
-export function renderCardHeader(
+export function renderCardHeader (
   canvas: Canvas,
-  props: BuiltinProps<{ title: string; subtitle?: string }>
+  props: BuiltinProps<{ title: string; subtitle?: string }>,
 ) {
   const {
     subtitle,
@@ -46,13 +47,12 @@ export function renderCardHeader(
     ctx.fillText(title, left + width / 2, top + height / 2, width);
   }
 
-
   ctx.restore();
 }
 
-export function renderLabelValue(
+export function renderLabelValue (
   canvas: Canvas,
-  props: BuiltinProps<{ label: string; value?: string }>
+  props: BuiltinProps<{ label: string; value?: string }>,
 ) {
   const {
     label,
@@ -83,9 +83,9 @@ export function renderLabelValue(
   ctx.restore();
 }
 
-export async function renderAvatarLabel(
+export async function renderAvatarLabel (
   canvas: Canvas,
-  props: BuiltinProps<{ label?: string; imgSrc: string; size?: number }>
+  props: BuiltinProps<{ label?: string; imgSrc: string; size?: number }>,
 ) {
   const {
     label = '',
@@ -108,7 +108,7 @@ export async function renderAvatarLabel(
 
   try {
     const buffer = await fetch(imgSrc, { cache: 'force-cache' }).then((res) =>
-      res.arrayBuffer()
+      res.arrayBuffer(),
     );
     const avatar = await loadImage(buffer, {
       alt: 'label',
@@ -119,7 +119,7 @@ export async function renderAvatarLabel(
       top + (size / 2 + 2) * dpr,
       (size / 2) * dpr,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     ctx.clip(circlePath);
     ctx.drawImage(avatar, left, top + 2 * dpr, size * dpr, size * dpr);
@@ -132,10 +132,37 @@ export async function renderAvatarLabel(
       top + (size / 2 + 2) * dpr,
       (size / 2) * dpr,
       0,
-      2 * Math.PI
+      2 * Math.PI,
     );
     ctx.fill();
   } finally {
     ctx.restore();
   }
+}
+
+/**
+ *   24px
+ * ..8px..
+ *   16px
+ */
+export async function renderEmpty (
+  canvas: Canvas,
+  props: BuiltinProps<{}>,
+) {
+  const { width, height, dpr } = props.box;
+  const top = (height - 48 * dpr) / 2;
+
+  const ctx = canvas.getContext('2d');
+
+  const sadImage = await loadImage(`data:image/svg+xml;base64,${btoa(sad(24 * dpr, 'white'))}`);
+
+  ctx.drawImage(sadImage, width / 2 - 12 * dpr, top + 24 * dpr, 24 * dpr, 24 * dpr);
+
+  ctx.save();
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center';
+  ctx.font = `normal ${14 * dpr}px`;
+  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white';
+  ctx.fillText('Oooops! It\'s a Blank Canvas.', (width / 2), top + 64 * dpr, width);
+  ctx.restore();
 }

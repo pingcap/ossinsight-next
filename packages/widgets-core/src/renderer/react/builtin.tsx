@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { CSSProperties, ReactNode, useId } from 'react';
+import { CSSProperties, ReactNode, useId, useMemo } from 'react';
+import sad from '../../icons/sad';
 import { getTheme } from '../../utils/theme';
 
 type BuiltinProps<P extends Record<string, any>> = {
@@ -94,6 +95,20 @@ export function AvatarLabel ({
       >
         {label}
       </span>
+    </div>
+  );
+}
+
+export function Empty ({
+  className,
+  style,
+}: BuiltinProps<{}>) {
+  const svgString = useMemo(() => sad(24, 'currentColor'), []);
+
+  return (
+    <div className={clsx(className, 'flex flex-col items-center justify-center gap-2 text-white')} style={style}>
+      <span className="flex items-center justify-center" dangerouslySetInnerHTML={{ __html: svgString }} />
+      <span>Oooops! It's a Blank Canvas.</span>
     </div>
   );
 }
