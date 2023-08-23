@@ -6,7 +6,7 @@ import { cloneElement, use, useEffect, useMemo, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createWidgetContext } from '../../utils/context';
-import { CardHeading, Label, LabelValue, AvatarLabel } from './builtin';
+import { AvatarLabel, CardHeading, Empty, Label, LabelValue } from './builtin';
 import render from './index';
 
 interface ComposeComponentProps extends WidgetReactVisualizationProps {
@@ -98,13 +98,15 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
             return (
               <AvatarLabel
                 key={i}
-                className='absolute'
+                className="absolute"
                 style={props}
                 label={parameters.label}
                 imgSrc={parameters.imgSrc}
                 size={parameters.size}
               />
             );
+          case 'builtin:empty':
+            return <Empty key={i} className="absolute" style={props} />
           default: {
             const el = render({
               dynamicHeight: undefined,

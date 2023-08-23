@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { CSSProperties, ReactNode, useId } from 'react';
+import { CSSProperties, ReactNode, useId, useMemo } from 'react';
+import sad from '../../icons/sad';
 
 type BuiltinProps<P extends Record<string, any>> = {
   style?: CSSProperties
@@ -37,7 +38,7 @@ export function Label ({ className, style, label }: BuiltinProps<{ label: ReactN
   );
 }
 
-export function AvatarLabel({
+export function AvatarLabel ({
   className,
   style,
   label = '',
@@ -54,7 +55,7 @@ export function AvatarLabel({
       <div
         className={clsx(
           `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
-          `h-[${size}px] w-[${size}px]`
+          `h-[${size}px] w-[${size}px]`,
         )}
         style={{
           height: `${size}px`,
@@ -63,7 +64,7 @@ export function AvatarLabel({
       >
         {imgSrc && (
           <img
-            className='h-full w-full rounded-[inherit] object-cover'
+            className="h-full w-full rounded-[inherit] object-cover"
             src={imgSrc}
             alt={label}
           />
@@ -79,6 +80,20 @@ export function AvatarLabel({
       >
         {label}
       </span>
+    </div>
+  );
+}
+
+export function Empty ({
+  className,
+  style,
+}: BuiltinProps<{}>) {
+  const svgString = useMemo(() => sad(24, 'currentColor'), []);
+
+  return (
+    <div className={clsx(className, 'flex flex-col items-center justify-center gap-2 text-white')} style={style}>
+      <span className="flex items-center justify-center" dangerouslySetInnerHTML={{ __html: svgString }} />
+      <span>Oooops! It's a Blank Canvas.</span>
     </div>
   );
 }
