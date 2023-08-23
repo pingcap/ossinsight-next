@@ -35,7 +35,7 @@ export function scaleToFit (sw: number, sh: number, tw: number, th: number): { w
   return { width, height };
 }
 
-export function isEmptyData (datasource: any) {
+export function isEmptyData (datasource: any): boolean {
   if (datasource == null) {
     return true;
   }
