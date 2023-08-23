@@ -57,7 +57,7 @@ export default async function renderCompose (width: number, height: number, dpr:
     width: width * dpr,
     height: height * dpr,
     dpr,
-    ...createWidgetContext('server', parameters, linkedData),
+    ...createWidgetContext('server', parameters, linkedData, colorScheme),
   });
 
   const all = option.map(async (item) => {

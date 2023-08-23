@@ -18,4 +18,5 @@ export interface WidgetVisualizationProps {
 export interface WidgetReactVisualizationProps extends WidgetVisualizationProps {
   className?: string;
   style?: CSSProperties;
+  colorScheme?: string;
 }

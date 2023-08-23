@@ -4,6 +4,7 @@ import type * as colors from 'tailwindcss/colors';
 export interface BasicContext {
   theme: {
     colors: typeof colors
+    colorScheme: string
   };
 
   getTimeParams (): { zone: string, period: string };

@@ -1,4 +1,5 @@
 import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
+import { getTheme, themed } from '../../utils/theme';
 
 type BuiltinProps<P> = {
   colorScheme?: string
@@ -26,20 +27,22 @@ export function renderCardHeader(
   ctx.strokeStyle = 'none';
   ctx.textBaseline = 'middle';
 
+  const { CardHeader } = getTheme(props.colorScheme);
+
   if (subtitle) {
     ctx.textAlign = 'start';
     ctx.font = `bold ${14 * dpr}px`;
-    ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(62, 62, 63)' : 'rgb(193,193,193)';
+    ctx.fillStyle = CardHeader.titleColor;
     ctx.fillText(title, left, top + height / 2, width);
 
     ctx.textAlign = 'end';
     ctx.font = `normal italic ${12 * dpr}px`;
-    ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(121, 121, 121)' : 'rgb(124,124,124)';
+    ctx.fillStyle = CardHeader.subtitleColor;
     ctx.fillText(subtitle, left + width, top + height / 2, width);
   } else {
     ctx.textAlign = 'center';
     ctx.font = `bold ${14 * dpr}px`;
-    ctx.fillStyle = props.colorScheme === 'light' ? 'rgb(62, 62, 63)' : 'rgb(193,193,193)';
+    ctx.fillStyle = CardHeader.subtitleColor;
     ctx.fillText(title, left + width / 2, top + height / 2, width);
   }
 
@@ -57,6 +60,8 @@ export function renderLabelValue(
     value,
   } = props;
 
+  const { Label, Value } = getTheme(props.colorScheme);
+
   const ctx = canvas.getContext('2d');
   ctx.save();
   ctx.strokeStyle = 'none';
@@ -64,7 +69,7 @@ export function renderLabelValue(
   ctx.textAlign = 'start';
 
   ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white';
+  ctx.fillStyle = Label.color;
   ctx.fillText(label, left, top, width);
 
   const measured = ctx.measureText(label);
@@ -72,7 +77,7 @@ export function renderLabelValue(
     measured.fontBoundingBoxAscent + measured.fontBoundingBoxDescent;
 
   ctx.font = `bold ${24 * dpr}px`;
-  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white'
+  ctx.fillStyle = Value.color;
   value && ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
 
   ctx.restore();
@@ -88,6 +93,9 @@ export async function renderAvatarLabel(
     imgSrc,
     size = 20,
   } = props;
+
+  const { Label, Avatar } = getTheme(props.colorScheme);
+
   const ctx = canvas.getContext('2d');
   ctx.save();
   ctx.strokeStyle = 'none';
@@ -95,7 +103,7 @@ export async function renderAvatarLabel(
   ctx.textAlign = 'start';
 
   ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = props.colorScheme === 'light' ? 'black' : 'white';
+  ctx.fillStyle = Label.color;
   label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
 
   try {
@@ -116,7 +124,7 @@ export async function renderAvatarLabel(
     ctx.clip(circlePath);
     ctx.drawImage(avatar, left, top + 2 * dpr, size * dpr, size * dpr);
   } catch {
-    ctx.fillStyle = props.colorScheme === 'light' ? '#f7f8f9' : 'rgb(37, 37, 39)';
+    ctx.fillStyle = Avatar.fallbackColor;
     ctx.lineWidth = dpr;
     ctx.beginPath();
     ctx.arc(

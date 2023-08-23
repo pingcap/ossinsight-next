@@ -12,7 +12,7 @@ interface SvgComponentProps extends WidgetReactVisualizationProps {
   linkedData: LinkedData;
 }
 
-export default function Svg ({ visualizer, data, parameters, linkedData, className, style }: SvgComponentProps) {
+export default function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme }: SvgComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: 0,
@@ -37,7 +37,7 @@ export default function Svg ({ visualizer, data, parameters, linkedData, classNa
 
   const el = visualizer.default(data, {
     ...size,
-    ...createWidgetContext('client', parameters, linkedData),
+    ...createWidgetContext('client', parameters, linkedData, colorScheme),
   });
 
   return cloneElement(el, {

@@ -2,9 +2,11 @@
 
 import siteConfig from '@/site.config';
 import { createDefaultComposeLayout, widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
+import { ColorSchemeSelector } from '@ossinsight/ui';
+import { useColorScheme } from '@ossinsight/ui/src/components/ColorScheme';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
-import { CSSProperties, use } from 'react';
+import { CSSProperties, use, useState } from 'react';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
 
 export interface WidgetProps {
@@ -20,6 +22,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   let visualizer = use(widgetVisualizer(name));
   const generateMetadata = use(widgetMetadataGenerator(name));
   const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
+  const { colorScheme, setColorScheme } = useColorScheme()
 
   if (hasEmptyData(data)) {
     return (
@@ -36,7 +39,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
     visualizer = createDefaultComposeLayout(name, data, {
       generateMetadata,
       ctx: {
-        ...createWidgetContext('client', params, linkedData),
+        ...createWidgetContext('client', params, linkedData, colorScheme),
         width,
         height,
         dpr: devicePixelRatio,
@@ -46,7 +49,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
 
   return (
     <div
-      className={'w-full h-full p-4 overflow-auto' + (!dynamicHeight ? ' flex items-center justify-center' : '')}
+      className={'relative w-full h-full p-4 overflow-auto' + (!dynamicHeight ? ' flex items-center justify-center' : '') + ' ' + (colorScheme === 'light' ? 'bg-white' : 'bg-body')}
       style={{
         // background: 'radial-gradient(50.4% 48.07% at 50.4% 51.93%, #6760A4 0%, rgb(31,30,40) 100%)',
       }}
@@ -71,7 +74,11 @@ export default function Widget ({ className, style, name, params, data, linkedDa
           data={data}
           parameters={params}
           linkedData={linkedData}
+          colorScheme={colorScheme}
         />
+      </div>
+      <div className='absolute right-4 top-4'>
+        <ColorSchemeSelector value={colorScheme} onValueChange={setColorScheme} />
       </div>
     </div>
   );

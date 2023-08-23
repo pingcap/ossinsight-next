@@ -69,7 +69,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   }
 
   const renderCtx = {
-    ...createWidgetContext('server', parameters, linkedData),
+    ...createWidgetContext('server', parameters, linkedData, colorScheme),
     width: width,
     height: height,
     dpr,

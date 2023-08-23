@@ -1,6 +1,6 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
-import { EChartsOption, EChartsType, init } from 'echarts';
+import { dispose, EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
@@ -16,12 +16,12 @@ interface EChartsComponentProps extends WidgetReactVisualizationProps {
   linkedData: LinkedData;
 }
 
-function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData }: EChartsComponentProps) {
+function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: EChartsComponentProps) {
   const echartsRef = useRef<EChartsType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ec = echartsRef.current = init(containerRef.current!, 'dark', {});
+    const ec = echartsRef.current = init(containerRef.current!, colorScheme === 'auto' ? 'dark' : colorScheme, {});
 
     const ro = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
@@ -33,8 +33,9 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
     ro.observe(containerRef.current!);
     return () => {
       ro.disconnect();
+      dispose(ec);
     };
-  }, []);
+  }, [colorScheme]);
 
   useEffect(() => {
     const { clientWidth: width, clientHeight: height } = containerRef.current!;
@@ -46,7 +47,7 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       dpr: devicePixelRatio,
     });
     echartsRef.current!.setOption(option);
-  }, [data, visualizer, parameters]);
+  }, [data, visualizer, parameters, colorScheme]);
 
   return (
     <div

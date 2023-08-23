@@ -10,11 +10,11 @@ export function createWidgetBaseContext<P extends Record<string, string>> (runti
   };
 }
 
-export function createWidgetContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData) {
+export function createWidgetContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData, colorScheme?: string) {
   return {
     ...createWidgetBaseContext(runtime, parameters),
     ...createLinkedDataContext(linkedData),
-    theme: { colors },
+    theme: { colors, colorScheme: colorScheme ?? 'dark' },
     getTimeParams (): any {
       const { DEFAULT_ZONE } = generateZoneOptions();
 
