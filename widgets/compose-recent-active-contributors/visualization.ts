@@ -1,15 +1,5 @@
-import type {
-  ComposeVisualizationConfig,
-  WidgetVisualizerContext,
-} from '@ossinsight/widgets-types';
-import {
-  autoSize,
-  computeLayout,
-  grid,
-  vertical,
-  widget,
-} from '@ossinsight/widgets-utils/src/compose';
-import _ from 'lodash';
+import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { autoSize, computeLayout, grid, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -47,7 +37,7 @@ const calcGridCfg = (limit: number) => {
 
 export default function (
   [contributors]: Input,
-  ctx: WidgetVisualizerContext<Params>
+  ctx: WidgetVisualizerContext<Params>,
 ): ComposeVisualizationConfig {
   const today = new Date();
   const prior30 = new Date(new Date().setDate(today.getDate() - 30));
@@ -69,7 +59,7 @@ export default function (
         title: 'Active Contributors',
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
-      grid(
+      nonEmptyDataWidget(contributors, () => grid(
         rows,
         cols,
         ...contributors.map((item) =>
@@ -79,14 +69,14 @@ export default function (
             imgSrc: item.actor_login
               ? `https://github.com/${item.actor_login}.png`
               : '',
-          })
-        )
-      ).gap(autoSize(ctx, 4))
+          }),
+        ),
+      ).gap(autoSize(ctx, 4))),
     ).padding([0, PADDING, PADDING / 2, PADDING]),
     0,
     0,
     WIDTH,
-    HEIGHT
+    HEIGHT,
   );
 }
 
