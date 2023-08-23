@@ -1,5 +1,5 @@
 import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, horizontal, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import { autoSize, computeLayout, horizontal, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -37,15 +37,17 @@ export default function (
         title: 'Top Active Contributors',
         subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
-      horizontal(
-        vertical(
-          ...sortedContributors.map((contributor =>
-            widget('builtin:avatar-label', undefined, {
-              label: contributor.actor_login,
-              imgSrc: `https://github.com/${contributor.actor_login}.png`,
-            }))),
-        ).flex(0.7),
-        widget('@ossinsight/widget-analyze-repo-recent-top-contributors', [sortedContributors], ctx.parameters),
+      nonEmptyDataWidget(sortedContributors, () =>
+        horizontal(
+          vertical(
+            ...sortedContributors.map((contributor =>
+              widget('builtin:avatar-label', undefined, {
+                label: contributor.actor_login,
+                imgSrc: `https://github.com/${contributor.actor_login}.png`,
+              }))),
+          ).flex(0.7),
+          widget('@ossinsight/widget-analyze-repo-recent-top-contributors', [sortedContributors], ctx.parameters),
+        ),
       ),
     ).padding([0, PADDING, PADDING - autoSize(ctx, 4) /* the bar chart have small padding vertically */]),
     0,

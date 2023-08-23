@@ -1,6 +1,7 @@
 import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
+import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { ComposeVisualizationConfig, MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { autoSize, computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 
@@ -98,10 +99,11 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
           })
             .padding([0, PADDING])
             .fix(HEADER_HEIGHT),
-          widget(name, data, ctx.parameters)
-            .padding([0, PADDING, PADDING]),
+          isEmptyData(data)
+            ? widget('builtin:empty', undefined, {})
+            : widget(name, data, ctx.parameters).padding([0, PADDING, PADDING]),
         ),
-        0, 0,  autoSize(ctx, ctx.width), autoSize(ctx, realHeight),
+        0, 0, autoSize(ctx, ctx.width), autoSize(ctx, realHeight),
       );
     },
     type: 'compose',

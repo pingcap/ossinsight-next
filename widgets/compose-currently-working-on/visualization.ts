@@ -1,5 +1,5 @@
 import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import { autoSize, computeLayout, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -33,13 +33,13 @@ export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params
     vertical(
       widget('builtin:card-heading', undefined, { title: 'Last 28 Days Stats', subtitle: `Date: ${subtitle}` })
         .fix(HEADER_HEIGHT),
-      widget('@ossinsight/basic-bubbles-chart', data, {
+      nonEmptyDataWidget(data, () => widget('@ossinsight/basic-bubbles-chart', data, {
         start,
         end,
         axis_field: 'event_period',
         value_field: 'cnt',
         label_field: 'repo_name',
-      }),
+      })),
     ).padding([0, PADDING, PADDING / 2, PADDING]).gap(SPACING),
     0,
     0,

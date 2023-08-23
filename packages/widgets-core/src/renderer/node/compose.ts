@@ -3,7 +3,7 @@ import { visualizers } from '@ossinsight/widgets';
 import { VisualizerModule, WidgetComposeItem } from '@ossinsight/widgets-types';
 import { LinkedData } from '../../parameters/resolver';
 import { createWidgetContext } from '../../utils/context';
-import { renderAvatarLabel, renderCardHeader, renderLabelValue } from './builtin';
+import { renderAvatarLabel, renderCardHeader, renderEmpty, renderLabelValue } from './builtin';
 import render from './index';
 
 /**
@@ -61,6 +61,11 @@ export default async function renderCompose (width: number, height: number, dpr:
   });
 
   const all = option.map(async (item) => {
+    const left = offX + item.left;
+    const top = offY + item.top;
+    const width = item.width;
+    const height = item.height;
+    const box = { left, top, width, height, dpr };
     switch (item.widget) {
       case 'builtin:label':
       case 'builtin:label-value':
@@ -68,13 +73,7 @@ export default async function renderCompose (width: number, height: number, dpr:
           colorScheme,
           label: item.parameters.label,
           value: item.parameters.value,
-          box: {
-            dpr,
-            left: offX + item.left,
-            top: offY + item.top,
-            width: item.width,
-            height: item.height,
-          },
+          box,
         });
         break;
       case 'builtin:card-heading':
@@ -82,13 +81,7 @@ export default async function renderCompose (width: number, height: number, dpr:
           colorScheme,
           title: item.parameters.title,
           subtitle: item.parameters.subtitle,
-          box: {
-            dpr,
-            left: offX + item.left,
-            top: offY + item.top,
-            width: item.width,
-            height: item.height,
-          },
+          box,
         });
         break;
       case 'builtin:avatar-label':
@@ -97,14 +90,11 @@ export default async function renderCompose (width: number, height: number, dpr:
           label: item.parameters.label,
           imgSrc: item.parameters.imgSrc,
           size: item.parameters.size,
-          box: {
-            dpr,
-            left: offX + item.left,
-            top: offY + item.top,
-            width: item.width,
-            height: item.height,
-          },
+          box,
         });
+        break;
+      case 'builtin:empty':
+        await renderEmpty(canvas, { box })
         break;
       default: {
         const visualizer = await visualizers[item.widget]();

@@ -1,5 +1,5 @@
 import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import { autoSize, computeLayout, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -29,8 +29,9 @@ export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params
           subtitle: `Date: ${subtitle}`,
         },
       ).fix(HEADER_HEIGHT),
-      widget('@ossinsight/widget-analyze-repo-activity-trends', input, ctx.parameters)
-        .padding([0, -autoSize(ctx, 8)]),
+      nonEmptyDataWidget(input, () =>
+        widget('@ossinsight/widget-analyze-repo-activity-trends', input, ctx.parameters)
+          .padding([0, -autoSize(ctx, 8)])),
     ).padding([0, PADDING, PADDING / 2, PADDING]),
     0,
     0,

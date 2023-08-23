@@ -1,4 +1,5 @@
 import type { WidgetComposeItem } from '../../../widgets-types';
+import { isEmptyData } from '../utils';
 
 export type Spacing =
   [top: number, right: number, bottom: number, left: number]
@@ -148,6 +149,14 @@ export function widget (name: string, data: any, parameters: Record<string, any>
   });
 }
 
+export function nonEmptyDataWidget (data: any, builder: () => LayoutBuilder<any> | Layout) {
+  if (isEmptyData(data)) {
+    return widget('builtin:empty', undefined, {});
+  } else {
+    return builder();
+  }
+}
+
 export function computeLayout (input: Layout | LayoutBuilder<any>, left: number, top: number, width: number, height: number): WidgetComposeItem[] {
   const layout: Layout = input instanceof LayoutBuilder ? input.layout : input;
   const padding = resolveSpacing(layout.padding);
@@ -175,7 +184,7 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
       let flexibleChildren: Array<{ index: number, grow: number }> = [];
       for (let i = 0; i < layout.children.length; i++) {
         let child = layout.children[i];
-        if ('size' in child &&  child.size && child.size > 0) {
+        if ('size' in child && child.size && child.size > 0) {
           restSize -= child.size;
         } else {
           flexibleChildren.push({ index: i, grow: 'grow' in child && child.grow && child.grow > 0 ? child.grow : 1 });
