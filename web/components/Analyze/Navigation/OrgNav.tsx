@@ -1,17 +1,28 @@
 'use client';
 import * as React from 'react';
 import NextLink from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import FileBarGraphIcon from 'bootstrap-icons/icons/file-bar-graph.svg';
 import clsx from 'clsx';
 
 export default function OrgNav(props: any) {
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
+
   const params = useParams();
+  // const pathname = usePathname();
 
   // https://github.com/vercel/next.js/discussions/49465#discussioncomment-5845312
   React.useEffect(() => {
-    console.log("Hash:", window.location.hash);
-  }, [params]);
+    console.log('Hash:', window.location.hash);
+    const hash = window.location.hash || '';
+    const id = hash.replace('#', '');
+    selectedId !== id && setSelectedId(id);
+  }, [params, selectedId]);
+
+  // React.useEffect(() => {
+  //   console.log("Pathname:", pathname);
+  // }
+  // , [pathname]);
 
   const ItemWrapper = (props: {
     anchor?: string;
@@ -35,7 +46,13 @@ export default function OrgNav(props: any) {
         return (
           <li
             key={item.id}
-            className='flex items-center justify-start md:justify-center lg:justify-start'
+            className={clsx(
+              'flex items-center justify-start md:justify-center lg:justify-start',
+              {
+                'text-[var(--color-primary)] border-r-2 border-r-[var(--color-primary)]':
+                  selectedId === item.id,
+              }
+            )}
           >
             <ItemWrapper
               anchor={item.anchor}
@@ -43,7 +60,7 @@ export default function OrgNav(props: any) {
                 'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
                 item.Icon ? 'text-base font-medium' : 'text-sm',
                 {
-                  'hover:text-gray-100': item.anchor,
+                  'hover:text-[var(--color-primary)]': item.anchor,
                   'cursor-default': !item.anchor,
                 }
               )}
