@@ -2,6 +2,6 @@ export function autoSize (ctx: { runtime: 'client' | 'server', dpr: number }, si
   if (ctx.runtime === 'client') {
     return size;
   } else {
-    return size * ctx.dpr;
+    return size;
   }
 }

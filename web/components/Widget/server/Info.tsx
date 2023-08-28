@@ -7,16 +7,13 @@ export async function ServerWidgetInfo ({ name, linkedDataPromise, searchParams 
   const meta = widgetMeta(name);
   const linkedData = await linkedDataPromise;
 
-  const metadata = generateMetadata({
-    ...createWidgetContext('server', searchParams, linkedData),
-    width: 0,
-    height: 0,
-    dpr: 0,
-  });
+  const metadata = generateMetadata(
+    createWidgetContext('server', searchParams, linkedData),
+  );
 
   return (
     <>
-      <h1 className='text-lg text-title font-bold mb-2'>{metadata.title}</h1>
+      <h1 className="text-lg text-title font-bold mb-2">{metadata.title}</h1>
       <p>{metadata.description ?? meta.description}</p>
     </>
   );

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { cloneElement, ReactElement, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
-import { createWidgetContext } from '../../utils/context';
+import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 
 interface SvgComponentProps extends WidgetReactVisualizationProps {
   data: any;
@@ -36,8 +36,8 @@ export default function Svg ({ visualizer, data, parameters, linkedData, classNa
   }, []);
 
   const el = visualizer.default(data, {
-    ...size,
-    ...createWidgetContext('client', parameters, linkedData, colorScheme),
+    ...createVisualizationContext({ ...size, colorScheme }),
+    ...createWidgetContext('client', parameters, linkedData),
   });
 
   return cloneElement(el, {

@@ -35,18 +35,15 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
   const usp = new URLSearchParams(searchParams);
   const twitterImageUsp = new URLSearchParams(usp);
 
-  const { title, description, keywords } = generateMetadata({
-    width: 0,
-    height: 0,
-    dpr: 1,
-    ...createWidgetContext('server', searchParams, linkedData),
-  });
+  const { title, description, keywords } = generateMetadata(
+    createWidgetContext('server', searchParams, linkedData),
+  );
 
   twitterImageUsp.set('image_size', 'twitter:summary_large_image');
 
   const finalTitle = (title ?? decodeURIComponent(params.name)) + ' | OSSInsight';
   const finalDescription = description || widget.description;
-  const finalKeywords =  ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []);
+  const finalKeywords = ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []);
 
   return {
     title: finalTitle,

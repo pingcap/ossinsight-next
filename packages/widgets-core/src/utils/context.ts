@@ -1,4 +1,4 @@
-import { LinkedDataContext } from '@ossinsight/widgets-types';
+import { LinkedDataContext, VisualizationContext } from '@ossinsight/widgets-types';
 import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../parameters/resolver';
@@ -7,14 +7,6 @@ export function createWidgetBaseContext<P extends Record<string, string>> (runti
   return {
     runtime,
     parameters,
-  };
-}
-
-export function createWidgetContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData, colorScheme?: string) {
-  return {
-    ...createWidgetBaseContext(runtime, parameters),
-    ...createLinkedDataContext(linkedData),
-    theme: { colors, colorScheme: colorScheme ?? 'dark' },
     getTimeParams (): any {
       const { DEFAULT_ZONE } = generateZoneOptions();
 
@@ -40,5 +32,21 @@ export function createLinkedDataContext (linkedData: LinkedData): LinkedDataCont
     getOrg (id: number): any {
       return {};
     },
+  };
+}
+
+export function createWidgetContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData) {
+  return {
+    ...createWidgetBaseContext(runtime, parameters),
+    ...createLinkedDataContext(linkedData),
+  };
+}
+
+export function createVisualizationContext ({ width, height, dpr, colorScheme = 'dark' }: Pick<VisualizationContext, 'width' | 'height' | 'dpr'> & { colorScheme?: string }): VisualizationContext {
+  return {
+    width,
+    height,
+    dpr,
+    theme: { colors, colorScheme: colorScheme },
   };
 }

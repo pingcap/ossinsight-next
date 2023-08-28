@@ -1,18 +1,17 @@
 import { createCanvas, loadImage } from '@napi-rs/canvas';
-import { VisualizerModule } from '@ossinsight/widgets-types';
-import { LinkedData } from '../../parameters/resolver';
-import { createWidgetContext } from '../../utils/context';
+import { WidgetNodeVisualizationProps } from '../../types';
+import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 import { scaleToFit } from '../../utils/vis';
 
-export default async function renderSvg (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
+export default async function renderSvg (props: WidgetNodeVisualizationProps) {
+  const { data, visualizer, dpr, parameters, linkedData, colorScheme } = props;
+  let { width, height } = props;
   width = visualizer.width ?? width;
   height = visualizer.height ?? height;
 
   const option = visualizer.default(data, {
-    width: width,
-    height: height,
-    dpr,
-    ...createWidgetContext('server', parameters, linkedData, colorScheme),
+    ...createVisualizationContext({ width, height, dpr, colorScheme }),
+    ...createWidgetContext('server', parameters, linkedData),
   });
 
   // @ts-ignore

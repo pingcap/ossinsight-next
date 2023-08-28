@@ -8,12 +8,9 @@ export async function Share ({ name, params, searchParams, linkedDataPromise }: 
   const generateMetadata = await widgetMetadataGenerator(name);
   const linkedData = await linkedDataPromise;
 
-  const { title, keywords } = generateMetadata({
-    ...createWidgetContext('client', searchParams, linkedData),
-    width: 0,
-    height: 0,
-    dpr: 1,
-  });
+  const { title, keywords } = generateMetadata(
+    createWidgetContext('client', searchParams, linkedData),
+  );
 
   const usp = new URLSearchParams(searchParams);
   const imageUsp = new URLSearchParams(usp);

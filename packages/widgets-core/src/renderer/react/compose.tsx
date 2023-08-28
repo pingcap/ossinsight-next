@@ -5,8 +5,8 @@ import { ComposeVisualizationConfig, VisualizerModule } from '@ossinsight/widget
 import { cloneElement, use, useEffect, useMemo, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
-import { createWidgetContext } from '../../utils/context';
-import { AvatarLabel, CardHeading, Empty, Label, LabelValue } from './builtin';
+import { createVisualizationContext, createWidgetContext } from '../../utils/context';
+import { Builtin } from './builtin';
 import render from './index';
 
 interface ComposeComponentProps extends WidgetReactVisualizationProps {
@@ -47,10 +47,8 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
   const items = useMemo(() => {
     const { width, height } = size;
     return visualizer.default(data, {
-      ...createWidgetContext('client', parameters, linkedData, colorScheme),
-      width,
-      height,
-      dpr,
+      ...createVisualizationContext({ width, height, dpr, colorScheme }),
+      ...createWidgetContext('client', parameters, linkedData),
     });
   }, [size.width, size.height, dpr, data, colorScheme]);
 
@@ -87,49 +85,29 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
       }}
     >
       {items.map(({ parameters, widget, data, ...props }, i) => {
-        switch (widget) {
-          case 'builtin:label-value':
-            return <LabelValue key={i} className="absolute" style={{ ...props, zIndex: 1 }} label={parameters.label} value={parameters.value} colorScheme={colorScheme} />;
-          case 'builtin:card-heading':
-            return <CardHeading key={i} className="absolute" style={props} title={parameters.title} subtitle={parameters.subtitle} colorScheme={colorScheme} />;
-          case 'builtin:label':
-            return <Label key={i} className="absolute" style={props} label={parameters.label} colorScheme={colorScheme} />;
-          case 'builtin:avatar-label':
-            return (
-              <AvatarLabel
-                key={i}
-                className="absolute"
-                style={props}
-                label={parameters.label}
-                imgSrc={parameters.imgSrc}
-                size={parameters.size}
-                colorScheme={colorScheme}
-              />
-            );
-          case 'builtin:empty':
-            return <Empty key={i} className="absolute" style={props} colorScheme={colorScheme} />
-          default: {
-            const el = render({
-              dynamicHeight: undefined,
-              className: undefined,
-              style: props,
-              parameters,
-              linkedData,
-              type: resolvedVisualizers[i]!.type,
-              visualizer: resolvedVisualizers[i]!,
-              data,
-              colorScheme,
-            });
+        if (widget.startsWith('builtin:')) {
+          return <Builtin key={i} className="absolute" style={props} name={widget as any} colorScheme={colorScheme}  {...parameters} />;
+        } else {
+          const el = render({
+            dynamicHeight: undefined,
+            className: undefined,
+            style: props,
+            parameters,
+            linkedData,
+            type: resolvedVisualizers[i]!.type,
+            visualizer: resolvedVisualizers[i]!,
+            data,
+            colorScheme,
+          });
 
-            return cloneElement(el, {
-              ...el.props,
-              key: i,
-              style: {
-                ...el.props.style,
-                position: 'absolute',
-              },
-            });
-          }
+          return cloneElement(el, {
+            ...el.props,
+            key: i,
+            style: {
+              ...el.props.style,
+              position: 'absolute',
+            },
+          });
         }
       })}
     </div>

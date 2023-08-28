@@ -1,18 +1,11 @@
 import type { EChartsOption } from 'echarts';
 import type * as colors from 'tailwindcss/colors';
 
-export interface BasicContext {
-  theme: {
-    colors: typeof colors
-    colorScheme: string
-  };
-
-  getTimeParams (): { zone: string, period: string };
-}
-
 export interface WidgetBaseContext<P extends Record<string, any> = Record<string, any>> {
   runtime: 'server' | 'client';
   parameters: P;
+
+  getTimeParams (): { zone: string, period: string };
 }
 
 export interface LinkedDataContext {
@@ -25,18 +18,32 @@ export interface LinkedDataContext {
   getOrg (id: number): any;
 }
 
-export interface WidgetVisualizerContext<P extends Record<string, any> = Record<string, any>> extends WidgetBaseContext<P>, BasicContext, LinkedDataContext {
+export interface VisualizationContext {
   /**
-   * The container width when executing the visualization function.
+   * The container ***LOGICAL*** width when executing the visualization function.
    */
   width: number;
 
   /**
-   * The container height when executing the visualization function.
+   * The container ***LOGICAL*** height when executing the visualization function.
    */
   height: number;
 
+  /**
+   * The rendering target's device pixel ratio.
+   */
   dpr: number;
+
+  theme: {
+    colors: typeof colors
+    colorScheme: string
+  };
+}
+
+export interface WidgetVisualizerContext<P extends Record<string, any> = Record<string, any>> extends WidgetBaseContext<P>, LinkedDataContext, VisualizationContext {
+}
+
+export interface WidgetMetadataContext<P extends Record<string, any> = Record<string, any>> extends WidgetBaseContext<P>, LinkedDataContext {
 }
 
 export type EChartsVisualizationConfig = EChartsOption;
@@ -45,6 +52,8 @@ export type WidgetComposeItem = {
   widget: string
   parameters: Record<string, any>
   data: any
+
+  // These sizes should be ***LOGICAL*** value not real value
   left: number
   top: number
   width: number
@@ -91,10 +100,10 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
   height?: number;
 }
 
-const SYMBOL_FOR_TYPING = Symbol('SYMBOL_FOR_TYPING');
+declare const SYMBOL_FOR_TYPING: unique symbol;
 
 export interface BaseParameterDefinition<T> {
-  [SYMBOL_FOR_TYPING]?: T
+  [SYMBOL_FOR_TYPING]?: T;
   type: string;
   title?: string;
   description?: string;
@@ -143,23 +152,23 @@ export interface DateParameterDefinition extends BaseParameterDefinition<string>
   expression?: string;
 }
 
-export type ExtractParameterType<T extends BaseParameterDefinition> = T extends BaseParameterDefinition<infer E> ? E : never;
+export type ExtractParameterType<T extends BaseParameterDefinition<any>> = T extends BaseParameterDefinition<infer E> ? E : never;
 
 export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefinitionMap];
 
 export interface ParameterDefinitionMap {
-  'repo-id': RepoIdParameterDefinition
-  'user-id': UserIdParameterDefinition
-  'collection-id': CollectionIdParameterDefinition
-  'time-zone': TimeZoneParameterDefinition
-  'time-period': TimePeriodParameterDefinition
-  'activity-type': ActivityTypeParameterDefinition
-  'event-type': EventTypeParameterDefinition
-  'limit': LimitParameterDefinition
-  'day': DateParameterDefinition
-  'month': DateParameterDefinition
+  'repo-id': RepoIdParameterDefinition;
+  'user-id': UserIdParameterDefinition;
+  'collection-id': CollectionIdParameterDefinition;
+  'time-zone': TimeZoneParameterDefinition;
+  'time-period': TimePeriodParameterDefinition;
+  'activity-type': ActivityTypeParameterDefinition;
+  'event-type': EventTypeParameterDefinition;
+  'limit': LimitParameterDefinition;
+  'day': DateParameterDefinition;
+  'month': DateParameterDefinition;
 }
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
 
-export type MetadataGenerator<P> = (ctx: WidgetVisualizerContext<P>) => Partial<{ title: string, description: string, keywords: [] }>
+export type MetadataGenerator<P> = (ctx: WidgetMetadataContext<P>) => Partial<{ title: string, description: string, keywords: [] }>

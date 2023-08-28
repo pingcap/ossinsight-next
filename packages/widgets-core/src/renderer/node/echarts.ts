@@ -1,25 +1,23 @@
 import { createCanvas } from '@napi-rs/canvas';
-import { VisualizerModule } from '@ossinsight/widgets-types';
 import { init } from 'echarts';
-import { LinkedData } from '../../parameters/resolver';
-import { createWidgetContext } from '../../utils/context';
-import '../echarts-theme';
+import { WidgetNodeVisualizationProps } from '../../types';
+import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 import '../echarts-map';
+import '../echarts-theme';
 
-export default function renderEcharts (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string) {
+export default function renderEcharts (props: WidgetNodeVisualizationProps) {
+  const { width, height, dpr, visualizer, data, parameters, linkedData, colorScheme } = props;
   const dynamicHeight = visualizer.computeDynamicHeight?.(data);
   let canvas = createCanvas(width, dynamicHeight ?? height);
 
   const option = visualizer.default(data, {
-    width: width,
-    height: height,
-    dpr,
-    ...createWidgetContext('server', parameters, linkedData, colorScheme),
+    ...createVisualizationContext({ width, height, dpr }),
+    ...createWidgetContext('server', parameters, linkedData),
   });
 
   const echarts = init(canvas as any, colorScheme, {
     width: width,
-    height: dynamicHeight ?? height,
+    height: (dynamicHeight ?? height),
     devicePixelRatio: dpr,
   });
 
