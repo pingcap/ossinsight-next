@@ -6,7 +6,7 @@ import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/reso
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import render from '@ossinsight/widgets-core/src/renderer/node';
 import renderCompose from '@ossinsight/widgets-core/src/renderer/node/compose';
-import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
+import { createVisualizationContext, createWidgetBaseContext, createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -45,10 +45,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   const paramDef = await widgetParameterDefinitions(name);
   const linkedData = await resolveParameters(paramDef, parameters);
 
-  const data = await datasource({
-    runtime: 'server',
-    parameters,
-  });
+  const data = await datasource(createWidgetBaseContext('server', parameters));
 
   const colorScheme = request.nextUrl.searchParams.get('color_scheme') ?? 'dark';
 
@@ -69,21 +66,20 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   }
 
   const renderCtx = {
-    ...createWidgetContext('server', parameters, linkedData, colorScheme),
-    width: width,
-    height: height,
-    dpr,
+    ...createVisualizationContext({ width, height, dpr, colorScheme }),
+    ...createWidgetContext('server', parameters, linkedData),
   };
 
   let canvas: Canvas;
 
   if (visualizer.type !== 'compose') {
     // Use compose to render all others images temporary.
-    canvas = await renderCompose(
+    canvas = await renderCompose({
       width,
       height,
       dpr,
-      createDefaultComposeLayout(name, data, {
+      type: 'compose',
+      visualizer: createDefaultComposeLayout(name, data, {
         generateMetadata,
         ctx: renderCtx,
         isDynamicHeight,
@@ -92,8 +88,9 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
       parameters,
       linkedData,
       colorScheme,
-      size,
-    );
+      sizeName: size,
+      root: true,
+    });
   } else {
     canvas = await render({
       type: visualizer.type,

@@ -3,6 +3,7 @@ import { WidgetProps } from '@/components/Widget/Widget';
 import { widgetDatasourceFetcher, widgetParameterDefinitions } from '@/utils/widgets';
 import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { createWidgetBaseContext } from '@ossinsight/widgets-core/src/utils/context';
 
 export interface ServerWidgetProps extends Omit<WidgetProps, 'linkedData' | 'data' | 'params'> {
   linkedDataPromise: Promise<LinkedData>;
@@ -18,10 +19,7 @@ export async function ServerWidget ({ name, searchParams, linkedDataPromise, ...
     ...resolveExpressions(params),
   };
 
-  const data = await fetcher({
-    runtime: 'server',
-    parameters,
-  });
+  const data = await fetcher(createWidgetBaseContext('server', parameters));
 
   return (
     <Widget name={name} params={parameters} data={data} linkedData={await linkedDataPromise} {...props} />

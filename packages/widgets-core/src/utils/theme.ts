@@ -12,6 +12,18 @@ type Theme = {
   Avatar: {
     fallbackColor: string;
   }
+
+  Container: {
+    backgroundColor: string
+    Card: {
+      backgroundColor: string
+      shadowColor: string
+    }
+  }
+
+  Orphan: {
+    backgroundColor: string
+  }
 }
 
 type ColorSchemes = Record<string, Theme>
@@ -28,8 +40,19 @@ const light: Theme = {
     color: 'black',
   },
   Avatar: {
-    fallbackColor: '#f7f8f9'
-  }
+    fallbackColor: '#f7f8f9',
+  },
+
+  Container: {
+    backgroundColor: '#fff',
+    Card: {
+      backgroundColor: '#fff',
+      shadowColor: 'rgba(219, 216, 199, 0.75)',
+    },
+  },
+  Orphan: {
+    backgroundColor: 'rgba(255,255,255,0)',
+  },
 };
 
 const dark: Theme = {
@@ -44,20 +67,24 @@ const dark: Theme = {
     color: 'white',
   },
   Avatar: {
-    fallbackColor: 'rgb(37, 37, 39)'
-  }
+    fallbackColor: 'rgb(37, 37, 39)',
+  },
+  Container: {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    Card: {
+      backgroundColor: 'rgb(36, 35, 49)',
+      shadowColor: 'rgba(36, 39, 56, 0.25)',
+    },
+  },
+  Orphan: {
+    backgroundColor: 'rgb(37, 37, 39)',
+  },
 };
 
 const COLOR_SCHEMES: ColorSchemes = {
   light,
   dark,
 };
-
-export function themed<T> (colorScheme: string, getter: (theme: Theme) => T) {
-  const theme = getTheme(colorScheme);
-
-  return getter(theme);
-}
 
 export function getTheme (colorScheme: string): Theme {
   return COLOR_SCHEMES[colorScheme] ?? dark;

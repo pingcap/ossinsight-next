@@ -5,8 +5,8 @@ import { createDefaultComposeLayout, widgetMetadataGenerator, widgetVisualizer }
 import { ColorSchemeSelector } from '@ossinsight/ui';
 import { useColorScheme } from '@ossinsight/ui/src/components/ColorScheme';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
-import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
-import { CSSProperties, use, useState } from 'react';
+import { createVisualizationContext, createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
+import { CSSProperties, use } from 'react';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
 
 export interface WidgetProps {
@@ -22,7 +22,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
   let visualizer = use(widgetVisualizer(name));
   const generateMetadata = use(widgetMetadataGenerator(name));
   const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
-  const { colorScheme, setColorScheme } = useColorScheme()
+  const { colorScheme, setColorScheme } = useColorScheme();
 
   const width = visualizer.width ?? siteConfig.sizes.default.width;
   const height = dynamicHeight ?? visualizer.height ?? siteConfig.sizes.default.height;
@@ -31,10 +31,8 @@ export default function Widget ({ className, style, name, params, data, linkedDa
     visualizer = createDefaultComposeLayout(name, data, {
       generateMetadata,
       ctx: {
-        ...createWidgetContext('client', params, linkedData, colorScheme),
-        width,
-        height,
-        dpr: devicePixelRatio,
+        ...createVisualizationContext({ width, height, dpr: devicePixelRatio, colorScheme }),
+        ...createWidgetContext('client', params, linkedData),
       },
     });
   }
@@ -69,17 +67,9 @@ export default function Widget ({ className, style, name, params, data, linkedDa
           colorScheme={colorScheme}
         />
       </div>
-      <div className='absolute right-4 top-8'>
+      <div className="absolute right-4 top-8">
         <ColorSchemeSelector value={colorScheme} onValueChange={setColorScheme} />
       </div>
     </div>
   );
-}
-
-function hasEmptyData (data: any) {
-  if (data instanceof Array) {
-    return data.findIndex(item => item != null) == -1;
-  } else {
-    return data == null;
-  }
 }

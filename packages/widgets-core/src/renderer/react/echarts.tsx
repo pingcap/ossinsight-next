@@ -1,13 +1,11 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
-import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
 import { dispose, EChartsOption, EChartsType, init } from 'echarts';
 import { useEffect, useRef } from 'react';
-import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
-import { createLinkedDataContext, createWidgetContext } from '../../utils/context';
-import '../echarts-theme';
+import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 import '../echarts-map';
+import '../echarts-theme';
 
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
@@ -41,10 +39,8 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
     const { clientWidth: width, clientHeight: height } = containerRef.current!;
 
     const option = visualizer.default(data, {
+      ...createVisualizationContext({ width, height, dpr: devicePixelRatio, colorScheme }),
       ...createWidgetContext('client', parameters, linkedData),
-      width,
-      height,
-      dpr: devicePixelRatio,
     });
     echartsRef.current!.setOption(option);
   }, [data, visualizer, parameters, colorScheme]);

@@ -1,4 +1,4 @@
-import { widgetMeta, widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
+import { widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { WidgetMeta } from '@ossinsight/widgets-types';
 import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 
 export async function WidgetPreview ({ name }: { name: string }) {
-  const widget = widgetMeta(name);
   const imageUsp = new URLSearchParams(await dynamicParameters(name));
 
   imageUsp.set('image_size', 'preview_image');
@@ -16,12 +15,12 @@ export async function WidgetPreview ({ name }: { name: string }) {
     <div className="group rounded-md relative overflow-hidden bg-popover border w-full transition-shadow hover:shadow-lg">
       <div className="flex flex-col items-center bg-body p-4 gap-4" style={{ height: 360 }}>
         <h2 className="text-lg font-bold text-title">
-          <Suspense fallback='&nbsp;'>
+          <Suspense fallback="&nbsp;">
             <WidgetName widget={name} />
           </Suspense>
         </h2>
         <Image
-          className='block'
+          className="block"
           loading="lazy"
           width={480}
           height={270}
@@ -53,15 +52,14 @@ async function WidgetName ({ widget }: { widget: string }) {
 
   const metadata = metadataGenerator({
     ...createWidgetContext('client', parameters, null as any),
-    width: 0,
-    height: 0,
-    dpr: 0,
     getCollection () { return { id: 0, name: 'Collection', public: true }; },
     getRepo () { return { id: 0, fullName: 'Repository' }; },
     getUser () { return { id: 0, login: 'Developer' };},
+    getOrg () { return { id: 0, name: 'Organization' }; },
+    getTimeParams () { return { zone: 'TimeZone', period: 'Period' }; },
   });
 
-  return <>{metadata.title}</>
+  return <>{metadata.title}</>;
 }
 
 function getName (name: string) {
