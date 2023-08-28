@@ -53,7 +53,7 @@ export default function (input: any[], ctx: WidgetVisualizerContext<Params>): EC
       },
       axisLabel: {
         fontSize: 12,
-        color: 'white',
+        color: ctx.theme.colorScheme === 'dark' ? 'white' : 'black',
       },
       offset: 16,
     },

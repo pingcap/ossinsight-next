@@ -12,7 +12,7 @@ export default async function renderSvg (width: number, height: number, dpr: num
     width: width,
     height: height,
     dpr,
-    ...createWidgetContext('server', parameters, linkedData),
+    ...createWidgetContext('server', parameters, linkedData, colorScheme),
   });
 
   // @ts-ignore

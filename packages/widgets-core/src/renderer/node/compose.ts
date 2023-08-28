@@ -19,7 +19,7 @@ import render from './index';
  * @param sizeName
  * @param root indicate that the widget is a real compose type widget.
  */
-export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme?: string, sizeName?: string, root = false) {
+export default async function renderCompose (width: number, height: number, dpr: number, visualizer: VisualizerModule<any, any, any, any>, data: any, parameters: any, linkedData: LinkedData, colorScheme: string = 'dark', sizeName?: string, root = false) {
   // should wrap with shadow box if the widget is 'compose' type or the rendering context is not twitter.
   const shouldWrap = !!(root || sizeName !== 'twitter:summary_large_image');
 
@@ -57,7 +57,7 @@ export default async function renderCompose (width: number, height: number, dpr:
     width: width * dpr,
     height: height * dpr,
     dpr,
-    ...createWidgetContext('server', parameters, linkedData),
+    ...createWidgetContext('server', parameters, linkedData, colorScheme),
   });
 
   const all = option.map(async (item) => {
@@ -94,7 +94,7 @@ export default async function renderCompose (width: number, height: number, dpr:
         });
         break;
       case 'builtin:empty':
-        await renderEmpty(canvas, { box })
+        await renderEmpty(canvas, { box, colorScheme })
         break;
       default: {
         const visualizer = await visualizers[item.widget]();

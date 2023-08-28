@@ -18,7 +18,7 @@ interface ComposeComponentProps extends WidgetReactVisualizationProps {
 
 const dpr = typeof devicePixelRatio === 'number' ? devicePixelRatio : 2;
 
-export default function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData }: ComposeComponentProps) {
+export default function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: ComposeComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: visualizer.width ?? 0,
@@ -47,12 +47,12 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
   const items = useMemo(() => {
     const { width, height } = size;
     return visualizer.default(data, {
-      ...createWidgetContext('client', parameters, linkedData),
+      ...createWidgetContext('client', parameters, linkedData, colorScheme),
       width,
       height,
       dpr,
     });
-  }, [size.width, size.height, dpr, data]);
+  }, [size.width, size.height, dpr, data, colorScheme]);
 
   const itemNames = useMemo(() => {
     return items.map(i => i.widget).join(',');
@@ -82,18 +82,18 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
         }),
         borderRadius: 18,
         overflow: 'hidden',
-        background: 'rgb(36, 35, 49)',
+        background: colorScheme === 'light' ? 'white' : 'rgb(36, 35, 49)',
         boxShadow: '0px 4px 4px 0px rgba(36, 39, 56, 0.25)',
       }}
     >
       {items.map(({ parameters, widget, data, ...props }, i) => {
         switch (widget) {
           case 'builtin:label-value':
-            return <LabelValue key={i} className="absolute" style={{ ...props, zIndex: 1 }} label={parameters.label} value={parameters.value} />;
+            return <LabelValue key={i} className="absolute" style={{ ...props, zIndex: 1 }} label={parameters.label} value={parameters.value} colorScheme={colorScheme} />;
           case 'builtin:card-heading':
-            return <CardHeading key={i} className="absolute" style={props} title={parameters.title} subtitle={parameters.subtitle} />;
+            return <CardHeading key={i} className="absolute" style={props} title={parameters.title} subtitle={parameters.subtitle} colorScheme={colorScheme} />;
           case 'builtin:label':
-            return <Label key={i} className="absolute" style={props} label={parameters.label} />;
+            return <Label key={i} className="absolute" style={props} label={parameters.label} colorScheme={colorScheme} />;
           case 'builtin:avatar-label':
             return (
               <AvatarLabel
@@ -103,10 +103,11 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
                 label={parameters.label}
                 imgSrc={parameters.imgSrc}
                 size={parameters.size}
+                colorScheme={colorScheme}
               />
             );
           case 'builtin:empty':
-            return <Empty key={i} className="absolute" style={props} />
+            return <Empty key={i} className="absolute" style={props} colorScheme={colorScheme} />
           default: {
             const el = render({
               dynamicHeight: undefined,
@@ -117,6 +118,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
               type: resolvedVisualizers[i]!.type,
               visualizer: resolvedVisualizers[i]!,
               data,
+              colorScheme,
             });
 
             return cloneElement(el, {

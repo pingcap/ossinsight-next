@@ -1,39 +1,51 @@
 import clsx from 'clsx';
 import { CSSProperties, ReactNode, useId, useMemo } from 'react';
 import sad from '../../icons/sad';
+import { getTheme } from '../../utils/theme';
 
 type BuiltinProps<P extends Record<string, any>> = {
   style?: CSSProperties
   className?: string
+  colorScheme: string
 } & P
 
-export function CardHeading ({ className, style, title, subtitle }: BuiltinProps<{ title: ReactNode, subtitle: ReactNode }>) {
+const useTheme = (colorScheme: string) => {
+  return getTheme(colorScheme);
+};
+
+export function CardHeading ({ className, style, title, subtitle, colorScheme }: BuiltinProps<{ title: ReactNode, subtitle: ReactNode }>) {
   const id = useId();
+  const { CardHeader } = useTheme(colorScheme)
+
   return (
     <div id={id} className={clsx(className, 'flex items-center', subtitle ? 'justify-between' : 'justify-center')} style={style}>
-      <span style={{ fontSize: 14, lineHeight: 1, fontWeight: 'bold', color: 'rgba(193, 193, 193, 1)' }}>
+      <span style={{ fontSize: 14, lineHeight: 1, fontWeight: 'bold', color: CardHeader.titleColor }}>
         {title}
       </span>
-      {subtitle && <span style={{ fontSize: 12, lineHeight: 1, fontStyle: 'italic', color: 'rgba(124, 124, 124, 1)' }}>
+      {subtitle && <span style={{ fontSize: 12, lineHeight: 1, fontStyle: 'italic', color: CardHeader.subtitleColor }}>
         {subtitle}
       </span>}
     </div>
   );
 }
 
-export function LabelValue ({ className, style, label, value }: BuiltinProps<{ label: ReactNode, value: ReactNode }>) {
+export function LabelValue ({ className, style, label, value, colorScheme }: BuiltinProps<{ label: ReactNode, value: ReactNode }>) {
+  const { Label, Value } = useTheme(colorScheme)
+
   return (
     <div className={clsx(className, 'flex flex-col items-start gap-1')} style={style}>
-      <span style={{ fontSize: 12, lineHeight: 1, color: 'white', overflow: 'visible', whiteSpace: 'nowrap' }}>{label}</span>
-      <span style={{ fontSize: 24, lineHeight: 1, fontWeight: 'bold', color: 'white', overflow: 'visible', whiteSpace: 'nowrap' }}>{value}</span>
+      <span style={{ fontSize: 12, lineHeight: 1, color: Label.color, overflow: 'visible', whiteSpace: 'nowrap' }}>{label}</span>
+      <span style={{ fontSize: 24, lineHeight: 1, fontWeight: 'bold', color: Value.color, overflow: 'visible', whiteSpace: 'nowrap' }}>{value}</span>
     </div>
   );
 }
 
-export function Label ({ className, style, label }: BuiltinProps<{ label: ReactNode }>) {
+export function Label ({ className, style, label, colorScheme }: BuiltinProps<{ label: ReactNode }>) {
+  const { Label } = useTheme(colorScheme)
+
   return (
     <div className={clsx(className, 'flex items-center justify-center')} style={style}>
-      <span style={{ fontSize: 12, lineHeight: 1, color: '#C1C1C1' }}>{label}</span>
+      <span style={{ fontSize: 12, lineHeight: 1, color: Label.color }}>{label}</span>
     </div>
   );
 }
@@ -44,7 +56,10 @@ export function AvatarLabel ({
   label = '',
   imgSrc = '',
   size = 20,
+  colorScheme,
 }: BuiltinProps<{ label?: string; imgSrc?: string; size?: number }>) {
+  const { Label } = useTheme(colorScheme)
+
   return (
     <div
       className={clsx(className, 'flex flex-row items-center', {
@@ -75,7 +90,7 @@ export function AvatarLabel ({
           fontSize: 12,
           lineHeight: 1,
           fontWeight: 'bold',
-          color: 'white',
+          color: Label.color,
         }}
       >
         {label}
@@ -87,11 +102,19 @@ export function AvatarLabel ({
 export function Empty ({
   className,
   style,
+  colorScheme,
 }: BuiltinProps<{}>) {
   const svgString = useMemo(() => sad(24, 'currentColor'), []);
 
   return (
-    <div className={clsx(className, 'flex flex-col items-center justify-center gap-2 text-white')} style={style}>
+    <div
+      className={clsx(
+        className,
+        'flex flex-col items-center justify-center gap-2 text-white',
+        colorScheme === 'light' ? 'text-black' : 'text-white',
+      )}
+      style={style}
+    >
       <span className="flex items-center justify-center" dangerouslySetInnerHTML={{ __html: svgString }} />
       <span>Oooops! It's a Blank Canvas.</span>
     </div>

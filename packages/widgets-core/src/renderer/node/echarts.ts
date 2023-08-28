@@ -14,7 +14,7 @@ export default function renderEcharts (width: number, height: number, dpr: numbe
     width: width,
     height: height,
     dpr,
-    ...createWidgetContext('server', parameters, linkedData),
+    ...createWidgetContext('server', parameters, linkedData, colorScheme),
   });
 
   const echarts = init(canvas as any, colorScheme, {

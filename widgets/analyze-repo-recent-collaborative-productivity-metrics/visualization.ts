@@ -69,7 +69,7 @@ export default function (
         },
         detail: {
           offsetCenter: [0, 0],
-          color: '#fff',
+          color: ctx.theme.colorScheme === 'light' ? 'black' : '#fff',
           fontSize: 16,
           lineHeight: 21,
           formatter: function (value) {
