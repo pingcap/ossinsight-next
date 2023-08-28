@@ -69,7 +69,7 @@ export default function Widget ({ className, style, name, params, data, linkedDa
           colorScheme={colorScheme}
         />
       </div>
-      <div className='absolute right-4 top-4'>
+      <div className='absolute right-4 top-8'>
         <ColorSchemeSelector value={colorScheme} onValueChange={setColorScheme} />
       </div>
     </div>
