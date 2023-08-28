@@ -2,6 +2,8 @@ import AnalyzeOrgContextProvider, {
   AnalyzeOrgContextProps,
 } from '@/components/Context/Analyze/AnalyzeOrg';
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
+import SectionTemplate from '@/components/Analyze/Section';
+import ChartTemplate from '@/app/analyze/org/[org]/Chart';
 
 const fetchOrgInfo = async (
   orgName: string
@@ -25,6 +27,18 @@ export default async function OrgAnalyzePage({
     <AnalyzeOrgContextProvider data={data}>
       <OrgAnalyzePageHeader />
       OrgAnalyzePage
+      <SectionTemplate
+        title='Overview'
+        description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
+      >
+        charts
+        <ChartTemplate
+          name='@ossinsight/widget-compose-last-28-days-stats'
+          searchParams={{
+            repo_id: '41986369',
+          }}
+        />
+      </SectionTemplate>
     </AnalyzeOrgContextProvider>
   );
 }

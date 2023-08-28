@@ -5,78 +5,185 @@ import { useParams, usePathname } from 'next/navigation';
 import FileBarGraphIcon from 'bootstrap-icons/icons/file-bar-graph.svg';
 import clsx from 'clsx';
 
-export default function OrgNav(props: any) {
+export default function OrgNav(props: { org: string }) {
+  const { org } = props;
+
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
 
-  const params = useParams();
-  // const pathname = usePathname();
-
   // https://github.com/vercel/next.js/discussions/49465#discussioncomment-5845312
+  // const params = useParams();
+  const pathname = usePathname();
+
   React.useEffect(() => {
-    console.log('Hash:', window.location.hash);
-    const hash = window.location.hash || '';
-    const id = hash.replace('#', '');
-    selectedId !== id && setSelectedId(id);
-  }, [params, selectedId]);
+    const section =
+      pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+    console.log('section:', section);
+    selectedId !== section && setSelectedId(section);
+  }, [org, pathname, selectedId]);
 
-  // React.useEffect(() => {
-  //   console.log("Pathname:", pathname);
-  // }
-  // , [pathname]);
-
-  const ItemWrapper = (props: {
-    anchor?: string;
-    children?: React.ReactNode;
-    [key: string]: any;
-  }) => {
-    const { anchor, children, ...rest } = props;
-    if (anchor) {
-      return (
-        <NextLink href={`#${props.anchor}`} {...rest}>
-          {children}
-        </NextLink>
-      );
-    }
-    return <div {...rest}>{children}</div>;
-  };
+  const highlightIdMemo = React.useMemo(() => {
+    return calcSelectedIdParents(navItems, selectedId);
+  }, [selectedId]);
+  const basePathMemo = React.useMemo(() => {
+    return `/analyze/org/${org}`;
+  }, [org]);
 
   return (
-    <ul className='sticky overflow-x-auto w-full flex md:flex-col md:w-40 lg:h-full'>
-      {navItems.map((item) => {
+    <>
+      <NavList
+        items={navItems}
+        selectedId={selectedId}
+        highlightId={highlightIdMemo}
+        basePath={basePathMemo}
+      />
+    </>
+  );
+}
+
+const NavList = (props: {
+  items: NavItemType[];
+  selectedId: string | null;
+  depth?: number;
+  highlightId?: string[];
+  basePath: string;
+}) => {
+  const { items, selectedId, depth = 0, highlightId = [], basePath } = props;
+
+  return (
+    <ul
+      className={clsx('w-full flex md:flex-col md:w-40', {
+        'sticky overflow-x-auto lg:h-full': depth === 0,
+      })}
+    >
+      {items.map((item) => {
         return (
-          <li
-            key={item.id}
-            className={clsx(
-              'flex items-center justify-start md:justify-center lg:justify-start',
-              {
-                'text-[var(--color-primary)] border-r-2 border-r-[var(--color-primary)]':
-                  selectedId === item.id,
-              }
-            )}
-          >
-            <ItemWrapper
-              anchor={item.anchor}
+          <React.Fragment key={item.id}>
+            <li
               className={clsx(
-                'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
-                item.Icon ? 'text-base font-medium' : 'text-sm',
+                'flex md:flex-col items-center justify-start md:justify-center lg:justify-start',
+                highlightId.includes(item.id)
+                  ? 'text-[var(--color-primary)]'
+                  : 'text-[var(--text-color-content)]',
                 {
-                  'hover:text-[var(--color-primary)]': item.anchor,
-                  'cursor-default': !item.anchor,
+                  'border-b-2 border-[var(--color-primary)] md:border-r-2 md:border-b-0':
+                    selectedId === item.id,
                 }
               )}
             >
-              {item.Icon ? (
-                <item.Icon width={20} height={20} />
-              ) : (
-                <div className='w-5' />
+              <NextLink
+                href={`${basePath}/${item.id}`}
+                className={clsx(
+                  'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
+                  item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
+                  {
+                    'hover:text-[var(--color-primary)]': item.anchor,
+                    'cursor-default': !item.anchor,
+                  }
+                )}
+              >
+                {item.Icon && <item.Icon width={20} height={20} />}
+                <span>{item.title}</span>
+              </NextLink>
+              {item.children && (
+                <NavList
+                  items={item.children}
+                  selectedId={selectedId}
+                  depth={depth + 1}
+                  highlightId={highlightId}
+                  basePath={basePath}
+                />
               )}
-              <span>{item.title}</span>
-            </ItemWrapper>
-          </li>
+            </li>
+          </React.Fragment>
         );
       })}
     </ul>
   );
+};
+
+const calcSelectedIdParents = (
+  items: NavItemType[],
+  selectedId: string | null
+): string[] => {
+  const parents: string[] = [];
+  const find = (items: NavItemType[], selectedId: string | null) => {
+    for (const item of items) {
+      if (item.id === selectedId) {
+        parents.push(item.id);
+        return true;
+      }
+      if (item.children) {
+        if (find(item.children, selectedId)) {
+          parents.push(item.id);
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  find(items, selectedId);
+  return parents;
+};
+
+const flattenNavItems = (
+  items: NavItemType[]
+): Omit<NavItemType, 'children'>[] => {
+  const result: NavItemType[] = [];
+  const find = (items: NavItemType[]) => {
+    for (const item of items) {
+      const { children, ...rest } = item;
+      result.push({ ...rest });
+      if (children) {
+        find(children);
+      }
+    }
+  };
+  find(items);
+  return result;
+};
+
+export function calcPrevNextId(
+  items: NavItemType[],
+  selectedId: string | null
+): {
+  prevId: string | null;
+  nextId: string | null;
+  prevItem: NavItemType | null;
+  nextItem: NavItemType | null;
+} {
+  let prevItem: NavItemType | null = null;
+  let nextItem: NavItemType | null = null;
+  let prevId: string | null = null;
+  let nextId: string | null = null;
+  const flattenItems = flattenNavItems(items).filter((item) => item.anchor);
+  const index = flattenItems.findIndex((item) => item.id === selectedId);
+  if (index > 0) {
+    prevItem = flattenItems[index - 1];
+    prevId = prevItem.id;
+  }
+  if (index < flattenItems.length - 1) {
+    nextItem = flattenItems[index + 1];
+    nextId = nextItem.id;
+  }
+  return { prevId, nextId, prevItem, nextItem };
+}
+
+export function getNavItemById(id: string): NavItemType | null {
+  const find = (items: NavItemType[]): NavItemType | null => {
+    for (const item of items) {
+      if (item.id === id) {
+        return item;
+      }
+      if (item.children) {
+        const result = find(item.children);
+        if (result) {
+          return result;
+        }
+      }
+    }
+    return null;
+  };
+  return find(navItems);
 }
 
 type NavItemType = {
@@ -84,9 +191,13 @@ type NavItemType = {
   title: string;
   anchor?: string;
   Icon?: any;
+  children?: NavItemType[];
 };
 
-const navItems: NavItemType[] = [
+export const DEFAULT_NAV_ID = 'overview';
+
+// DEPTH 0~1
+export const navItems: NavItemType[] = [
   {
     id: 'overview',
     title: 'Overview',
@@ -94,28 +205,32 @@ const navItems: NavItemType[] = [
     Icon: FileBarGraphIcon,
   },
   {
-    id: 'Popularity',
+    id: 'popularity',
     title: 'Popularity',
     Icon: FileBarGraphIcon,
-  },
-  {
-    id: 'star-growth',
-    title: 'Star Growth',
-    anchor: 'star-growth',
+    children: [
+      {
+        id: 'star-growth',
+        title: 'Star Growth',
+        anchor: 'star-growth',
+      },
+    ],
   },
   {
     id: 'participant',
     title: 'Participant',
     Icon: FileBarGraphIcon,
-  },
-  {
-    id: 'Engagement',
-    title: 'Engagement',
-    anchor: 'engagement',
-  },
-  {
-    id: 'origins',
-    title: 'Origins',
-    anchor: 'origins',
+    children: [
+      {
+        id: 'engagement',
+        title: 'Engagement',
+        anchor: 'engagement',
+      },
+      {
+        id: 'origins',
+        title: 'Origins',
+        anchor: 'origins',
+      },
+    ],
   },
 ];

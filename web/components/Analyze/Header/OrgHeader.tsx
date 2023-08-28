@@ -2,6 +2,9 @@
 import * as React from 'react';
 import NextImage from 'next/image';
 import JournalBookmark from 'bootstrap-icons/icons/journal-bookmark.svg';
+import CircleFill from 'bootstrap-icons/icons/circle-fill.svg';
+import Star from 'bootstrap-icons/icons/star.svg';
+import Person from 'bootstrap-icons/icons/person.svg';
 
 import {
   AnalyzeOrgContextProps,
@@ -16,7 +19,7 @@ export default function OrgAnalyzePageHeader() {
   return (
     <>
       {/* -- header -- */}
-      <h1 className='font-semibold text-3xl	text-white'>
+      <h1 className='font-semibold text-3xl	text-title'>
         <NextImage
           src={`https://github.com/${orgName}.png`}
           alt={`${orgName} logo`}
@@ -41,19 +44,18 @@ export default function OrgAnalyzePageHeader() {
         <LabelItemWithCount
           label='Participants'
           count={2186}
-          icon={<JournalBookmark />}
+          icon={<Person />}
           description='Individuals involved in repositories under this organization.'
         />
-        <LabelItemWithCount
-          label='Stars'
-          count={34343}
-          icon={<JournalBookmark />}
-        />
-        <div className='ml-auto'>
+        <LabelItemWithCount label='Stars' count={34343} icon={<Star />} />
+        <div className='ml-auto inline-flex gap-2 items-center'>
+          <CircleFill className='text-title w-4 h-4' />
           <span>Last active at</span>
-          <span>37 seconds ago</span>
+          <span className='text-title'>37 seconds ago</span>
         </div>
       </div>
+
+      {/* -- divider -- */}
       <hr className='my-1 h-[1px] border-t-0 bg-neutral-100 opacity-50' />
     </>
   );
@@ -72,7 +74,7 @@ const LabelItemWithCount = ({
 }) => (
   <div className='flex gap-2 items-center cursor-default'>
     {icon && <div className=''>{icon}</div>}
-    <div className=''>{count}</div>
+    <div className='text-title'>{count}</div>
     <div className='inline-flex items-center'>
       {label}
       {description && (
