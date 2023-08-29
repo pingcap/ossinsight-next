@@ -40,26 +40,23 @@ export default function (
       }).fix(HEADER_HEIGHT),
       horizontal(
         horizontal(
-          widget('builtin:label', undefined, {
+          widget('builtin:label-value', undefined, {
             label: 'stars',
-            // className: 'items-end',
+            value: '↑star%',
             labelProps: {
               style: {
                 fontSize: 24,
                 fontWeight: 'bold',
               },
             },
-          }).flex(),
-          widget('builtin:label', undefined, {
-            label: '↑star%',
-            // className: 'items-end',
-            labelProps: {
+            valueProps: {
               style: {
                 fontSize: 12,
                 lineHeight: 2,
                 color: ctx.theme.colors.green['400'],
               },
             },
+            column: false,
           }).flex()
         ).gap(SPACING),
         widget(

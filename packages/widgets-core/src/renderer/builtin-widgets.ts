@@ -10,6 +10,11 @@ export interface BuiltinWidgetsMap {
       style?: CSSProperties;
       className?: string;
     };
+    valueProps?: {
+      style?: CSSProperties;
+      className?: string;
+    };
+    column?: boolean;
   };
   'builtin:label': { label: string };
   'builtin:empty': {};

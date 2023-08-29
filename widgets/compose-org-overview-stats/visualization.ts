@@ -49,26 +49,23 @@ export default function (
       }).fix(HEADER_HEIGHT),
       vertical(
         horizontal(
-          widget('builtin:label', undefined, {
+          widget('builtin:label-value', undefined, {
             label: 'pr',
-            // className: 'items-end',
+            value: '↑pr%',
             labelProps: {
               style: {
                 fontSize: 24,
                 fontWeight: 'bold',
               },
             },
-          }),
-          widget('builtin:label', undefined, {
-            label: '↑per%',
-            // className: 'items-end',
-            labelProps: {
+            valueProps: {
               style: {
                 fontSize: 12,
                 lineHeight: 2,
                 color: ctx.theme.colors.green['400'],
               },
             },
+            column: false,
           })
         )
           .gap(SPACING)
