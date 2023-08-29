@@ -19,16 +19,15 @@ export default function OrgBottomNav(props: { org: string }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const currentIdMemo = React.useMemo(() => {
-    return pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+  const { prevId, nextId, prevItem, nextItem } = React.useMemo(() => {
+    const currentID =
+      pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+    const { prevId, nextId, prevItem, nextItem } = calcPrevNextId(
+      navItems,
+      currentID
+    );
+    return { currentID, prevId, nextId, prevItem, nextItem };
   }, [org, pathname]);
-
-  console.log('org:', org);
-  const { prevId, nextId, prevItem, nextItem } = calcPrevNextId(
-    navItems,
-    currentIdMemo
-  );
-  console.log('prevId:', { prevId, nextId, prevItem, nextItem });
 
   return (
     <>

@@ -3,7 +3,7 @@ import AnalyzeOrgContextProvider, {
 } from '@/components/Context/Analyze/AnalyzeOrg';
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
-// import ChartTemplate from '@/app/analyze/org/[org]/Chart';
+import ChartTemplate from '@/app/analyze/org/[org]/Chart';
 
 // import Content from '../mockContent';
 
@@ -36,13 +36,59 @@ export default async function OrgAnalyzePage({
         description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
         classname='pt-8'
       >
-        {/* charts
-        <ChartTemplate
-          name='@ossinsight/widget-compose-last-28-days-stats'
-          searchParams={{
-            repo_id: '41986369',
-          }}
-        /> */}
+        <div className='flex gap-4'>
+          <div className='flex flex-col gap-4'>
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-overview-stars'
+              searchParams={{
+                repo_id: '41986369',
+              }}
+              className='h-[150px] w-[698px]'
+            />
+            <div className='flex gap-4'>
+              <ChartTemplate
+                name='@ossinsight/widget-compose-org-overview-stats'
+                searchParams={{
+                  repo_id: '41986369',
+                }}
+                className='h-[222] w-[222]'
+              />
+              <ChartTemplate
+                name='@ossinsight/widget-compose-org-overview-stats'
+                searchParams={{
+                  repo_id: '41986369',
+                }}
+                className='h-[222] w-[222px]'
+              />
+              <ChartTemplate
+                name='@ossinsight/widget-compose-org-overview-stats'
+                searchParams={{
+                  repo_id: '41986369',
+                }}
+                className='h-[222px] w-[222px]'
+              />
+            </div>
+          </div>
+          <div className='flex flex-col gap-4'>
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-active-contributors'
+              searchParams={{
+                repo_id: '41986369',
+                limit: '5',
+              }}
+              className='h-[186px] w-[300px]'
+            />
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-active-contributors'
+              searchParams={{
+                repo_id: '41986369',
+                limit: '5',
+              }}
+              className='h-[186px] w-[300px]'
+            />
+          </div>
+        </div>
+
         {PAGE_ID}
         {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
       </SectionTemplate>
