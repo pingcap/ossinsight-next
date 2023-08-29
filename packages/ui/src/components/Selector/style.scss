@@ -14,13 +14,20 @@
 }
 
 .SelectTrigger {
-  @apply px-2 py-1 bg-control text-active text-sm transition-all inline-flex gap-1 items-center justify-center;
-  @include control-shadow;
-  @include control-border;
+  @apply px-2 py-1 bg-control text-active text-sm transition-all inline-flex gap-1 items-center justify-center outline-none;
 }
-.SelectTrigger:hover {
-  background-color: var(--background-color-popover);
+
+.SelectWrapper:not(.Select-borderless) {
+  .SelectTrigger {
+    @include control-shadow;
+    @include control-border;
+
+    &:hover {
+      background-color: var(--background-color-popover);
+    }
+  }
 }
+
 .SelectTrigger[data-placeholder] {
   color: var(--color-primary);
 }

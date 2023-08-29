@@ -11,10 +11,11 @@ export const Select = React.forwardRef<
   SelectPrimitive.SelectProps & {
   id?: string
   label?: string | React.ReactNode;
-}
->(({ id, children, ...props }, forwardedRef) => {
+  className?: string;
+} & Pick<SelectPrimitive.SelectContentProps, 'position'>
+>(({ id, children, className, position, ...props }, forwardedRef) => {
   return (
-    <div className="SelectWrapper">
+    <div className={clsx('SelectWrapper', className)}>
       <SelectPrimitive.Root {...props}>
         <SelectPrimitive.Trigger
           className={clsx('SelectTrigger')}
@@ -27,7 +28,7 @@ export const Select = React.forwardRef<
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Portal>
-          <SelectPrimitive.Content className={clsx('SelectContent')}>
+          <SelectPrimitive.Content className={clsx('SelectContent')} position={position}>
             <SelectPrimitive.ScrollUpButton
               className={clsx('SelectScrollButton')}
             >

@@ -29,5 +29,8 @@
       @include control-border;
     }
 
+    &.TextInput-compact {
+      @apply p-0;
+    }
   }
 }
