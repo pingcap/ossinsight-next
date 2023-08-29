@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { BuiltinProps, useTheme } from './common';
 
-export function Label ({ className, style, label, colorScheme, labelProps }: BuiltinProps<'builtin:label-value'>) {
+export function Label({ className, style, label, colorScheme, labelProps = {} }: BuiltinProps<'builtin:label-value'>) {
   const { Label } = useTheme(colorScheme);
 
   return (

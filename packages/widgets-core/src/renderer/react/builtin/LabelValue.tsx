@@ -7,8 +7,8 @@ export function LabelValue({
   label,
   value,
   colorScheme,
-  labelProps,
-  valueProps,
+  labelProps = {},
+  valueProps = {},
   column = true,
 }: BuiltinProps<'builtin:label-value'>) {
   const { Label, Value } = useTheme(colorScheme);
