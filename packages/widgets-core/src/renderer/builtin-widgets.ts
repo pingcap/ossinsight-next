@@ -18,6 +18,7 @@ export interface BuiltinWidgetsMap {
   };
   'builtin:label': { label: string };
   'builtin:empty': {};
+  'builtin:avatar-progress': { label?: string; imgSrc?: string; size?: number;  value: number, maxVal: number };
 }
 
 export type BuiltinWidgetProps<K extends keyof BuiltinWidgetsMap> = BuiltinWidgetsMap[K];
