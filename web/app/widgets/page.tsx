@@ -1,7 +1,9 @@
 import { Filter, WidgetCreator, WidgetsList } from '@/components/Widget';
 import { filteredWidgetsNames, nonPopularWidgetsNames } from '@/utils/widgets';
+import { ScrollAnchor } from '@ossinsight/ui/src/components/ScrollAnchor';
+import { SwitchingText } from '@ossinsight/ui/src/components/SwitchingText';
+import ArrowDownIcon from 'bootstrap-icons/icons/arrow-down.svg'
 import { Metadata } from 'next';
-import Heading from './Heading.mdx';
 
 export default async function Home ({ searchParams }: {
   searchParams: any
@@ -13,12 +15,28 @@ export default async function Home ({ searchParams }: {
 
   return (
     <main className="container mx-auto py-16 px-2">
-      <WidgetCreator />
+      <h1 className="lg:text-center text-4xl text-title">
+        {'Embed Real-time Widget in '}
+        <SwitchingText>
+          <span className="text-[#FFDF34]">
+            &#8203;Repo&apos;s
+          </span>
+          <span className="text-[#FF9356]">
+            &#8203;Personal
+          </span>
+        </SwitchingText>
+        {' README.md within 30s!'}
+      </h1>
+      <WidgetCreator className="mt-16" />
+      <ScrollAnchor className="text-center text-title flex items-center gap-2 justify-center mx-auto mt-8" id='widgets-list' top={120}>
+        <ArrowDownIcon />
+        Find more customized widgets
+      </ScrollAnchor>
       <Filter config={config} />
-      <section className='grid grid-cols-1 divide-dashed divide-y-4'>
-        <WidgetsList className='py-8' widgets={filteredWidgetsNames(config)} />
+      <section id='widgets-list' className="grid grid-cols-1 divide-dashed divide-y-4">
+        <WidgetsList className="py-8" widgets={filteredWidgetsNames(config)} />
         {!config.tag && (
-          <WidgetsList className='py-8' widgets={nonPopularWidgetsNames()} />
+          <WidgetsList className="py-8" widgets={nonPopularWidgetsNames()} />
         )}
       </section>
     </main>

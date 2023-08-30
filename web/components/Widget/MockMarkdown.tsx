@@ -14,11 +14,11 @@ export function MockMarkdown ({ className, children }: { className?: string, chi
       </div>
       <div className="p-8">
         <p className="text-base font-bold text-white border-b mb-4 pb-2">README.md</p>
-        <ParagraphSkeleton characters={137} />
+        <ParagraphSkeleton characters={69} />
         <br />
         {children}
         <br />
-        <ParagraphSkeleton characters={33} />
+        <ParagraphSkeleton characters={23} />
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ const defaultTuple: AnalyzeTuple = {
   value: { id: 41986369, fullName: 'pingcap/tidb' },
 };
 
-export function WidgetCreator () {
+export function WidgetCreator ({ className }: { className?: string}) {
   const [tuple, setTuple] = useState<AnalyzeTuple>(defaultTuple);
   const [widget, setWidget] = useState<string | undefined>('@ossinsight/widget-compose-recent-active-contributors');
   const [shareInfo, setShareInfo] = useState<ShareOptions>();
@@ -57,7 +57,7 @@ export function WidgetCreator () {
   }, [tuple.type]);
 
   return (
-    <div>
+    <div className={className}>
       <div className="max-w-screen-md mx-auto flex flex-col sm:items-end sm:flex-row gap-4">
         <div className="flex flex-col flex-1 gap-1">
           <label className="text-xs flex gap-1" htmlFor="analyze-selector">
@@ -96,10 +96,10 @@ export function WidgetCreator () {
           Get this widget
         </Button>
       </div>
-      <div className="mt-4 flex flex-col gap-8 skeleton-paused lg:flex-row">
+      <div className="mt-8 flex flex-col gap-8 skeleton-paused lg:flex-row">
         <div className="flex-1 rounded border p-4 bg-toolbar border-dimmed">
           <MockMarkdown>
-            <div className="lg:min-h-[240px]">
+            <div>
               {shareInfo
                 ? (
                   <LazyImg

@@ -48,7 +48,7 @@ export function WidgetsFilter (props: WidgetsFilterProps) {
   };
 
   return (
-    <div className="rounded-2xl py-4">
+    <div className="rounded-2xl py-4 mt-4">
       <div className="space-y-4 lg:flex lg:items-center lg:justify-between">
         <div className="flex items-center gap-2 flex-wrap">
           {['🔥Popular', 'All'].concat(props.availableTags).map((tag, index) => (
