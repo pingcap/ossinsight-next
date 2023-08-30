@@ -12,6 +12,8 @@ import { ShareOptions } from '@ossinsight/ui/src/components/ShareBlock';
 
 import '@ossinsight/widget-compose-recent-active-contributors/metadata';
 import '@ossinsight/widget-compose-recent-active-contributors/params.json';
+
+import CheckCircleFillIcon from 'bootstrap-icons/icons/check-circle-fill.svg';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -58,11 +60,17 @@ export function WidgetCreator () {
     <div>
       <div className="max-w-screen-md mx-auto flex flex-col sm:items-end sm:flex-row gap-4">
         <div className="flex flex-col flex-1 gap-1">
-          <label className="text-xs" htmlFor="analyze-selector">Select a repo or repository</label>
+          <label className="text-xs flex gap-1" htmlFor="analyze-selector">
+            <CheckCircleFillIcon width={10} heigit={10} className='text-[#4A65C6]' />
+            Input your repository/user name
+          </label>
           <AnalyzeSelector id="analyze-selector" tuple={tuple} onTupleChange={setTuple} />
         </div>
         <div className="flex flex-col flex-1 gap-1 p-1 -m-1 overflow-hidden">
-          <label className="text-xs" htmlFor="widget-selector">Select a repo or repository</label>
+          <label className="text-xs flex gap-1" htmlFor="widget-selector">
+            <CheckCircleFillIcon width={10} heigit={10} className='text-[#4A65C6]' />
+            Select a widget type
+          </label>
           <Select
             key={tuple.type}
             value={widget}
@@ -85,7 +93,7 @@ export function WidgetCreator () {
           </Select>
         </div>
         <Button className="Button Button-primary" disabled={!widget || !tuple.value} onClick={handleGotoWidget}>
-          Generate Widget
+          Get this widget
         </Button>
       </div>
       <div className="mt-4 flex flex-col gap-8 skeleton-paused lg:flex-row">
