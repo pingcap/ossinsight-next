@@ -16,15 +16,20 @@ export default function ChartTemplate(props: {
   className?: string;
 }) {
   const { name, searchParams = {}, className } = props;
-  const linkedData = makeLinkedData(name, searchParams);
+
+  const linkedDataMemo = React.useMemo(
+    () => makeLinkedData(name, searchParams),
+    [name, searchParams]
+  );
+
   return (
     <div className={clsx('relative', className)}>
       <React.Suspense>
         <ServerWidget
           className='WidgetContainer'
           name={name}
-          searchParams={props.searchParams}
-          linkedDataPromise={linkedData}
+          searchParams={searchParams}
+          linkedDataPromise={linkedDataMemo}
           showShadow={false}
           showThemeSwitch={false}
           dense

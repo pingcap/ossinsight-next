@@ -1,5 +1,15 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, grid, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import type {
+  ComposeVisualizationConfig,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
+import {
+  autoSize,
+  computeLayout,
+  grid,
+  nonEmptyDataWidget,
+  vertical,
+  widget,
+} from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -37,7 +47,7 @@ const calcGridCfg = (limit: number) => {
 
 export default function (
   [contributors]: Input,
-  ctx: WidgetVisualizerContext<Params>,
+  ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const today = new Date();
   const prior30 = new Date(new Date().setDate(today.getDate() - 30));
@@ -46,7 +56,11 @@ export default function (
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
 
   const limit = ctx.parameters.limit || '5';
-  const { rows, cols, size } = calcGridCfg(Number(limit));
+  const { rows, cols, size } = {
+    rows: 1,
+    cols: 5,
+    size: 40,
+  };
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -57,26 +71,45 @@ export default function (
     vertical(
       widget('builtin:card-heading', undefined, {
         title: 'Active Contributors',
-        subtitle: `Date: ${subtitle}`,
       }).fix(HEADER_HEIGHT),
-      nonEmptyDataWidget(contributors, () => grid(
-        rows,
-        cols,
-        ...contributors.map((item) =>
-          widget('builtin:avatar-label', undefined, {
-            label: '',
-            size: size,
-            imgSrc: item.actor_login
-              ? `https://github.com/${item.actor_login}.png`
-              : '',
-          }),
-        ),
-      ).gap(autoSize(ctx, 4))),
+      widget('builtin:label-value', undefined, {
+        label: '000',
+        value: '↑000%',
+        labelProps: {
+          style: {
+            fontSize: 24,
+            fontWeight: 'bold',
+          },
+        },
+        valueProps: {
+          style: {
+            fontSize: 12,
+            lineHeight: 2,
+            color: ctx.theme.colors.green['400'],
+          },
+        },
+        column: false,
+      }),
+      nonEmptyDataWidget(contributors, () =>
+        grid(
+          rows,
+          cols,
+          ...contributors.map((item) =>
+            widget('builtin:avatar-label', undefined, {
+              label: '',
+              size: size,
+              imgSrc: item.actor_login
+                ? `https://github.com/${item.actor_login}.png`
+                : '',
+            })
+          )
+        ).gap(autoSize(ctx, 4))
+      )
     ).padding([0, PADDING, PADDING / 2, PADDING]),
     0,
     0,
     WIDTH,
-    HEIGHT,
+    HEIGHT
   );
 }
 
