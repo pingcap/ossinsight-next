@@ -12,14 +12,14 @@ export interface AnalyzeSelectorProps {
 }
 
 export function AnalyzeSelector ({ id, tuple, onTupleChange }: AnalyzeSelectorProps) {
-  const handleUserSelected = useCallback((user: RemoteUserInfo) => {
+  const handleUserSelected = useCallback((user: RemoteUserInfo | undefined) => {
     onTupleChange({
       type: 'user',
       value: user,
     });
   }, [onTupleChange]);
 
-  const handleRepoSelected = useCallback((repo: RemoteRepoInfo) => {
+  const handleRepoSelected = useCallback((repo: RemoteRepoInfo | undefined) => {
     onTupleChange({
       type: 'repo',
       value: repo,
