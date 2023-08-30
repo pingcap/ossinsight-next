@@ -11,13 +11,16 @@ import { useColorScheme } from '../ColorScheme';
 import { Tab, Tabs } from '../Tabs';
 import { TwitterButton } from './TwitterButton';
 
-export interface ShareBlockProps {
+export interface ShareBlockProps extends ShareOptions {
+  themedImage?: boolean;
+}
+
+export interface ShareOptions {
   title: string;
   url: string;
   thumbnailUrl: string;
   keywords?: string[];
   imageWidth: number;
-  themedImage?: boolean;
 }
 
 export function ShareBlock ({
@@ -65,7 +68,7 @@ export function ShareBlock ({
 }
 
 
-function markdownCode (colorScheme: string, title: string, url: string, thumbnailUrl: string, width: number) {
+export function markdownCode (colorScheme: string, title: string, url: string, thumbnailUrl: string, width: number) {
   if (colorScheme !== 'auto') {
     return `[![${title}](${thumbnailUrl})](${url})`;
   }
@@ -77,7 +80,7 @@ function markdownCode (colorScheme: string, title: string, url: string, thumbnai
 </a>`
 }
 
-function htmlCode (colorScheme: string, title: string, url: string, thumbnailUrl: string, width: number) {
+export function htmlCode (colorScheme: string, title: string, url: string, thumbnailUrl: string, width: number) {
   if (colorScheme !== 'auto') {
     return `<a href="${url}" target="_blank">
   <img src="${thumbnailUrl}" width="${width}" height="auto" alt="${title}">

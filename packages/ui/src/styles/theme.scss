@@ -5,9 +5,10 @@ $color-primary-reverse: rgb(31, 30, 40);
 $color-disabled: rgba(124, 124, 124, 0.7);
 
 $background-color-body: rgb(31, 30, 40);
-$background-color-toolbar: rgb(37, 37, 39);
-$background-color-popover: rgb(47, 47, 49);
+$background-color-toolbar: #1D1C24;
+$background-color-popover: rgb(47, 47, 58);
 $background-color-control: #292835;
+$background-color-code: #11151C;
 
 $text-color-title: #E9EaEE;
 $text-color-subtitle: rgb(200, 200, 200);
@@ -15,8 +16,11 @@ $text-color-content: rgb(124, 124, 124);
 $text-color-active: $text-color-subtitle;
 
 $border-color-default: #3E3C4F;
+$border-color-dimmed: #292932;
 
-$divide-color-default: #3E3C4F;
+$divide-color-default: $border-color-default;
+$divide-color-dimmed: $border-color-dimmed;
+
 
 $list-item-focus: rgb(67, 67, 69);
 $list-item-active: rgb(77, 77, 79);

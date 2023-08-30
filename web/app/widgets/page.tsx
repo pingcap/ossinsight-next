@@ -1,4 +1,4 @@
-import { Filter, WidgetsList } from '@/components/Widget';
+import { Filter, WidgetCreator, WidgetsList } from '@/components/Widget';
 import { filteredWidgetsNames, nonPopularWidgetsNames } from '@/utils/widgets';
 import { Metadata } from 'next';
 import Heading from './Heading.mdx';
@@ -13,9 +13,7 @@ export default async function Home ({ searchParams }: {
 
   return (
     <main className="container mx-auto py-16 px-2">
-      <article className="mb-4 prose prose-invert max-w-none">
-        <Heading />
-      </article>
+      <WidgetCreator />
       <Filter config={config} />
       <section className='grid grid-cols-1 divide-dashed divide-y-4'>
         <WidgetsList className='py-8' widgets={filteredWidgetsNames(config)} />

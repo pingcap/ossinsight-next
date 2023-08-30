@@ -9,8 +9,8 @@ export type LinkedData = {
   collections: Record<string, { id: number, name: string, public: boolean }>
 }
 
-export async function resolveParameters (definitions: ParameterDefinitions, params: any) {
-  const linkedData: LinkedData = {
+export async function resolveParameters (definitions: ParameterDefinitions, params: any, defaultLinkedData?: LinkedData) {
+  const linkedData = defaultLinkedData ?? {
     repos: {},
     users: {},
     collections: {},
@@ -25,6 +25,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
     switch (def.type) {
       case 'repo-id':
         if (param) {
+          if (linkedData.repos[param]) return Promise.resolve();
           return fetch(`https://api.ossinsight.io/gh/repositories/${param}`)
             .then(handleOApi)
             .then((data) => linkedData.repos[param] = { id: param, fullName: data.full_name });
@@ -32,6 +33,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
         break;
       case 'user-id':
         if (param) {
+          if (linkedData.users[param]) return Promise.resolve();
           return fetch(`https://api.ossinsight.io/gh/user/${param}`)
             .then(handleOApi)
             .then((data) => linkedData.users[param] = { id: param, login: data.login });
@@ -39,6 +41,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
         break;
       case 'collection-id':
         if (param) {
+          if (linkedData.collections[param]) return Promise.resolve();
           return collectionsPromise
             .then(res => res.find(collection => collection.id === param))
             .then(collection => {

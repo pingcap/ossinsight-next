@@ -21,6 +21,7 @@ module.exports = {
         toolbar: 'var(--background-color-toolbar)',
         popover: 'var(--background-color-popover)',
         control: 'var(--background-color-control)',
+        code: 'var(--background-color-code)',
       },
       textColor: {
         title: 'var(--text-color-title)',
@@ -35,9 +36,11 @@ module.exports = {
       },
       borderColor: {
         DEFAULT: 'var(--border-color-default)',
+        dimmed: 'var(--border-color-dimmed)',
       },
       divideColor: {
         DEFAULT: 'var(--divide-color-default)',
+        dimmed: 'var(--divide-color-dimmed)',
       },
       boxShadow: {
         control: '0 0 0 2px var(--tw-shadow-color)',

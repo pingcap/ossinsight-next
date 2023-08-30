@@ -4,6 +4,7 @@ import ChevronDownIcon from 'bootstrap-icons/icons/chevron-down.svg';
 import ChevronUpIcon from 'bootstrap-icons/icons/chevron-up.svg';
 import clsx from 'clsx';
 import * as React from 'react';
+import { ReactNode } from 'react';
 import './style.scss';
 
 export const Select = React.forwardRef<
@@ -12,8 +13,10 @@ export const Select = React.forwardRef<
   id?: string
   label?: string | React.ReactNode;
   className?: string;
+  placeholder?: string;
+  renderValue?: (value: string) => ReactNode;
 } & Pick<SelectPrimitive.SelectContentProps, 'position'>
->(({ id, children, className, position, ...props }, forwardedRef) => {
+>(({ id, children, className, position, placeholder, renderValue, ...props }, forwardedRef) => {
   return (
     <div className={clsx('SelectWrapper', className)}>
       <SelectPrimitive.Root {...props}>
@@ -22,7 +25,9 @@ export const Select = React.forwardRef<
           id={id}
           ref={forwardedRef}
         >
-          <SelectPrimitive.Value />
+          {renderValue
+            ? props.value == null ? <span className="text-content text-sm">{placeholder}</span> : renderValue(props.value)
+            : <SelectPrimitive.Value placeholder={<span className="text-content text-sm">{placeholder}</span>} />}
           <SelectPrimitive.Icon className={clsx('SelectIcon')}>
             <ChevronDownIcon width={12} height={12} />
           </SelectPrimitive.Icon>

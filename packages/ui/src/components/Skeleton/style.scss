@@ -4,6 +4,12 @@
   animation: skeleton-keyframes 1.6s ease-in-out infinite alternate;
 }
 
+.skeleton-paused {
+  .skeleton {
+    animation-play-state: paused;
+  }
+}
+
 $text-from: fade-out($text-color-subtitle, 0.7);
 $text-to: $text-color-subtitle;
 $bg-from: fade-out($text-color-content, 0.7);
@@ -11,12 +17,12 @@ $bg-to: $text-color-content;
 
 @keyframes skeleton-keyframes {
   0% {
-    background-color: $bg-from;
-    color: $text-from;
-  }
-  100% {
     background-color: $bg-to;
     color: $text-to;
+  }
+  100% {
+    background-color: $bg-from;
+    color: $text-from;
   }
 }
 

@@ -1,17 +1,25 @@
 import ClearIcon from 'bootstrap-icons/icons/x-circle-fill.svg';
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-export interface RemoteSelectedItemProps {
+export interface RemoteSelectedItemCommonProps {
   id?: string;
   onClear?: () => void;
+  compat?: boolean;
+}
+
+export interface RemoteSelectedItemProps extends RemoteSelectedItemCommonProps {
   children: ReactNode;
 }
 
-export function RemoteSelectedItem ({ id, onClear, children }: RemoteSelectedItemProps) {
+export function RemoteSelectedItem ({ id, compat = false, onClear, children }: RemoteSelectedItemProps) {
   // TODO: Set id for button will trigger onClick when click the referencing label
   //       Find a way to focus but not click.
   return (
-    <span className="flex items-center gap-4 py-1 px-2 border border-transparent">
+    <span className={twMerge(
+      'flex items-center gap-4 border border-transparent',
+      compat ? 'border-0' : 'py-1 px-2',
+    )}>
       <span className="flex text-sm gap-2 items-center text-subtitle select-none">
         {children}
       </span>

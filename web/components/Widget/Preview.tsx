@@ -1,5 +1,5 @@
-import { widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
-import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
+import { WidgetName } from '@/components/Widget/WidgetName';
+import { widgetParameterDefinitions } from '@/utils/widgets';
 import { WidgetMeta } from '@ossinsight/widgets-types';
 import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
 
@@ -35,31 +35,6 @@ export async function WidgetPreview ({ name }: { name: string }) {
       </div>
     </div>
   );
-}
-
-async function WidgetName ({ widget }: { widget: string }) {
-  const [metadataGenerator, params] = await Promise.all([
-    widgetMetadataGenerator(widget),
-    widgetParameterDefinitions(widget),
-  ]);
-
-  const parameters: any = {};
-  Object.entries(params).forEach(([key, config]) => {
-    if (config.default != null) {
-      parameters[key] = config.default;
-    }
-  });
-
-  const metadata = metadataGenerator({
-    ...createWidgetContext('client', parameters, null as any),
-    getCollection () { return { id: 0, name: 'Collection', public: true }; },
-    getRepo () { return { id: 0, fullName: 'Repository' }; },
-    getUser () { return { id: 0, login: 'Developer' };},
-    getOrg () { return { id: 0, name: 'Organization' }; },
-    getTimeParams () { return { zone: 'TimeZone', period: 'Period' }; },
-  });
-
-  return <>{metadata.title}</>;
 }
 
 function getName (name: string) {

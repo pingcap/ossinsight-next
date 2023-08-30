@@ -14,13 +14,14 @@
 }
 
 .SelectTrigger {
-  @apply px-2 py-1 bg-control text-active text-sm transition-all inline-flex gap-1 items-center justify-center outline-none;
+  @apply px-2 bg-control text-active text-sm transition-all inline-flex gap-1 items-center justify-between outline-none w-full;
 }
 
 .SelectWrapper:not(.Select-borderless) {
   .SelectTrigger {
     @include control-shadow;
     @include control-border;
+    @apply py-1;
 
     &:hover {
       background-color: var(--background-color-popover);
