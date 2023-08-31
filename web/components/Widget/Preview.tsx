@@ -13,24 +13,26 @@ export async function WidgetPreview ({ name }: { name: string }) {
 
   return (
     <div className="group rounded-md relative overflow-hidden bg-popover border w-full transition-shadow hover:shadow-lg">
-      <div className="flex flex-col items-center bg-body p-4 gap-4" style={{ height: 360 }}>
+      <div className="flex flex-col items-center bg-body p-4 gap-4 md:h-[360px]">
         <h2 className="text-lg font-bold text-title">
           <Suspense fallback="&nbsp;">
             <WidgetName widget={name} />
           </Suspense>
         </h2>
-        <Image
-          className="block"
-          loading="lazy"
-          width={480}
-          height={270}
-          quality={100}
-          src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
-          alt="preview"
-        />
+        <div className='flex-1 flex items-center'>
+          <Image
+            className="block"
+            loading="lazy"
+            width={480}
+            height={270}
+            quality={100}
+            src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
+            alt="preview"
+          />
+        </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-10 flex items-center justify-center gap-2 text-white transition-transform transform-gpu translate-y-full group-hover:translate-y-0" style={{ background: 'linear-gradient(98deg, #562FF2 0%, #6041DE 100%)' }}>
-        edit it
+      <div className="absolute bottom-0 left-0 w-full h-10 flex items-center justify-center gap-2 transition-transform transform-gpu translate-y-full group-hover:translate-y-0 text-black bg-primary">
+        Get this widget
         <ArrowUpRightIcon />
       </div>
     </div>
