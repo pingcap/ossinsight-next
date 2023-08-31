@@ -3,7 +3,6 @@ import { htmlCode, ShareOptions } from '@ossinsight/ui/src/components/ShareBlock
 import { TextSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
 import { ReactNode } from 'react';
-import { Pace, WindupChildren } from 'windups';
 
 export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, editReadmeUrl: string | undefined }) {
   const { title, keywords, imageWidth, url, thumbnailUrl } = shareInfo;
@@ -36,46 +35,42 @@ export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, e
 export function CodeLoading () {
   return (
     <CodeShell>
-      <WindupChildren>
-        <Pace ms={40}>
-        <pre className="pt-14 px-4">
-          <code>
-            <p>
-              <span className="text-emerald-600">
-                <TextSkeleton characters={8} color="currentcolor">
-                  {'\u2003'.repeat(8)}
-                </TextSkeleton>
-              </span>
-              &nbsp;
-              <span className="text-blue-900">
-                <TextSkeleton characters={12} color="currentcolor">
-                  {'\u2003'.repeat(12)}
-                </TextSkeleton>
-              </span>
-              &nbsp;
-              <span className="text-emerald-600">
-                <TextSkeleton characters={8} color="currentcolor">
-                  {'\u2003'.repeat(8)}
-                </TextSkeleton>
-              </span>
-            </p>
-            <p className="mt-2">
-              <span className="text-yellow-600">
-                <TextSkeleton characters={4} color="currentcolor">
-                  {'\u2003'.repeat(4)}
-                </TextSkeleton>
-              </span>
-              &nbsp;
-              <span className="text-blue-900">
-                <TextSkeleton characters={23} color="currentcolor">
-                  {'\u2003'.repeat(23)}
-                </TextSkeleton>
-              </span>
-            </p>
-          </code>
-        </pre>
-        </Pace>
-      </WindupChildren>
+      <pre className="pt-14 px-4">
+        <code>
+          <p>
+            <span className="text-emerald-600">
+              <TextSkeleton characters={8} color="currentcolor">
+                {'\u2003'.repeat(8)}
+              </TextSkeleton>
+            </span>
+            &nbsp;
+            <span className="text-blue-900">
+              <TextSkeleton characters={12} color="currentcolor">
+                {'\u2003'.repeat(12)}
+              </TextSkeleton>
+            </span>
+            &nbsp;
+            <span className="text-emerald-600">
+              <TextSkeleton characters={8} color="currentcolor">
+                {'\u2003'.repeat(8)}
+              </TextSkeleton>
+            </span>
+          </p>
+          <p className="mt-2">
+            <span className="text-yellow-600">
+              <TextSkeleton characters={4} color="currentcolor">
+                {'\u2003'.repeat(4)}
+              </TextSkeleton>
+            </span>
+            &nbsp;
+            <span className="text-blue-900">
+              <TextSkeleton characters={23} color="currentcolor">
+                {'\u2003'.repeat(23)}
+              </TextSkeleton>
+            </span>
+          </p>
+        </code>
+      </pre>
     </CodeShell>
   );
 }

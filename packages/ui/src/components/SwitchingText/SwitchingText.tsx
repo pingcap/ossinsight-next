@@ -1,8 +1,8 @@
 'use client';
 
 import { ReactElement, useEffect, useState } from 'react';
-import { Pace, WindupChildren } from 'windups';
 import { useLatestRef } from '../../hooks/useLatestRef';
+import { Transition } from '../Transition';
 import './style.scss';
 
 export interface SwitchingTextProps {
@@ -29,13 +29,21 @@ export function SwitchingText ({ children }: SwitchingTextProps) {
 
   return (
     <>
-      {currentIndex >= 0 && (
-        <WindupChildren key={currentIndex}>
-          <Pace ms={120}>
-            {children[currentIndex]}
-          </Pace>
-        </WindupChildren>
-      )}
+      <span className="inline-flex w-[4em] h-[1em] items-center justify-center align-bottom relative">
+        {children.map((child, index) => (
+          <Transition
+            key={index}
+            show={currentIndex === index}
+            timeout={200}
+            className="absolute bottom-0 transition translate-y-0 opacity-100"
+            entering="-translate-y-2 opacity-0"
+            entered="translate-y-0 opacity-100"
+            exiting="translate-y-2 opacity-0"
+          >
+            {child}
+          </Transition>
+        ))}
+      </span>
       <span className="sr-only">
         {children}
       </span>
