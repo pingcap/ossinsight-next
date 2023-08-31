@@ -60,7 +60,7 @@ export function CodeBlock ({ heading, code, language, wrap, className, showCopyB
   }
 
   return (
-    <div className={clsx('relative !bg-code rounded hljs', className)}>
+    <div className={clsx('relative !bg-transparent rounded hljs', className)}>
       {heading && <div className='pt-4 px-4 absolute text-disabled text-sm'>
         {heading}
       </div>}

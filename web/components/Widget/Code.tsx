@@ -11,7 +11,7 @@ export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, e
   const language = 'html';
 
   return (
-    <div className="relative lg:h-full">
+    <div className="relative lg:h-full CodeShadow overflow-hidden bg-code">
       <CodeBlock
         className="lg:h-full"
         code={code}
@@ -20,12 +20,12 @@ export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, e
         showCopyButton={false}
         heading="Code"
       />
-      <div className="absolute bottom-8 flex items-center justify-center gap-4 w-full">
+      <div className="absolute bottom-8 flex items-center justify-center gap-4 w-full flex-col lg:flex-row z-[1]">
         <NoStyleCopyButton className="Button Button-primary px-4 w-[140px]" content={code}>
-          Copy code
+          {copied => `${copied ? 'Copied' : 'Copy'} code`}
         </NoStyleCopyButton>
         <a className="inline-flex gap-1 items-center text-sm text-primary transition-opacity opacity-80 hover:opacity-100" target="_blank" href={editReadmeUrl}>
-          Add to readme.md
+          Add to README.md
           <ArrowUpRightIcon />
         </a>
       </div>
