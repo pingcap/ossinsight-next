@@ -373,6 +373,12 @@ importers:
         specifier: workspace:^
         version: link:../packages/eslint-plugin
 
+  widgets/analyze-org-recent-stars:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-repo-activity-trends:
     devDependencies:
       '@ossinsight/widgets-parent':

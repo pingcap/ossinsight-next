@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-org-recent-stars",
+  "version": "1.0.0",
+  "description": "TODO",
+  "keywords": ["Repository", "Stars"],
+  "author": "OSSInsight",
+  "type": "module",
+  "main": "visualization.ts",
+  "devDependencies": {
+    "@ossinsight/widgets-types": "workspace:^"
+  }
+}
