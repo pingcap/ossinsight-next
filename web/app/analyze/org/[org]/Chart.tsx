@@ -22,8 +22,13 @@ export default function ChartTemplate(props: {
     [name, searchParams]
   );
 
+  const classNameMemo = React.useMemo(
+    () => clsx('relative', className),
+    [className]
+  );
+
   return (
-    <div className={clsx('relative', className)}>
+    <div className={classNameMemo}>
       <React.Suspense>
         <ServerWidget
           className='WidgetContainer'

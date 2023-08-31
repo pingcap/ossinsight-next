@@ -1,0 +1,6 @@
+[
+  {
+    "type": "ref",
+    "widget": "@ossinsight/widget-analyze-org-recent-stars"
+  }
+]

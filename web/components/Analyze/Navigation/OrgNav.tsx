@@ -70,20 +70,33 @@ const NavList = (props: {
                 }
               )}
             >
-              <NextLink
-                href={`${basePath}/${item.id}`}
-                className={clsx(
-                  'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
-                  item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
-                  {
-                    'hover:text-[var(--color-primary)]': item.anchor,
-                    'cursor-default': !item.anchor,
-                  }
-                )}
-              >
-                {item.Icon && <item.Icon width={20} height={20} />}
-                <span>{item.title}</span>
-              </NextLink>
+              {item?.anchor ? (
+                <NextLink
+                  href={`${basePath}/${item.id}`}
+                  className={clsx(
+                    'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
+                    item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
+                    {
+                      'hover:text-[var(--color-primary)]': item.anchor,
+                      'cursor-default': !item.anchor,
+                    }
+                  )}
+                >
+                  {item.Icon && <item.Icon width={20} height={20} />}
+                  <span>{item.title}</span>
+                </NextLink>
+              ) : (
+                <div
+                  className={clsx(
+                    'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
+                    item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9'
+                  )}
+                >
+                  {item.Icon && <item.Icon width={20} height={20} />}
+                  <span>{item.title}</span>
+                </div>
+              )}
+
               {item.children && (
                 <NavList
                   items={item.children}

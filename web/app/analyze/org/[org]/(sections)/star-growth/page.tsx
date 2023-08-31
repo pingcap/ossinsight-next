@@ -28,17 +28,13 @@ export default async function OrgAnalyzePage({
   return (
     <AnalyzeOrgContextProvider data={data}>
       <OrgAnalyzePageHeader />
-      <SectionTemplate
-        title='Star Growth'
-        level={2}
-        classname='pt-8'
-      >
+      <SectionTemplate title='Star Growth' level={2} classname='pt-8'>
         <ChartTemplate
-          name='@ossinsight/widget-compose-org-overview-stats'
+          name='@ossinsight/widget-compose-org-star-growth'
           searchParams={{
             repo_id: '41986369',
           }}
-          className='h-[254px] w-[254px]'
+          className='h-[408px] w-[1089px]'
         />
         {PAGE_ID}
         {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
