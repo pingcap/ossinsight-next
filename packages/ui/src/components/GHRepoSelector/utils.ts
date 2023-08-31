@@ -10,7 +10,9 @@ export function isRepoEquals (a: RemoteRepoInfo, b: RemoteRepoInfo) {
 export function searchRepo (text: string): CancelablePromise<RemoteRepoInfo[]> {
   return cancellableFetch(`${unstable_getApiOrigin()}/gh/repos/search?keyword=${encodeURIComponent(text)}`)
     .then(res => res.json())
-    .then(res => res.data);
+    .then((res: { data: { id: number, fullName: string, defaultBranchRef: { name: string } }[] }) => res.data.map(({ id, fullName, defaultBranchRef: { name: defaultBranch } }) => ({
+      id, fullName, defaultBranch,
+    })));
 }
 
 export function getRepoText (repo: RemoteRepoInfo) {
