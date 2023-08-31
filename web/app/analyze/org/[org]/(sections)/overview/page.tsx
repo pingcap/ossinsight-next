@@ -87,6 +87,14 @@ export default async function OrgAnalyzePage({
               className='h-[186px] w-[300px]'
             />
           </div>
+          <ChartTemplate
+            name='@ossinsight/widget-compose-org-active-repositories'
+            searchParams={{
+              repo_id: '41986369',
+              limit: '5',
+            }}
+            className='h-[388px] w-[300px]'
+          />
         </div>
 
         {PAGE_ID}
