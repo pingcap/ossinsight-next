@@ -34,8 +34,8 @@ export function AnalyzeSelector ({ id, tuple, onTupleChange }: AnalyzeSelectorPr
   }, [onTupleChange]);
 
   return (
-    <div className="TextInput flex items-center divide-x">
-      <Select className='Select-borderless' value={tuple.type} onValueChange={handleTypeChange} position='popper'>
+    <div className="TextInput flex items-stretch">
+      <Select className="Select-borderless" value={tuple.type} onValueChange={handleTypeChange} position="popper">
         <SelectItem value={'user'}>
           User
         </SelectItem>
@@ -43,13 +43,14 @@ export function AnalyzeSelector ({ id, tuple, onTupleChange }: AnalyzeSelectorPr
           Repository
         </SelectItem>
       </Select>
+      <span className="flex-shrink-0 w-1 border-l" />
       {tuple.type === 'user' && <GHUserSelector user={tuple.value} onUserSelected={handleUserSelected} compat renderInput={renderInput} />}
       {tuple.type === 'repo' && <GHRepoSelector repo={tuple.value} onRepoSelected={handleRepoSelected} compat renderInput={renderInput} />}
-      <input className='sr-only' id={id} />
+      <input className="sr-only" id={id} />
     </div>
   );
 }
 
 function renderInput (props: RemoteSelectorInputProps) {
-  return <input {...props} className="text-sm pl-2 flex-1" placeholder='Search...' type={undefined} />;
+  return <input {...props} className="text-sm pl-2 flex-1" placeholder="Search..." type={undefined} />;
 }
