@@ -14,12 +14,11 @@ export interface CodeBlockProps {
   language?: string;
   className?: string;
   wrap?: boolean;
-  copyButtonClassName?: string;
-  copyButtonContent?: ReactNode;
+  showCopyButton?: boolean;
   heading?: ReactNode;
 }
 
-export function CodeBlock ({ heading, code, language, wrap, className, copyButtonClassName, copyButtonContent }: CodeBlockProps) {
+export function CodeBlock ({ heading, code, language, wrap, className, showCopyButton = true }: CodeBlockProps) {
   const id = useId();
   const [result, setResult] = useState<string | undefined>();
 
@@ -75,11 +74,10 @@ export function CodeBlock ({ heading, code, language, wrap, className, copyButto
           {...codeProps}
         />
       </pre>
-      <CopyButton
-        className={twMerge('absolute top-2 right-2', copyButtonClassName)}
+      {showCopyButton && <CopyButton
+        className={twMerge('absolute top-2 right-2')}
         content={code}
-        children={copyButtonContent}
-      />
+      />}
     </div>
   );
 }

@@ -350,6 +350,9 @@ importers:
       tailwind-merge:
         specifier: ^1.14.0
         version: 1.14.0
+      windups:
+        specifier: ^1.2.1
+        version: 1.2.1(react@18.2.0)
 
   widgets:
     dependencies:
@@ -5855,7 +5858,6 @@ packages:
   /break-styled-lines@1.3.1:
     resolution: {integrity: sha512-amvWsWzUB5LbcUbexbZtnSP6/pKAQKvtu/v//7Bse5K3NmyeYYzcFgfKbbYP24+Lc+gwRQlVH/nJ+JvZon8P2Q==}
     engines: {node: '>=10'}
-    dev: false
 
   /brorand@1.1.0:
     resolution: {integrity: sha512-cKV8tMCEpQs4hK/ik71d6LrPOnpkpGBR0wzxqr68g2m/LB2GxVYQroAjMJZRVM1Y4BCjCKc3vAamxSzOY2RP+w==}
@@ -12665,7 +12667,6 @@ packages:
     dependencies:
       break-styled-lines: 1.3.1
       react: 18.2.0
-    dev: false
 
   /word-wrap@1.2.4:
     resolution: {integrity: sha512-2V81OA4ugVo5pRo46hAoD2ivUJx8jXmWXfUkY4KFNw0hEptvN0QfH3K4nHiwzGeKl5rFKedV48QVoqYavy4YpA==}

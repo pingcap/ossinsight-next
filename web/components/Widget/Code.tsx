@@ -1,97 +1,102 @@
-import { createShareInfo } from '@/components/Share/utils';
-import { widgetParameterDefinitions } from '@/utils/widgets';
-import { AnalyzeTuple } from '@ossinsight/ui/src/components/AnalyzeSelector';
-import { CodeBlock } from '@ossinsight/ui/src/components/CodeBlock';
+import { CodeBlock, NoStyleCopyButton } from '@ossinsight/ui/src/components/CodeBlock';
 import { htmlCode, ShareOptions } from '@ossinsight/ui/src/components/ShareBlock';
-import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
-import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
-import { useContext, useEffect, useState, useTransition } from 'react';
+import { TextSkeleton } from '@ossinsight/ui/src/components/Skeleton';
+import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
+import { ReactNode } from 'react';
+import { Pace, WindupChildren } from 'windups';
 
-export function Code ({ name: fullName, tuple, onPrepared }: { name: string | undefined, tuple: AnalyzeTuple, onPrepared: (options: ShareOptions | undefined, params: any) => void }) {
-  const [shareInfo, setShareInfo] = useState<ShareOptions>();
-  const [params, setParams] = useState<any>();
-  const [transitioning, startTransition] = useTransition();
-  const [waiting, setWaiting] = useState(false);
-
-  const { linkedData } = useContext(ParametersContext);
-
-  useEffect(() => {
-    setWaiting(true);
-    startTransition(async () => {
-      setShareInfo(undefined);
-      setParams(undefined);
-      if (fullName == null || tuple.value == null) {
-        setWaiting(false);
-        return;
-      }
-      const { vendor, name } = parseName(fullName);
-      const parameters = await widgetParameterDefinitions(fullName);
-      let flag = false;
-      let skip = false;
-      const params = Object.entries(parameters).reduce((res, [k, v]) => {
-        if (!flag && v.type === 'repo-id' && tuple.type === 'repo' && tuple.value != null) {
-          res[k] = tuple.value.id;
-          flag = true;
-        } else if (!flag && v.type === 'user-id' && tuple.type === 'user' && tuple.value != null) {
-          res[k] = tuple.value.id;
-          flag = true;
-        } else if (['user-id', 'repo-id'].includes(v.type)) {
-        } else if (v.default != null) {
-          res[k] = v.default;
-        }
-        return res;
-      }, {} as any);
-      if (skip) {
-        setWaiting(false);
-        return;
-      }
-
-      await resolveParameters(parameters, params, linkedData);
-      setShareInfo(await createShareInfo(fullName, name, vendor, linkedData, params));
-      setParams(params);
-      setWaiting(false);
-    });
-  }, [fullName, tuple]);
-
-  useEffect(() => {
-    onPrepared(shareInfo, params);
-  }, [shareInfo, onPrepared, params]);
-
-  let code: string;
-  let language: 'html' | 'markdown';
-
-  if (transitioning || waiting) {
-    code = 'Loading...';
-    language = 'markdown';
-  } else if (!shareInfo || !tuple.value) {
-    code = `Please select a ${tuple.type}`;
-    language = 'markdown';
-  } else {
-    const { title, keywords, imageWidth, url, thumbnailUrl } = shareInfo;
-    code = htmlCode('auto', title, url, thumbnailUrl, imageWidth);
-    language = 'html';
-  }
+export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, editReadmeUrl: string | undefined }) {
+  const { title, keywords, imageWidth, url, thumbnailUrl } = shareInfo;
+  const code = htmlCode('auto', title, url, thumbnailUrl, imageWidth);
+  const language = 'html';
 
   return (
-    <CodeBlock
-      className="lg:h-full"
-      code={code}
-      language={language}
-      wrap
-      copyButtonClassName="top-auto right-auto bottom-8 left-1/2 -translate-x-1/2"
-      copyButtonContent="Copy and Paste it into README.md"
-      heading="Code"
-    />
+    <div className="relative lg:h-full">
+      <CodeBlock
+        className="lg:h-full"
+        code={code}
+        language={language}
+        wrap
+        showCopyButton={false}
+        heading="Code"
+      />
+      <div className="absolute bottom-8 flex items-center justify-center gap-4 w-full">
+        <NoStyleCopyButton className="Button Button-primary px-4 w-[140px]" content={code}>
+          Copy code
+        </NoStyleCopyButton>
+        <a className="inline-flex gap-1 items-center text-sm text-primary transition-opacity opacity-80 hover:opacity-100" target="_blank" href={editReadmeUrl}>
+          Add to readme.md
+          <ArrowUpRightIcon />
+        </a>
+      </div>
+    </div>
   );
 }
 
-function parseName (name: string): { vendor: string, name: string } {
-  if (name.startsWith('@ossinsight/widget-')) {
-    return {
-      vendor: 'official',
-      name: name.replace('@ossinsight/widget-', ''),
-    };
-  } else {
-    throw new Error('not supported widget');
-  }
+export function CodeLoading () {
+  return (
+    <CodeShell>
+      <WindupChildren>
+        <Pace ms={40}>
+        <pre className="pt-14 px-4">
+          <code>
+            <p>
+              <span className="text-emerald-600">
+                <TextSkeleton characters={8} color="currentcolor">
+                  {'\u2003'.repeat(8)}
+                </TextSkeleton>
+              </span>
+              &nbsp;
+              <span className="text-blue-900">
+                <TextSkeleton characters={12} color="currentcolor">
+                  {'\u2003'.repeat(12)}
+                </TextSkeleton>
+              </span>
+              &nbsp;
+              <span className="text-emerald-600">
+                <TextSkeleton characters={8} color="currentcolor">
+                  {'\u2003'.repeat(8)}
+                </TextSkeleton>
+              </span>
+            </p>
+            <p className="mt-2">
+              <span className="text-yellow-600">
+                <TextSkeleton characters={4} color="currentcolor">
+                  {'\u2003'.repeat(4)}
+                </TextSkeleton>
+              </span>
+              &nbsp;
+              <span className="text-blue-900">
+                <TextSkeleton characters={23} color="currentcolor">
+                  {'\u2003'.repeat(23)}
+                </TextSkeleton>
+              </span>
+            </p>
+          </code>
+        </pre>
+        </Pace>
+      </WindupChildren>
+    </CodeShell>
+  );
+}
+
+export function CodePending ({ type }: { type: string }) {
+  return (
+    <CodeShell>
+      <div className="p-4 text-disabled flex items-center justify-center h-full text-sm">
+        <span>No code yet, please input your {type} name</span>
+      </div>
+    </CodeShell>
+  );
+}
+
+function CodeShell ({ children }: { children: ReactNode }) {
+  return (
+    <div className="relative !bg-code rounded lg:h-full">
+      <div className="pt-4 px-4 absolute text-disabled text-sm">
+        Code
+      </div>
+      {children}
+    </div>
+  );
 }

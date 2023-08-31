@@ -5,7 +5,7 @@ import { handleOApi } from '../utils/oapi';
 import parsers from './parser';
 
 export type LinkedData = {
-  repos: Record<string, { id: number, fullName: string }>
+  repos: Record<string, { id: number, fullName: string, defaultBranch: string }>
   users: Record<string, { id: number, login: string }>
   collections: Record<string, { id: number, name: string, public: boolean }>
 }
@@ -29,7 +29,13 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
           if (linkedData.repos[param]) return Promise.resolve();
           return fetch(`${unstable_getApiOrigin()}/gh/repositories/${param}`)
             .then(handleOApi)
-            .then((data) => linkedData.repos[param] = { id: param, fullName: data.full_name });
+            .then((data) => {
+              linkedData.repos[param] = {
+                id: param,
+                fullName: data.full_name,
+                defaultBranch: data.default_branch,
+              };
+            });
         }
         break;
       case 'user-id':
@@ -37,7 +43,12 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
           if (linkedData.users[param]) return Promise.resolve();
           return fetch(`${unstable_getApiOrigin()}/gh/user/${param}`)
             .then(handleOApi)
-            .then((data) => linkedData.users[param] = { id: param, login: data.login });
+            .then((data) => {
+              linkedData.users[param] = {
+                id: param,
+                login: data.login,
+              };
+            });
         }
         break;
       case 'collection-id':

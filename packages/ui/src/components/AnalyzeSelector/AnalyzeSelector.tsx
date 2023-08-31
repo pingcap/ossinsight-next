@@ -43,8 +43,9 @@ export function AnalyzeSelector ({ id, tuple, onTupleChange }: AnalyzeSelectorPr
           Repository
         </SelectItem>
       </Select>
-      {tuple.type === 'user' && <GHUserSelector id={id} user={tuple.value} onUserSelected={handleUserSelected} compat renderInput={renderInput} />}
-      {tuple.type === 'repo' && <GHRepoSelector id={id} repo={tuple.value} onRepoSelected={handleRepoSelected} compat renderInput={renderInput} />}
+      {tuple.type === 'user' && <GHUserSelector user={tuple.value} onUserSelected={handleUserSelected} compat renderInput={renderInput} />}
+      {tuple.type === 'repo' && <GHRepoSelector repo={tuple.value} onRepoSelected={handleRepoSelected} compat renderInput={renderInput} />}
+      <input className='sr-only' id={id} />
     </div>
   );
 }

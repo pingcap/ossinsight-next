@@ -7,13 +7,17 @@ export interface TextSkeletonProps {
   visualCharacter?: string;
   characters?: number;
   style?: CSSProperties;
+  color?: CSSProperties['backgroundColor'];
+  children?: string;
 }
 
-export function TextSkeleton ({ className, visualCharacter = '&#8195;', characters = 1000, style }: TextSkeletonProps) {
+export function TextSkeleton ({ className, color, visualCharacter = '\u2003', characters = 1000, style, children }: TextSkeletonProps) {
   const content = useMemo(() => visualCharacter.repeat(characters), [visualCharacter, characters]);
   return (
     <span className={clsx('inline-block', className)} style={style}>
-      <span className="inline skeleton rounded select-none" dangerouslySetInnerHTML={{ __html: content }} />
+      <span className="inline skeleton rounded select-none" style={{ backgroundColor: color }}>
+        {children ?? content}
+      </span>
     </span>
   );
 }

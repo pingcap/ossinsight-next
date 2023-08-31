@@ -6,6 +6,7 @@ import { getRepoText, isRepoEquals, searchRepo } from './utils';
 export type RemoteRepoInfo = {
   id: number
   fullName: string
+  defaultBranch: string
 }
 
 export interface GHRepoSelectorProps extends Pick<RemoteSelectorProps<any>, 'id' | 'renderInput'> {

@@ -2,7 +2,7 @@ $color-primary: rgb(255, 232, 149);
 $color-primary-darkened: fade-out($color-primary, 0.4);
 $color-primary-highlighted: lighten($color-primary, 5%);
 $color-primary-reverse: rgb(31, 30, 40);
-$color-disabled: rgba(124, 124, 124, 0.7);
+$color-disabled: #615F6F;
 
 $background-color-body: rgb(31, 30, 40);
 $background-color-toolbar: #1D1C24;

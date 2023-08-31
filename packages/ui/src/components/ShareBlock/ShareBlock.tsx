@@ -21,6 +21,7 @@ export interface ShareOptions {
   thumbnailUrl: string;
   keywords?: string[];
   imageWidth: number;
+  imageHeight?: number;
 }
 
 export function ShareBlock ({

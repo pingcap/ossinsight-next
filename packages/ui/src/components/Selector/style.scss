@@ -62,7 +62,7 @@
   user-select: none;
 }
 .SelectItem[data-disabled] {
-  color: var(--text-color-disable);
+  color: var(--color-disabled);
   pointer-events: none;
 }
 .SelectItem[data-highlighted] {
