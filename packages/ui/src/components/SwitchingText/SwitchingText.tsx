@@ -17,7 +17,7 @@ export function SwitchingText ({ children }: SwitchingTextProps) {
     setIndex(0);
     const interval = setInterval(() => {
       setIndex(index => (index + 1) % latestChildrenLength.current);
-    }, 5000);
+    }, 2000);
     return () => {
       clearInterval(interval);
     };

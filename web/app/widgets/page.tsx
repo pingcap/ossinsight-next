@@ -25,7 +25,10 @@ export default async function Home ({ searchParams }: {
             &#8203;Personal
           </span>
         </SwitchingText>
-        {' README.md within 30s!'}
+        <em>
+          {' README.md '}
+        </em>
+        {'within 30s!'}
       </h1>
       <WidgetCreator className="mt-16" />
       <ScrollAnchor className="text-center text-title flex items-center gap-2 justify-center mx-auto mt-16" id='widgets-list' top={120}>
