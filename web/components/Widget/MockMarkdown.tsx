@@ -1,6 +1,5 @@
 import LazyImg from '@ossinsight/ui/src/components/LazyImg/LazyImg';
 import { ShareOptions } from '@ossinsight/ui/src/components/ShareBlock';
-import { ParagraphSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 import ListIcon from 'bootstrap-icons/icons/list-ul.svg';
 import { ReactNode } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -37,7 +36,6 @@ export function MockMarkdown ({ type, loading, shareInfo, className }: { type: s
     </div>
   );
 }
-
 
 function ImagePendingShell ({ children, height }: { children: ReactNode, height?: number }) {
   return (

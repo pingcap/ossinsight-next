@@ -60,7 +60,7 @@ export function WidgetCreator ({ className }: { className?: string }) {
             <CheckCircleFillIcon width={10} heigit={10} className="text-[#4A65C6]" />
             Select a widget type
           </label>
-          <QuickSelector key={tuple.type} type={tuple.type} widgets={widgets} widget={widget} setWidget={setWidget} />
+          <QuickSelector key={tuple.type} widgets={widgets} widget={widget} setWidget={setWidget} />
         </div>
       </div>
       <div className="mt-8 flex flex-col gap-8 lg:flex-row">

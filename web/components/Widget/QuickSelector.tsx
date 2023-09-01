@@ -1,7 +1,7 @@
 import { WidgetTitle } from '@/components/Widget/Title';
 import { Select, SelectItem } from '@ossinsight/ui';
 
-export function QuickSelector ({ type, widgets, widget, setWidget }: { type: 'repo' | 'user', widgets: string[], widget: string | undefined, setWidget (widget: string | undefined): void }) {
+export function QuickSelector ({ widgets, widget, setWidget }: { widgets: string[], widget: string | undefined, setWidget (widget: string | undefined): void }) {
   return (
     <Select
       id="widget-selector"
