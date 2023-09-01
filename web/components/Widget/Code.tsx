@@ -24,7 +24,7 @@ export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, e
           {copied => `${copied ? 'Copied' : 'Copy'} code`}
         </NoStyleCopyButton>
         <a className="inline-flex gap-1 items-center text-sm text-primary transition-opacity opacity-80 hover:opacity-100" target="_blank" href={editReadmeUrl}>
-          Add to README.md
+          Add it to README.md
           <ArrowUpRightIcon />
         </a>
       </div>

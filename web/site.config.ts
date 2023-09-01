@@ -42,6 +42,10 @@ export default defineSiteConfig({
         href: 'https://ossinsight.io/docs/api/',
       },
       {
+        label: 'Widgets',
+        href: '/widgets',
+      },
+      {
         label: 'More',
         items: [
           { label: 'Workshop', href: '/docs/workshop' },
