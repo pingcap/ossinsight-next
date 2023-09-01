@@ -246,4 +246,32 @@ export const navItems: NavItemType[] = [
       },
     ],
   },
+  {
+    id: 'productivity',
+    title: 'Productivity',
+    Icon: FileBarGraphIcon,
+    children: [
+      {
+        id: 'pull-request-efficiency',
+        title: 'Pull Request Efficiency',
+        anchor: 'pull-request-efficiency',
+      },
+      {
+        id: 'code-review-efficiency',
+        title: 'Code Review Efficiency',
+        anchor: 'code-review-efficiency',
+      },
+      {
+        id: 'code-submission',
+        title: 'Code Submission',
+        anchor: 'code-submission',
+      },
+    ],
+  },
+  {
+    id: 'issue',
+    title: 'Issue',
+    Icon: FileBarGraphIcon,
+    anchor: 'issue',
+  },
 ];
