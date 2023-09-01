@@ -1,6 +1,6 @@
-import { WidgetName } from '@/components/Widget/WidgetName';
+import { WidgetTitle } from '@/components/Widget/Title';
+import { toWidgetPathname } from '@/components/Widget/utils';
 import { widgetParameterDefinitions } from '@/utils/widgets';
-import { WidgetMeta } from '@ossinsight/widgets-types';
 import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
 
 import Image from 'next/image';
@@ -16,17 +16,17 @@ export async function WidgetPreview ({ name }: { name: string }) {
       <div className="flex flex-col items-center bg-body p-4 gap-4 md:h-[360px]">
         <h2 className="text-lg font-bold text-title">
           <Suspense fallback="&nbsp;">
-            <WidgetName widget={name} />
+            <WidgetTitle widget={name} />
           </Suspense>
         </h2>
-        <div className='flex-1 flex items-center'>
+        <div className="flex-1 flex items-center">
           <Image
             className="block"
             loading="lazy"
             width={480}
             height={270}
             quality={100}
-            src={`/widgets/official/${getName(name)}/thumbnail.png?${imageUsp.toString()}`}
+            src={`${toWidgetPathname(name)}/thumbnail.png?${imageUsp.toString()}`}
             alt="preview"
           />
         </div>
@@ -37,27 +37,6 @@ export async function WidgetPreview ({ name }: { name: string }) {
       </div>
     </div>
   );
-}
-
-function getName (name: string) {
-  return name.replace(/^@ossinsight\/widget-/, '');
-}
-
-function formatName (name: string) {
-  return name
-    .replace(/-/g, ' ')
-    .replace(/^[a-z]/, e => e.toUpperCase());
-}
-
-function renderAuthor (meta: WidgetMeta) {
-  if (!meta.author) {
-    return <b>@unknown</b>;
-  }
-  if (typeof meta.author === 'string') {
-    return <b>@{meta.author}</b>;
-  } else {
-    return <b>@{meta.author.name ?? 'unknown'}</b>;
-  }
 }
 
 export async function dynamicParameters (name: string) {

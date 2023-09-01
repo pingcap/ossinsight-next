@@ -1,16 +1,17 @@
 import { createShareInfo } from '@/components/Share/utils';
-import { widgetParameterDefinitions } from '@/utils/widgets';
+import { widgetMetadataGenerator, widgetParameterDefinitions } from '@/utils/widgets';
 import { AnalyzeTuple } from '@ossinsight/ui/src/components/AnalyzeSelector';
 import { ShareOptions } from '@ossinsight/ui/src/components/ShareBlock';
 import { ParametersContext } from '@ossinsight/widgets-core/src/parameters/react/context';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { useContext, useEffect, useMemo, useState, useTransition } from 'react';
 
 export function useWidgetShareInfo (fullName: string | undefined, tuple: AnalyzeTuple) {
   const [shareInfo, setShareInfo] = useState<ShareOptions>();
   const [params, setParams] = useState<any>();
   const [transitioning, startTransition] = useTransition();
-  const [waiting, setWaiting] = useState(false);
+  const [waiting, setWaiting] = useState(true);
 
   const { linkedData } = useContext(ParametersContext);
 
@@ -23,7 +24,6 @@ export function useWidgetShareInfo (fullName: string | undefined, tuple: Analyze
         setWaiting(false);
         return;
       }
-      const { vendor, name } = parseName(fullName);
       const parameters = await widgetParameterDefinitions(fullName);
       let flag = false;
       let skip = false;
@@ -46,7 +46,7 @@ export function useWidgetShareInfo (fullName: string | undefined, tuple: Analyze
       }
 
       await resolveParameters(parameters, params, linkedData);
-      setShareInfo(await createShareInfo(fullName, name, vendor, linkedData, params));
+      setShareInfo(await createShareInfo(fullName, linkedData, params));
       setParams(params);
       setWaiting(false);
     });
@@ -85,13 +85,39 @@ export function useWidgetShareInfo (fullName: string | undefined, tuple: Analyze
   };
 }
 
-function parseName (name: string): { vendor: string, name: string } {
-  if (name.startsWith('@ossinsight/widget-')) {
-    return {
-      vendor: 'official',
-      name: name.replace('@ossinsight/widget-', ''),
-    };
-  } else {
-    throw new Error('not supported widget');
-  }
+export function useWidgetTitle (widget: string) {
+  const [name, setName] = useState('');
+  const [transition, startTransition] = useTransition();
+
+  useEffect(() => {
+    startTransition(async () => {
+      const [metadataGenerator, params] = await Promise.all([
+        widgetMetadataGenerator(widget),
+        widgetParameterDefinitions(widget),
+      ]);
+
+      const parameters: any = {};
+      Object.entries(params).forEach(([key, config]) => {
+        if (config.default != null) {
+          parameters[key] = config.default;
+        }
+      });
+
+      const metadata = metadataGenerator({
+        ...createWidgetContext('client', parameters, null as any),
+        getCollection () { return { id: 0, name: 'Collection', public: true }; },
+        getRepo () { return { id: 0, fullName: 'Repository' }; },
+        getUser () { return { id: 0, login: 'Developer' };},
+        getOrg () { return { id: 0, name: 'Organization' }; },
+        getTimeParams () { return { zone: 'TimeZone', period: 'Period' }; },
+      });
+
+      setName(metadata.title ?? 'Untitled');
+    });
+  }, [widget]);
+
+  return {
+    name,
+    loading: transition || !name,
+  } as { loading: true, name: undefined } | { loading: false, name: string };
 }

@@ -1,3 +1,4 @@
+import { toWidgetPathname } from '@/components/Widget/utils';
 import siteConfig from '@/site.config';
 import { widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
 import { ShareOptions } from '@ossinsight/ui/src/components/ShareBlock';
@@ -18,7 +19,7 @@ export function getOrigin () {
   return /^localhost:/.test(host) ? 'http://' + host : 'https://' + host;
 }
 
-export async function createShareInfo (fullName: string, name: string, vendor: string, linkedData: LinkedData, params: Record<string, string>): Promise<ShareOptions> {
+export async function createShareInfo (fullName: string, linkedData: LinkedData, params: Record<string, string>): Promise<ShareOptions> {
   const generateMetadata = await widgetMetadataGenerator(fullName);
 
   const { title, keywords } = generateMetadata(
@@ -32,11 +33,11 @@ export async function createShareInfo (fullName: string, name: string, vendor: s
   const origin = getOrigin();
 
   const { width } = await widgetVisualizer(fullName);
-
+  const pathname = toWidgetPathname(fullName)
   return {
     title: title || 'Untitled',
-    url: `${origin}/widgets/${vendor}/${name}?${usp.toString()}`,
-    thumbnailUrl: `${origin}/widgets/${vendor}/${name}/thumbnail.png?${imageUsp.toString()}`,
+    url: `${origin}${pathname}?${usp.toString()}`,
+    thumbnailUrl: `${origin}${pathname}/thumbnail.png?${imageUsp.toString()}`,
     keywords,
     imageWidth: width ?? 720,
   };

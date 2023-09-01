@@ -4,7 +4,17 @@ import { TextSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
 import { ReactNode } from 'react';
 
-export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, editReadmeUrl: string | undefined }) {
+export function QuickCode ({ type, shareInfo, editReadmeUrl, loading }: { type: 'repo' | 'user', shareInfo?: ShareOptions, editReadmeUrl?: string, loading: boolean }) {
+  if (shareInfo) {
+    return <Code shareInfo={shareInfo} editReadmeUrl={editReadmeUrl} />;
+  } else if (loading) {
+    return <CodeLoading />;
+  } else {
+    return <CodePending type={type} />;
+  }
+}
+
+function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, editReadmeUrl: string | undefined }) {
   const { title, keywords, imageWidth, url, thumbnailUrl } = shareInfo;
   const code = htmlCode('auto', title, url, thumbnailUrl, imageWidth);
   const language = 'html';
@@ -32,7 +42,7 @@ export function Code ({ shareInfo, editReadmeUrl }: { shareInfo: ShareOptions, e
   );
 }
 
-export function CodeLoading () {
+function CodeLoading () {
   return (
     <CodeShell>
       <pre className="pt-14 px-4">
@@ -75,7 +85,7 @@ export function CodeLoading () {
   );
 }
 
-export function CodePending ({ type }: { type: string }) {
+function CodePending ({ type }: { type: string }) {
   return (
     <CodeShell>
       <div className="p-4 text-disabled flex items-center justify-center h-full text-sm">
