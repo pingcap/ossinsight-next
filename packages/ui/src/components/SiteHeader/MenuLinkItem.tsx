@@ -15,7 +15,7 @@ export function MenuLinkItem ({ item }: { item: MenuItemConfig }) {
 
 export function renderItem (item: MenuItemConfig) {
   return (
-    <Link href={item.href} target={isFullUrl(item.href) ? '_blank' : undefined}>
+    <Link href={item.href} target={isOuterUrl(item.href) ? '_blank' : undefined}>
       {renderBaseItem(item)}
     </Link>
   );
@@ -30,6 +30,6 @@ export function renderBaseItem (item: MenuItemBaseConfig) {
   );
 }
 
-function isFullUrl (url: string) {
-  return /^https?:\/\//.test(url);
+function isOuterUrl (url: string) {
+  return /^https?:\/\//.test(url) && (url.indexOf('ossinsight.io') === -1);
 }
