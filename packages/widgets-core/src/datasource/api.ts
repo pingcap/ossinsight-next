@@ -18,12 +18,8 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
   }
 
   const template = parseTemplate(config.url);
-  let url = new URL(template.expand(ctx.parameters));
+  const url = new URL(template.expand(ctx.parameters));
   setUrlParams(url, config.params ?? {}, ctx.parameters);
-
-  if (typeof location !== 'undefined' && url.hostname === 'api.ossinsight.io') {
-    url = new URL(location.origin + '/unstable_proxy' + url.pathname + url.search + url.hash);
-  }
 
   const response = await fetch(url);
 

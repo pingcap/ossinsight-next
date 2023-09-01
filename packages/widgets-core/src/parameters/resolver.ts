@@ -1,5 +1,4 @@
 import { collectionsPromise } from '@ossinsight/ui/src/components/CollectionSelector/utils';
-import { unstable_getApiOrigin } from '@ossinsight/ui/src/utils/unstable_get_api_origin';
 import { ParameterDefinitions } from '@ossinsight/widgets-types';
 import { handleOApi } from '../utils/oapi';
 import parsers from './parser';
@@ -27,7 +26,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
       case 'repo-id':
         if (param) {
           if (linkedData.repos[param]) return Promise.resolve();
-          return fetch(`${unstable_getApiOrigin()}/gh/repositories/${param}`)
+          return fetch(`https://api.ossinsight.io/gh/repositories/${param}`)
             .then(handleOApi)
             .then((data) => {
               linkedData.repos[param] = {
@@ -41,7 +40,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
       case 'user-id':
         if (param) {
           if (linkedData.users[param]) return Promise.resolve();
-          return fetch(`${unstable_getApiOrigin()}/gh/user/${param}`)
+          return fetch(`https://api.ossinsight.io/gh/user/${param}`)
             .then(handleOApi)
             .then((data) => {
               linkedData.users[param] = {
