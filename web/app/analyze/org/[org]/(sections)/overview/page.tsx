@@ -33,7 +33,6 @@ export default async function OrgAnalyzePage({
       <SectionTemplate
         title='Overview'
         level={2}
-        description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
         classname='pt-8'
       >
         <div className='flex gap-4 w-full flex-wrap'>

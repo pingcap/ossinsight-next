@@ -28,18 +28,25 @@ export default async function OrgAnalyzePage({
   return (
     <AnalyzeOrgContextProvider data={data}>
       <OrgAnalyzePageHeader />
-      <SectionTemplate title='Star Growth' level={2} classname='pt-8'>
-        <div className='w-full overflow-x-auto'>
-          <ChartTemplate
-            name='@ossinsight/widget-compose-org-star-growth'
-            searchParams={{
-              repo_id: '41986369',
-            }}
-            className='h-[408px] w-[1089px]'
-          />
-        </div>
-        {PAGE_ID}
-        {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
+      <SectionTemplate
+        title='Popularity'
+        description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
+        level={2}
+        classname='pt-8'
+      >
+        <SectionTemplate title='Star Growth' level={3} classname='pt-8'>
+          <div className='w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-star-growth'
+              searchParams={{
+                repo_id: '41986369',
+              }}
+              className='h-[408px] w-[1089px]'
+            />
+          </div>
+          {PAGE_ID}
+          {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
+        </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>
   );
