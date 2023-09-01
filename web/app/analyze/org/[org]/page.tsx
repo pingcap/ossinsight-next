@@ -3,7 +3,7 @@ import AnalyzeOrgContextProvider, {
 } from '@/components/Context/Analyze/AnalyzeOrg';
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
-import ChartTemplate from '@/app/analyze/org/[org]/Chart';
+import ChartTemplate from '@/components/Analyze/Section/Chart';
 
 const fetchOrgInfo = async (
   orgName: string

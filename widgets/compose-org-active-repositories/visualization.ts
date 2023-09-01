@@ -1,9 +1,20 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, horizontal, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import type {
+  ComposeVisualizationConfig,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
+import {
+  autoSize,
+  computeLayout,
+  horizontal,
+  nonEmptyDataWidget,
+  vertical,
+  widget,
+} from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
 
 type Params = {
   repo_id: string;
+  activity?: string;
 };
 
 type DataPoint = {
@@ -13,16 +24,38 @@ type DataPoint = {
 
 type Input = [[DataPoint[]]];
 
+const getActivity = (activity: string) => {
+  switch (activity) {
+    case 'star':
+      return {
+        title: 'Top Repositories by Stars',
+        subtitle: ' ',
+        label: 'Repositories',
+        value: 'Star earned',
+      };
+    default:
+      return {
+        title: 'Active Repositories',
+        subtitle: ' ',
+        label: 'Top Repositories',
+        value: 'Activities',
+      };
+  }
+};
+
 export default function (
   [[contributors]]: Input,
-  ctx: WidgetVisualizerContext<Params>,
+  ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   // This range is not returned by api https://github.com/pingcap/ossinsight/blob/main/configs/queries/analyze-recent-top-contributors/template.sql
   const today = new Date();
   const prior30 = new Date(new Date().setDate(today.getDate() - 30));
   const end = DateTime.fromISO(today.toISOString());
   const start = DateTime.fromISO(prior30.toISOString());
-  const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
+  // const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
+
+  const { activity = 'activity' } = ctx.parameters;
+  const { title, subtitle, label, value } = getActivity(activity);
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -34,8 +67,8 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Top Active Contributors',
-        subtitle: ' ',
+        title,
+        subtitle,
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
         label: 'repo',
@@ -56,8 +89,8 @@ export default function (
         column: false,
       }).flex(0.2),
       widget('builtin:label-value', undefined, {
-        label: 'Top Repo',
-        value: 'Activities',
+        label,
+        value,
         labelProps: {
           style: {
             fontSize: 12,
@@ -77,23 +110,29 @@ export default function (
       nonEmptyDataWidget(sortedContributors, () =>
         horizontal(
           vertical(
-            ...sortedContributors.map((contributor =>
+            ...sortedContributors.map((contributor) =>
               widget('builtin:avatar-progress', undefined, {
                 label: contributor.actor_login,
                 imgSrc: `https://github.com/${contributor.actor_login}.png`,
                 size: 24,
                 value: 10,
                 maxVal: 100,
-              }))),
-          ).flex(0.7),
+              })
+            )
+          ).flex(0.7)
           // widget('@ossinsight/widget-analyze-repo-recent-top-contributors', [sortedContributors], ctx.parameters),
-        ),
-      ),
-    ).padding([0, PADDING, PADDING - autoSize(ctx, 4) /* the bar chart have small padding vertically */]),
+        )
+      )
+    ).padding([
+      0,
+      PADDING,
+      PADDING -
+        autoSize(ctx, 4) /* the bar chart have small padding vertically */,
+    ]),
     0,
     0,
     WIDTH,
-    HEIGHT,
+    HEIGHT
   );
 }
 

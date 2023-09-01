@@ -70,7 +70,8 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Active Contributors',
+        title: 'Active Participants',
+        subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
         label: '000',

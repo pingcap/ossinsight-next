@@ -3,7 +3,8 @@ import AnalyzeOrgContextProvider, {
 } from '@/components/Context/Analyze/AnalyzeOrg';
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
-import ChartTemplate from '@/app/analyze/org/[org]/Chart';
+import ChartTemplate from '@/components/Analyze/Section/Chart';
+import CompanyRankTable from '@/components/Analyze/Table/RankTable';
 
 const PAGE_ID = 'star-growth';
 
@@ -34,8 +35,12 @@ export default async function OrgAnalyzePage({
         level={2}
         classname='pt-8'
       >
-        <SectionTemplate title='Star Growth' level={3} classname='pt-8'>
-          <div className='w-full overflow-x-auto'>
+        <SectionTemplate
+          title='Star Growth'
+          level={3}
+          classname='pt-8 flex flex-col gap-4'
+        >
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-compose-org-star-growth'
               searchParams={{
@@ -43,9 +48,40 @@ export default async function OrgAnalyzePage({
               }}
               className='h-[408px] w-[1089px]'
             />
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-active-repositories'
+              searchParams={{
+                repo_id: '41986369',
+                limit: '5',
+                activity: 'star',
+              }}
+              className='h-[388px] w-[300px]'
+            />
           </div>
-          {PAGE_ID}
-          {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
+
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-repo-company'
+              searchParams={{
+                repo_id: '41986369',
+                activity: 'stars',
+              }}
+              className='h-[405px] w-[720px]'
+            />
+            <CompanyRankTable />
+          </div>
+
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-repo-stars-map'
+              searchParams={{
+                repo_id: '41986369',
+                activity: 'stars',
+              }}
+              className='h-[405px] w-[720px]'
+            />
+            <CompanyRankTable />
+          </div>
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>

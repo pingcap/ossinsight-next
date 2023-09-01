@@ -32,6 +32,10 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     key: 'pr-reviewed-ratio',
     title: 'PR Reviewed Ratio',
   },
+  {
+    key: 'activities',
+    title: 'Activities',
+  }
 ];
 
 export function activityDisplayName (key: string) {
