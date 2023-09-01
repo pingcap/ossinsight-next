@@ -1,6 +1,7 @@
 'use client';
 
 import * as RuiMenubar from '@radix-ui/react-menubar';
+import Link from 'next/link';
 import { useState } from 'react';
 import { SiteHeaderConfig } from '../../types/ui-config';
 import { SiteConfigIcon } from '../SiteConfigIcon';
@@ -20,12 +21,14 @@ export function SiteHeader ({ logo, items }: SiteHeaderConfig) {
     <RuiMenubar.Root asChild value={value} onValueChange={setValue}>
       <header className="SiteHeader">
         <RuiMenubar.Label asChild>
-          <SiteConfigIcon icon={logo} alt="Logo" height={logoHeight} />
+          <Link href="https://ossinsight.io/">
+            <SiteConfigIcon icon={logo} alt="Logo" height={logoHeight} />
+          </Link>
         </RuiMenubar.Label>
         <nav className="SiteHeader-menu">
           <ul>
             {items.map((item, index) => (
-              <MenuItem item={item} key={index} onValueChange={setValue}/>
+              <MenuItem item={item} key={index} onValueChange={setValue} />
             ))}
           </ul>
         </nav>
