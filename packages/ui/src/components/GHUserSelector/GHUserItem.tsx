@@ -1,13 +1,13 @@
 import { GHAvatar } from '../GHAvatar';
 import { RemoteSelectedItem, RemoteSelectedItemCommonProps } from '../RemoteSelector';
-import { RemoteRepoInfo } from './GHRepoSelector';
+import { RemoteUserInfo } from './GHUserSelector';
 
-export function GHRepoItem ({ item, ...props }: RemoteSelectedItemCommonProps & { item: RemoteRepoInfo }) {
+export function GHUserItem ({ item, ...props }: RemoteSelectedItemCommonProps & { item: RemoteUserInfo }) {
   return (
     <RemoteSelectedItem {...props}>
-      <GHAvatar name={item.fullName} size={4} />
+      <GHAvatar name={item.login} size={4} />
       <span className="overflow-hidden whitespace-nowrap text-ellipsis">
-        {item.fullName}
+        {item.login}
       </span>
     </RemoteSelectedItem>
   );

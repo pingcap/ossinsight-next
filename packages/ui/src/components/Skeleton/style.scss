@@ -1,7 +1,15 @@
 @import "../../styles/theme";
 
 .skeleton {
+  background-color: $background-color-control;
   animation: skeleton-keyframes 1.6s ease-in-out infinite alternate;
+}
+
+.skeleton-paused {
+  .skeleton {
+    animation: none;
+    opacity: 0.6;
+  }
 }
 
 $text-from: fade-out($text-color-subtitle, 0.7);
@@ -11,12 +19,10 @@ $bg-to: $text-color-content;
 
 @keyframes skeleton-keyframes {
   0% {
-    background-color: $bg-from;
-    color: $text-from;
+    opacity: 0.3;
   }
   100% {
-    background-color: $bg-to;
-    color: $text-to;
+    opacity: 0.6;
   }
 }
 

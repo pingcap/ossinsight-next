@@ -6,14 +6,16 @@ import { getRepoText, isRepoEquals, searchRepo } from './utils';
 export type RemoteRepoInfo = {
   id: number
   fullName: string
+  defaultBranch: string
 }
 
 export interface GHRepoSelectorProps extends Pick<RemoteSelectorProps<any>, 'id' | 'renderInput'> {
   repo: RemoteRepoInfo | undefined;
   onRepoSelected: (repo: RemoteRepoInfo | undefined) => void;
+  compat?: boolean;
 }
 
-export function GHRepoSelector ({ repo, onRepoSelected, ...props }: GHRepoSelectorProps) {
+export function GHRepoSelector ({ repo, onRepoSelected, compat, ...props }: GHRepoSelectorProps) {
   return (
     <RemoteSelector<RemoteRepoInfo>
       {...props}
@@ -21,7 +23,7 @@ export function GHRepoSelector ({ repo, onRepoSelected, ...props }: GHRepoSelect
       value={repo ? [repo] : []}
       onSelect={onRepoSelected}
       getRemoteOptions={searchRepo}
-      renderSelectedItems={([item]) => <GHRepoItem id={props.id} item={item} onClear={() => onRepoSelected(undefined)} />}
+      renderSelectedItems={([item]) => <GHRepoItem id={props.id} item={item} compat={compat} onClear={() => onRepoSelected(undefined)} />}
       renderListItem={props => <GHRepoListItem key={props.item.id} {...props} />}
       equals={isRepoEquals}
     />

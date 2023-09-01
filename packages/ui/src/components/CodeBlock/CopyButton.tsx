@@ -1,9 +1,13 @@
 import ClipboardCheckIcon from 'bootstrap-icons/icons/clipboard-check.svg';
 import ClipboardIcon from 'bootstrap-icons/icons/clipboard.svg';
-import clsx from 'clsx';
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 
-export function CopyButton ({ className, content }: { className: string, content: string }) {
+export function CopyButton ({ className, ...props }: { className?: string, content: string, children?: (copied: boolean) => ReactNode }) {
+  return <NoStyleCopyButton className={twJoin('border bg-toolbar rounded hover:text-active transition-colors px-2 py-1 text-content flex gap-2 items-center text-sm', className)} {...props} />;
+}
+
+export function NoStyleCopyButton ({ className, content, children }: { className?: string, content: string, children?: (copied: boolean) => ReactNode }) {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
@@ -17,9 +21,9 @@ export function CopyButton ({ className, content }: { className: string, content
   }, [content]);
 
   return (
-    <button className={clsx('border bg-toolbar rounded hover:text-active transition-colors px-2 py-1 text-content flex gap-2 items-center text-sm', className)} onClick={handleCopy} type="button">
+    <button className={className} onClick={handleCopy} type="button">
       {checked ? <ClipboardCheckIcon width={14} height={14} /> : <ClipboardIcon width={14} height={14} />}
-      {checked ? 'Copied!' : 'Copy'}
+      {children ? children(checked) : checked ? 'Copied!' : 'Copy'}
     </button>
   );
 }

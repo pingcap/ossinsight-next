@@ -36,6 +36,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "@types/mdx": "^2.0.5",
     "bootstrap-icons": "^1.10.5",
-    "sass": "^1.63.6"
+    "sass": "^1.63.6",
+    "tailwind-merge": "^1.14.0"
   }
 }

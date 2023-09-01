@@ -1,7 +1,7 @@
 @import "../../styles/controls";
 
 .Button {
-  @apply px-2 py-1 text-sm border transition;
+  @apply px-2 py-1 text-sm border transition inline-flex items-center justify-center gap-1;
 
   &:not(.Button-primary) {
     @include control-shadow($color-disabled);

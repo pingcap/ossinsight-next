@@ -4,6 +4,7 @@ import ChevronDownIcon from 'bootstrap-icons/icons/chevron-down.svg';
 import ChevronUpIcon from 'bootstrap-icons/icons/chevron-up.svg';
 import clsx from 'clsx';
 import * as React from 'react';
+import { ReactNode } from 'react';
 import './style.scss';
 
 export const Select = React.forwardRef<
@@ -11,23 +12,28 @@ export const Select = React.forwardRef<
   SelectPrimitive.SelectProps & {
   id?: string
   label?: string | React.ReactNode;
-}
->(({ id, children, ...props }, forwardedRef) => {
+  className?: string;
+  placeholder?: string;
+  renderValue?: (value: string) => ReactNode;
+} & Pick<SelectPrimitive.SelectContentProps, 'position'>
+>(({ id, children, className, position, placeholder, renderValue, ...props }, forwardedRef) => {
   return (
-    <div className="SelectWrapper">
+    <div className={clsx('SelectWrapper', className)}>
       <SelectPrimitive.Root {...props}>
         <SelectPrimitive.Trigger
           className={clsx('SelectTrigger')}
           id={id}
           ref={forwardedRef}
         >
-          <SelectPrimitive.Value />
+          {renderValue
+            ? props.value == null ? <span className="text-content text-sm">{placeholder}</span> : renderValue(props.value)
+            : <SelectPrimitive.Value placeholder={<span className="text-content text-sm">{placeholder}</span>} />}
           <SelectPrimitive.Icon className={clsx('SelectIcon')}>
             <ChevronDownIcon width={12} height={12} />
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Portal>
-          <SelectPrimitive.Content className={clsx('SelectContent')}>
+          <SelectPrimitive.Content className={clsx('SelectContent')} position={position}>
             <SelectPrimitive.ScrollUpButton
               className={clsx('SelectScrollButton')}
             >

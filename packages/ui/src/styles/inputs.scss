@@ -10,7 +10,7 @@
     }
 
     ::placeholder {
-      @apply text-disabled text-xs;
+      @apply text-disabled text-sm;
     }
 
     &-lg {
@@ -29,5 +29,8 @@
       @include control-border;
     }
 
+    &.TextInput-compact {
+      @apply p-0;
+    }
   }
 }

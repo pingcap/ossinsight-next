@@ -12,6 +12,7 @@
   --background-color-toolbar: #{$background-color-toolbar};
   --background-color-popover: #{$background-color-popover};
   --background-color-control: #{$background-color-control};
+  --background-color-code: #{$background-color-code};
 
   --text-color-title: #{$text-color-title};
   --text-color-subtitle: #{$text-color-subtitle};
@@ -19,8 +20,10 @@
   --text-color-active: #{$text-color-active};
 
   --border-color-default: #{$border-color-default};
+  --border-color-dimmed: #{$border-color-dimmed};
 
-  --divide-color-default: #{$border-color-default};
+  --divide-color-default: #{$divide-color-default};
+  --divide-color-dimmed: #{$divide-color-dimmed};
 
   --list-item-focus: #{$list-item-focus};
   --list-item-active: #{$list-item-active};

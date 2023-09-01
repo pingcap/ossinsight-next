@@ -59,6 +59,9 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
+      react-transition-state:
+        specifier: ^2.1.1
+        version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
       rehype-react:
         specifier: ^7.2.0
         version: 7.2.0(@types/react@18.2.15)
@@ -68,6 +71,9 @@ importers:
       remark-rehype:
         specifier: ^10.1.0
         version: 10.1.0
+      tailwind-merge:
+        specifier: ^1.14.0
+        version: 1.14.0
       unified:
         specifier: ^10.1.2
         version: 10.1.2
@@ -341,6 +347,9 @@ importers:
       sass:
         specifier: ^1.63.6
         version: 1.63.6
+      tailwind-merge:
+        specifier: ^1.14.0
+        version: 1.14.0
 
   widgets:
     dependencies:
@@ -6493,6 +6502,7 @@ packages:
 
   /debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
+    requiresBuild: true
     peerDependencies:
       supports-color: '*'
     peerDependenciesMeta:
@@ -10814,6 +10824,16 @@ packages:
       tslib: 2.6.0
     dev: false
 
+  /react-transition-state@2.1.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-kQx5g1FVu9knoz1T1WkapjUgFz08qQ/g1OmuWGi3/AoEFfS0kStxrPlZx81urjCXdz2d+1DqLpU6TyLW/Ro04Q==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -11730,6 +11750,9 @@ packages:
       '@pkgr/utils': 2.4.2
       tslib: 2.6.0
     dev: false
+
+  /tailwind-merge@1.14.0:
+    resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
 
   /tailwindcss@3.3.3:
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
