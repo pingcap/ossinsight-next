@@ -29,13 +29,15 @@ export default async function OrgAnalyzePage({
     <AnalyzeOrgContextProvider data={data}>
       <OrgAnalyzePageHeader />
       <SectionTemplate title='Star Growth' level={2} classname='pt-8'>
-        <ChartTemplate
-          name='@ossinsight/widget-compose-org-star-growth'
-          searchParams={{
-            repo_id: '41986369',
-          }}
-          className='h-[408px] w-[1089px]'
-        />
+        <div className='w-full overflow-x-auto'>
+          <ChartTemplate
+            name='@ossinsight/widget-compose-org-star-growth'
+            searchParams={{
+              repo_id: '41986369',
+            }}
+            className='h-[408px] w-[1089px]'
+          />
+        </div>
         {PAGE_ID}
         {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
       </SectionTemplate>

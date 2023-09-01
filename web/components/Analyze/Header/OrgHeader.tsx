@@ -35,7 +35,7 @@ export default function OrgAnalyzePageHeader() {
       </p>
 
       {/* -- status bar -- */}
-      <div className='flex items-end gap-6'>
+      <div className='flex gap-6 flex-wrap flex-col md:flex-row md:items-end'>
         <LabelItemWithCount
           label='Public repositories'
           count={107}

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-
+import NextLink from 'next/link';
 import {
   makeLinkedData,
   widgetPageParams,
@@ -27,6 +27,15 @@ export default function ChartTemplate(props: {
     [className]
   );
 
+  const targetLinkMemo = React.useMemo(() => {
+    if (name.includes(`@ossinsight/widget-`)) {
+      const widget = name.split('@ossinsight/widget-').pop();
+      const searchStr = new URLSearchParams(searchParams).toString();
+      return `/widgets/official/${widget}?${searchStr}`;
+    }
+    return null;
+  }, [name, searchParams]);
+
   return (
     <div className={classNameMemo}>
       <React.Suspense>
@@ -39,9 +48,13 @@ export default function ChartTemplate(props: {
           showThemeSwitch={false}
           dense
         />
-        <button className='absolute top-4 right-4'>
-          <ArrowUpRightCircleFill />
-        </button>
+        {targetLinkMemo && (
+          <NextLink target='_blank' href={targetLinkMemo}>
+            <button className='absolute top-4 right-4'>
+              <ArrowUpRightCircleFill />
+            </button>
+          </NextLink>
+        )}
       </React.Suspense>
     </div>
   );

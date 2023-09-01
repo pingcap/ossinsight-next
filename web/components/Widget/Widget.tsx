@@ -66,7 +66,7 @@ export default function Widget({
 
   return (
     <div
-      className={clsx('relative w-full h-fulloverflow-auto', {
+      className={clsx('relative w-full h-full overflow-auto', {
         ['flex items-center justify-center']: !dynamicHeight,
         'bg-white': colorScheme === 'light',
         'bg-body': colorScheme !== 'light',

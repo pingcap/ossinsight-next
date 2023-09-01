@@ -36,8 +36,8 @@ export default async function OrgAnalyzePage({
         description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
         classname='pt-8'
       >
-        <div className='flex gap-4'>
-          <div className='flex flex-col gap-4'>
+        <div className='flex gap-4 w-full flex-wrap'>
+          <div className='flex flex-col gap-4 overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-compose-org-overview-stars'
               searchParams={{
