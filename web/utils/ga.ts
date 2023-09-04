@@ -17,7 +17,7 @@ export function serverSendGaMeasurementEvent (events: GaEvent[]) {
   });
 }
 
-type GaEventParams = Record<string, string | number | boolean | undefined>;
+type GaEventParams = Record<string, string | number | boolean | undefined | null>;
 
 interface GaEvent {
   name: string;
@@ -36,8 +36,7 @@ export function apiEvent (name: string, params: GaEventParams, request: NextRequ
     browser: `${ua.browser.name} ${ua.browser.version}`,
     is_bot: ua.isBot,
     origin: request.headers.get('origin') ?? undefined,
-    page_referer: request.headers.get('referer') ?? undefined,
-    page_location: request.url,
+    referer: request.headers.get('referer') ?? undefined,
     is_production: Boolean(process.env.IS_PRODUCTION_DEPLOYMENT),
   };
 
@@ -48,4 +47,17 @@ export function apiEvent (name: string, params: GaEventParams, request: NextRequ
       ...params,
     },
   };
+}
+
+export function autoParams (prefix: string, params: any): GaEventParams {
+  return Object.entries(params).reduce((res, [k, v]) => {
+    if (v == null) {
+      res[`${prefix}${k}`] = v;
+    } else if (v instanceof Object) {
+      res[`${prefix}${k}`] = String(v);
+    } else {
+      res[`${prefix}${k}`] = v as any;
+    }
+    return res;
+  }, {} as GaEventParams);
 }

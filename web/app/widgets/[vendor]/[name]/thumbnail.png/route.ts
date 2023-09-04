@@ -1,5 +1,5 @@
 import config from '@/site.config';
-import { apiEvent, serverSendGaMeasurementEvent } from '@/utils/ga';
+import { apiEvent, autoParams, serverSendGaMeasurementEvent } from '@/utils/ga';
 import { resolveImageSizeConfig } from '@/utils/siteConfig';
 import { createDefaultComposeLayout, isWidget, widgetDatasourceFetcher, widgetMetadataGenerator, widgetParameterDefinitions, widgetVisualizer } from '@/utils/widgets';
 import { Canvas } from '@napi-rs/canvas';
@@ -53,6 +53,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
       ...createWidgetBaseContext('server', parameters),
       ...createLinkedDataContext(linkedData),
     }).title,
+    ...autoParams('widget_param_', parameters),
   }, request)]);
 
   const data = await datasource(createWidgetBaseContext('server', parameters));
