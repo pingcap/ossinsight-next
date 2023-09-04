@@ -31,4 +31,9 @@
   --scrollbar-track-color: #{$scrollbar-track-color};
   --scrollbar-thumb-color: #{$scrollbar-thumb-color};
   --scrollbar-thumb-hover-color: #{$scrollbar-thumb-hover-color};
+
+  --headless-tab-background: #{$headless-tab-background};
+  --headless-tab-active-background: #{$headless-tab-active-background};
+  --headless-tab-text: #{$headless-tab-text};
+  --headless-tab-active-text: #{$headless-tab-active-text};
 }

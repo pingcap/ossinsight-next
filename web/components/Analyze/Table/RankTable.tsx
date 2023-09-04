@@ -1,41 +1,7 @@
 'use client';
 import * as React from 'react';
 import { SingleToggleButtonGroup } from '@ossinsight/ui/src/components/Toggle/ToggleButton';
-import { Tabs, Tab } from '@ossinsight/ui/src/components/Tabs';
-
-const people = [
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-  },
-  // More people...
-];
+import { HeadlessTabs, HeadlessTab } from '@ossinsight/ui/src/components/Tabs';
 
 const data = new Array(10)
   .fill(0)
@@ -50,14 +16,14 @@ export default function RankTable(props: any) {
         <h1 className='px-1 text-base font-semibold leading-6 text-white'>
           Top locations
         </h1>
-        <Tabs className=''>
-          <Tab title='New' value='new'>
+        <HeadlessTabs categories={['New', 'Total']}>
+          <HeadlessTab>
             <Table header={['No.', 'Company1', 'Activities']} data={data} />
-          </Tab>
-          <Tab title='Total' value='total'>
+          </HeadlessTab>
+          <HeadlessTab>
             <Table header={['No.', 'Company2', 'Activities']} data={data} />
-          </Tab>
-        </Tabs>
+          </HeadlessTab>
+        </HeadlessTabs>
       </div>
     </>
   );

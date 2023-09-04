@@ -4,6 +4,7 @@
   "type": "module",
   "module": "src/index.ts",
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@ossinsight/widgets-utils": "workspace:^",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-label": "^2.0.2",
