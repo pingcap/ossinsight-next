@@ -2,6 +2,12 @@ import { defineSiteConfig } from './utils/siteConfig';
 
 export default defineSiteConfig({
   host: 'https://next.ossinsight.io',
+  ga: {
+    tag: 'GTM-WBZS43V',
+    measurementId: 'G-KW4FDPBLLJ',
+    measurementSecret: process.env.GA_MESUREMENT_SECRET ?? '',
+    clientId: 'ossinsight-next',
+  },
   banner: {
     content: 'This is the next version of **[ossinsight.io](https://ossinsight.io)**.',
   },

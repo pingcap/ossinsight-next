@@ -4,6 +4,12 @@ export interface SiteConfig {
   /** @deprecated not used */
   host: string;
   header: SiteHeaderConfig;
+  ga: {
+    tag: string
+    measurementId: string
+    measurementSecret: string
+    clientId: string
+  }
   banner?: SiteBannerConfig;
   sizes: Record<string, ImageSizeConfig>;
   widgets: SiteWidgetsConfig;
