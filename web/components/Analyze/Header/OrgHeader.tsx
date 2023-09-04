@@ -1,10 +1,8 @@
 'use client';
 import * as React from 'react';
 import NextImage from 'next/image';
-import JournalBookmark from 'bootstrap-icons/icons/journal-bookmark.svg';
 import CircleFill from 'bootstrap-icons/icons/circle-fill.svg';
-import Star from 'bootstrap-icons/icons/star.svg';
-import Person from 'bootstrap-icons/icons/person.svg';
+import { RepoIcon, StarIcon, PeopleIcon } from '@primer/octicons-react';
 
 import {
   AnalyzeOrgContextProps,
@@ -39,17 +37,17 @@ export default function OrgAnalyzePageHeader() {
         <LabelItemWithCount
           label='Public repositories'
           count={107}
-          icon={<JournalBookmark />}
+          icon={<RepoIcon />}
         />
         <LabelItemWithCount
           label='Participants'
           count={2186}
-          icon={<Person />}
+          icon={<PeopleIcon />}
           description='Individuals involved in repositories under this organization.'
         />
-        <LabelItemWithCount label='Stars' count={34343} icon={<Star />} />
+        <LabelItemWithCount label='Stars' count={34343} icon={<StarIcon />} />
         <div className='ml-auto inline-flex gap-2 items-center'>
-          <CircleFill className='text-title w-4 h-4' />
+          <CircleFill className='text-title w-2 h-2' />
           <span>Last active at</span>
           <span className='text-title'>37 seconds ago</span>
         </div>
