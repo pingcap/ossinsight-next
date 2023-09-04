@@ -1,6 +1,5 @@
 'use client';
 import * as React from 'react';
-import { SingleToggleButtonGroup } from '@ossinsight/ui/src/components/Toggle/ToggleButton';
 import { HeadlessTabs, HeadlessTab } from '@ossinsight/ui/src/components/Tabs';
 
 const data = new Array(10)
