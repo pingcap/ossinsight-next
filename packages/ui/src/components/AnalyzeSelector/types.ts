@@ -10,4 +10,9 @@ export type RepoTuple = {
   value: RemoteRepoInfo | undefined
 }
 
-export type AnalyzeTuple = UserTuple | RepoTuple;
+export type OrgTuple = {
+  type: 'org'
+  value: RemoteUserInfo | undefined // TODO - Change to RemoteOrgInfo
+}
+
+export type AnalyzeTuple = UserTuple | RepoTuple | OrgTuple;

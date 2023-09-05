@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { GHRepoSelector, RemoteRepoInfo } from '../GHRepoSelector';
 import { GHUserSelector, RemoteUserInfo } from '../GHUserSelector';
+import { GHOrgSelector } from '../GHOrgSelector';
 import { RemoteSelectorInputProps } from '../RemoteSelector';
 import { Select, SelectItem } from '../Selector';
 import { AnalyzeTuple } from './types';
@@ -26,7 +27,14 @@ export function AnalyzeSelector ({ id, tuple, onTupleChange }: AnalyzeSelectorPr
     });
   }, [onTupleChange]);
 
-  const handleTypeChange = useCallback((type: 'user' | 'repo') => {
+  const handleOrgSelected = useCallback((org: RemoteUserInfo | undefined) => {
+    onTupleChange({
+      type: 'org',
+      value: org,
+    });
+  }, [onTupleChange]);
+
+  const handleTypeChange = useCallback((type: 'user' | 'repo' | 'org') => {
     onTupleChange({
       type,
       value: undefined,
@@ -42,10 +50,15 @@ export function AnalyzeSelector ({ id, tuple, onTupleChange }: AnalyzeSelectorPr
         <SelectItem value={'repo'}>
           Repository
         </SelectItem>
+        <SelectItem value={'org'}>
+          Organization
+        </SelectItem>
       </Select>
       <span className="flex-shrink-0 w-1 border-l" />
       {tuple.type === 'user' && <GHUserSelector user={tuple.value} onUserSelected={handleUserSelected} compat renderInput={renderInput} />}
       {tuple.type === 'repo' && <GHRepoSelector repo={tuple.value} onRepoSelected={handleRepoSelected} compat renderInput={renderInput} />}
+      {/* TODO - Update GHOrgSelector */}
+      {tuple.type === 'org' && <GHOrgSelector user={tuple.value} onUserSelected={handleOrgSelected} compat renderInput={renderInput} />}
       <input className="sr-only" id={id} />
     </div>
   );
