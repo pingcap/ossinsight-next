@@ -1,3 +1,4 @@
+import siteConfig from '@/site.config';
 import { SiteBanner } from '@ossinsight/ui/src/components/SiteBanner';
 import { SiteHeader } from '@ossinsight/ui/src/components/SiteHeader';
 import type { Metadata } from 'next';
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-const GTAG_ID = 'GTM-WBZS43V';
+const GTAG_ID = siteConfig.ga.tag;
 
 export default function RootLayout ({
   children,
