@@ -42,7 +42,7 @@ export default async function OrgAnalyzePage({
         >
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
             <ChartTemplate
-              name='@ossinsight/widget-compose-org-star-growth'
+              name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
                 repo_id: '41986369',
               }}

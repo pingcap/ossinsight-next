@@ -35,7 +35,15 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'activities',
     title: 'Activities',
-  }
+  },
+  {
+    key: 'participants',
+    title: 'Participants',
+  },
+  {
+    key: 'code-submissions',
+    title: 'Code Submissions',
+  },
 ];
 
 export function activityDisplayName (key: string) {

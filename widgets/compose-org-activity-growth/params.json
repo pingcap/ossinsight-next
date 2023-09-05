@@ -1,0 +1,14 @@
+{
+  "repo_id": {
+    "type": "repo-id",
+    "title": "Analyzing Repo",
+    "required": true,
+    "default": 41986369
+  },
+  "activity": {
+    "type": "activity-type",
+    "title": "Activity type",
+    "enums": ["stars", "participants", "pull-requests", "code-submissions"],
+    "default": "stars"
+  }
+}

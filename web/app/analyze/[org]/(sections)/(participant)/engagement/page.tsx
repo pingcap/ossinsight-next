@@ -11,7 +11,7 @@ const fetchOrgInfo = async (
   orgName: string
 ): Promise<AnalyzeOrgContextProps> => {
   // TODO - fetch org info
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
   return {
     orgName: 'pingcap',
     orgId: 11855343,
@@ -36,16 +36,15 @@ export default async function OrgAnalyzePage({
       >
         <SectionTemplate title='Engagement' level={3} classname='pt-8'>
           <div className='w-full overflow-x-auto'>
-            {/* <ChartTemplate
-              name='@ossinsight/widget-compose-org-star-growth'
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
                 repo_id: '41986369',
+                activity: 'participants',
               }}
               className='h-[408px] w-[1089px]'
-            /> */}
+            />
           </div>
-          {PAGE_ID}
-          {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>

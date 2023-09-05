@@ -13,6 +13,7 @@ import { DateTime } from 'luxon';
 
 type Params = {
   repo_id: string;
+  activity: string;
 };
 
 type DataPoint = {
@@ -36,7 +37,7 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Star Earned Over Time',
+        title: `${ctx.parameters?.activity} overtime`,
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       vertical(
