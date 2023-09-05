@@ -34,7 +34,7 @@ export default function OrgBottomNav(props: { org: string }) {
       <div className='flex items-center justify-between'>
         {prevId && (
           <NavButton
-            onClick={() => router.push(`/analyze/org/${org}/${prevId}`)}
+            onClick={() => router.push(`/analyze/${org}/${prevId}`)}
             title={prevItem?.title || ''}
             subTitle='Previous'
             icon={<ChevronLeftIcon className='w-4 h-4' />}
@@ -42,7 +42,7 @@ export default function OrgBottomNav(props: { org: string }) {
         )}
         {nextId && (
           <NavButton
-            onClick={() => router.push(`/analyze/org/${org}/${nextId}`)}
+            onClick={() => router.push(`/analyze/${org}/${nextId}`)}
             title={nextItem?.title || ''}
             subTitle='Next'
             icon={<ChevronRightIcon className='w-4 h-4' />}

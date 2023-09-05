@@ -25,7 +25,7 @@ export default function OrgNav(props: { org: string }) {
     return calcSelectedIdParents(navItems, selectedId);
   }, [selectedId]);
   const basePathMemo = React.useMemo(() => {
-    return `/analyze/org/${org}`;
+    return `/analyze/${org}`;
   }, [org]);
 
   return (
