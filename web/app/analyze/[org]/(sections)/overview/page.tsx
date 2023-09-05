@@ -30,11 +30,7 @@ export default async function OrgAnalyzePage({
   return (
     <AnalyzeOrgContextProvider data={data}>
       <OrgAnalyzePageHeader />
-      <SectionTemplate
-        title='Overview'
-        level={2}
-        classname='pt-8'
-      >
+      <SectionTemplate title='Overview' level={2} classname='pt-8'>
         <div className='flex gap-4 w-full flex-wrap'>
           <div className='flex flex-col gap-4 overflow-x-auto'>
             <ChartTemplate
@@ -42,7 +38,6 @@ export default async function OrgAnalyzePage({
               searchParams={{
                 repo_id: '41986369',
               }}
-              className='h-[150px] w-[698px]'
             />
             <div className='flex gap-4'>
               <ChartTemplate
@@ -50,21 +45,18 @@ export default async function OrgAnalyzePage({
                 searchParams={{
                   repo_id: '41986369',
                 }}
-                className='h-[222] w-[222]'
               />
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
                   repo_id: '41986369',
                 }}
-                className='h-[222] w-[222px]'
               />
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
                   repo_id: '41986369',
                 }}
-                className='h-[222px] w-[222px]'
               />
             </div>
           </div>
@@ -75,7 +67,6 @@ export default async function OrgAnalyzePage({
                 repo_id: '41986369',
                 limit: '5',
               }}
-              className='h-[186px] w-[300px]'
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-contributors'
@@ -83,7 +74,6 @@ export default async function OrgAnalyzePage({
                 repo_id: '41986369',
                 limit: '5',
               }}
-              className='h-[186px] w-[300px]'
             />
           </div>
           <ChartTemplate
@@ -92,7 +82,6 @@ export default async function OrgAnalyzePage({
               repo_id: '41986369',
               limit: '5',
             }}
-            className='h-[388px] w-[300px]'
           />
         </div>
 

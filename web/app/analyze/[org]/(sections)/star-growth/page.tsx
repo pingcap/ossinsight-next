@@ -46,7 +46,6 @@ export default async function OrgAnalyzePage({
               searchParams={{
                 repo_id: '41986369',
               }}
-              className='h-[408px] w-[1089px]'
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-repositories'
@@ -55,7 +54,6 @@ export default async function OrgAnalyzePage({
                 limit: '5',
                 activity: 'star',
               }}
-              className='h-[388px] w-[300px]'
             />
           </div>
 
@@ -66,7 +64,6 @@ export default async function OrgAnalyzePage({
                 repo_id: '41986369',
                 activity: 'stars',
               }}
-              className='h-[405px] w-[720px]'
             />
             <CompanyRankTable />
           </div>
@@ -78,7 +75,6 @@ export default async function OrgAnalyzePage({
                 repo_id: '41986369',
                 activity: 'stars',
               }}
-              className='h-[405px] w-[720px]'
             />
             <CompanyRankTable />
           </div>

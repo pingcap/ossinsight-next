@@ -8,14 +8,20 @@ import {
 } from '@/app/widgets/[vendor]/[name]/utils';
 import { ServerWidget } from '@/components/Widget/server';
 import ArrowUpRightCircleFill from 'bootstrap-icons/icons/arrow-up-right-circle-fill.svg';
-import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-export default function ChartTemplate(props: {
+import { AnalyzeOrgContext } from '@/components/Context/Analyze/AnalyzeOrg';
+
+export interface ChartTemplateProps {
   name: string;
   searchParams?: Record<string, string>;
   className?: string;
-}) {
+}
+
+export default function ChartTemplate(props: ChartTemplateProps) {
   const { name, searchParams = {}, className } = props;
+
+  const { orgName } = React.useContext(AnalyzeOrgContext);
 
   const linkedDataMemo = React.useMemo(
     () => makeLinkedData(name, searchParams),
@@ -23,7 +29,7 @@ export default function ChartTemplate(props: {
   );
 
   const classNameMemo = React.useMemo(
-    () => clsx('relative', className),
+    () => twMerge('relative w-fit h-fit', className),
     [className]
   );
 

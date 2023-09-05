@@ -42,7 +42,7 @@ export default async function OrgAnalyzePage({
                 repo_id: '41986369',
                 activity: 'participants',
               }}
-              className='h-[408px] w-[1089px]'
+              // className='h-[408px] w-[1089px]'
             />
           </div>
         </SectionTemplate>
