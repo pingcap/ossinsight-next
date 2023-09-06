@@ -68,7 +68,8 @@ export function WidgetCreator ({ className }: { className?: string }) {
           <MockMarkdown type={tuple.type} className="skeleton-paused" shareInfo={shareInfo} loading={loading} />
         </div>
         <div className="flex-1 overflow-auto">
-          <QuickCode type={tuple.type} loading={loading} shareInfo={shareInfo} editReadmeUrl={editReadmeUrl} />
+          {/* TODO - fix tuple.type */}
+          <QuickCode type={tuple.type as any} loading={loading} shareInfo={shareInfo} editReadmeUrl={editReadmeUrl} />
         </div>
       </div>
     </div>
