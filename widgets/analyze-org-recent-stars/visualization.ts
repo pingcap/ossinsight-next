@@ -9,17 +9,15 @@ import {
 } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
-  repo_id: string;
+  owner_id: string;
 };
 
 type DataPoint = {
-  current_period_day: string;
-  current_period_day_stars: number;
-  current_period_stars: number;
   idx: number;
-  last_period_day: string;
-  last_period_day_stars: number;
-  last_period_stars: number;
+  current_period_day: string;
+  current_period_day_total: number;
+  past_period_day: string;
+  past_period_day_total: number;
 };
 
 type Input = [DataPoint[], DataPoint[] | undefined];
@@ -32,7 +30,7 @@ export default function (
 
   return {
     dataset: {
-      source: [...main.sort((a, b) => a.idx - b.idx)],
+      source: [...main.sort((a, b) => b.idx - a.idx)],
     },
     xAxis: {
       type: 'category',
@@ -60,10 +58,10 @@ export default function (
     series: [
       {
         type: 'bar',
-        name: 'Stars',
+        name: 'Current period',
         encode: {
           x: 'idx',
-          y: 'current_period_day_stars',
+          y: 'current_period_day_total',
         },
         itemStyle: {
           decal: {
@@ -93,7 +91,7 @@ export default function (
         name: 'Last period',
         encode: {
           x: 'idx',
-          y: 'last_period_day_stars',
+          y: 'past_period_day_total',
         },
         itemStyle: {
           color: '#ED5C53',

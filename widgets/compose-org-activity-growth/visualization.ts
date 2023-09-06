@@ -12,16 +12,19 @@ import {
 import { DateTime } from 'luxon';
 
 type Params = {
-  repo_id: string;
+  owner_id: string;
   activity: string;
 };
 
 type DataPoint = {
-  actor_login: string;
-  events: number;
+  idx: number;
+  current_period_day: string;
+  current_period_day_total: number;
+  past_period_day: string;
+  past_period_day_total: number;
 };
 
-type Input = [any[]];
+type Input = [DataPoint[]];
 
 export default function (
   [data]: Input,
@@ -29,10 +32,21 @@ export default function (
 ): ComposeVisualizationConfig {
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const SPACING = autoSize(ctx, 16);
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
-  const HORIZONTAL_SPACING = autoSize(ctx, 64);
+  const SPACING = 16;
+  const PADDING = 24;
+  const HEADER_HEIGHT = 48;
+  const HORIZONTAL_SPACING = 64;
+
+  const [currentSum, lastSum] = data.reduce(
+    (acc, cur) => {
+      acc[0] += cur.current_period_day_total;
+      acc[1] += cur.past_period_day_total;
+      return acc;
+    },
+    [0, 0]
+  );
+
+  const diff = currentSum - lastSum;
 
   return computeLayout(
     vertical(
@@ -43,8 +57,8 @@ export default function (
       vertical(
         horizontal(
           widget('builtin:label-value', undefined, {
-            label: 'star',
-            value: '↑star%',
+            label: currentSum,
+            value: diff >= 0 ? `↑${diff}%` : `↓${diff}%`,
             labelProps: {
               style: {
                 fontSize: 24,
@@ -55,25 +69,24 @@ export default function (
               style: {
                 fontSize: 12,
                 lineHeight: 2,
-                color: ctx.theme.colors.green['400'],
+                color:
+                  diff >= 0
+                    ? ctx.theme.colors.green['400']
+                    : ctx.theme.colors.red['400'],
               },
             },
             column: false,
           })
         )
           .gap(SPACING)
-          .flex(0.3),
+          .flex(0.1),
         widget(
           '@ossinsight/widget-analyze-org-recent-stars',
-          data,
+          [data],
           ctx.parameters
         )
       )
-        .gap(HORIZONTAL_SPACING)
-        .flex(0.7)
-    )
-      .padding([0, PADDING, PADDING])
-      .gap(SPACING),
+    ).padding([0, PADDING, PADDING]),
     0,
     0,
     WIDTH,
@@ -83,5 +96,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 726 * 1.5;
-export const height = 272 * 1.5;
+export const width = 726;
+export const height = 272;

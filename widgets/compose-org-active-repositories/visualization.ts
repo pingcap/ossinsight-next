@@ -13,16 +13,17 @@ import {
 import { DateTime } from 'luxon';
 
 type Params = {
-  repo_id: string;
+  owner_id: string;
   activity?: string;
 };
 
 type DataPoint = {
-  actor_login: string;
-  events: number;
+  repo_id: number;
+  repo_name: string;
+  stars: number;
 };
 
-type Input = [[DataPoint[]]];
+type Input = [DataPoint[]];
 
 const getActivity = (activity: string) => {
   switch (activity) {
@@ -44,7 +45,7 @@ const getActivity = (activity: string) => {
 };
 
 export default function (
-  [[contributors]]: Input,
+  [data]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   // This range is not returned by api https://github.com/pingcap/ossinsight/blob/main/configs/queries/analyze-recent-top-contributors/template.sql
@@ -59,10 +60,11 @@ export default function (
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
+  const PADDING = 24;
+  const HEADER_HEIGHT = 48;
 
-  const sortedContributors = contributors.sort((a, b) => b.events - a.events);
+  const sortedData = data.sort((a, b) => b.stars - a.stars).slice(0, 5);
+  const sum = sortedData.reduce((acc, cur) => acc + cur.stars, 0);
 
   return computeLayout(
     vertical(
@@ -71,7 +73,7 @@ export default function (
         subtitle,
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
-        label: 'repo',
+        label: sum,
         value: '↑repo%',
         labelProps: {
           style: {
@@ -107,16 +109,18 @@ export default function (
         },
         column: false,
       }).flex(0.1),
-      nonEmptyDataWidget(sortedContributors, () =>
+      nonEmptyDataWidget(sortedData, () =>
         horizontal(
           vertical(
-            ...sortedContributors.map((contributor) =>
+            ...sortedData.map((item) =>
               widget('builtin:avatar-progress', undefined, {
-                label: contributor.actor_login,
-                imgSrc: `https://github.com/${contributor.actor_login}.png`,
+                label: item.repo_name,
+                imgSrc: `https://github.com/${
+                  item.repo_name.split('/')[0]
+                }.png`,
                 size: 24,
-                value: 10,
-                maxVal: 100,
+                value: item.stars,
+                maxVal: sum,
               })
             )
           ).flex(0.7)

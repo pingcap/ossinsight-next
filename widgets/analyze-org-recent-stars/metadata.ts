@@ -4,11 +4,11 @@ import {
 } from '@ossinsight/widgets-types';
 
 const generateMetadata: MetadataGenerator<{
-  repo_id: string;
-}> = ({ parameters: { repo_id }, getRepo }) => {
-  const main = getRepo(parseInt(repo_id));
+  owner_id: string;
+}> = ({ parameters: { owner_id }, getRepo }) => {
+  // const main = getRepo(parseInt(repo_id));
   return {
-    title: `TODO Stars of ${main.fullName}`,
+    title: `TODO Stars of ${owner_id}`,
   };
 };
 

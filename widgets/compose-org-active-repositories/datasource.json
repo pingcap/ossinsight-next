@@ -1,6 +1,16 @@
 [
   {
-    "type": "ref",
-    "widget": "@ossinsight/widget-analyze-repo-recent-top-contributors"
+    "type": "api",
+    "url": "https://api.ossinsight.io/q/orgs/stars/top-repos",
+    "parser": {
+      "type": "json",
+      "extract": "$.data[*]"
+    },
+    "params": {
+      "ownerId": "owner_id",
+      "from": "from",
+      "to": "to"
+    },
+    "when": ["owner_id"]
   }
 ]

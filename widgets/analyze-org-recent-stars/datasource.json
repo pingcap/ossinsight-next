@@ -1,14 +1,16 @@
 [
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/analyze-recent-stars",
+    "url": "https://api.ossinsight.io/q/orgs/stars/trends",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
     },
     "params": {
-      "repoId": "repo_id"
+      "ownerId": "owner_id",
+      "from": "from",
+      "to": "to"
     },
-    "when": ["repo_id"]
+    "when": ["owner_id"]
   }
 ]
