@@ -88,6 +88,22 @@ export function HeaderAnalyzeSelector(props: HeaderAnalyzeSelectorProps) {
     [selectedType, navigateTo]
   );
 
+  React.useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === '/') {
+        openModal();
+        event.preventDefault();
+      } else if (event.key === 'Escape') {
+        closeModal();
+        event.preventDefault();
+      }
+    };
+    document.addEventListener('keypress', handleKeyPress);
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress);
+    };
+  }, []);
+
   return (
     <>
       <button
