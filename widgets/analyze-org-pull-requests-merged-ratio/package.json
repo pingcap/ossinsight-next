@@ -1,0 +1,15 @@
+{
+  "name": "@ossinsight/widget-analyze-org-pull-requests-merged-ratio",
+  "version": "1.0.0",
+  "description": "Pull Request Merged Ratio",
+  "private": true,
+  "keywords": [
+    "Pull Requests"
+  ],
+  "author": "OSSInsight",
+  "type": "module",
+  "main": "visualization.ts",
+  "devDependencies": {
+    "@ossinsight/widgets-types": "workspace:^"
+  }
+}

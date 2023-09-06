@@ -40,7 +40,12 @@ export default async function OrgAnalyzePage({
           level={3}
           classname='pt-8 flex flex-col gap-4'
         >
-          {PAGE_ID}
+          <ChartTemplate
+            name='@ossinsight/widget-compose-org-productivity-ratio'
+            searchParams={{
+              owner_id: '11855343',
+            }}
+          />
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>

@@ -1,0 +1,14 @@
+{
+  "owner_id": {
+    "type": "owner-id",
+    "title": "Analyzing Org",
+    "required": true,
+    "default": 11855343
+  },
+  "activity": {
+    "type": "activity-type",
+    "title": "Activity type",
+    "enums": ["pull-requests"],
+    "default": "pull-requests"
+  }
+}
