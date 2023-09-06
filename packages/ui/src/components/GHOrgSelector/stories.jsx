@@ -21,14 +21,10 @@ export const Default = {
 };
 
 function Wrapper() {
-  const [user, setUser] = useState();
+  const [org, setOrg] = useState();
 
   return (
-    <GHOrgSelector
-      user={user}
-      onUserSelected={setUser}
-      renderInput={renderInput}
-    />
+    <GHOrgSelector org={org} onOrgSelected={setOrg} renderInput={renderInput} />
   );
 }
 

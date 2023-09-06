@@ -1,47 +1,45 @@
 import { RemoteSelector, RemoteSelectorProps } from '../RemoteSelector';
 import { GHOrgItem } from './GHOrgItem';
 import { GHOrgListItem } from './GHOrgListItem';
-import { getUserText, isUserEquals, searchUser } from './utils';
+import { getOrgText, isOrgEquals, searchOrg } from './utils';
 
-// TODO - RemoteUserInfo => RemoteOrgInfo
-export type RemoteUserInfo = {
+export type RemoteOrgInfo = {
   id: number;
   login: string;
 };
 
-export interface GHUserSelectorProps
+export interface GHOrgSelectorProps
   extends Pick<RemoteSelectorProps<any>, 'id' | 'renderInput'> {
-  user: RemoteUserInfo | undefined;
-  onUserSelected: (repo: RemoteUserInfo | undefined) => void;
+  org: RemoteOrgInfo | undefined;
+  onOrgSelected: (repo: RemoteOrgInfo | undefined) => void;
   compat?: boolean;
 }
 
-// TODO - RemoteUserInfo => RemoteOrgInfo
 export function GHOrgSelector({
-  user,
-  onUserSelected,
+  org,
+  onOrgSelected,
   compat,
   ...props
-}: GHUserSelectorProps) {
+}: GHOrgSelectorProps) {
   return (
-    <RemoteSelector<RemoteUserInfo>
+    <RemoteSelector<RemoteOrgInfo>
       {...props}
-      getItemText={getUserText}
-      value={user ? [user] : []}
-      onSelect={onUserSelected}
-      getRemoteOptions={searchUser}
+      getItemText={getOrgText}
+      value={org ? [org] : []}
+      onSelect={onOrgSelected}
+      getRemoteOptions={searchOrg}
       renderSelectedItems={([item]) => (
         <GHOrgItem
           id={props.id}
           item={item}
           compat={compat}
-          onClear={() => onUserSelected(undefined)}
+          onClear={() => onOrgSelected(undefined)}
         />
       )}
       renderListItem={(props) => (
         <GHOrgListItem key={props.item.id} {...props} />
       )}
-      equals={isUserEquals}
+      equals={isOrgEquals}
     />
   );
 }

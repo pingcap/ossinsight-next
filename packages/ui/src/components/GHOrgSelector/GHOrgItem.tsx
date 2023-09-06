@@ -3,13 +3,12 @@ import {
   RemoteSelectedItem,
   RemoteSelectedItemCommonProps,
 } from '../RemoteSelector';
-import { RemoteUserInfo } from './GHOrgSelector';
+import { RemoteOrgInfo } from './GHOrgSelector';
 
-// TODO - item: RemoteUserInfo => item: RemoteOrgInfo
 export function GHOrgItem({
   item,
   ...props
-}: RemoteSelectedItemCommonProps & { item: RemoteUserInfo }) {
+}: RemoteSelectedItemCommonProps & { item: RemoteOrgInfo }) {
   return (
     <RemoteSelectedItem {...props}>
       <GHAvatar name={item.login} size={4} />

@@ -1,15 +1,14 @@
 import { cancellableFetch } from '../../utils/fetch';
 import { CancelablePromise } from '../../utils/promise';
-import { RemoteUserInfo } from './GHOrgSelector';
+import { RemoteOrgInfo } from './GHOrgSelector';
 
-export function isUserEquals(a: RemoteUserInfo, b: RemoteUserInfo) {
+export function isOrgEquals(a: RemoteOrgInfo, b: RemoteOrgInfo) {
   return a.id === b.id;
 }
 
-// TODO: update this api to use the orgs api
-export function searchUser(text: string): CancelablePromise<RemoteUserInfo[]> {
+export function searchOrg(text: string): CancelablePromise<RemoteOrgInfo[]> {
   return cancellableFetch(
-    `https://api.ossinsight.io/gh/users/search?keyword=${encodeURIComponent(
+    `https://api.ossinsight.io/gh/organizations/search?keyword=${encodeURIComponent(
       text
     )}`
   )
@@ -17,6 +16,6 @@ export function searchUser(text: string): CancelablePromise<RemoteUserInfo[]> {
     .then((res) => res.data);
 }
 
-export function getUserText(repo: RemoteUserInfo) {
+export function getOrgText(repo: RemoteOrgInfo) {
   return repo.login;
 }

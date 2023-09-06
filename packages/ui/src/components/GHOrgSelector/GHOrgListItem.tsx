@@ -4,13 +4,12 @@ import {
   RemoteSelectItem,
   RemoteSelectorListItemProps,
 } from '../RemoteSelector';
-import { RemoteUserInfo } from './GHOrgSelector';
+import { RemoteOrgInfo } from './GHOrgSelector';
 
-// TODO - RemoteSelectorListItemProps<RemoteUserInfo> => RemoteSelectorListItemProps<RemoteOrgInfo>
 export function GHOrgListItem({
   item,
   ...props
-}: RemoteSelectorListItemProps<RemoteUserInfo>) {
+}: RemoteSelectorListItemProps<RemoteOrgInfo>) {
   return (
     <RemoteSelectItem {...props}>
       <GHAvatar name={item.login} size={4} />
