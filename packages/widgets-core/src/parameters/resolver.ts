@@ -6,6 +6,7 @@ import parsers from './parser';
 export type LinkedData = {
   repos: Record<string, { id: number, fullName: string, defaultBranch: string }>
   users: Record<string, { id: number, login: string }>
+  orgs: Record<string, { id: number, login: string }>
   collections: Record<string, { id: number, name: string, public: boolean }>
 }
 
@@ -13,6 +14,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
   const linkedData = defaultLinkedData ?? {
     repos: {},
     users: {},
+    orgs: {},
     collections: {},
   };
   const results = await Promise.allSettled(Object.entries(definitions).map(([name, def]) => {
@@ -48,6 +50,24 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
                 login: data.login,
               };
             });
+        }
+        break;
+      case 'owner-id':
+        if (param) {
+          if (linkedData.orgs[param]) return Promise.resolve();
+          // TODO: Uncomment this when we have the API
+          //   return fetch(`https://api.ossinsight.io/gh/orgs/${param}`)
+          //     .then(handleOApi)
+          //     .then((data) => {
+          //       linkedData.orgs[param] = {
+          //         id: param,
+          //         login: data.login,
+          //       };
+          //     });
+          return Promise.resolve({
+            id: param,
+            login: 'pingcap',
+          });
         }
         break;
       case 'collection-id':

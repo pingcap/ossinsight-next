@@ -119,6 +119,10 @@ export interface UserIdParameterDefinition extends BaseParameterDefinition<numbe
   type: 'user-id';
 }
 
+export interface OrgIdParameterDefinition extends BaseParameterDefinition<number> {
+  type: 'owner-id';
+}
+
 export interface CollectionIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'collection-id';
 }
@@ -159,6 +163,7 @@ export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefiniti
 export interface ParameterDefinitionMap {
   'repo-id': RepoIdParameterDefinition;
   'user-id': UserIdParameterDefinition;
+  'owner-id': OrgIdParameterDefinition;
   'collection-id': CollectionIdParameterDefinition;
   'time-zone': TimeZoneParameterDefinition;
   'time-period': TimePeriodParameterDefinition;

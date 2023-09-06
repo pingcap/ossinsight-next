@@ -30,7 +30,7 @@ export function createLinkedDataContext (linkedData: LinkedData): LinkedDataCont
       return linkedData.collections[String(id)];
     },
     getOrg (id: number): any {
-      return {};
+      return linkedData.orgs[String(id)];
     },
   };
 }

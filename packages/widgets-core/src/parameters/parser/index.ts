@@ -6,6 +6,7 @@ import parseEventType from './event-type';
 import parseRepoId from './repo-id';
 import * as parseTime from './time';
 import parseUserId from './user-id';
+import parseOwnerId from './owner-id';
 
 type Parsers = {
   [K in keyof ParameterDefinitionMap]: (value: string, config: ParameterDefinitionMap[K]) => ExtractParameterType<ParameterDefinitionMap[K]>
@@ -14,6 +15,7 @@ type Parsers = {
 const parsers: Parsers = {
   'repo-id': parseRepoId,
   'user-id': parseUserId,
+  'owner-id': parseOwnerId,
   'time-zone': parseTime.parseTimeZone,
   'time-period': parseTime.parseTimePeriod,
   'activity-type': parseActivityType,
