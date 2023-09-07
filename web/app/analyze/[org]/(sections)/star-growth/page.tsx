@@ -39,6 +39,7 @@ export default async function OrgAnalyzePage({
               searchParams={{
                 owner_id: '11855343',
                 activity: 'stars',
+                period: 'past_28_days',
               }}
             />
             {/* <ChartTemplate

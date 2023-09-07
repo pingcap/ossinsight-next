@@ -85,7 +85,8 @@ export default async function OrgAnalyzePage({
             name='@ossinsight/widget-compose-org-active-repositories'
             searchParams={{
               owner_id: '11855343',
-              activity: 'activities',
+              activity: 'repos',
+              period: 'past_28_days',
             }}
             width={300}
             height={388}

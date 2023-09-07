@@ -24,8 +24,12 @@ export default async function OrgAnalyzePage({
         level={2}
         classname='pt-8'
       >
-        <SectionTemplate title='Engagement' level={3} classname='pt-8'>
-          <div className='w-full overflow-x-auto'>
+        <SectionTemplate
+          title='Engagement'
+          level={3}
+          classname='pt-8 flex flex-col gap-4'
+        >
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
