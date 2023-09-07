@@ -15,52 +15,99 @@ import { DateTime } from 'luxon';
 type Params = {
   owner_id: string;
   activity?: string;
+  period?: string;
 };
 
-type DataPoint = {
+type ParticipantDataPoint = {
+  login: string;
+  engagements: number;
+};
+
+type ActivityDataPoint = {
   repo_id: number;
   repo_name: string;
   stars: number;
 };
 
-type Input = [DataPoint[], DataPoint[]];
+type DataPoint = ParticipantDataPoint | ActivityDataPoint;
 
-const getActivity = (activity: string) => {
+type Input = [DataPoint[], DataPoint[] | undefined];
+
+const handleInputData = (data: DataPoint[], activity: string) => {
   switch (activity) {
-    case 'star':
+    case 'repos':
       return {
-        title: 'Top Repositories by Stars',
-        subtitle: ' ',
-        label: 'Repositories',
-        value: 'Star earned',
-      };
-    default:
-      return {
+        data: (data as ActivityDataPoint[])
+          .sort((a, b) => b.stars - a.stars)
+          .slice(0, 5),
         title: 'Active Repositories',
         subtitle: ' ',
         label: 'Top Repositories',
         value: 'Star earned',
+        maxVal: (data as ActivityDataPoint[]).reduce(
+          (acc, cur) => acc + cur.stars,
+          0
+        ),
+      };
+    case 'stars':
+      return {
+        data: (data as ActivityDataPoint[])
+          .sort((a, b) => b.stars - a.stars)
+          .slice(0, 5),
+        title: 'Top Repositories by Stars',
+        subtitle: ' ',
+        label: 'Repositories',
+        value: 'Star earned',
+        maxVal: (data as ActivityDataPoint[]).reduce(
+          (acc, cur) => acc + cur.stars,
+          0
+        ),
+      };
+    case 'participants':
+    default:
+      return {
+        data: (data as ParticipantDataPoint[]).slice(0, 5),
+        title: 'Top Participants',
+        subtitle: ' ',
+        label: 'Name',
+        value: 'Activity Count',
+        maxVal: (data as ParticipantDataPoint[]).reduce(
+          (acc, cur) => acc + cur.engagements,
+          0
+        ),
       };
   }
 };
 
+const getLogin = (item: DataPoint) => {
+  if (item.hasOwnProperty('login')) {
+    return (item as ParticipantDataPoint).login;
+  }
+  return (item as ActivityDataPoint).repo_name.split('/')[0];
+};
+
+const getLabel = (item: DataPoint) => {
+  if (item.hasOwnProperty('login')) {
+    return (item as ParticipantDataPoint).login;
+  }
+  return (item as ActivityDataPoint).repo_name;
+};
+
 export default function (
-  [starsData, activitiesData]: Input,
+  [inputData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  const { activity = 'stars' } = ctx.parameters;
+  const { activity = 'activities' } = ctx.parameters;
 
-  const data = activity === 'stars' ? starsData : activitiesData;
-
-  const { title, subtitle, label, value } = getActivity(activity);
+  const { title, subtitle, label, value, data, maxVal } = handleInputData(
+    inputData,
+    activity
+  );
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
   const PADDING = 24;
   const HEADER_HEIGHT = 48;
-
-  const sortedData = data.sort((a, b) => b.stars - a.stars).slice(0, 5);
-  const sum = sortedData.reduce((acc, cur) => acc + cur.stars, 0);
 
   return computeLayout(
     vertical(
@@ -106,18 +153,16 @@ export default function (
         },
         column: false,
       }).flex(0.1),
-      nonEmptyDataWidget(sortedData, () =>
+      nonEmptyDataWidget(data, () =>
         horizontal(
           vertical(
-            ...sortedData.map((item) =>
+            ...data.map((item) =>
               widget('builtin:avatar-progress', undefined, {
-                label: item.repo_name,
-                imgSrc: `https://github.com/${
-                  item.repo_name.split('/')[0]
-                }.png`,
+                label: getLabel(item),
+                imgSrc: `https://github.com/${getLogin(item)}.png`,
                 size: 24,
-                value: item.stars,
-                maxVal: sum,
+                value: item?.stars || item?.engagements,
+                maxVal,
               })
             )
           ).flex(0.7)

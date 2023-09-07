@@ -41,13 +41,13 @@ export default async function OrgAnalyzePage({
                 activity: 'stars',
               }}
             />
-            <ChartTemplate
+            {/* <ChartTemplate
               name='@ossinsight/widget-compose-org-active-repositories'
               searchParams={{
                 owner_id: '11855343',
                 activity: 'stars',
               }}
-            />
+            /> */}
           </div>
 
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>

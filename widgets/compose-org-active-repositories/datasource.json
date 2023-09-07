@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/stars/top-repos",
+    "url": "https://api.ossinsight.io/q/orgs/{activity}/active/ranking",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
@@ -9,22 +9,9 @@
     "params": {
       "ownerId": "owner_id",
       "from": "from",
-      "to": "to"
+      "to": "to",
+      "period": "period"
     },
-    "when": ["owner_id"]
-  },
-  {
-    "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/repos/active/ranking",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
-    "params": {
-      "ownerId": "owner_id",
-      "from": "from",
-      "to": "to"
-    },
-    "when": ["owner_id"]
+    "when": ["owner_id", "activity", "period"]
   }
 ]
