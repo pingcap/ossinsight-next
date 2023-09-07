@@ -44,6 +44,14 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     key: 'code-submissions',
     title: 'Code Submissions',
   },
+  {
+    key: 'active',
+    title: 'Active',
+  },
+  {
+    key: 'new',
+    title: 'New',
+  },
 ];
 
 export function activityDisplayName (key: string) {

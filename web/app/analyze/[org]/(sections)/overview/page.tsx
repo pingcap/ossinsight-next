@@ -67,15 +67,17 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-contributors'
               searchParams={{
-                repo_id: '41986369',
-                limit: '5',
+                owner_id: '11855343',
+                activity: 'active',
+                period: 'past_28_days',
               }}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-contributors'
               searchParams={{
-                repo_id: '41986369',
-                limit: '5',
+                owner_id: '11855343',
+                activity: 'new',
+                period: 'past_28_days',
               }}
             />
           </div>

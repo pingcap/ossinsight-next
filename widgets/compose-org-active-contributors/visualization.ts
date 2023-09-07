@@ -13,69 +13,45 @@ import {
 import { DateTime } from 'luxon';
 
 type Params = {
-  repo_id: string;
-  limit: number;
+  owner_id: string;
+  period?: string;
+  activity?: string;
 };
 
 type DataPoint = {
-  actor_login: string;
-  events: number;
+  login: string;
+  engagements: number;
 };
 
 type Input = [DataPoint[]];
-
-const calcGridCfg = (limit: number) => {
-  switch (limit) {
-    case 50:
-    case 100:
-      return {
-        rows: 5,
-        cols: 20,
-        size: 20,
-      };
-    case 5:
-    case 10:
-    case 30:
-    default:
-      return {
-        rows: 3,
-        cols: 10,
-        size: 40,
-      };
-  }
-};
 
 export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  const today = new Date();
-  const prior30 = new Date(new Date().setDate(today.getDate() - 30));
-  const end = DateTime.fromISO(today.toISOString());
-  const start = DateTime.fromISO(prior30.toISOString());
-  const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
 
-  const limit = ctx.parameters.limit || '5';
+  const sum = contributors.length;
+
   const { rows, cols, size } = {
     rows: 1,
     cols: 5,
     size: 40,
   };
-
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
+  const PADDING = 24;
+  const HEADER_HEIGHT = 48;
 
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Active Participants',
+        title: `${ctx.parameters?.activity} Participants`,
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
-        label: '000',
-        value: '↑000%',
+        label: sum,
+        // value: '↑000%',
+        value: ' ',
         labelProps: {
           style: {
             fontSize: 24,
@@ -99,12 +75,10 @@ export default function (
             widget('builtin:avatar-label', undefined, {
               label: '',
               size: size,
-              imgSrc: item.actor_login
-                ? `https://github.com/${item.actor_login}.png`
-                : '',
+              imgSrc: item.login ? `https://github.com/${item.login}.png` : '',
             })
           )
-        ).gap(autoSize(ctx, 4))
+        ).gap(4)
       )
     ).padding([0, PADDING, PADDING / 2, PADDING]),
     0,
