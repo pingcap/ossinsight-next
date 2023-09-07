@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { HeadlessTabs, HeadlessTab } from '@ossinsight/ui/src/components/Tabs';
 import { twMerge } from 'tailwind-merge';
-import { alpha2ToGeo, alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
+import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 
 import { getOrgStarsLocations } from '@/components/Analyze/utils';
 
