@@ -11,15 +11,18 @@ import ArrowUpRightCircleFill from 'bootstrap-icons/icons/arrow-up-right-circle-
 import { twMerge } from 'tailwind-merge';
 
 import { AnalyzeOrgContext } from '@/components/Context/Analyze/AnalyzeOrg';
+import { ChartSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 
 export interface ChartTemplateProps {
   name: string;
   searchParams?: Record<string, string>;
   className?: string;
+  width?: number;
+  height?: number;
 }
 
 export default function ChartTemplate(props: ChartTemplateProps) {
-  const { name, searchParams = {}, className } = props;
+  const { name, searchParams = {}, className, width, height } = props;
 
   const { orgName } = React.useContext(AnalyzeOrgContext);
 
@@ -29,8 +32,14 @@ export default function ChartTemplate(props: ChartTemplateProps) {
   );
 
   const classNameMemo = React.useMemo(
-    () => twMerge('relative w-fit h-fit', className),
-    [className]
+    () =>
+      twMerge(
+        'relative w-fit h-fit',
+        className,
+        width && `w-[${width}px]`,
+        height && `h-[${height}px]`
+      ),
+    [className, width, height]
   );
 
   const targetLinkMemo = React.useMemo(() => {
@@ -44,7 +53,16 @@ export default function ChartTemplate(props: ChartTemplateProps) {
 
   return (
     <div className={classNameMemo}>
-      <React.Suspense>
+      <React.Suspense
+        fallback={
+          <ChartSkeleton
+            style={{
+              width: width ? `${width}px` : undefined,
+              height: height ? `${height}px` : undefined,
+            }}
+          />
+        }
+      >
         <ServerWidget
           className='WidgetContainer'
           name={name}

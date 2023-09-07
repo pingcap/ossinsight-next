@@ -47,6 +47,8 @@ export default async function OrgAnalyzePage({
               searchParams={{
                 owner_id: '11855343',
               }}
+              width={698}
+              height={150}
             />
             <div className='flex gap-4'>
               <ChartTemplate
@@ -55,6 +57,8 @@ export default async function OrgAnalyzePage({
                   owner_id: '11855343',
                   activity: 'pull-requests',
                 }}
+                width={222}
+                height={222}
               />
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
@@ -62,6 +66,8 @@ export default async function OrgAnalyzePage({
                   owner_id: '11855343',
                   activity: 'issues',
                 }}
+                width={222}
+                height={222}
               />
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
@@ -69,6 +75,8 @@ export default async function OrgAnalyzePage({
                   owner_id: '11855343',
                   activity: 'pull-requests',
                 }}
+                width={222}
+                height={222}
               />
             </div>
           </div>
@@ -80,6 +88,8 @@ export default async function OrgAnalyzePage({
                 activity: 'active',
                 period: 'past_28_days',
               }}
+              width={300}
+              height={186}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-contributors'
@@ -88,6 +98,8 @@ export default async function OrgAnalyzePage({
                 activity: 'new',
                 period: 'past_28_days',
               }}
+              width={300}
+              height={186}
             />
           </div>
           <ChartTemplate
@@ -96,6 +108,8 @@ export default async function OrgAnalyzePage({
               owner_id: '11855343',
               activity: 'activities',
             }}
+            width={300}
+            height={388}
           />
         </div>
       </SectionTemplate>
