@@ -43,24 +43,15 @@ export default async function OrgAnalyzePage({
               }}
             />
           </div>
-          {/* <div className='w-full overflow-x-auto'>
+          <div className='w-full overflow-x-auto'>
             <ChartTemplate
-              name='@ossinsight/widget-compose-org-activity-growth'
+              name='@ossinsight/widget-compose-org-participants-roles-ratio'
               searchParams={{
                 owner_id: '11855343',
-                activity: 'participants',
                 period: 'past_28_days',
               }}
             />
-            <ChartTemplate
-              name='@ossinsight/widget-compose-org-active-repositories'
-              searchParams={{
-                owner_id: '11855343',
-                activity: 'participants',
-                period: 'past_28_days',
-              }}
-            />
-          </div> */}
+          </div>
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>
