@@ -1,8 +1,10 @@
 {
-  "name": "@ossinsight/widget-analyze-org-recent-stars",
+  "name": "@ossinsight/widget-analyze-org-recent-stats",
   "version": "1.0.0",
   "description": "TODO",
-  "keywords": ["Repository", "Stars"],
+  "keywords": [
+    "Organization"
+  ],
   "author": "OSSInsight",
   "type": "module",
   "main": "visualization.ts",

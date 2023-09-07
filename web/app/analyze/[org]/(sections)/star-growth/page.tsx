@@ -8,19 +8,9 @@ import CompanyRankTable, {
   GeoRankTable,
   TableSkeleton,
 } from '@/components/Analyze/Table/RankTable';
+import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
 
 const PAGE_ID = 'star-growth';
-
-const fetchOrgInfo = async (
-  orgName: string
-): Promise<AnalyzeOrgContextProps> => {
-  // TODO - fetch org info
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return {
-    orgName: 'pingcap',
-    orgId: 11855343,
-  };
-};
 
 export default async function OrgAnalyzePage({
   params,

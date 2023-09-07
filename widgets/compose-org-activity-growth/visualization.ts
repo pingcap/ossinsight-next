@@ -13,10 +13,11 @@ import { DateTime } from 'luxon';
 
 type Params = {
   owner_id: string;
-  activity: string;
+  activity?: string;
+  period?: string;
 };
 
-type DataPoint = {
+type StarDataPoint = {
   idx: number;
   current_period_day: string;
   current_period_day_total: number;
@@ -24,7 +25,55 @@ type DataPoint = {
   past_period_day_total: number;
 };
 
+type ParticipantDataPoint = {
+  day: string;
+  active_participants: number;
+  new_participants: number;
+};
+
+type DataPoint = StarDataPoint | ParticipantDataPoint;
+
 type Input = [DataPoint[]];
+
+const handleData = (data: DataPoint[], activity: string) => {
+  switch (activity) {
+    case 'participants':
+      const [activeParticipantsSum, newParticipantsSum] = (
+        data as ParticipantDataPoint[]
+      ).reduce(
+        (acc, cur) => {
+          acc[0] += cur.active_participants;
+          acc[1] += cur.new_participants;
+          return acc;
+        },
+        [0, 0]
+      );
+      const diff1 = (newParticipantsSum / activeParticipantsSum) * 100;
+      return {
+        data,
+        label: activeParticipantsSum,
+        value: `↑${diff1.toFixed(2)}%`,
+        increase: true,
+      };
+    case 'stars':
+    default:
+      const [currentSum, lastSum] = (data as StarDataPoint[]).reduce(
+        (acc, cur) => {
+          acc[0] += cur.current_period_day_total;
+          acc[1] += cur.past_period_day_total;
+          return acc;
+        },
+        [0, 0]
+      );
+      const diff = currentSum - lastSum;
+      return {
+        data,
+        label: currentSum,
+        value: diff >= 0 ? `↑${diff}%` : `↓${diff}%`,
+        increase: diff >= 0,
+      };
+  }
+};
 
 export default function (
   [data]: Input,
@@ -37,16 +86,14 @@ export default function (
   const HEADER_HEIGHT = 48;
   const HORIZONTAL_SPACING = 64;
 
-  const [currentSum, lastSum] = data.reduce(
-    (acc, cur) => {
-      acc[0] += cur.current_period_day_total;
-      acc[1] += cur.past_period_day_total;
-      return acc;
-    },
-    [0, 0]
-  );
+  const { activity = 'stars' } = ctx.parameters || {};
 
-  const diff = currentSum - lastSum;
+  const {
+    data: handledData,
+    label,
+    value,
+    increase,
+  } = handleData(data, activity);
 
   return computeLayout(
     vertical(
@@ -57,8 +104,8 @@ export default function (
       vertical(
         horizontal(
           widget('builtin:label-value', undefined, {
-            label: currentSum,
-            value: diff >= 0 ? `↑${diff}%` : `↓${diff}%`,
+            label,
+            value,
             labelProps: {
               style: {
                 fontSize: 24,
@@ -69,10 +116,9 @@ export default function (
               style: {
                 fontSize: 12,
                 lineHeight: 2,
-                color:
-                  diff >= 0
-                    ? ctx.theme.colors.green['400']
-                    : ctx.theme.colors.red['400'],
+                color: increase
+                  ? ctx.theme.colors.green['400']
+                  : ctx.theme.colors.red['400'],
               },
             },
             column: false,
@@ -81,8 +127,8 @@ export default function (
           .gap(SPACING)
           .flex(0.1),
         widget(
-          '@ossinsight/widget-analyze-org-recent-stars',
-          [data],
+          '@ossinsight/widget-analyze-org-recent-stats',
+          [handledData],
           ctx.parameters
         )
       )

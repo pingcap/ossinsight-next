@@ -394,7 +394,7 @@ importers:
         specifier: workspace:^
         version: link:../../packages/widgets-types
 
-  widgets/analyze-org-recent-stars:
+  widgets/analyze-org-recent-stats:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^

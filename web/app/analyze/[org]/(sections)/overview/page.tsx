@@ -4,30 +4,9 @@ import AnalyzeOrgContextProvider, {
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
-import { getOrgInfo } from '@/components/Analyze/utils';
-import { notFound } from 'next/navigation';
-
-// import Content from '../mockContent';
+import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
 
 const PAGE_ID = 'overview';
-
-const fetchOrgInfo = async (
-  orgName: string
-): Promise<AnalyzeOrgContextProps> => {
-  try {
-    const orgDatas = await getOrgInfo(orgName);
-    const orgData = orgDatas[0];
-    if (!orgData) {
-      throw new Error('org not found');
-    }
-    return {
-      orgName: orgData.login,
-      orgId: orgData.id,
-    };
-  } catch (error) {
-    notFound();
-  }
-};
 
 export default async function OrgAnalyzePage({
   params,

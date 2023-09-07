@@ -4,19 +4,9 @@ import AnalyzeOrgContextProvider, {
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
+import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
 
 const PAGE_ID = 'engagement';
-
-const fetchOrgInfo = async (
-  orgName: string
-): Promise<AnalyzeOrgContextProps> => {
-  // TODO - fetch org info
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
-  return {
-    orgName: 'pingcap',
-    orgId: 11855343,
-  };
-};
 
 export default async function OrgAnalyzePage({
   params,
@@ -39,10 +29,10 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
-                repo_id: '41986369',
+                owner_id: '11855343',
                 activity: 'participants',
+                period: 'past_28_days',
               }}
-              // className='h-[408px] w-[1089px]'
             />
           </div>
         </SectionTemplate>

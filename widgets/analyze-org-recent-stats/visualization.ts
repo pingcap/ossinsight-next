@@ -10,9 +10,10 @@ import {
 
 type Params = {
   owner_id: string;
+  activity?: 'stars' | 'participants';
 };
 
-type DataPoint = {
+type StarDataPoint = {
   idx: number;
   current_period_day: string;
   current_period_day_total: number;
@@ -20,17 +21,74 @@ type DataPoint = {
   past_period_day_total: number;
 };
 
+type ParticipantDataPoint = {
+  day: string;
+  active_participants: number;
+  new_participants: number;
+};
+
+type DataPoint = StarDataPoint | ParticipantDataPoint;
+
 type Input = [DataPoint[], DataPoint[] | undefined];
+
+const handleData = (data: DataPoint[], activity: 'stars' | 'participants') => {
+  switch (activity) {
+    case 'participants':
+      const source2 = data as ParticipantDataPoint[];
+      const mainSeries2 = {
+        encode: {
+          x: 'day',
+          y: 'active_participants',
+        },
+      };
+      const vsSeries2 = {
+        encode: {
+          x: 'day',
+          y: 'new_participants',
+        },
+      };
+      return {
+        source: source2,
+        mainSeries: mainSeries2,
+        vsSeries: vsSeries2,
+      };
+    case 'stars':
+    default:
+      const source1 = [
+        ...(data as StarDataPoint[]).sort((a, b) => b.idx - a.idx),
+      ];
+      const mainSeries1 = {
+        encode: {
+          x: 'idx',
+          y: 'current_period_day_total',
+        },
+      };
+      const vsSeries1 = {
+        encode: {
+          x: 'idx',
+          y: 'past_period_day_total',
+        },
+      };
+      return {
+        source: source1,
+        mainSeries: mainSeries1,
+        vsSeries: vsSeries1,
+      };
+  }
+};
 
 export default function (
   data: Input,
   ctx: WidgetVisualizerContext<Params>
 ): EChartsVisualizationConfig {
   const [main, vs] = data;
+  const { activity = 'stars' } = ctx.parameters;
+
+  const { source, mainSeries, vsSeries } = handleData(main, activity);
 
   return {
     dataset: {
-      source: [...main.sort((a, b) => b.idx - a.idx)],
+      source,
     },
     xAxis: {
       type: 'category',
@@ -60,8 +118,9 @@ export default function (
         type: 'bar',
         name: 'Current period',
         encode: {
-          x: 'idx',
-          y: 'current_period_day_total',
+          // x: 'idx',
+          // y: 'current_period_day_total',
+          ...mainSeries.encode,
         },
         itemStyle: {
           decal: {
@@ -90,8 +149,9 @@ export default function (
         type: 'bar',
         name: 'Last period',
         encode: {
-          x: 'idx',
-          y: 'past_period_day_total',
+          // x: 'idx',
+          // y: 'past_period_day_total',
+          ...vsSeries.encode,
         },
         itemStyle: {
           color: '#ED5C53',
