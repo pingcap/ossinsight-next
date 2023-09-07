@@ -52,7 +52,13 @@ export default function ChartTemplate(props: ChartTemplateProps) {
   }, [name, searchParams]);
 
   return (
-    <div className={classNameMemo}>
+    <div
+      className={classNameMemo}
+      style={{
+        width: width ? `${width}px` : undefined,
+        height: height ? `${height}px` : undefined,
+      }}
+    >
       <React.Suspense
         fallback={
           <ChartSkeleton
