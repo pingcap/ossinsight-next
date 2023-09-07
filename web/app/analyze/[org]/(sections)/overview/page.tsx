@@ -81,17 +81,14 @@ export default async function OrgAnalyzePage({
               }}
             />
           </div>
-          {/* <ChartTemplate
+          <ChartTemplate
             name='@ossinsight/widget-compose-org-active-repositories'
             searchParams={{
-              repo_id: '41986369',
-              limit: '5',
+              owner_id: '11855343',
+              activity: 'stars',
             }}
-          /> */}
+          />
         </div>
-
-        {PAGE_ID}
-        {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
       </SectionTemplate>
     </AnalyzeOrgContextProvider>
   );
