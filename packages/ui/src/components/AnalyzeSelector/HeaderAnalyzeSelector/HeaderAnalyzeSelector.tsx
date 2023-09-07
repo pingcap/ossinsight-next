@@ -81,7 +81,7 @@ export function HeaderAnalyzeSelector(props: HeaderAnalyzeSelectorProps) {
           );
           break;
         case 'org':
-          navigateTo?.(`/analyze/${(item as RemoteOrgInfo)!.login}`);
+          navigateTo?.(`/analyze/${(item as RemoteOrgInfo)!.login}/overview`);
           break;
       }
     },
