@@ -4,7 +4,10 @@ import AnalyzeOrgContextProvider, {
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
-import CompanyRankTable from '@/components/Analyze/Table/RankTable';
+import CompanyRankTable, {
+  GeoRankTable,
+  TableSkeleton,
+} from '@/components/Analyze/Table/RankTable';
 
 const PAGE_ID = 'star-growth';
 
@@ -44,39 +47,40 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
-                repo_id: '41986369',
+                owner_id: '11855343',
+                activity: 'stars',
               }}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-repositories'
               searchParams={{
-                repo_id: '41986369',
-                limit: '5',
-                activity: 'star',
+                owner_id: '11855343',
+                activity: 'stars',
               }}
             />
           </div>
 
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-            <ChartTemplate
+            {/* <ChartTemplate
               name='@ossinsight/widget-analyze-repo-company'
               searchParams={{
                 repo_id: '41986369',
                 activity: 'stars',
               }}
             />
-            <CompanyRankTable />
+            <CompanyRankTable /> */}
           </div>
 
-          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+          <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
             <ChartTemplate
-              name='@ossinsight/widget-analyze-repo-stars-map'
+              name='@ossinsight/widget-analyze-org-stars-map'
               searchParams={{
-                repo_id: '41986369',
-                activity: 'stars',
+                owner_id: '11855343',
               }}
+              width={726}
+              height={405}
             />
-            <CompanyRankTable />
+            <GeoRankTable id={data.orgId} />
           </div>
         </SectionTemplate>
       </SectionTemplate>

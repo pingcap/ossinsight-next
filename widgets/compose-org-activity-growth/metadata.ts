@@ -4,7 +4,7 @@ const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({ parameters:
   // const repo = getRepo(Number(repo_id));
 
   return {
-    title: `TODO Active Contributors of ${owner_id} - Last 28 days`
+    title: `TODO Star Earned Over Time of ${owner_id}`
   }
 };
 

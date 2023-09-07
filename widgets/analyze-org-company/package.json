@@ -1,0 +1,12 @@
+{
+  "name": "@ossinsight/widget-analyze-org-company",
+  "version": "1.0.0",
+  "description": "Analyze and compare company affiliations of repository stargazers, pull request submitters, and issue creators.",
+  "type": "module",
+  "main": "visualization.ts",
+  "keywords": ["Repository", "Company"],
+  "author": "OSSInsight",
+  "devDependencies": {
+    "@ossinsight/widgets-parent": "workspace:^"
+  }
+}

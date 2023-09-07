@@ -10,6 +10,7 @@ const geoMap: Record<string, { long: number; lat: number }> = geo.reduce(
 );
 
 export const alpha2ToTitle = (alpha2: string) => {
+  if (alpha2 === "UND") return "Unknown";
   return code[alpha2];
 };
 
