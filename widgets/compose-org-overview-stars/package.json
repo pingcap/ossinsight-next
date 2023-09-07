@@ -5,7 +5,8 @@
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
-    "Repository"
+    "Organization",
+    "Stars"
   ],
   "author": "OSSInsight",
   "devDependencies": {

@@ -12,25 +12,43 @@ import {
 import { DateTime } from 'luxon';
 
 type Params = {
-  repo_id: string;
+  owner_id: string;
 };
 
-type Input = [[any[]]];
+type DataPoint = {
+  idx: number;
+  current_period_day: string;
+  current_period_day_total: number;
+  past_period_day: string;
+  past_period_day_total: number;
+};
+
+type Input = [DataPoint[]];
 
 export default function (
-  [[stars]]: Input,
+  input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  const end = DateTime.fromISO(stars[0].current_period_day);
-  const start = DateTime.fromISO(stars[stars.length - 1].current_period_day);
-  const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
-
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
-  const SPACING = autoSize(ctx, 16);
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
-  const HORIZONTAL_SPACING = autoSize(ctx, 64);
+  const SPACING = 16;
+  const PADDING = 24;
+  const HEADER_HEIGHT = 48;
+  const HORIZONTAL_SPACING = 64;
+
+  const [data] = input;
+
+  const [currentStarsSum, pastStarsSum] = data.reduce(
+    ([current, past], { current_period_day_total, past_period_day_total }) => {
+      return [current + current_period_day_total, past + past_period_day_total];
+    },
+    [0, 0]
+  );
+
+  const diff = currentStarsSum - pastStarsSum;
+  const diffPercentage = ((Math.abs(diff) / pastStarsSum) * 100).toFixed(2);
+
+  const stars = transferData2Star(data);
 
   return computeLayout(
     vertical(
@@ -41,8 +59,8 @@ export default function (
       horizontal(
         horizontal(
           widget('builtin:label-value', undefined, {
-            label: 'stars',
-            value: '↑star%',
+            label: currentStarsSum,
+            value: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
             labelProps: {
               style: {
                 fontSize: 24,
@@ -53,20 +71,21 @@ export default function (
               style: {
                 fontSize: 12,
                 lineHeight: 2,
-                color: ctx.theme.colors.green['400'],
+                color:
+                  diff >= 0
+                    ? ctx.theme.colors.green['400']
+                    : ctx.theme.colors.red['400'],
               },
             },
             column: false,
           }).flex()
-        ).gap(SPACING),
+        ).gap(SPACING).flex(0.3),
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
           ctx.parameters
         )
       )
-        .gap(HORIZONTAL_SPACING)
-        .flex()
     )
       .padding([0, PADDING, PADDING])
       .gap(SPACING),
@@ -75,6 +94,36 @@ export default function (
     WIDTH,
     HEIGHT
   );
+}
+
+// idx: number;
+// current_period_day: string;
+// current_period_day_total: number;
+// past_period_day: string;
+// past_period_day_total: number;
+
+// type StarDataPoint = {
+//   current_period_day: string;
+//   current_period_day_stars: number;
+//   current_period_stars: number;
+//   idx: number;
+//   last_period_day: string;
+//   last_period_day_stars: number;
+//   last_period_stars: number;
+// };
+
+const transferData2Star = (data: DataPoint[]) => { 
+  return data.map((d) => {
+    return {
+      idx: d.idx,
+      current_period_day: d.current_period_day,
+      current_period_day_stars: d.current_period_day_total,
+      current_period_stars: d.current_period_day_total,
+      last_period_day: d.past_period_day,
+      last_period_day_stars: d.past_period_day_total,
+      last_period_stars: d.past_period_day_total,
+    };
+  });
 }
 
 export const type = 'compose';

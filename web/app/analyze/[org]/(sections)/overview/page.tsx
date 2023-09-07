@@ -36,7 +36,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-overview-stars'
               searchParams={{
-                repo_id: '41986369',
+                owner_id: '11855343',
               }}
             />
             <div className='flex gap-4'>
@@ -76,13 +76,13 @@ export default async function OrgAnalyzePage({
               }}
             />
           </div>
-          <ChartTemplate
+          {/* <ChartTemplate
             name='@ossinsight/widget-compose-org-active-repositories'
             searchParams={{
               repo_id: '41986369',
               limit: '5',
             }}
-          />
+          /> */}
         </div>
 
         {PAGE_ID}
