@@ -43,19 +43,22 @@ export default async function OrgAnalyzePage({
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
-                  repo_id: '41986369',
+                  owner_id: '11855343',
+                  activity: 'pull-requests',
                 }}
               />
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
-                  repo_id: '41986369',
+                  owner_id: '11855343',
+                  activity: 'issues',
                 }}
               />
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
-                  repo_id: '41986369',
+                  owner_id: '11855343',
+                  activity: 'pull-requests',
                 }}
               />
             </div>

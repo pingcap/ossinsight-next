@@ -1,11 +1,17 @@
-import { MetadataGenerator, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import {
+  MetadataGenerator,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ repo_id: string, vs_repo_id?: string }> = ({ parameters: { repo_id, vs_repo_id }, getRepo }) => {
-  const repo = getRepo(Number(repo_id));
+const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
+  parameters: { owner_id },
+  getRepo,
+}) => {
+  // const repo = getRepo(Number(repo_id));
 
   return {
-    title: `TODO: Overview of ${repo.fullName}`
-  }
+    title: `TODO: Overview stats of ${owner_id}`,
+  };
 };
 
 export default generateMetadata;

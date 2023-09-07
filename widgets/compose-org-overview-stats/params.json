@@ -1,8 +1,14 @@
 {
-  "repo_id": {
-    "type": "repo-id",
-    "title": "Analyzing Repo",
+  "owner_id": {
+    "type": "owner-id",
+    "title": "Analyzing Org",
     "required": true,
-    "default": 41986369
+    "default": 11855343
+  },
+  "activity": {
+    "type": "activity-type",
+    "title": "Activity type",
+    "enums": ["issues", "pull-requests", "code-reviews"],
+    "default": "pull-requests"
   }
 }
