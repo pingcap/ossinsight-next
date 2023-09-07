@@ -9,6 +9,6 @@
     "type": "activity-type",
     "enums": ["stars", "activities"],
     "title": "Type",
-    "default": "activities"
+    "default": "stars"
   }
 }

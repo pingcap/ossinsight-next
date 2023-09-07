@@ -23,7 +23,7 @@ type DataPoint = {
   stars: number;
 };
 
-type Input = [DataPoint[]];
+type Input = [DataPoint[], DataPoint[]];
 
 const getActivity = (activity: string) => {
   switch (activity) {
@@ -39,23 +39,19 @@ const getActivity = (activity: string) => {
         title: 'Active Repositories',
         subtitle: ' ',
         label: 'Top Repositories',
-        value: 'Activities',
+        value: 'Star earned',
       };
   }
 };
 
 export default function (
-  [data]: Input,
+  [starsData, activitiesData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  // This range is not returned by api https://github.com/pingcap/ossinsight/blob/main/configs/queries/analyze-recent-top-contributors/template.sql
-  const today = new Date();
-  const prior30 = new Date(new Date().setDate(today.getDate() - 30));
-  const end = DateTime.fromISO(today.toISOString());
-  const start = DateTime.fromISO(prior30.toISOString());
-  // const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
+  const { activity = 'stars' } = ctx.parameters;
 
-  const { activity = 'activity' } = ctx.parameters;
+  const data = activity === 'stars' ? starsData : activitiesData;
+
   const { title, subtitle, label, value } = getActivity(activity);
 
   const WIDTH = ctx.width;
@@ -73,8 +69,9 @@ export default function (
         subtitle,
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
-        label: sum,
-        value: '↑repo%',
+        label: data.length.toString(),
+        // value: '↑repo%',
+        value: ' ',
         labelProps: {
           style: {
             fontSize: 24,
