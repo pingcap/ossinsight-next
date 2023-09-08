@@ -56,6 +56,15 @@ export default async function OrgAnalyzePage({
               }}
             />
           </div>
+          <div className='w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-engagement-scatter'
+              searchParams={{
+                owner_id: '11855343',
+                period: 'past_28_days',
+              }}
+            />
+          </div>
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>
