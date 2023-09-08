@@ -1,14 +1,15 @@
 [
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/analyze-{activity}-company",
+    "url": "https://api.ossinsight.io/q/orgs/{activity}/organizations",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
     },
     "params": {
-      "repoId": "repo_id"
+      "ownerId": "owner_id",
+      "period": "period"
     },
-    "when": ["repo_id", "activity"]
+    "when": ["owner_id", "activity", "period"]
   }
 ]

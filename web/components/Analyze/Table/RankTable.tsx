@@ -4,7 +4,10 @@ import { HeadlessTabs, HeadlessTab } from '@ossinsight/ui/src/components/Tabs';
 import { twMerge } from 'tailwind-merge';
 import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 
-import { getOrgStarsLocations } from '@/components/Analyze/utils';
+import {
+  getOrgActivityLocations,
+  getOrgParticipateOrgs,
+} from '@/components/Analyze/utils';
 
 const mock_data = new Array(10)
   .fill(0)
@@ -137,22 +140,34 @@ function Table(props: {
   );
 }
 
+export function upperFirst(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function TableSkeleton() {
   return <Table loading />;
 }
 
-export async function GeoRankTablePromise(props: { id: number }) {
-  const { id } = props;
+export async function GeoRankTablePromise(props: {
+  id: number;
+  type: 'stars' | 'participants';
+  maxRows?: number;
+}) {
+  const { id, type, maxRows = 10 } = props;
 
-  const data = await getOrgStarsLocations(id);
+  const data = await getOrgActivityLocations(id, { activity: type });
 
-  const rows = data.map((d, idx) => [
-    idx + 1,
-    alpha2ToTitle(d.country_code),
-    d.stars,
-  ]);
+  console.log(data);
 
-  const header = ['No.', 'Location', 'Stars'];
+  const rows = data
+    .slice(0, maxRows)
+    .map((d: any, idx: number) => [
+      idx + 1,
+      alpha2ToTitle(d.country_code),
+      d[type],
+    ]);
+
+  const header = ['No.', 'Location', upperFirst(type)];
 
   return (
     <>
@@ -161,8 +176,11 @@ export async function GeoRankTablePromise(props: { id: number }) {
   );
 }
 
-export function GeoRankTable(props: { id?: number }) {
-  const { id } = props;
+export function GeoRankTable(props: {
+  id?: number;
+  type?: 'stars' | 'participants';
+}) {
+  const { id, type = 'stars' } = props;
 
   if (!id) {
     return null;
@@ -174,7 +192,46 @@ export function GeoRankTable(props: { id?: number }) {
         Top locations
       </h1>
       <React.Suspense fallback={<TableSkeleton />}>
-        <GeoRankTablePromise id={id} />
+        <GeoRankTablePromise id={id} type={type} />
+      </React.Suspense>
+    </div>
+  );
+}
+
+export async function ParticipantCompanyRankTablePromise(props: {
+  id: number;
+}) {
+  const { id } = props;
+
+  const data = await getOrgParticipateOrgs(id);
+
+  const rows = data
+    .slice(0, 10)
+    .map((d, idx) => [idx + 1, d.organization_name, d.participants]);
+
+  const header = ['No.', 'Company', 'Participants'];
+
+  return (
+    <>
+      <Table rows={rows} header={header} />
+    </>
+  );
+}
+
+export function ParticipantCompanyRankTable(props: { id?: number }) {
+  const { id } = props;
+
+  if (!id) {
+    return null;
+  }
+
+  return (
+    <div className='px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-around'>
+      <h1 className='px-1 text-base font-semibold leading-6 text-white'>
+        Top companies
+      </h1>
+      <React.Suspense fallback={<TableSkeleton />}>
+        <ParticipantCompanyRankTablePromise id={id} />
       </React.Suspense>
     </div>
   );

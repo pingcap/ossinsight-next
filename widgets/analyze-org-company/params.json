@@ -1,18 +1,21 @@
 {
-  "repo_id": {
-    "type": "repo-id",
-    "title": "Analyzing Repo",
+  "owner_id": {
+    "type": "owner-id",
+    "title": "Analyzing Org",
     "required": true,
-    "default": 41986369
+    "default": 11855343
   },
-  "vs_repo_id": {
-    "type": "repo-id",
-    "title": "Comparing Repo"
+  "period": {
+    "type": "time-period",
+    "title": "Period",
+    "required": true,
+    "enums": ["past_28_days", "past_90_days", "past_12_months"],
+    "default": "past_28_days"
   },
   "activity": {
     "type": "activity-type",
     "title": "Activity type",
-    "enums": ["stars", "pull-request-creators", "issue-creators"],
-    "default": "stars"
+    "enums": ["participants", "stars"],
+    "default": "participants"
   }
 }

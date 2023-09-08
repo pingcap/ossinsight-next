@@ -4,19 +4,14 @@ import AnalyzeOrgContextProvider, {
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
+import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
+import CompanyRankTable, {
+  ParticipantCompanyRankTable,
+  GeoRankTable,
+  TableSkeleton,
+} from '@/components/Analyze/Table/RankTable';
 
 const PAGE_ID = 'origins';
-
-const fetchOrgInfo = async (
-  orgName: string
-): Promise<AnalyzeOrgContextProps> => {
-  // TODO - fetch org info
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return {
-    orgName: 'pingcap',
-    orgId: 11855343,
-  };
-};
 
 export default async function OrgAnalyzePage({
   params,
@@ -28,18 +23,42 @@ export default async function OrgAnalyzePage({
   return (
     <AnalyzeOrgContextProvider data={data}>
       <OrgAnalyzePageHeader />
-      <SectionTemplate title='Origins' level={3} classname='pt-8'>
-        <div className='w-full overflow-x-auto'>
-          {/* <ChartTemplate
-              name='@ossinsight/widget-compose-org-star-growth'
+      <SectionTemplate
+        title='Participant'
+        description='Examine participation dynamics within your organization, analyzing participant activity, engagement depth, roles, affiliations, and geographic distribution. Uncover valuable insights into participate involvement, preferences, and demographics, enabling targeted strategies for enhanced engagement and tailored experiences.'
+        level={2}
+        classname='pt-8'
+      >
+        <SectionTemplate
+          title='Origins'
+          level={3}
+          classname='pt-8 flex flex-col gap-4'
+        >
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-company'
               searchParams={{
-                repo_id: '41986369',
+                owner_id: '11855343',
+                activity: 'participants',
+                period: 'past_28_days',
               }}
-              className='h-[408px] w-[1089px]'
-            /> */}
-        </div>
-        {PAGE_ID}
-        {/* <Content title={PAGE_ID} nextLink='star-growth' /> */}
+            />
+            <ParticipantCompanyRankTable id={data.orgId} />
+          </div>
+          <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-stars-map'
+              searchParams={{
+                owner_id: '11855343',
+                activity: 'participants',
+                period: 'past_28_days',
+              }}
+              width={726}
+              height={405}
+            />
+            <GeoRankTable id={data.orgId} type='participants' />
+          </div>
+        </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>
   );

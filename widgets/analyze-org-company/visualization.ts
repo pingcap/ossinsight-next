@@ -15,15 +15,14 @@ import {
 // import xss from 'xss';
 
 type Params = {
-  repo_id: string;
-  vs_repo_id?: string;
-  activity: string;
+  owner_id: string;
+  activity?: string;
+  period?: string;
 };
 
 type DataPoint = {
-  company_name: string;
-  proportion: number;
-  stargazers: number;
+  organization_name: string;
+  participants: number;
 };
 
 type Input = [DataPoint[], DataPoint[] | undefined];
@@ -39,7 +38,7 @@ function transformCompanyData(
     id: '',
     group: '',
     // name: xss(item.company_name),
-    name: item.company_name,
+    name: item.organization_name,
     depth: 1,
     value: item[valueIndex],
     index: 0,
@@ -47,26 +46,20 @@ function transformCompanyData(
   }));
 }
 
-const companyValueIndices = {
-  'analyze-stars-company': 'stargazers',
-  'analyze-issue-creators-company': 'issue_creators',
-  'analyze-pull-request-creators-company': 'code_contributors',
-};
-
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): EChartsVisualizationConfig {
-  const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
-  const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
+  const main = {
+    id: ctx.parameters.owner_id,
+    fullName: ctx.parameters.owner_id,
+  };
 
-  const companyType = `analyze-${ctx.parameters.activity || 'stars'}-company`;
-  const valueIndex = companyValueIndices[companyType];
+  const valueIndex = 'participants';
 
   const generateData = () => {
     let index = 0;
-    const shrinkedInput = input.map((i) => (!!vs ? i?.slice(0, 25) : i));
-    const res = shrinkedInput
+    const res = input
       .flatMap((data, i) =>
         transformCompanyData(data ?? [], valueIndex).map((item) => {
           item.id = `${i}-${item.name}`;

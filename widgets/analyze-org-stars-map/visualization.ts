@@ -12,12 +12,21 @@ import { alpha2ToGeo, alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 
 type Params = {
   owner_id: string;
+  activity?: string;
+  period?: string;
 };
 
-type DataPoint = {
+type StarDataPoint = {
   country_code: string;
   stars: number;
 };
+
+type ParticipantDataPoint = {
+  country_code: string;
+  participants: number;
+};
+
+type DataPoint = StarDataPoint | ParticipantDataPoint;
 
 type Input = [DataPoint[], DataPoint[] | undefined];
 
@@ -26,10 +35,13 @@ export type LocationData = {
   count: number;
 };
 
-const dataPointToLocationData = (data: DataPoint[]): LocationData[] => {
+const dataPointToLocationData = (
+  data: DataPoint[],
+  activity: string
+): LocationData[] => {
   return data.map((item) => ({
     country_or_area: item.country_code,
-    count: item.stars,
+    count: item[activity],
   }));
 };
 
@@ -66,13 +78,15 @@ export default function (
   const main = ctx.parameters.owner_id;
   const vs = ctx.parameters.owner_id;
 
+  const { activity = 'stars' } = ctx.parameters;
+
   const max = input
     .flat()
-    .reduce((prev, current) => Math.max(prev, current?.stars || 0), 1);
+    .reduce((prev, current) => Math.max(prev, current[activity] || 0), 1);
 
   const option = {
     dataset: compare(input, (data, name) =>
-      datasets(name, 1, dataPointToLocationData(data))
+      datasets(name, 1, dataPointToLocationData(data, activity))
     ).flat(),
     geo: worldMapGeo(),
     series: compare([main, vs], (data, name) => [
