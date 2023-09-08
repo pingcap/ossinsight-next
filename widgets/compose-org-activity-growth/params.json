@@ -8,7 +8,7 @@
   "activity": {
     "type": "activity-type",
     "title": "Activity type",
-    "enums": ["stars", "participants", "pull-requests", "code-submissions"],
+    "enums": ["stars", "participants", "pull-requests", "commits"],
     "default": "stars"
   },
   "period": {

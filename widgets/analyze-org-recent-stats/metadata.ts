@@ -8,7 +8,7 @@ const generateMetadata: MetadataGenerator<{
 }> = ({ parameters: { owner_id }, getRepo }) => {
   // const main = getRepo(parseInt(repo_id));
   return {
-    title: `TODO Stars/Participants of ${owner_id}`,
+    title: `TODO Stars/Participants/Commits of ${owner_id}`,
   };
 };
 

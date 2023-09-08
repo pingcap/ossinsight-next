@@ -55,7 +55,11 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'repos',
     title: 'Repos',
-  }
+  },
+  {
+    key: 'commits',
+    title: 'Commits',
+  },
 ];
 
 export function activityDisplayName (key: string) {

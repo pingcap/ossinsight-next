@@ -5,19 +5,9 @@ import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
 import CompanyRankTable from '@/components/Analyze/Table/RankTable';
+import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
 
 const PAGE_ID = 'pull-request-efficiency';
-
-const fetchOrgInfo = async (
-  orgName: string
-): Promise<AnalyzeOrgContextProps> => {
-  // TODO - fetch org info
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return {
-    orgName: 'pingcap',
-    orgId: 11855343,
-  };
-};
 
 export default async function OrgAnalyzePage({
   params,

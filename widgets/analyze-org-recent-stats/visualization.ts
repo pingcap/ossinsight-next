@@ -10,7 +10,7 @@ import {
 
 type Params = {
   owner_id: string;
-  activity?: 'stars' | 'participants';
+  activity?: 'stars' | 'participants' | 'commits';
 };
 
 type StarDataPoint = {
@@ -27,11 +27,21 @@ type ParticipantDataPoint = {
   new_participants: number;
 };
 
-type DataPoint = StarDataPoint | ParticipantDataPoint;
+type CommitDataPoint = {
+  idx: number;
+  day: string;
+  pushes: number;
+  commits: number;
+};
+
+type DataPoint = StarDataPoint | ParticipantDataPoint | CommitDataPoint;
 
 type Input = [DataPoint[], DataPoint[] | undefined];
 
-const handleData = (data: DataPoint[], activity: 'stars' | 'participants') => {
+const handleData = (
+  data: DataPoint[],
+  activity: 'stars' | 'participants' | 'commits'
+) => {
   switch (activity) {
     case 'participants':
       const source2 = data as ParticipantDataPoint[];
@@ -51,6 +61,25 @@ const handleData = (data: DataPoint[], activity: 'stars' | 'participants') => {
         source: source2,
         mainSeries: mainSeries2,
         vsSeries: vsSeries2,
+      };
+    case 'commits':
+      const source3 = (data as CommitDataPoint[]).reverse();
+      const mainSeries3 = {
+        encode: {
+          x: 'day',
+          y: 'commits',
+        },
+      };
+      const vsSeries3 = {
+        encode: {
+          x: 'day',
+          y: 'pushes',
+        },
+      };
+      return {
+        source: source3,
+        mainSeries: mainSeries3,
+        vsSeries: vsSeries3,
       };
     case 'stars':
     default:

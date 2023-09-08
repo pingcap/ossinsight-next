@@ -31,7 +31,14 @@ type ParticipantDataPoint = {
   new_participants: number;
 };
 
-type DataPoint = StarDataPoint | ParticipantDataPoint;
+type CommitDataPoint = {
+  idx: number;
+  day: string;
+  pushes: number;
+  commits: number;
+};
+
+type DataPoint = StarDataPoint | ParticipantDataPoint | CommitDataPoint;
 
 type Input = [DataPoint[]];
 
@@ -53,6 +60,23 @@ const handleData = (data: DataPoint[], activity: string) => {
         data,
         label: activeParticipantsSum,
         value: `↑${diff1.toFixed(2)}%`,
+        increase: true,
+      };
+    case 'commits':
+      const [pushesSum, commitsSum] = (data as CommitDataPoint[]).reduce(
+        (acc, cur) => {
+          acc[0] += cur.pushes;
+          acc[1] += cur.commits;
+          return acc;
+        },
+        [0, 0]
+      );
+      const diff2 = (commitsSum / pushesSum) * 100;
+      return {
+        data,
+        label: commitsSum,
+        // value: `↑${diff2.toFixed(2)}%`,
+        value: ' ',
         increase: true,
       };
     case 'stars':
