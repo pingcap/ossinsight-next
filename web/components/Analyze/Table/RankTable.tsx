@@ -6,8 +6,9 @@ import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 
 import {
   getOrgActivityLocations,
-  getOrgParticipateOrgs,
+  getOrgActivityOrgs,
 } from '@/components/Analyze/utils';
+import { type } from 'os';
 
 const mock_data = new Array(10)
   .fill(0)
@@ -198,18 +199,22 @@ export function GeoRankTable(props: {
   );
 }
 
-export async function ParticipantCompanyRankTablePromise(props: {
+export async function CompanyRankTablePromise(props: {
   id: number;
+  type: 'stars' | 'participants';
+  maxRows?: number;
 }) {
-  const { id } = props;
+  const { id, maxRows = 10, type } = props;
 
-  const data = await getOrgParticipateOrgs(id);
+  const data = await getOrgActivityOrgs(id, {
+    activity: type,
+  });
 
   const rows = data
-    .slice(0, 10)
-    .map((d, idx) => [idx + 1, d.organization_name, d.participants]);
+    .slice(0, maxRows)
+    .map((d: any, idx) => [idx + 1, d.organization_name, d[type]]);
 
-  const header = ['No.', 'Company', 'Participants'];
+  const header = ['No.', 'Company', upperFirst(type)];
 
   return (
     <>
@@ -218,8 +223,11 @@ export async function ParticipantCompanyRankTablePromise(props: {
   );
 }
 
-export function ParticipantCompanyRankTable(props: { id?: number }) {
-  const { id } = props;
+export function CompanyRankTable(props: {
+  id?: number;
+  type?: 'stars' | 'participants';
+}) {
+  const { id, type = 'stars' } = props;
 
   if (!id) {
     return null;
@@ -231,7 +239,7 @@ export function ParticipantCompanyRankTable(props: { id?: number }) {
         Top companies
       </h1>
       <React.Suspense fallback={<TableSkeleton />}>
-        <ParticipantCompanyRankTablePromise id={id} />
+        <CompanyRankTablePromise id={id} type='stars' />
       </React.Suspense>
     </div>
   );

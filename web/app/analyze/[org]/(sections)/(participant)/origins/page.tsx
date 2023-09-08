@@ -5,8 +5,8 @@ import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
 import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
-import CompanyRankTable, {
-  ParticipantCompanyRankTable,
+import {
+  CompanyRankTable,
   GeoRankTable,
   TableSkeleton,
 } from '@/components/Analyze/Table/RankTable';
@@ -43,7 +43,7 @@ export default async function OrgAnalyzePage({
                 period: 'past_28_days',
               }}
             />
-            <ParticipantCompanyRankTable id={data.orgId} />
+            <CompanyRankTable id={data.orgId} type='participants' />
           </div>
           <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
             <ChartTemplate

@@ -2,6 +2,7 @@ const API_SERVER = 'https://api.ossinsight.io';
 const PATH_GET_ORG_INFO = `/q/get-user-by-login`;
 const PATH_GET_ORG_OVERVIEW = `/q/orgs/overview`;
 const PATH_GET_ORG_STARS_LOCATIONS = `/q/orgs/stars/locations`;
+const PATH_GET_ORG_STARS_ORGS = `/q/orgs/stars/organizations`;
 const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/q/orgs/participants/locations`;
 const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
 
@@ -57,13 +58,24 @@ export type ParticipateOrgDataType = {
   participants: number;
 };
 
-export const getOrgParticipateOrgs = (
-  id: number,
-  params?: { period?: string }
-): Promise<ParticipateOrgDataType[]> => {
-  const paramsStr = params2UrlSearch({ ...params, ownerId: id });
+export type StarOrgDataType = {
+  organization_name: string;
+  stars: number;
+};
 
-  return fetch(`${API_SERVER}${PATH_GET_ORG_PARTICIPANT_ORGS}?${paramsStr}`)
+export const getOrgActivityOrgs = (
+  id: number,
+  params?: { period?: string; activity: 'stars' | 'participants' }
+): Promise<ParticipateOrgDataType[] | StarOrgDataType[]> => {
+  const { activity = 'stars', ...restParams } = params || {};
+  const paramsStr = params2UrlSearch({ ...restParams, ownerId: id });
+
+  let path = PATH_GET_ORG_STARS_ORGS;
+  if (activity === 'participants') {
+    path = PATH_GET_ORG_PARTICIPANT_ORGS;
+  }
+
+  return fetch(`${API_SERVER}${path}?${paramsStr}`)
     .then((res) => res.json())
     .then((data) => data.data);
 };

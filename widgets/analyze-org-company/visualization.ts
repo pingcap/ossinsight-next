@@ -20,10 +20,17 @@ type Params = {
   period?: string;
 };
 
-type DataPoint = {
+type ParticipantDataPoint = {
   organization_name: string;
   participants: number;
 };
+
+type StarDataPoint = {
+  organization_name: string;
+  stars: number;
+};
+
+type DataPoint = ParticipantDataPoint | StarDataPoint;
 
 type Input = [DataPoint[], DataPoint[] | undefined];
 
@@ -55,7 +62,7 @@ export default function (
     fullName: ctx.parameters.owner_id,
   };
 
-  const valueIndex = 'participants';
+  const valueIndex = ctx.parameters?.activity || 'participants';
 
   const generateData = () => {
     let index = 0;

@@ -4,7 +4,8 @@ import AnalyzeOrgContextProvider, {
 import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
-import CompanyRankTable, {
+import {
+  CompanyRankTable,
   GeoRankTable,
   TableSkeleton,
 } from '@/components/Analyze/Table/RankTable';
@@ -52,14 +53,15 @@ export default async function OrgAnalyzePage({
           </div>
 
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-            {/* <ChartTemplate
-              name='@ossinsight/widget-analyze-repo-company'
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-company'
               searchParams={{
-                repo_id: '41986369',
+                owner_id: '11855343',
                 activity: 'stars',
+                period: 'past_28_days',
               }}
             />
-            <CompanyRankTable /> */}
+            <CompanyRankTable id={data.orgId} type='stars' />
           </div>
 
           <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
