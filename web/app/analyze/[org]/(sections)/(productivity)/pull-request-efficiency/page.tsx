@@ -40,12 +40,24 @@ export default async function OrgAnalyzePage({
           level={3}
           classname='pt-8 flex flex-col gap-4'
         >
-          <ChartTemplate
-            name='@ossinsight/widget-compose-org-productivity-ratio'
-            searchParams={{
-              owner_id: '11855343',
-            }}
-          />
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-productivity-ratio'
+              searchParams={{
+                owner_id: '11855343',
+                period: 'past_28_days',
+              }}
+            />
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-activity-efficiency'
+              searchParams={{
+                owner_id: '11855343',
+                activity: 'pull-requests',
+                period: 'past_28_days',
+              }}
+            />
+          </div>
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'></div>
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>

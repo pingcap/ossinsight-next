@@ -382,6 +382,12 @@ importers:
         specifier: workspace:^
         version: link:../packages/eslint-plugin
 
+  widgets/analyze-org-activity-efficiency:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-org-company:
     devDependencies:
       '@ossinsight/widgets-parent':
