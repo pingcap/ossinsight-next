@@ -57,7 +57,24 @@ export default async function OrgAnalyzePage({
               }}
             />
           </div>
-          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'></div>
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-activity-open-to-close'
+              searchParams={{
+                owner_id: '11855343',
+                activity: 'pull-requests',
+                period: 'past_28_days',
+              }}
+            />
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-activity-open-to-first-response'
+              searchParams={{
+                owner_id: '11855343',
+                activity: 'pull-requests',
+                period: 'past_28_days',
+              }}
+            />
+          </div>
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>

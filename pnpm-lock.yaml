@@ -388,6 +388,18 @@ importers:
         specifier: workspace:^
         version: link:../../packages/widgets-types
 
+  widgets/analyze-org-activity-open-to-close:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-activity-open-to-first-response:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
   widgets/analyze-org-company:
     devDependencies:
       '@ossinsight/widgets-parent':
