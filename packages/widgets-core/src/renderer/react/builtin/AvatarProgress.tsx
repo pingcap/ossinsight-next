@@ -10,6 +10,9 @@ export function AvatarProgress({
   maxVal = 100,
   size = 20,
   colorScheme,
+  backgroundColor,
+  color,
+  valueFormatter = (v: number) => `${v}`,
 }: BuiltinProps<'builtin:avatar-progress'>) {
   const { Label } = useTheme(colorScheme);
 
@@ -20,24 +23,24 @@ export function AvatarProgress({
       })}
       style={style}
     >
-      <div
-        className={clsx(
-          `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
-          `h-[${size}px] w-[${size}px]`
-        )}
-        style={{
-          height: `${size}px`,
-          width: `${size}px`,
-        }}
-      >
-        {imgSrc && (
+      {imgSrc && (
+        <div
+          className={clsx(
+            `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
+            `h-[${size}px] w-[${size}px]`
+          )}
+          style={{
+            height: `${size}px`,
+            width: `${size}px`,
+          }}
+        >
           <img
             className='h-full w-full rounded-[inherit] object-cover'
             src={imgSrc}
             alt={label}
           />
-        )}
-      </div>
+        </div>
+      )}
       <div
         className={clsx('grow flex flex-col justify-between', `h-[${size}px]`)}
       >
@@ -47,7 +50,7 @@ export function AvatarProgress({
               fontSize: 12,
               lineHeight: 1,
               fontWeight: 'bold',
-              color: Label.color,
+              color: color || Label.color,
             }}
           >
             {label}
@@ -57,17 +60,29 @@ export function AvatarProgress({
               fontSize: 12,
               lineHeight: 1,
               fontWeight: 'bold',
-              color: Label.color,
+              color: backgroundColor || Label.color,
             }}
           >
-            {value}
+            {valueFormatter(value)}
           </span>
         </div>
-        <div className='h-1 w-full bg-[var(--scrollbar-track-color)]'>
+        <div
+          className={clsx('h-1 w-full', {
+            'bg-[var(--scrollbar-track-color)]': !backgroundColor,
+            [`bg-[${backgroundColor}]`]: backgroundColor,
+          })}
+          style={{
+            backgroundColor: backgroundColor || 'var(--scrollbar-track-color)',
+          }}
+        >
           <div
-            className='h-1 bg-primary'
+            className={clsx('h-1', {
+              'bg-primary': !color,
+              [`bg-[${color}]`]: color,
+            })}
             style={{
               width: `${(value / maxVal) * 100}%`,
+              backgroundColor: color || 'var(--color-primary)',
             }}
           ></div>
         </div>

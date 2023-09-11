@@ -48,14 +48,13 @@ export default async function OrgAnalyzePage({
                 period: 'past_28_days',
               }}
             />
-            {/* <ChartTemplate
-              name='@ossinsight/widget-compose-org-activity-growth'
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-code-changes-top-repositories'
               searchParams={{
                 owner_id: '11855343',
                 period: 'past_28_days',
-                activity: 'commits',
               }}
-            /> */}
+            />
           </div>
         </SectionTemplate>
       </SectionTemplate>

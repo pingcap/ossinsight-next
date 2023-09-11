@@ -53,7 +53,7 @@ export async function renderAvatarLabel (
       0,
       2 * Math.PI,
     );
-    ctx.fill();
+    imgSrc && ctx.fill();
   } finally {
     ctx.restore();
   }

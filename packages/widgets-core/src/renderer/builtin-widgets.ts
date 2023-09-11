@@ -18,7 +18,16 @@ export interface BuiltinWidgetsMap {
   };
   'builtin:label': { label: string };
   'builtin:empty': {};
-  'builtin:avatar-progress': { label?: string; imgSrc?: string; size?: number;  value: number, maxVal: number };
+  'builtin:avatar-progress': {
+    label?: string;
+    imgSrc?: string;
+    size?: number;
+    value: number;
+    maxVal: number;
+    backgroundColor?: string;
+    color?: string;
+    valueFormatter?: (value: any) => string;
+  };
 }
 
 export type BuiltinWidgetProps<K extends keyof BuiltinWidgetsMap> = BuiltinWidgetsMap[K];
