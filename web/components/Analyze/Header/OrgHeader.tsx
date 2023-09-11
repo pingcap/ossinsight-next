@@ -17,7 +17,7 @@ export default function OrgAnalyzePageHeader() {
   const { orgName, orgId } =
     React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
 
-  const { data, loading, error, finishedAt } = useOrgOverview(orgId);
+  const { data, loading, error, finishedAt } = useOrgOverview(orgId, orgName);
 
   return (
     <>
@@ -32,14 +32,14 @@ export default function OrgAnalyzePageHeader() {
         />
         {orgName}
       </h1>
-      <p className='my-4'>TODO - DESC here</p>
+      <p className='my-4'>{data?.bio || ''}</p>
 
       {/* -- status bar -- */}
       <div className='flex gap-6 flex-wrap flex-col md:flex-row md:items-end'>
         <LabelItemWithCount
           label='Public repositories'
           loading={loading}
-          count={0}
+          count={data?.repos || 0}
           icon={<RepoIcon />}
         />
         <LabelItemWithCount

@@ -5,6 +5,7 @@ const PATH_GET_ORG_STARS_LOCATIONS = `/q/orgs/stars/locations`;
 const PATH_GET_ORG_STARS_ORGS = `/q/orgs/stars/organizations`;
 const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/q/orgs/participants/locations`;
 const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
+const PATH_GET_USERS = `/gh/users/`;
 
 export const getOrgInfo = (login: string) => {
   return fetch(`${API_SERVER}${PATH_GET_ORG_INFO}?login=${login}`)
@@ -76,6 +77,12 @@ export const getOrgActivityOrgs = (
   }
 
   return fetch(`${API_SERVER}${path}?${paramsStr}`)
+    .then((res) => res.json())
+    .then((data) => data.data);
+};
+
+export const getUserInfo = (login: string | number) => {
+  return fetch(`${API_SERVER}${PATH_GET_USERS}${login}`)
     .then((res) => res.json())
     .then((data) => data.data);
 };
