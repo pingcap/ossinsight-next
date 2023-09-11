@@ -10,7 +10,7 @@ type Params = {
   activity?: string;
 };
 
-type DataPoint = {
+type PRMergedDataPoint = {
   current_period_percentage: number;
   current_period_prs: number;
   past_period_percentage: number;
@@ -19,36 +19,62 @@ type DataPoint = {
   type: 'others-merged' | 'un-merged' | 'self-merged';
 };
 
+type IssueClosedDataPoint = {
+  current_period_opened_issues: number;
+  current_period_closed_issues: number;
+  current_period_closed_ratio: number;
+  past_period_opened_issues: number;
+  past_period_closed_issues: number;
+  past_period_closed_ratio: number;
+  closed_ratio_change: number;
+};
+
+type DataPoint = PRMergedDataPoint | IssueClosedDataPoint;
+
 type Input = [DataPoint[], undefined];
+
+const handleData = (items: DataPoint[], activity: string) => {
+  switch (activity) {
+    case 'issues/closed':
+      return [
+        {
+          name: 'Closed Issues',
+          value: (items as IssueClosedDataPoint[])[0]
+            .current_period_closed_issues,
+          itemStyle: styleMap[0].itemStyle,
+        },
+        {
+          name: 'Opened Issues',
+          value: (items as IssueClosedDataPoint[])[0]
+            .current_period_opened_issues,
+          itemStyle: styleMap[1].itemStyle,
+        },
+      ];
+    case 'pull-requests/merged':
+    default:
+      return items.map((item, idx) => {
+        const prMergedData = item as PRMergedDataPoint;
+        return {
+          name: prMergedData.type,
+          value: prMergedData.current_period_prs,
+          itemStyle: styleMap[idx].itemStyle,
+        };
+      });
+  }
+};
 
 export default function (
   data: Input,
   ctx: WidgetVisualizerContext<Params>
 ): EChartsVisualizationConfig {
   const [main, vs] = data;
-
-  const { selfMerged, othersMerged, unMerged } = main.reduce((acc, cur) => {
-    if (cur.type === 'self-merged') {
-      acc.selfMerged = { ...cur };
-    }
-    if (cur.type === 'others-merged') {
-      acc.othersMerged = { ...cur };
-    }
-    if (cur.type === 'un-merged') {
-      acc.unMerged = { ...cur };
-    }
-    return acc;
-  }, {} as Record<'selfMerged' | 'othersMerged' | 'unMerged', DataPoint>);
-
-  const current = 100 - unMerged.current_period_percentage;
-  const past = 100 - unMerged.past_period_percentage;
-  const diff = current - past;
+  const activity = ctx.parameters.activity ?? 'pull-requests/merged';
 
   return {
     tooltip: {
       trigger: 'item',
       position: 'top',
-      formatter: (params) => { 
+      formatter: (params) => {
         const { name, value } = params;
         return `${name}: ${value}`;
       },
@@ -76,11 +102,7 @@ export default function (
         labelLine: {
           show: false,
         },
-        data: main.map((item, idx) => ({
-          name: item.type,
-          value: item.current_period_prs,
-          itemStyle: styleMap[idx].itemStyle,
-        })),
+        data: handleData(main, activity),
       },
     ],
   };

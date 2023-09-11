@@ -16,7 +16,7 @@ type Params = {
   activity: string;
 };
 
-type DataPoint = {
+type PRMergedDataPoint = {
   current_period_percentage: number;
   current_period_prs: number;
   past_period_percentage: number;
@@ -25,7 +25,59 @@ type DataPoint = {
   type: 'others-merged' | 'un-merged' | 'self-merged';
 };
 
+type IssueClosedDataPoint = {
+  current_period_opened_issues: number;
+  current_period_closed_issues: number;
+  current_period_closed_ratio: number;
+  past_period_opened_issues: number;
+  past_period_closed_issues: number;
+  past_period_closed_ratio: number;
+  closed_ratio_change: number;
+};
+
+type DataPoint = PRMergedDataPoint | IssueClosedDataPoint;
+
 type Input = [DataPoint[]];
+
+const handleInputData = (data: DataPoint[], activity: string) => {
+  switch (activity) {
+    case 'issues/closed':
+      const { current_period_closed_ratio, closed_ratio_change } = (
+        data as IssueClosedDataPoint[]
+      )[0];
+      return {
+        title: 'Issues Closed Ratio',
+        label: `${(current_period_closed_ratio * 100).toFixed(0)}%`,
+        value: `${closed_ratio_change>= 0 ? '↑' : '↓'}${(closed_ratio_change * 100).toFixed(0)}%`,
+        isIncrease: closed_ratio_change >= 0,
+      };
+    case 'pull-requests/merged':
+    default:
+      const { selfMerged, othersMerged, unMerged } = (
+        data as PRMergedDataPoint[]
+      ).reduce((acc, cur) => {
+        if (cur.type === 'self-merged') {
+          acc.selfMerged = { ...cur };
+        }
+        if (cur.type === 'others-merged') {
+          acc.othersMerged = { ...cur };
+        }
+        if (cur.type === 'un-merged') {
+          acc.unMerged = { ...cur };
+        }
+        return acc;
+      }, {} as Record<'selfMerged' | 'othersMerged' | 'unMerged', PRMergedDataPoint>);
+      const current = 100 - unMerged.current_period_percentage;
+      const past = 100 - unMerged.past_period_percentage;
+      const diff = current - past;
+      return {
+        title: 'Pull Requests Merged Ratio',
+        label: `${current.toFixed(2)}%`,
+        value: `${diff >= 0 ? '↑' : '↓'}${Math.abs(diff).toFixed(2)}%`,
+        isIncrease: diff >= 0,
+      };
+  }
+};
 
 export default function (
   input: Input,
@@ -39,37 +91,21 @@ export default function (
   const HORIZONTAL_SPACING = 64;
 
   const data = input[0];
+  const activity = ctx.parameters?.activity || 'pull-requests/merged';
 
-  console.log('input', data);
-
-  const { selfMerged, othersMerged, unMerged } = data.reduce((acc, cur) => {
-    if (cur.type === 'self-merged') {
-      acc.selfMerged = { ...cur };
-    }
-    if (cur.type === 'others-merged') {
-      acc.othersMerged = { ...cur };
-    }
-    if (cur.type === 'un-merged') {
-      acc.unMerged = { ...cur };
-    }
-    return acc;
-  }, {} as Record<'selfMerged' | 'othersMerged' | 'unMerged', DataPoint>);
-
-  const current = 100 - unMerged.current_period_percentage;
-  const past = 100 - unMerged.past_period_percentage;
-  const diff = current - past;
+  const { title, label, value, isIncrease } = handleInputData(data, activity);
 
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: `${ctx.parameters?.activity} Merged Ratio`,
+        title,
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       vertical(
         horizontal(
           widget('builtin:label-value', undefined, {
-            label: `${current.toFixed(2)}%`,
-            value: `${diff >= 0 ? '↑' : '↓'}${Math.abs(diff).toFixed(2)}%`,
+            label,
+            value,
             labelProps: {
               style: {
                 fontSize: 24,
@@ -80,10 +116,9 @@ export default function (
               style: {
                 fontSize: 12,
                 lineHeight: 2,
-                color:
-                  diff >= 0
-                    ? ctx.theme.colors.green['400']
-                    : ctx.theme.colors.red['400'],
+                color: isIncrease
+                  ? ctx.theme.colors.green['400']
+                  : ctx.theme.colors.red['400'],
               },
             },
             column: false,
@@ -92,7 +127,7 @@ export default function (
           .gap(SPACING)
           .flex(0.1),
         widget(
-          '@ossinsight/widget-analyze-org-pull-requests-merged-ratio',
+          '@ossinsight/widget-analyze-org-activity-action-ratio',
           input,
           ctx.parameters
         )

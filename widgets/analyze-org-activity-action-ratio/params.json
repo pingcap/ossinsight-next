@@ -1,9 +1,9 @@
 {
   "owner_id": {
     "type": "owner-id",
-    "title": "Analyzing Org",
+    "title": "Analyzing Repo",
     "required": true,
-    "default": 11855343
+    "default": 41986369
   },
   "activity": {
     "type": "activity-type",

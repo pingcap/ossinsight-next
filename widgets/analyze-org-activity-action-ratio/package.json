@@ -1,10 +1,10 @@
 {
-  "name": "@ossinsight/widget-analyze-org-pull-requests-merged-ratio",
+  "name": "@ossinsight/widget-analyze-org-activity-action-ratio",
   "version": "1.0.0",
-  "description": "Pull Request Merged Ratio",
+  "description": "TODO",
   "private": true,
   "keywords": [
-    "Pull Requests"
+    "Organization"
   ],
   "author": "OSSInsight",
   "type": "module",

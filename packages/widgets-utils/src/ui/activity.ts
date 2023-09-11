@@ -60,6 +60,14 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     key: 'commits',
     title: 'Commits',
   },
+  {
+    key: 'pull-requests/merged',
+    title: 'Pull Requests - Merged',
+  },
+  {
+    key: 'issues/closed',
+    title: 'Issues - Closed',
+  }
 ];
 
 export function activityDisplayName (key: string) {

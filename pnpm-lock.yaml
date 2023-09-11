@@ -382,6 +382,12 @@ importers:
         specifier: workspace:^
         version: link:../packages/eslint-plugin
 
+  widgets/analyze-org-activity-action-ratio:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-org-activity-efficiency:
     devDependencies:
       '@ossinsight/widgets-types':
@@ -420,12 +426,6 @@ importers:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:..
-
-  widgets/analyze-org-pull-requests-merged-ratio:
-    devDependencies:
-      '@ossinsight/widgets-types':
-        specifier: workspace:^
-        version: link:../../packages/widgets-types
 
   widgets/analyze-org-recent-stats:
     devDependencies:
