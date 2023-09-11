@@ -42,6 +42,8 @@ export default async function OrgAnalyzePage({
                 activity: 'participants',
                 period: 'past_28_days',
               }}
+              width={720}
+              height={405}
             />
             <CompanyRankTable id={data.orgId} type='participants' />
           </div>
@@ -53,7 +55,7 @@ export default async function OrgAnalyzePage({
                 activity: 'participants',
                 period: 'past_28_days',
               }}
-              width={726}
+              width={720}
               height={405}
             />
             <GeoRankTable id={data.orgId} type='participants' />

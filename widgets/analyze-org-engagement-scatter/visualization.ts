@@ -81,3 +81,6 @@ export default function (
 }
 
 export const type = 'echarts';
+
+export const width = 1042;
+export const height = 259;

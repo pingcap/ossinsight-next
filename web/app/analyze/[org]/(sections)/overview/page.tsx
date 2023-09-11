@@ -89,7 +89,7 @@ export default async function OrgAnalyzePage({
               period: 'past_28_days',
             }}
             width={300}
-            height={388}
+            height={389}
           />
         </div>
       </SectionTemplate>

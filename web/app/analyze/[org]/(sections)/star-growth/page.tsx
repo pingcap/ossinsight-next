@@ -42,6 +42,8 @@ export default async function OrgAnalyzePage({
                 activity: 'stars',
                 period: 'past_28_days',
               }}
+              width={726}
+              height={389}
             />
             {/* <ChartTemplate
               name='@ossinsight/widget-compose-org-active-repositories'
@@ -49,6 +51,8 @@ export default async function OrgAnalyzePage({
                 owner_id: '11855343',
                 activity: 'stars',
               }}
+              width={300}
+              height={389}
             /> */}
           </div>
 
@@ -60,6 +64,8 @@ export default async function OrgAnalyzePage({
                 activity: 'stars',
                 period: 'past_28_days',
               }}
+              width={726}
+              height={405}
             />
             <CompanyRankTable id={data.orgId} type='stars' />
           </div>

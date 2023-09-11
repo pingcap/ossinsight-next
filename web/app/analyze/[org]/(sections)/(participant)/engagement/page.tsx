@@ -37,6 +37,8 @@ export default async function OrgAnalyzePage({
                 activity: 'participants',
                 period: 'past_28_days',
               }}
+              width={726}
+              height={389}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-repositories'
@@ -45,6 +47,8 @@ export default async function OrgAnalyzePage({
                 activity: 'participants',
                 period: 'past_28_days',
               }}
+              width={300}
+              height={389}
             />
           </div>
           <div className='w-full overflow-x-auto'>
@@ -54,6 +58,8 @@ export default async function OrgAnalyzePage({
                 owner_id: '11855343',
                 period: 'past_28_days',
               }}
+              width={1042}
+              height={259}
             />
           </div>
           <div className='w-full overflow-x-auto'>
@@ -63,6 +69,8 @@ export default async function OrgAnalyzePage({
                 owner_id: '11855343',
                 period: 'past_28_days',
               }}
+              width={1042}
+              height={259}
             />
           </div>
         </SectionTemplate>

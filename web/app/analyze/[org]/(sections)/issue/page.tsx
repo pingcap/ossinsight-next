@@ -33,6 +33,8 @@ export default async function OrgAnalyzePage({
               activity: 'issues/closed',
               period: 'past_28_days',
             }}
+            width={272}
+            height={272}
           />
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-activity-efficiency'
@@ -41,6 +43,8 @@ export default async function OrgAnalyzePage({
               activity: 'issues',
               period: 'past_28_days',
             }}
+            width={700}
+            height={272}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -51,6 +55,8 @@ export default async function OrgAnalyzePage({
               activity: 'issues',
               period: 'past_28_days',
             }}
+            width={486}
+            height={274}
           />
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-activity-open-to-first-response'
@@ -59,6 +65,8 @@ export default async function OrgAnalyzePage({
               activity: 'issues',
               period: 'past_28_days',
             }}
+            width={486}
+            height={274}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -69,6 +77,8 @@ export default async function OrgAnalyzePage({
               activity: 'issues/issue-comments',
               period: 'past_28_days',
             }}
+            width={486}
+            height={274}
           />
         </div>
       </SectionTemplate>

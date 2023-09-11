@@ -38,6 +38,8 @@ export default async function OrgAnalyzePage({
                 period: 'past_28_days',
                 activity: 'commits',
               }}
+              width={988}
+              height={272}
             />
           </div>
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -47,6 +49,8 @@ export default async function OrgAnalyzePage({
                 owner_id: '11855343',
                 period: 'past_28_days',
               }}
+              width={486}
+              height={274}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-code-changes-top-repositories'
@@ -54,6 +58,8 @@ export default async function OrgAnalyzePage({
                 owner_id: '11855343',
                 period: 'past_28_days',
               }}
+              width={486}
+              height={274}
             />
           </div>
         </SectionTemplate>

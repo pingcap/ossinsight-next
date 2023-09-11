@@ -36,7 +36,10 @@ export default async function OrgAnalyzePage({
               searchParams={{
                 owner_id: '11855343',
                 period: 'past_28_days',
+                activity: 'pull-requests/merged',
               }}
+              width={272}
+              height={272}
             />
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-activity-efficiency'
@@ -45,6 +48,8 @@ export default async function OrgAnalyzePage({
                 activity: 'pull-requests',
                 period: 'past_28_days',
               }}
+              width={700}
+              height={272}
             />
           </div>
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -55,6 +60,8 @@ export default async function OrgAnalyzePage({
                 activity: 'pull-requests',
                 period: 'past_28_days',
               }}
+              width={486}
+              height={274}
             />
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-activity-open-to-first-response'
@@ -63,6 +70,8 @@ export default async function OrgAnalyzePage({
                 activity: 'pull-requests',
                 period: 'past_28_days',
               }}
+              width={486}
+              height={274}
             />
           </div>
         </SectionTemplate>
