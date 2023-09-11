@@ -1,5 +1,5 @@
 {
-  "name": "@ossinsight/widget-compose-org-active-repositories",
+  "name": "@ossinsight/widget-compose-org-activity-active-ranking",
   "version": "1.0.0",
   "description": "TODO",
   "type": "module",

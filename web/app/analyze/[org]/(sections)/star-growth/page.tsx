@@ -45,15 +45,15 @@ export default async function OrgAnalyzePage({
               width={726}
               height={389}
             />
-            {/* <ChartTemplate
-              name='@ossinsight/widget-compose-org-active-repositories'
+            <ChartTemplate
+              name='@ossinsight/widget-compose-org-stars-top-repos'
               searchParams={{
                 owner_id: '11855343',
-                activity: 'stars',
+                period: 'past_28_days',
               }}
               width={300}
               height={389}
-            /> */}
+            />
           </div>
 
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>

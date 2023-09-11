@@ -7,7 +7,7 @@
   },
   "activity": {
     "type": "activity-type",
-    "enums": ["repos", "stars", "participants"],
+    "enums": ["repos", "participants"],
     "title": "Type",
     "default": "repos"
   },

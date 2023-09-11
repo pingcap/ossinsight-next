@@ -650,7 +650,7 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
 
-  widgets/compose-org-active-repositories:
+  widgets/compose-org-activity-active-ranking:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
@@ -741,6 +741,18 @@ importers:
       '@types/lodash':
         specifier: ^4.14.195
         version: 4.14.195
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.3.0
+
+  widgets/compose-org-stars-top-repos:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
       '@types/luxon':
         specifier: ^3.3.1
         version: 3.3.1
