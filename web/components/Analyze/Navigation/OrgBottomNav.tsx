@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 // import NextLink from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@ossinsight/ui/src/components/Button';
 import ChevronLeftIcon from 'bootstrap-icons/icons/chevron-left.svg';
 import ChevronRightIcon from 'bootstrap-icons/icons/chevron-right.svg';
@@ -18,6 +18,7 @@ export default function OrgBottomNav(props: { org: string }) {
 
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { prevId, nextId, prevItem, nextItem } = React.useMemo(() => {
     const currentID =
@@ -34,7 +35,7 @@ export default function OrgBottomNav(props: { org: string }) {
       <div className='flex items-center justify-between'>
         {prevId && (
           <NavButton
-            onClick={() => router.push(`/analyze/${org}/${prevId}`)}
+            onClick={() => router.push(`/analyze/${org}/${prevId}?${searchParams.toString()}`)}
             title={prevItem?.title || ''}
             subTitle='Previous'
             icon={<ChevronLeftIcon className='w-4 h-4' />}
@@ -42,7 +43,7 @@ export default function OrgBottomNav(props: { org: string }) {
         )}
         {nextId && (
           <NavButton
-            onClick={() => router.push(`/analyze/${org}/${nextId}`)}
+            onClick={() => router.push(`/analyze/${org}/${nextId}?${searchParams.toString()}`)}
             title={nextItem?.title || ''}
             subTitle='Next'
             icon={<ChevronRightIcon className='w-4 h-4' />}

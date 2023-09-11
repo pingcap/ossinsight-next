@@ -12,6 +12,7 @@ import { Tooltip } from '@ossinsight/ui';
 import { twMerge } from 'tailwind-merge';
 
 import { useOrgOverview } from '@/components/Analyze/hooks';
+import OrgAnalyzePageHeaderAction from '@/components/Analyze/Header/OrgHeaderAction';
 
 export default function OrgAnalyzePageHeader() {
   const { orgName, orgId } =
@@ -69,6 +70,9 @@ export default function OrgAnalyzePageHeader() {
 
       {/* -- divider -- */}
       <hr className='my-1 h-[1px] border-t-0 bg-neutral-100 opacity-50' />
+
+      {/* -- action bar -- */}
+      <OrgAnalyzePageHeaderAction />
     </>
   );
 }

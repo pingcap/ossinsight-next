@@ -10,12 +10,14 @@ import {
 export interface AnalyzeOrgContextProps {
   orgName: string;
   orgId?: number;
+  period?: 'past_28_days' | 'past_90_days' | 'past_12_months';
   // orgInfo?: OrgInfo;
 }
 
 export const AnalyzeOrgContext = createContext<AnalyzeOrgContextProps>({
   orgName: '',
   orgId: undefined,
+  period: 'past_28_days',
   // orgInfo: undefined,
 });
 

@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import NextLink from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import FileBarGraphIcon from 'bootstrap-icons/icons/file-bar-graph.svg';
 import clsx from 'clsx';
 
@@ -17,7 +17,6 @@ export default function OrgNav(props: { org: string }) {
   React.useEffect(() => {
     const section =
       pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
-    console.log('section:', section);
     selectedId !== section && setSelectedId(section);
   }, [org, pathname, selectedId]);
 
@@ -49,6 +48,8 @@ const NavList = (props: {
 }) => {
   const { items, selectedId, depth = 0, highlightId = [], basePath } = props;
 
+  const searchParams = useSearchParams();
+
   return (
     <ul
       className={clsx('w-full flex md:flex-col md:w-40', {
@@ -72,7 +73,7 @@ const NavList = (props: {
             >
               {item?.anchor ? (
                 <NextLink
-                  href={`${basePath}/${item.id}`}
+                  href={`${basePath}/${item.id}?${searchParams.toString()}`}
                   className={clsx(
                     'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
                     item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',

@@ -1,6 +1,7 @@
 'use client';
 import * as React from 'react';
 import NextLink from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   makeLinkedData,
   widgetPageParams,
@@ -25,14 +26,20 @@ export default function ChartTemplate(props: ChartTemplateProps) {
   const { name, searchParams = {}, className, width, height } = props;
 
   const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
+  const searchParamsFromUrl = useSearchParams();
+
+  const periodMemo = React.useMemo(() => {
+    return searchParamsFromUrl.get('period') || 'past_28_days';
+  }, [searchParamsFromUrl]);
 
   const searchParamsMemo = React.useMemo(
     () => ({
       ...widgetPageParams,
       ...searchParams,
       owner_id: `${orgId}`,
+      period: periodMemo,
     }),
-    [orgId, searchParams]
+    [orgId, periodMemo, searchParams]
   );
 
   const linkedDataMemo = React.useMemo(
