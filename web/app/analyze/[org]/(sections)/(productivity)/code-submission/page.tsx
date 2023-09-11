@@ -41,14 +41,13 @@ export default async function OrgAnalyzePage({
             />
           </div>
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-            {/* <ChartTemplate
-              name='@ossinsight/widget-compose-org-activity-growth'
+            <ChartTemplate
+              name='@ossinsight/widget-analyze-org-commits-time-distribution'
               searchParams={{
                 owner_id: '11855343',
                 period: 'past_28_days',
-                activity: 'commits',
               }}
-            /> */}
+            />
             {/* <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{

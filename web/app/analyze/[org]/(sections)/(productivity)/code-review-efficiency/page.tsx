@@ -5,19 +5,9 @@ import OrgAnalyzePageHeader from '@/components/Analyze/Header/OrgHeader';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
 import CompanyRankTable from '@/components/Analyze/Table/RankTable';
+import { fetchOrgInfo } from '@/app/analyze/[org]/fetchOwner';
 
 const PAGE_ID = 'code-review-efficiency';
-
-const fetchOrgInfo = async (
-  orgName: string
-): Promise<AnalyzeOrgContextProps> => {
-  // TODO - fetch org info
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  return {
-    orgName: 'pingcap',
-    orgId: 11855343,
-  };
-};
 
 export default async function OrgAnalyzePage({
   params,
@@ -40,7 +30,23 @@ export default async function OrgAnalyzePage({
           level={3}
           classname='pt-8 flex flex-col gap-4'
         >
-          {PAGE_ID}
+          <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+            {/* <ChartTemplate
+              name='@ossinsight/widget-compose-org-productivity-ratio'
+              searchParams={{
+                owner_id: '11855343',
+                period: 'past_28_days',
+              }}
+            /> */}
+            {/* <ChartTemplate
+              name='@ossinsight/widget-analyze-org-activity-efficiency'
+              searchParams={{
+                owner_id: '11855343',
+                activity: 'pull-requests',
+                period: 'past_28_days',
+              }}
+            /> */}
+          </div>
         </SectionTemplate>
       </SectionTemplate>
     </AnalyzeOrgContextProvider>

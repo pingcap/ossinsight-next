@@ -400,6 +400,15 @@ importers:
         specifier: workspace:^
         version: link:..
 
+  widgets/analyze-org-commits-time-distribution:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
   widgets/analyze-org-company:
     devDependencies:
       '@ossinsight/widgets-parent':
