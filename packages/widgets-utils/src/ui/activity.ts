@@ -67,6 +67,10 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'issues/closed',
     title: 'Issues - Closed',
+  },
+  {
+    key: 'issues/issue-comments',
+    title: 'Issues - Issue Comments',
   }
 ];
 

@@ -388,6 +388,12 @@ importers:
         specifier: workspace:^
         version: link:../../packages/widgets-types
 
+  widgets/analyze-org-activity-action-top-repos:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
   widgets/analyze-org-activity-efficiency:
     devDependencies:
       '@ossinsight/widgets-types':

@@ -1,0 +1,14 @@
+{
+  "name": "@ossinsight/widget-analyze-org-activity-action-top-repos",
+  "version": "1.0.0",
+  "description": "TODO",
+  "keywords": [
+    "Organization"
+  ],
+  "author": "OSSInsight",
+  "type": "module",
+  "main": "visualization.ts",
+  "devDependencies": {
+    "@ossinsight/widgets-types": "workspace:^"
+  }
+}
