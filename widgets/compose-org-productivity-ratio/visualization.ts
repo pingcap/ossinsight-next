@@ -35,7 +35,17 @@ type IssueClosedDataPoint = {
   closed_ratio_change: number;
 };
 
-type DataPoint = PRMergedDataPoint | IssueClosedDataPoint;
+type ReviewedDataPoint = {
+  current_period_opened_prs: number;
+  current_period_reviewed_prs: number;
+  current_period_reviewed_ratio: number;
+  past_period_opened_prs: number;
+  past_period_reviewed_prs: number;
+  past_period_reviewed_ratio: number;
+  reviewed_ratio_change: number;
+};
+
+type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
 
 type Input = [DataPoint[]];
 
@@ -48,8 +58,22 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       return {
         title: 'Issues Closed Ratio',
         label: `${(current_period_closed_ratio * 100).toFixed(0)}%`,
-        value: `${closed_ratio_change>= 0 ? '↑' : '↓'}${(closed_ratio_change * 100).toFixed(0)}%`,
+        value: `${closed_ratio_change >= 0 ? '↑' : '↓'}${(
+          closed_ratio_change * 100
+        ).toFixed(0)}%`,
         isIncrease: closed_ratio_change >= 0,
+      };
+    case 'reviews/reviewed':
+      const { current_period_reviewed_ratio, reviewed_ratio_change } = (
+        data as ReviewedDataPoint[]
+      )[0];
+      return {
+        title: 'PR Reviewed Ratio',
+        label: `${(current_period_reviewed_ratio * 100).toFixed(0)}%`,
+        value: `${reviewed_ratio_change >= 0 ? '↑' : '↓'}${(
+          reviewed_ratio_change * 100
+        ).toFixed(0)}%`,
+        isIncrease: reviewed_ratio_change >= 0,
       };
     case 'pull-requests/merged':
     default:

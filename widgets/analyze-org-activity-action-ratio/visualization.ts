@@ -29,7 +29,17 @@ type IssueClosedDataPoint = {
   closed_ratio_change: number;
 };
 
-type DataPoint = PRMergedDataPoint | IssueClosedDataPoint;
+type ReviewedDataPoint = {
+  current_period_opened_prs: number;
+  current_period_reviewed_prs: number;
+  current_period_reviewed_ratio: number;
+  past_period_opened_prs: number;
+  past_period_reviewed_prs: number;
+  past_period_reviewed_ratio: number;
+  reviewed_ratio_change: number;
+};
+
+type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
 
 type Input = [DataPoint[], undefined];
 
@@ -47,6 +57,19 @@ const handleData = (items: DataPoint[], activity: string) => {
           name: 'Opened Issues',
           value: (items as IssueClosedDataPoint[])[0]
             .current_period_opened_issues,
+          itemStyle: styleMap[1].itemStyle,
+        },
+      ];
+    case 'reviews/reviewed':
+      return [
+        {
+          name: 'Reviewed PRs',
+          value: (items as ReviewedDataPoint[])[0].current_period_reviewed_prs,
+          itemStyle: styleMap[0].itemStyle,
+        },
+        {
+          name: 'Opened PRs',
+          value: (items as ReviewedDataPoint[])[0].current_period_opened_prs,
           itemStyle: styleMap[1].itemStyle,
         },
       ];
