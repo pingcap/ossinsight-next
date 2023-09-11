@@ -38,7 +38,13 @@ type CommitDataPoint = {
   commits: number;
 };
 
-type DataPoint = StarDataPoint | ParticipantDataPoint | CommitDataPoint;
+type PRReviewDataPoint = StarDataPoint;
+
+type DataPoint =
+  | StarDataPoint
+  | ParticipantDataPoint
+  | CommitDataPoint
+  | PRReviewDataPoint;
 
 type Input = [DataPoint[]];
 
@@ -76,6 +82,13 @@ const handleData = (data: DataPoint[], activity: string) => {
         data,
         label: commitsSum,
         // value: `↑${diff2.toFixed(2)}%`,
+        value: ' ',
+        increase: true,
+      };
+    case 'reviews/review-prs':
+      return {
+        data,
+        label: ' ',
         value: ' ',
         increase: true,
       };

@@ -5,12 +5,6 @@
     "required": true,
     "default": 11855343
   },
-  "activity": {
-    "type": "activity-type",
-    "title": "Activity type",
-    "enums": ["stars", "participants", "pull-requests", "commits", "reviews/review-prs"],
-    "default": "stars"
-  },
   "period": {
     "type": "time-period",
     "title": "Period",

@@ -115,7 +115,7 @@ export default function (
   const HORIZONTAL_SPACING = 64;
 
   const data = input[0];
-  const activity = ctx.parameters?.activity || 'pull-requests/merged';
+  const activity = ctx.parameters?.activity;
 
   const { title, label, value, isIncrease } = handleInputData(data, activity);
 

@@ -18,18 +18,89 @@ type IssueCommentsDataPoint = {
   comments_per_issue: number;
 };
 
-type DataPoint = IssueCommentsDataPoint;
+type ReviewCommentsDataPoint = {
+  repo_id: number;
+  repo_name: string;
+  reviews: number;
+  review_comments: number;
+  comments_per_review: number;
+};
+
+type DataPoint = IssueCommentsDataPoint | ReviewCommentsDataPoint;
 
 type Input = [DataPoint[], undefined];
 
 const handleInputData = (data: DataPoint[], activity: string) => {
   switch (activity) {
+    case 'reviews/review-comments':
+      return [
+        data.slice(0, 5).map((d) => ({
+          ...d,
+          x: d.repo_name.split('/')[1],
+        })),
+        [
+          {
+            name: 'Reviews',
+            type: 'bar',
+            encode: {
+              x: 'x',
+              y: 'reviews',
+            },
+          },
+          {
+            name: 'Comments',
+            type: 'bar',
+            encode: {
+              x: 'x',
+              y: 'review_comments',
+            },
+          },
+          {
+            name: 'Comments per review',
+            type: 'line',
+            encode: {
+              x: 'x',
+              y: 'comments_per_review',
+            },
+            yAxisId: 'line',
+          },
+        ],
+      ];
     case 'issues/issue-comments':
     default:
-      return data.slice(0, 5).map((d) => ({
-        ...d,
-        x: d.repo_name.split('/')[1],
-      }));
+      return [
+        data.slice(0, 5).map((d) => ({
+          ...d,
+          x: d.repo_name.split('/')[1],
+        })),
+        [
+          {
+            name: 'Issues',
+            type: 'bar',
+            encode: {
+              x: 'x',
+              y: 'issues',
+            },
+          },
+          {
+            name: 'Comments',
+            type: 'bar',
+            encode: {
+              x: 'x',
+              y: 'comments',
+            },
+          },
+          {
+            name: 'Comments per Issue',
+            type: 'line',
+            encode: {
+              x: 'x',
+              y: 'comments_per_issue',
+            },
+            yAxisId: 'line',
+          },
+        ],
+      ];
   }
 };
 
@@ -40,10 +111,12 @@ export default function (
   const [main] = data;
   const activity = ctx.parameters.activity ?? 'issues/issue-comments';
 
+  const [dataset, series] = handleInputData(main, activity);
+
   return {
     dataset: {
       id: 'main',
-      source: handleInputData(main, activity),
+      source: dataset,
     },
     grid: simpleGrid(2, true),
     tooltip: {
@@ -65,41 +138,29 @@ export default function (
         alignWithLabel: true,
       },
     },
-    yAxis: {
-      type: 'value',
-      axisLabel: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-    },
-    series: [
+    yAxis: [
       {
-        name: 'Issues',
-        type: 'bar',
-        encode: {
-          x: 'x',
-          y: 'issues',
+        id: 'bar',
+        type: 'value',
+        axisLabel: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
         },
       },
       {
-        name: 'Comments',
-        type: 'bar',
-        encode: {
-          x: 'x',
-          y: 'comments',
+        id: 'line',
+        type: 'value',
+        axisLabel: {
+          show: false,
         },
-      },
-      {
-        name: 'Comments per Issue',
-        type: 'line',
-        encode: {
-          x: 'x',
-          y: 'comments_per_issue',
+        axisLine: {
+          show: false,
         },
       },
     ],
+    series: series as any,
   };
 }
 
