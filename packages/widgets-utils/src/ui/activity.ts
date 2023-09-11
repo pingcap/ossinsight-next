@@ -75,6 +75,10 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: "reviews/reviewed",
     title: "Pull Requests - Reviewed",
+  },
+  {
+    key: "reviews/review-prs",
+    title: "Pull Requests - Review PRs",
   }
 ];
 

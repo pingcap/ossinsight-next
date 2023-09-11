@@ -34,13 +34,19 @@ type CommitDataPoint = {
   commits: number;
 };
 
-type DataPoint = StarDataPoint | ParticipantDataPoint | CommitDataPoint;
+type PRReviewDataPoint = StarDataPoint;
+
+type DataPoint =
+  | StarDataPoint
+  | ParticipantDataPoint
+  | CommitDataPoint
+  | PRReviewDataPoint;
 
 type Input = [DataPoint[], DataPoint[] | undefined];
 
 const handleData = (
   data: DataPoint[],
-  activity: 'stars' | 'participants' | 'commits'
+  activity: 'stars' | 'participants' | 'commits' | 'reviews/review-prs'
 ) => {
   switch (activity) {
     case 'participants':
@@ -80,6 +86,27 @@ const handleData = (
         source: source3,
         mainSeries: mainSeries3,
         vsSeries: vsSeries3,
+      };
+    case 'reviews/review-prs':
+      const source4 = [
+        ...(data as PRReviewDataPoint[]).sort((a, b) => b.idx - a.idx),
+      ];
+      const mainSeries4 = {
+        encode: {
+          x: 'idx',
+          y: 'current_period_day_total',
+        },
+      };
+      const vsSeries4 = {
+        encode: {
+          x: 'idx',
+          y: 'past_period_day_total',
+        },
+      };
+      return {
+        source: source4,
+        mainSeries: mainSeries4,
+        // vsSeries: vsSeries4,
       };
     case 'stars':
     default:
@@ -174,7 +201,7 @@ export default function (
           },
         },
       },
-      {
+      vsSeries && {
         type: 'bar',
         name: 'Last period',
         encode: {
