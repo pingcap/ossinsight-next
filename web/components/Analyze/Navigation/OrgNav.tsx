@@ -3,6 +3,13 @@ import * as React from 'react';
 import NextLink from 'next/link';
 import { useParams, usePathname, useSearchParams } from 'next/navigation';
 import FileBarGraphIcon from 'bootstrap-icons/icons/file-bar-graph.svg';
+import {
+  TelescopeIcon,
+  StarIcon,
+  PeopleIcon,
+  ToolsIcon,
+  IssueOpenedIcon,
+} from '@primer/octicons-react';
 import clsx from 'clsx';
 
 export default function OrgNav(props: { org: string }) {
@@ -216,12 +223,12 @@ export const navItems: NavItemType[] = [
     id: 'overview',
     title: 'Overview',
     anchor: 'overview',
-    Icon: FileBarGraphIcon,
+    Icon: TelescopeIcon,
   },
   {
     id: 'popularity',
     title: 'Popularity',
-    Icon: FileBarGraphIcon,
+    Icon: StarIcon,
     children: [
       {
         id: 'star-growth',
@@ -233,7 +240,7 @@ export const navItems: NavItemType[] = [
   {
     id: 'participant',
     title: 'Participant',
-    Icon: FileBarGraphIcon,
+    Icon: PeopleIcon,
     children: [
       {
         id: 'engagement',
@@ -250,7 +257,7 @@ export const navItems: NavItemType[] = [
   {
     id: 'productivity',
     title: 'Productivity',
-    Icon: FileBarGraphIcon,
+    Icon: ToolsIcon,
     children: [
       {
         id: 'pull-request-efficiency',
@@ -272,7 +279,7 @@ export const navItems: NavItemType[] = [
   {
     id: 'issue',
     title: 'Issue',
-    Icon: FileBarGraphIcon,
+    Icon: IssueOpenedIcon,
     anchor: 'issue',
   },
 ];
