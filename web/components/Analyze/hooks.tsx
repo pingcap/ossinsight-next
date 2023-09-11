@@ -22,7 +22,6 @@ export function useOrgOverview(id?: number, name?: string) {
         setLoading(true);
         const res = await getOrgOverview(id);
         const userData = await getUserInfo(name);
-        console.log(res, userData);
         const { finishedAt, data: dataArray } = res;
         const data = dataArray[0];
         setFinishedAt(new Date(finishedAt));

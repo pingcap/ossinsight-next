@@ -24,11 +24,20 @@ export interface ChartTemplateProps {
 export default function ChartTemplate(props: ChartTemplateProps) {
   const { name, searchParams = {}, className, width, height } = props;
 
-  const { orgName } = React.useContext(AnalyzeOrgContext);
+  const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
+
+  const searchParamsMemo = React.useMemo(
+    () => ({
+      ...widgetPageParams,
+      ...searchParams,
+      owner_id: `${orgId}`,
+    }),
+    [orgId, searchParams]
+  );
 
   const linkedDataMemo = React.useMemo(
-    () => makeLinkedData(name, searchParams),
-    [name, searchParams]
+    () => makeLinkedData(name, searchParamsMemo),
+    [name, searchParamsMemo]
   );
 
   const classNameMemo = React.useMemo(
@@ -45,11 +54,11 @@ export default function ChartTemplate(props: ChartTemplateProps) {
   const targetLinkMemo = React.useMemo(() => {
     if (name.includes(`@ossinsight/widget-`)) {
       const widget = name.split('@ossinsight/widget-').pop();
-      const searchStr = new URLSearchParams(searchParams).toString();
+      const searchStr = new URLSearchParams(searchParamsMemo).toString();
       return `/widgets/official/${widget}?${searchStr}`;
     }
     return null;
-  }, [name, searchParams]);
+  }, [name, searchParamsMemo]);
 
   return (
     <div
@@ -72,7 +81,7 @@ export default function ChartTemplate(props: ChartTemplateProps) {
         <ServerWidget
           className='WidgetContainer'
           name={name}
-          searchParams={searchParams}
+          searchParams={searchParamsMemo}
           linkedDataPromise={linkedDataMemo}
           showShadow={false}
           showThemeSwitch={false}
