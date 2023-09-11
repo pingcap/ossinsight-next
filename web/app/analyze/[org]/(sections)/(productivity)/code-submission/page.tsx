@@ -39,7 +39,7 @@ export default async function OrgAnalyzePage({
                 activity: 'commits',
               }}
               width={988}
-              height={272}
+              height={389}
             />
           </div>
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>

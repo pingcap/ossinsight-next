@@ -42,7 +42,7 @@ export default async function OrgAnalyzePage({
                 activity: 'stars',
                 period: 'past_28_days',
               }}
-              width={726}
+              width={988}
               height={389}
             />
             <ChartTemplate
