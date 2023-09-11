@@ -41,13 +41,7 @@ const getRatio = (numerator: number, denominator: number) => {
 };
 
 const handleData = (data: DataPoint) => {
-  const sum =
-    data.issue_commenters +
-    data.issue_creators +
-    data.participants +
-    data.pr_commenters +
-    data.pr_creators +
-    data.pr_reviewers;
+  const sum = data.participants;
   return {
     issue_commenters_ratio: getRatio(data.issue_commenters, sum),
     issue_creators_ratio: getRatio(data.issue_creators, sum),
