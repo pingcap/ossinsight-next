@@ -112,7 +112,7 @@ export default function (
                 widget('builtin:avatar-progress', undefined, {
                   label: `+${item.additions}`,
                   value: item.additions,
-                  valueFormatter: (v) => `-${v}`,
+                  valueFormatter: () => `-${item.deletions}`,
                   maxVal: item.additions + item.deletions,
                   color: ctx.theme.colors.green['400'],
                   backgroundColor: ctx.theme.colors.red['400'],
