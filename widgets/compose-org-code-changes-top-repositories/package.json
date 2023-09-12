@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-compose-org-code-changes-top-repositories",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Ranking of repos with the commit code changes in an organization",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [

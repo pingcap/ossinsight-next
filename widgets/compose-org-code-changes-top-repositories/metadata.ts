@@ -1,11 +1,17 @@
-import { MetadataGenerator, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import {
+  MetadataGenerator,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: string,  }> = ({ parameters: { owner_id }, getRepo }) => {
-  // const repo = getRepo(Number(repo_id));
+const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
+  parameters: { owner_id },
+  getOrg,
+}) => {
+  const main = getOrg(Number(owner_id));
 
   return {
-    title: `TODO code changes repo of ${owner_id} - Last 28 days`
-  }
+    title: `Ranking of repos with the commit code changes in ${main.login}`,
+  };
 };
 
 export default generateMetadata;

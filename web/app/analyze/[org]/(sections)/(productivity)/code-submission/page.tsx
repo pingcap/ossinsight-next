@@ -34,8 +34,6 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
                 activity: 'commits',
               }}
               width={988}
@@ -45,19 +43,13 @@ export default async function OrgAnalyzePage({
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-commits-time-distribution'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={486}
               height={274}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-code-changes-top-repositories'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={486}
               height={274}
             />

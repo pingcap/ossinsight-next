@@ -1,11 +1,17 @@
-import { MetadataGenerator, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import {
+  MetadataGenerator,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: number }> = ({ parameters: { owner_id }, getUser }) => {
-  // const user = getUser(user_id);
+const generateMetadata: MetadataGenerator<{ owner_id: number }> = ({
+  parameters: { owner_id },
+  getOrg,
+}) => {
+  const main = getOrg(owner_id);
 
   return {
-    title: `Commits Time Distribution of @${owner_id}`,
-  }
+    title: `Commits Time Distribution of ${main.login}`,
+  };
 };
 
 export default generateMetadata;

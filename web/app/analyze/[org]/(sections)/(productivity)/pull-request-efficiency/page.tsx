@@ -34,8 +34,6 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-productivity-ratio'
               searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
                 activity: 'pull-requests/merged',
               }}
               width={272}
@@ -44,9 +42,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-activity-efficiency'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'pull-requests',
-                period: 'past_28_days',
               }}
               width={700}
               height={272}
@@ -56,9 +52,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-activity-open-to-close'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'pull-requests',
-                period: 'past_28_days',
               }}
               width={486}
               height={274}
@@ -66,9 +60,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-activity-open-to-first-response'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'pull-requests',
-                period: 'past_28_days',
               }}
               width={486}
               height={274}

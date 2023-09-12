@@ -3,13 +3,13 @@ import {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
-  parameters: { owner_id },
-  getRepo,
+const generateMetadata: MetadataGenerator<{ owner_id: string; activity }> = ({
+  parameters: { owner_id, activity },
+  getOrg,
 }) => {
-  // const main = getRepo(parseInt(repo_id));
+  const main = getOrg(parseInt(owner_id));
   return {
-    title: `TODO Open to Close of ${owner_id}`,
+    title: `Top repos of ${activity} completion time of ${main.login}`,
   };
 };
 

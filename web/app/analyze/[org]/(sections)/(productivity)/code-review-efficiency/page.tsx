@@ -34,8 +34,6 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-productivity-ratio'
               searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
                 activity: 'reviews/reviewed',
               }}
               width={272}
@@ -43,10 +41,7 @@ export default async function OrgAnalyzePage({
             />
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-recent-pr-review-stats'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={700}
               height={272}
             />
@@ -54,19 +49,14 @@ export default async function OrgAnalyzePage({
           <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-pull-requests-open-to-review'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={486}
               height={274}
             />
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-activity-action-top-repos'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'reviews/review-comments',
-                period: 'past_28_days',
               }}
               width={486}
               height={274}

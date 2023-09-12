@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-analyze-org-recent-pr-review-stats",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Pull request review trends for an organization",
   "keywords": [
     "Organization"
   ],

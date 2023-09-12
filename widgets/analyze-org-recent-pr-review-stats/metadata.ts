@@ -5,10 +5,10 @@ import {
 
 const generateMetadata: MetadataGenerator<{
   owner_id: string;
-}> = ({ parameters: { owner_id }, getRepo }) => {
-  // const main = getRepo(parseInt(repo_id));
+}> = ({ parameters: { owner_id }, getOrg }) => {
+  const main = getOrg(parseInt(owner_id));
   return {
-    title: `TODO Stars/Participants/Commits of ${owner_id}`,
+    title: `PR review trends of ${main.login}`,
   };
 };
 

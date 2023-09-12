@@ -5,11 +5,11 @@ import {
 
 const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
   parameters: { owner_id },
-  getRepo,
+  getOrg,
 }) => {
-  // const main = getRepo(parseInt(repo_id));
+  const main = getOrg(parseInt(owner_id));
   return {
-    title: `TODO Open to review of ${owner_id}`,
+    title: `Ranking of repos with most proactive Pull Request Review responses of ${main.login}`,
   };
 };
 

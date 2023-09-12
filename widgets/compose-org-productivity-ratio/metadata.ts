@@ -2,15 +2,18 @@ import {
   MetadataGenerator,
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
+import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
 
-const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
-  parameters: { owner_id },
-  getRepo,
-}) => {
-  // const repo = getRepo(Number(org_id));
+const generateMetadata: MetadataGenerator<{
+  owner_id: string;
+  activity: string;
+}> = ({ parameters: { owner_id, activity }, getOrg }) => {
+  const main = getOrg(Number(owner_id));
 
   return {
-    title: `TODO Pull Request Merged Ratio ${owner_id}`,
+    title: `${upperFirst(activity.split('/').join(' '))} ratio of ${
+      main.login
+    }`,
   };
 };
 
