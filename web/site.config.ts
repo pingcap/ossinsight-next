@@ -54,13 +54,13 @@ export default defineSiteConfig({
       {
         label: 'More',
         items: [
-          { label: 'Workshop', href: '/docs/workshop' },
-          { label: 'About OSS Insight', href: '/docs/about' },
+          { label: 'Workshop', href: 'https://ossinsight.io/docs/workshop' },
+          { label: 'About OSS Insight', href: 'https://ossinsight.io/docs/about' },
           {
             label: 'About TiDB Cloud',
-            href: 'https://en.pingcap.com/tidb-cloud?utm_source=ossinsight&utm_medium=referral',
+            href: 'https://www.pingcap.com/tidb-serverless?utm_source=ossinsight&utm_medium=referral',
           },
-          { label: 'How do we implement OSS Insight?', href: '/blog/why-we-choose-tidb-to-support-ossinsight' },
+          { label: 'How do we implement OSS Insight?', href: 'https://ossinsight.io/blog/why-we-choose-tidb-to-support-ossinsight' },
           { label: 'Report an Issue', href: 'https://github.com/pingcap/ossinsight/issues' },
         ],
       },
