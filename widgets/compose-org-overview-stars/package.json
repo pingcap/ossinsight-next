@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-compose-org-overview-stars",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Overview of stars earned for an organization",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [

@@ -23,9 +23,6 @@ export default async function OrgAnalyzePage({
           <div className='flex flex-col gap-4 overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-compose-org-overview-stars'
-              searchParams={{
-                owner_id: '11855343',
-              }}
               width={698}
               height={150}
             />

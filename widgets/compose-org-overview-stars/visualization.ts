@@ -84,7 +84,7 @@ export default function (
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
           ctx.parameters
-        )
+        ).flex(0.3)
       )
     )
       .padding([0, PADDING, PADDING])
@@ -95,22 +95,6 @@ export default function (
     HEIGHT
   );
 }
-
-// idx: number;
-// current_period_day: string;
-// current_period_day_total: number;
-// past_period_day: string;
-// past_period_day_total: number;
-
-// type StarDataPoint = {
-//   current_period_day: string;
-//   current_period_day_stars: number;
-//   current_period_stars: number;
-//   idx: number;
-//   last_period_day: string;
-//   last_period_day_stars: number;
-//   last_period_stars: number;
-// };
 
 const transferData2Star = (data: DataPoint[]) => { 
   return data.map((d) => {
