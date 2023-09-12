@@ -2,11 +2,11 @@ import { MetadataGenerator } from '@ossinsight/widgets-types';
 
 const generateMetadata: MetadataGenerator<{ owner_id: number }> = ({
   parameters: { owner_id },
-  getRepo,
+  getOrg,
 }) => {
-  // const main = getRepo(parseInt(repo_id));
+  const main = getOrg(owner_id);
   return {
-    title: `Most engagement of ${owner_id}`,
+    title: `Most engaged people of ${main.login}`,
   };
 };
 

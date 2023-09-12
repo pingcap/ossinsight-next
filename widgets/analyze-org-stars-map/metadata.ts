@@ -6,7 +6,7 @@ const generateMetadata: MetadataGenerator<{
 }> = ({ parameters: { owner_id, activity }, getOrg }) => {
   const main = getOrg(owner_id);
   return {
-    title: `Geographical Distribution of ${owner_id}`,
+    title: `Geographical Distribution of ${main.login}`,
   };
 };
 

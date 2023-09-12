@@ -33,9 +33,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'participants',
-                period: 'past_28_days',
               }}
               width={988}
               height={389}
@@ -43,9 +41,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-active-ranking'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'participants',
-                period: 'past_28_days',
               }}
               width={300}
               height={389}
@@ -54,10 +50,7 @@ export default async function OrgAnalyzePage({
           <div className='w-full overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-compose-org-participants-roles-ratio'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={1042}
               height={259}
             />
@@ -65,10 +58,7 @@ export default async function OrgAnalyzePage({
           <div className='w-full overflow-x-auto'>
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-engagement-scatter'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={1042}
               height={259}
             />

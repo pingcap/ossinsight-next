@@ -5,11 +5,11 @@ import {
 
 const generateMetadata: MetadataGenerator<{
   owner_id: string;
-}> = ({ parameters: { owner_id}, getRepo }) => {
-  // const repo = getRepo(Number(repo_id));
+}> = ({ parameters: { owner_id }, getOrg }) => {
+  const main = getOrg(Number(owner_id));
 
   return {
-    title: `Participants roles of ${owner_id}`,
+    title: `Participants roles of ${main.login}`,
   };
 };
 
