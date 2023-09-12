@@ -29,9 +29,15 @@ type ActivityDataPoint = {
   stars: number;
 };
 
+type TotalDataPoint = {
+  current_period_total: number;
+  past_period_total: number;
+  growth_percentage: number;
+};
+
 type DataPoint = ParticipantDataPoint | ActivityDataPoint;
 
-type Input = [DataPoint[], DataPoint[] | undefined];
+type Input = [DataPoint[], TotalDataPoint[]];
 
 const handleInputData = (data: DataPoint[], activity: string) => {
   switch (activity) {
@@ -94,7 +100,7 @@ const getLabel = (item: DataPoint) => {
 };
 
 export default function (
-  [inputData]: Input,
+  [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const { activity = 'activities' } = ctx.parameters;
@@ -103,6 +109,10 @@ export default function (
     inputData,
     activity
   );
+
+  const total = totalData[0];
+  const { current_period_total, past_period_total, growth_percentage } = total;
+  const percentage = Math.abs(growth_percentage) * 100;
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -116,9 +126,11 @@ export default function (
         subtitle,
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
-        label: data.length.toString(),
-        // value: '↑repo%',
-        value: ' ',
+        label: `${current_period_total}`,
+        value:
+          growth_percentage >= 0
+            ? `↑${percentage.toFixed(2)}%`
+            : `↓${percentage.toFixed(2)}%`,
         labelProps: {
           style: {
             fontSize: 24,
@@ -129,7 +141,10 @@ export default function (
           style: {
             fontSize: 12,
             lineHeight: 2,
-            color: ctx.theme.colors.green['400'],
+            color:
+              growth_percentage >= 0
+                ? ctx.theme.colors.green['400']
+                : ctx.theme.colors.red['400'],
           },
         },
         column: false,

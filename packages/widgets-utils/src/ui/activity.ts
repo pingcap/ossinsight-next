@@ -73,18 +73,23 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     title: 'Issues - Issue Comments',
   },
   {
-    key: "reviews/reviewed",
-    title: "Pull Requests - Reviewed",
+    key: 'reviews/reviewed',
+    title: 'Pull Requests - Reviewed',
   },
   {
-    key: "reviews/review-prs",
-    title: "Pull Requests - Review PRs",
-  }, {
+    key: 'reviews/review-prs',
+    title: 'Pull Requests - Review PRs',
+  },
+  {
     key: 'reviews/review-comments',
     title: 'Pull Requests - Review Comments',
-  }
+  },
+  {
+    key: 'reviews',
+    title: 'Reviews',
+  },
 ];
 
-export function activityDisplayName (key: string) {
-  return ACTIVITY_TYPE_OPTIONS.find(a => a.key === key)?.title ?? 'Unknown';
+export function activityDisplayName(key: string) {
+  return ACTIVITY_TYPE_OPTIONS.find((a) => a.key === key)?.title ?? 'Unknown';
 }

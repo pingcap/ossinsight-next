@@ -30,7 +30,6 @@ export default async function OrgAnalyzePage({
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
-                  owner_id: '11855343',
                   activity: 'pull-requests',
                 }}
                 width={222}
@@ -39,17 +38,15 @@ export default async function OrgAnalyzePage({
               <ChartTemplate
                 name='@ossinsight/widget-compose-org-overview-stats'
                 searchParams={{
-                  owner_id: '11855343',
+                  activity: 'reviews',
+                }}
+                width={222}
+                height={222}
+              />
+              <ChartTemplate
+                name='@ossinsight/widget-compose-org-overview-stats'
+                searchParams={{
                   activity: 'issues',
-                }}
-                width={222}
-                height={222}
-              />
-              <ChartTemplate
-                name='@ossinsight/widget-compose-org-overview-stats'
-                searchParams={{
-                  owner_id: '11855343',
-                  activity: 'pull-requests',
                 }}
                 width={222}
                 height={222}
@@ -60,9 +57,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-contributors'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'active',
-                period: 'past_28_days',
               }}
               width={300}
               height={186}
@@ -70,9 +65,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-active-contributors'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'new',
-                period: 'past_28_days',
               }}
               width={300}
               height={186}

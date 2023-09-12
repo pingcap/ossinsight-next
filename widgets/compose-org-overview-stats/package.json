@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-compose-org-overview-stats",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "[Overview] Pull Requests/Issues/Reviews stats for an organization",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [

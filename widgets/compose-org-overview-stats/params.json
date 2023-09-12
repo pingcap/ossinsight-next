@@ -8,7 +8,7 @@
   "activity": {
     "type": "activity-type",
     "title": "Activity type",
-    "enums": ["issues", "pull-requests", "code-reviews"],
+    "enums": ["issues", "pull-requests", "reviews"],
     "default": "pull-requests"
   }
 }

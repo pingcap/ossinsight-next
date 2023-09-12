@@ -9,7 +9,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { DateTime } from 'luxon';
+import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -52,7 +52,7 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: `${ctx.parameters?.activity} Participants`,
+        title: `${upperFirst(ctx.parameters?.activity)} Participants`,
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
