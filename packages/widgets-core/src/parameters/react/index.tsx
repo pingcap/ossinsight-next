@@ -7,6 +7,7 @@ import { LimitInput } from './limit';
 import { RepoIdInput } from './repo-id';
 import { TimePeriodSelect, TimeZoneSelect } from './time';
 import { UserIdInput } from './user-id';
+import { OrgIdInput } from './org-id';
 
 type ComponentMap = Partial<{
   [K in keyof ParameterDefinitionMap]: (props: {
@@ -19,6 +20,7 @@ type ComponentMap = Partial<{
 const types: ComponentMap = {
   'repo-id': RepoIdInput,
   'user-id': UserIdInput,
+  'owner-id': OrgIdInput,
   'collection-id': CollectionIdInput,
   'time-period': TimePeriodSelect,
   'time-zone': TimeZoneSelect,
