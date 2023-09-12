@@ -3,7 +3,6 @@ import type {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 import {
-  autoSize,
   computeLayout,
   grid,
   nonEmptyDataWidget,
@@ -18,19 +17,27 @@ type Params = {
   activity?: string;
 };
 
-type DataPoint = {
+type TotalDataPoint = {
+  current_period_total: number;
+  past_period_total: number;
+  growth_percentage: number;
+};
+
+type RankingDataPoint = {
   login: string;
   engagements: number;
 };
 
-type Input = [DataPoint[]];
+type Input = [RankingDataPoint[], TotalDataPoint[]];
 
 export default function (
-  [contributors]: Input,
+  input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-
+  const [contributors, total] = input;
   const sum = contributors.length;
+
+  const totalData = total[0];
 
   const { rows, cols, size } = {
     rows: 1,
@@ -49,9 +56,11 @@ export default function (
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
-        label: sum,
-        // value: '↑000%',
-        value: ' ',
+        label: totalData?.current_period_total,
+        value:
+          totalData?.growth_percentage >= 0
+            ? `↑${Math.abs(totalData?.growth_percentage * 100).toFixed(2)}%`
+            : `↓${Math.abs(totalData?.growth_percentage * 100).toFixed(2)}%`,
         labelProps: {
           style: {
             fontSize: 24,

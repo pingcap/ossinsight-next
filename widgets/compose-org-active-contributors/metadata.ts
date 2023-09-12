@@ -3,15 +3,22 @@ import {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
-  parameters: { owner_id },
-  getRepo,
-}) => {
-  // const repo = getRepo(Number(repo_id));
+const generateMetadata: MetadataGenerator<{
+  owner_id: string;
+  activity: string;
+  period: string;
+}> = ({ parameters: { owner_id, activity, period }, getOrg }) => {
+  const org = getOrg(Number(owner_id));
 
   return {
-    title: `TODO Active participants of ${owner_id} - Last 28 days`,
+    title: `${upperCaseFirstLetter(activity)} participants of ${
+      org.login
+    } - ${period.split('_').join(' ')}`,
   };
+};
+
+const upperCaseFirstLetter = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 export default generateMetadata;

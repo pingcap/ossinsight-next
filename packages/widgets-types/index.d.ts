@@ -15,7 +15,7 @@ export interface LinkedDataContext {
 
   getCollection (id: number): { id: number, name: string, public: boolean } | undefined;
 
-  getOrg (id: number): any;
+  getOrg (id: number): { id: number, login: string } | undefined;
 }
 
 export interface VisualizationContext {

@@ -55,19 +55,14 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
       case 'owner-id':
         if (param) {
           if (linkedData.orgs[param]) return Promise.resolve();
-          // TODO: Uncomment this when we have the API
-          //   return fetch(`https://api.ossinsight.io/gh/orgs/${param}`)
-          //     .then(handleOApi)
-          //     .then((data) => {
-          //       linkedData.orgs[param] = {
-          //         id: param,
-          //         login: data.login,
-          //       };
-          //     });
-          return Promise.resolve({
-            id: param,
-            login: 'pingcap',
-          });
+          return fetch(`https://api.ossinsight.io/gh/user/${param}`)
+            .then(handleOApi)
+            .then((data) => {
+              linkedData.orgs[param] = {
+                id: param,
+                login: data.login,
+              };
+            });
         }
         break;
       case 'collection-id':
