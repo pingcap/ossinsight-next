@@ -19,7 +19,7 @@ export default function UserOrgAnalyzeLayout({
             </div>
           </aside>
           <main className='flex-1 overflow-x-hidden'>
-            <div className='pl-6 pr-24 py-8'>{children}</div>
+            <div className='pl-6 pr-28 py-8'>{children}</div>
           </main>
         </div>
       </div>

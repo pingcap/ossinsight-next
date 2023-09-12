@@ -59,7 +59,7 @@ const NavList = (props: {
 
   return (
     <ul
-      className={clsx('w-full flex md:flex-col md:w-40', {
+      className={clsx('w-full flex md:flex-col md:w-60', {
         'sticky overflow-x-auto lg:h-full': depth === 0,
       })}
     >
