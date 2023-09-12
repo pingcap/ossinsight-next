@@ -1,7 +1,7 @@
 {
   "name": "@ossinsight/widget-compose-org-stars-top-repos",
   "version": "1.0.0",
-  "description": "TODO",
+  "description": "Top repositories by stars for an organization",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [

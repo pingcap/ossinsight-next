@@ -1,19 +1,13 @@
 import { MetadataGenerator } from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: number }> = ({
-  parameters: { owner_id },
-  getRepo,
-}) => {
-  // const main = getRepo(parseInt(repo_id));
+const generateMetadata: MetadataGenerator<{
+  owner_id: number;
+  activity: string;
+}> = ({ parameters: { owner_id, activity }, getOrg }) => {
+  const main = getOrg(owner_id);
   return {
     title: `Geographical Distribution of ${owner_id}`,
   };
-};
-
-const TITLE = {
-  stars: 'Star',
-  'pull-request-creators': 'Pull Request Creator',
-  'issue-creators': 'Issue Creator',
 };
 
 export default generateMetadata;

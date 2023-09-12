@@ -1,11 +1,17 @@
-import { MetadataGenerator, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import {
+  MetadataGenerator,
+  WidgetVisualizerContext,
+} from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: string,  }> = ({ parameters: { owner_id }, getRepo }) => {
-  // const repo = getRepo(Number(repo_id));
+const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
+  parameters: { owner_id },
+  getOrg,
+}) => {
+  const main = getOrg(Number(owner_id));
 
   return {
-    title: `TODO Top repos of ${owner_id}`
-  }
+    title: `Top repos by stars of ${main.login}`,
+  };
 };
 
 export default generateMetadata;

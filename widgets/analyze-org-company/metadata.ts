@@ -3,13 +3,13 @@ import {
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
 
-const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
-  parameters: { owner_id },
-  getRepo,
-}) => {
-  // const main = getRepo(parseInt(repo_id));
+const generateMetadata: MetadataGenerator<{
+  owner_id: string;
+  activity: string;
+}> = ({ parameters: { owner_id, activity }, getOrg }) => {
+  const main = getOrg(parseInt(owner_id));
   return {
-    title: `TODO Company Affiliation of ${owner_id}`,
+    title: `Company Affiliation of ${main.login}`,
   };
 };
 

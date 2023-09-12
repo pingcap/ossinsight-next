@@ -38,19 +38,14 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-compose-org-activity-growth'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'stars',
-                period: 'past_28_days',
               }}
               width={988}
               height={389}
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-stars-top-repos'
-              searchParams={{
-                owner_id: '11855343',
-                period: 'past_28_days',
-              }}
+              searchParams={{}}
               width={300}
               height={389}
             />
@@ -60,9 +55,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-company'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'stars',
-                period: 'past_28_days',
               }}
               width={726}
               height={405}
@@ -74,9 +67,7 @@ export default async function OrgAnalyzePage({
             <ChartTemplate
               name='@ossinsight/widget-analyze-org-stars-map'
               searchParams={{
-                owner_id: '11855343',
                 activity: 'stars',
-                period: 'past_28_days',
               }}
               width={726}
               height={405}

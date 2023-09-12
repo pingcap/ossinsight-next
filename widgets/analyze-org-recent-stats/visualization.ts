@@ -93,13 +93,13 @@ const handleData = (
       ];
       const mainSeries4 = {
         encode: {
-          x: 'idx',
+          x: 'current_period_day',
           y: 'current_period_day_total',
         },
       };
       const vsSeries4 = {
         encode: {
-          x: 'idx',
+          x: 'current_period_day',
           y: 'past_period_day_total',
         },
       };
@@ -115,13 +115,13 @@ const handleData = (
       ];
       const mainSeries1 = {
         encode: {
-          x: 'idx',
+          x: 'current_period_day',
           y: 'current_period_day_total',
         },
       };
       const vsSeries1 = {
         encode: {
-          x: 'idx',
+          x: 'current_period_day',
           y: 'past_period_day_total',
         },
       };
@@ -151,18 +151,17 @@ export default function (
       axisLine: {
         show: false,
       },
-      axisLabel: {
-        show: false,
-      },
+      // axisLabel: {
+      //   show: false,
+      // },
       axisTick: {
         show: false,
       },
     },
     yAxis: {
-      type: 'value',
-      show: false,
+      type: 'value'
     },
-    grid: simpleGrid(2),
+    grid: simpleGrid(2, true),
     aria: {
       enabled: true,
       decal: {
@@ -174,8 +173,6 @@ export default function (
         type: 'bar',
         name: 'Current period',
         encode: {
-          // x: 'idx',
-          // y: 'current_period_day_total',
           ...mainSeries.encode,
         },
         itemStyle: {
@@ -205,8 +202,6 @@ export default function (
         type: 'bar',
         name: 'Last period',
         encode: {
-          // x: 'idx',
-          // y: 'past_period_day_total',
           ...vsSeries.encode,
         },
         itemStyle: {

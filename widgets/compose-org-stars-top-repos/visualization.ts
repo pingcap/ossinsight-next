@@ -24,9 +24,15 @@ type StarDataPoint = {
   stars: number;
 };
 
+type TotalDataPoint = {
+  current_period_total: number;
+  past_period_total: number;
+  growth_percentage: number;
+};
+
 type DataPoint = StarDataPoint;
 
-type Input = [DataPoint[], DataPoint[] | undefined];
+type Input = [DataPoint[], TotalDataPoint[]];
 
 const handleInputData = (data: DataPoint[], activity: string) => {
   switch (activity) {
@@ -44,7 +50,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
 };
 
 export default function (
-  [inputData]: Input,
+  [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const { activity = 'activities' } = ctx.parameters;
@@ -53,6 +59,10 @@ export default function (
     inputData,
     activity
   );
+
+  const total = totalData[0];
+  const { current_period_total, past_period_total, growth_percentage } = total;
+  const percentageStr = `${Math.abs(growth_percentage * 100).toFixed(2)}`;
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -66,9 +76,9 @@ export default function (
         subtitle,
       }).fix(HEADER_HEIGHT),
       widget('builtin:label-value', undefined, {
-        label: data.length.toString(),
-        // value: '↑repo%',
-        value: ' ',
+        label: `${current_period_total}`,
+        value:
+          growth_percentage >= 0 ? `↑${percentageStr}%` : `↓${percentageStr}%`,
         labelProps: {
           style: {
             fontSize: 24,
@@ -79,7 +89,10 @@ export default function (
           style: {
             fontSize: 12,
             lineHeight: 2,
-            color: ctx.theme.colors.green['400'],
+            color:
+              growth_percentage >= 0
+                ? ctx.theme.colors.green['400']
+                : ctx.theme.colors.red['400'],
           },
         },
         column: false,
@@ -109,7 +122,9 @@ export default function (
             ...data.map((item) =>
               widget('builtin:avatar-progress', undefined, {
                 label: item.repo_name.split('/')[1],
-                imgSrc: `https://github.com/${item.repo_name.split('/')[0]}.png`,
+                imgSrc: `https://github.com/${
+                  item.repo_name.split('/')[0]
+                }.png`,
                 size: 24,
                 value: item?.stars,
                 maxVal,

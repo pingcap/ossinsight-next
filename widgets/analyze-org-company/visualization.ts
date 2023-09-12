@@ -2,7 +2,6 @@ import type {
   EChartsVisualizationConfig,
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
-// import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import {
   itemTooltip,
   dataset,
@@ -12,7 +11,6 @@ import {
   d3Hierarchy,
   D3HierarchyItem,
 } from '@ossinsight/widgets-utils/src/options/custom/d3-hierarchy';
-// import xss from 'xss';
 
 type Params = {
   owner_id: string;
@@ -118,15 +116,7 @@ export default function (
         `${params.value.name as string}: ${params.value.value as string}`,
     }),
     hoverLayerThreshold: Infinity,
-    series: [
-      // ...compare([main, vs], (data, name) => ({
-      //   type: 'custom',
-      //   name: data.fullName,
-      //   color: [],
-      //   coordinateSystem: 'none',
-      // })),
-      series,
-    ],
+    series: [series],
   };
 
   return option;

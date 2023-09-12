@@ -1,12 +1,11 @@
 {
   "name": "@ossinsight/widget-analyze-org-stars-map",
   "version": "1.0.0",
-  "description": "Visualize and compare the geographic distribution of stars worldwide.",
+  "description": "Visualize and compare the geographic distribution of stars/participants worldwide.",
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
-    "Organization",
-    "Star"
+    "Organization"
   ],
   "author": "OSSInsight",
   "devDependencies": {

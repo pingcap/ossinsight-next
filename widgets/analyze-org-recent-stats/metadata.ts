@@ -2,13 +2,15 @@ import {
   MetadataGenerator,
   WidgetVisualizerContext,
 } from '@ossinsight/widgets-types';
+import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
 
 const generateMetadata: MetadataGenerator<{
   owner_id: string;
-}> = ({ parameters: { owner_id }, getRepo }) => {
-  // const main = getRepo(parseInt(repo_id));
+  activity: string;
+}> = ({ parameters: { owner_id, activity }, getOrg }) => {
+  const main = getOrg(parseInt(owner_id));
   return {
-    title: `TODO Stars/Participants/Commits of ${owner_id}`,
+    title: `${upperFirst(activity)} trends of ${main.login}`,
   };
 };
 
