@@ -158,8 +158,6 @@ export async function GeoRankTablePromise(props: {
 
   const data = await getOrgActivityLocations(id, { activity: type });
 
-  console.log(data);
-
   const rows = data
     .slice(0, maxRows)
     .map((d: any, idx: number) => [
