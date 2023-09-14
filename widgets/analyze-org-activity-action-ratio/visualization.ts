@@ -20,23 +20,21 @@ type PRMergedDataPoint = {
 };
 
 type IssueClosedDataPoint = {
-  current_period_opened_issues: number;
-  current_period_closed_issues: number;
-  current_period_closed_ratio: number;
-  past_period_opened_issues: number;
-  past_period_closed_issues: number;
-  past_period_closed_ratio: number;
-  closed_ratio_change: number;
+  current_period_issues: number;
+  current_period_percentage: number;
+  past_period_issues: number;
+  past_period_percentage: number;
+  percentage_change: number;
+  type: 'un-closed' | 'self-closed' | 'others-closed';
 };
 
 type ReviewedDataPoint = {
-  current_period_opened_prs: number;
-  current_period_reviewed_prs: number;
-  current_period_reviewed_ratio: number;
-  past_period_opened_prs: number;
-  past_period_reviewed_prs: number;
-  past_period_reviewed_ratio: number;
-  reviewed_ratio_change: number;
+  type: 'reviewed' | 'un-reviewed';
+  current_period_prs: number;
+  current_period_percentage: number;
+  past_period_prs: number;
+  past_period_percentage: number;
+  percentage_change: number;
 };
 
 type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
@@ -46,33 +44,23 @@ type Input = [DataPoint[], undefined];
 const handleData = (items: DataPoint[], activity: string) => {
   switch (activity) {
     case 'issues/closed':
-      return [
-        {
-          name: 'Closed Issues',
-          value: (items as IssueClosedDataPoint[])[0]
-            .current_period_closed_issues,
-          itemStyle: styleMap[0].itemStyle,
-        },
-        {
-          name: 'Opened Issues',
-          value: (items as IssueClosedDataPoint[])[0]
-            .current_period_opened_issues,
-          itemStyle: styleMap[1].itemStyle,
-        },
-      ];
+      return items.map((item, idx) => {
+        const issueClosedData = item as IssueClosedDataPoint;
+        return {
+          name: issueClosedData.type,
+          value: issueClosedData.current_period_issues,
+          itemStyle: styleMap[idx].itemStyle,
+        };
+      });
     case 'reviews/reviewed':
-      return [
-        {
-          name: 'Reviewed PRs',
-          value: (items as ReviewedDataPoint[])[0].current_period_reviewed_prs,
-          itemStyle: styleMap[0].itemStyle,
-        },
-        {
-          name: 'Opened PRs',
-          value: (items as ReviewedDataPoint[])[0].current_period_opened_prs,
-          itemStyle: styleMap[1].itemStyle,
-        },
-      ];
+      return items.map((item, idx) => {
+        const reviewedData = item as ReviewedDataPoint;
+        return {
+          name: reviewedData.type,
+          value: reviewedData.current_period_prs,
+          itemStyle: styleMap[idx].itemStyle,
+        };
+      });
     case 'pull-requests/merged':
     default:
       return items.map((item, idx) => {

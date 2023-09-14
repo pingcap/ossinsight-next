@@ -26,23 +26,21 @@ type PRMergedDataPoint = {
 };
 
 type IssueClosedDataPoint = {
-  current_period_opened_issues: number;
-  current_period_closed_issues: number;
-  current_period_closed_ratio: number;
-  past_period_opened_issues: number;
-  past_period_closed_issues: number;
-  past_period_closed_ratio: number;
-  closed_ratio_change: number;
+  current_period_issues: number;
+  current_period_percentage: number;
+  past_period_issues: number;
+  past_period_percentage: number;
+  percentage_change: number;
+  type: 'un-closed' | 'self-closed' | 'others-closed';
 };
 
 type ReviewedDataPoint = {
-  current_period_opened_prs: number;
-  current_period_reviewed_prs: number;
-  current_period_reviewed_ratio: number;
-  past_period_opened_prs: number;
-  past_period_reviewed_prs: number;
-  past_period_reviewed_ratio: number;
-  reviewed_ratio_change: number;
+  type: 'reviewed' | 'un-reviewed';
+  current_period_prs: number;
+  current_period_percentage: number;
+  past_period_prs: number;
+  past_period_percentage: number;
+  percentage_change: number;
 };
 
 type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
@@ -52,28 +50,57 @@ type Input = [DataPoint[]];
 const handleInputData = (data: DataPoint[], activity: string) => {
   switch (activity) {
     case 'issues/closed':
-      const { current_period_closed_ratio, closed_ratio_change } = (
+      const { selfClosed, othersClosed, unClosed } = (
         data as IssueClosedDataPoint[]
-      )[0];
+      ).reduce((acc, cur) => {
+        if (cur.type === 'self-closed') {
+          acc.selfClosed = { ...cur };
+        }
+        if (cur.type === 'others-closed') {
+          acc.othersClosed = { ...cur };
+        }
+        if (cur.type === 'un-closed') {
+          acc.unClosed = { ...cur };
+        }
+        return acc;
+      }, {} as Record<'selfClosed' | 'othersClosed' | 'unClosed', IssueClosedDataPoint>);
+      const issueCurrent =
+        selfClosed.current_period_percentage +
+        othersClosed.current_period_percentage;
+      const issuePast =
+        selfClosed.past_period_percentage + othersClosed.past_period_percentage;
+      const issueDiff = (issueCurrent - issuePast) / issuePast;
       return {
         title: 'Issues Closed Ratio',
-        label: `${(current_period_closed_ratio * 100).toFixed(0)}%`,
-        value: `${closed_ratio_change >= 0 ? '↑' : '↓'}${(
-          closed_ratio_change * 100
-        ).toFixed(0)}%`,
-        isIncrease: closed_ratio_change >= 0,
+        label: `${issueCurrent.toFixed(2)}%`,
+        value: `${issueDiff >= 0 ? '↑' : '↓'}${Math.abs(issueDiff).toFixed(
+          2
+        )}%`,
+        isIncrease: issueDiff >= 0,
       };
     case 'reviews/reviewed':
-      const { current_period_reviewed_ratio, reviewed_ratio_change } = (
-        data as ReviewedDataPoint[]
-      )[0];
+      const { reviewed, unReviewed } = (data as ReviewedDataPoint[]).reduce(
+        (acc, cur) => {
+          if (cur.type === 'reviewed') {
+            acc.reviewed = { ...cur };
+          }
+          if (cur.type === 'un-reviewed') {
+            acc.unReviewed = { ...cur };
+          }
+          return acc;
+        },
+        {} as Record<'reviewed' | 'unReviewed', ReviewedDataPoint>
+      );
+      const reviewCurrent = reviewed.current_period_percentage;
+      const reviewPast = reviewed.past_period_percentage;
+      const reviewDiff = (reviewCurrent - reviewPast) / reviewPast;
       return {
         title: 'PR Reviewed Ratio',
-        label: `${(current_period_reviewed_ratio * 100).toFixed(0)}%`,
-        value: `${reviewed_ratio_change >= 0 ? '↑' : '↓'}${(
-          reviewed_ratio_change * 100
-        ).toFixed(0)}%`,
-        isIncrease: reviewed_ratio_change >= 0,
+        label: `${reviewCurrent.toFixed(2)}%`,
+        value: `${reviewDiff >= 0 ? '↑' : '↓'}${Math.abs(reviewDiff).toFixed(
+          2
+        )}%`,
+        isIncrease: reviewDiff >= 0,
       };
     case 'pull-requests/merged':
     default:
@@ -91,14 +118,17 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         }
         return acc;
       }, {} as Record<'selfMerged' | 'othersMerged' | 'unMerged', PRMergedDataPoint>);
-      const current = 100 - unMerged.current_period_percentage;
-      const past = 100 - unMerged.past_period_percentage;
-      const diff = current - past;
+      const prCurrent =
+        selfMerged.current_period_percentage +
+        othersMerged.current_period_percentage;
+      const prPast =
+        selfMerged.past_period_percentage + othersMerged.past_period_percentage;
+      const prDiff = (prCurrent - prPast) / prPast;
       return {
         title: 'Pull Requests Merged Ratio',
-        label: `${current.toFixed(2)}%`,
-        value: `${diff >= 0 ? '↑' : '↓'}${Math.abs(diff).toFixed(2)}%`,
-        isIncrease: diff >= 0,
+        label: `${prCurrent.toFixed(2)}%`,
+        value: `${prDiff >= 0 ? '↑' : '↓'}${Math.abs(prDiff).toFixed(2)}%`,
+        isIncrease: prDiff >= 0,
       };
   }
 };
@@ -163,13 +193,6 @@ export default function (
     HEIGHT
   );
 }
-
-const calcPercentage = (current: number, past: number) => {
-  if (past === 0) {
-    return 0;
-  }
-  return ((current - past) / past) * 100;
-};
 
 export const type = 'compose';
 

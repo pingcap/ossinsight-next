@@ -21,11 +21,7 @@ type StarDataPoint = {
   past_period_day_total: number;
 };
 
-type ParticipantDataPoint = {
-  day: string;
-  active_participants: number;
-  new_participants: number;
-};
+type ParticipantDataPoint = StarDataPoint;
 
 type CommitDataPoint = {
   idx: number;
@@ -49,25 +45,6 @@ const handleData = (
   activity: 'stars' | 'participants' | 'commits' | 'reviews/review-prs'
 ) => {
   switch (activity) {
-    case 'participants':
-      const source2 = data as ParticipantDataPoint[];
-      const mainSeries2 = {
-        encode: {
-          x: 'day',
-          y: 'active_participants',
-        },
-      };
-      const vsSeries2 = {
-        encode: {
-          x: 'day',
-          y: 'new_participants',
-        },
-      };
-      return {
-        source: source2,
-        mainSeries: mainSeries2,
-        vsSeries: vsSeries2,
-      };
     case 'commits':
       const source3 = (data as CommitDataPoint[]).reverse();
       const mainSeries3 = {

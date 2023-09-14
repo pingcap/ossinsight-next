@@ -29,6 +29,7 @@ type DataPoint = {
   pr_commenters: number;
   pr_creators: number;
   pr_reviewers: number;
+  commit_authors: number;
 };
 
 type Input = [DataPoint[]];

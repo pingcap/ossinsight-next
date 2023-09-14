@@ -12,6 +12,7 @@ type DataPoint = {
   repos: number;
   engagements: number;
   participants: number;
+  participant_logins: string;
 };
 
 type Input = [DataPoint[], DataPoint[] | undefined];
@@ -69,9 +70,20 @@ export default function (
         borderColor: '#555',
       },
       id: 'main',
+      symbol: (value, params) => {
+        return `image://https://github.com/${
+          value?.participant_logins?.split(',')[0]
+        }.png?size=30`;
+      },
     },
     tooltip: {
-      show: false,
+      show: true,
+      formatter: (params) => {
+        const { data } = params;
+        return `<p>Involved in: <b>${data?.repos} repos</b></p>
+        <p>Contribution count: <b>${data?.engagements}</b></p>
+        <p>Participants: <b>${data?.participant_logins}</b></p>`;
+      },
     },
     legend: {
       show: true,

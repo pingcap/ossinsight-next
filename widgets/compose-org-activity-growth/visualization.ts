@@ -24,11 +24,7 @@ type StarDataPoint = {
   past_period_day_total: number;
 };
 
-type ParticipantDataPoint = {
-  day: string;
-  active_participants: number;
-  new_participants: number;
-};
+type ParticipantDataPoint = StarDataPoint;
 
 type CommitDataPoint = {
   idx: number;
@@ -49,24 +45,6 @@ type Input = [DataPoint[]];
 
 const handleData = (data: DataPoint[], activity: string) => {
   switch (activity) {
-    case 'participants':
-      const [activeParticipantsSum, newParticipantsSum] = (
-        data as ParticipantDataPoint[]
-      ).reduce(
-        (acc, cur) => {
-          acc[0] += cur.active_participants;
-          acc[1] += cur.new_participants;
-          return acc;
-        },
-        [0, 0]
-      );
-      const diff1 = (newParticipantsSum / activeParticipantsSum) * 100;
-      return {
-        data,
-        label: activeParticipantsSum,
-        value: `↑${diff1.toFixed(2)}%`,
-        increase: true,
-      };
     case 'commits':
       const [pushesSum, commitsSum] = (data as CommitDataPoint[]).reduce(
         (acc, cur) => {
