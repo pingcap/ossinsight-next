@@ -18,16 +18,16 @@ export default function IssueContent() {
           searchParams={{
             activity: 'issues/closed',
           }}
-          width={272}
-          height={272}
+          width={216}
+          height={216}
         />
         <ChartTemplate
           name='@ossinsight/widget-analyze-org-activity-efficiency'
           searchParams={{
             activity: 'issues',
           }}
-          width={700}
-          height={272}
+          width={648}
+          height={216}
         />
       </div>
       <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -36,7 +36,7 @@ export default function IssueContent() {
           searchParams={{
             activity: 'issues',
           }}
-          width={486}
+          width={432}
           height={274}
         />
         <ChartTemplate
@@ -44,7 +44,7 @@ export default function IssueContent() {
           searchParams={{
             activity: 'issues',
           }}
-          width={486}
+          width={432}
           height={274}
         />
       </div>
@@ -54,7 +54,7 @@ export default function IssueContent() {
           searchParams={{
             activity: 'issues/issue-comments',
           }}
-          width={486}
+          width={432}
           height={274}
         />
       </div>
