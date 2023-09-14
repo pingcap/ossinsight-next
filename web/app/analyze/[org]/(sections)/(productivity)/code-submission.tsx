@@ -21,7 +21,7 @@ export default function CodeSubmissionContent() {
             searchParams={{
               activity: 'commits',
             }}
-            width={988}
+            width={864}
             height={389}
           />
         </div>
@@ -29,13 +29,13 @@ export default function CodeSubmissionContent() {
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-commits-time-distribution'
             searchParams={{}}
-            width={486}
+            width={432}
             height={274}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-code-changes-top-repositories'
             searchParams={{}}
-            width={486}
+            width={432}
             height={274}
           />
         </div>

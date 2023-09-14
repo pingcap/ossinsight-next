@@ -125,7 +125,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         selfMerged.past_period_percentage + othersMerged.past_period_percentage;
       const prDiff = (prCurrent - prPast) / prPast;
       return {
-        title: 'Pull Requests Merged Ratio',
+        title: 'PRs Merged Ratio',
         label: `${prCurrent.toFixed(2)}%`,
         value: `${prDiff >= 0 ? '↑' : '↓'}${Math.abs(prDiff).toFixed(2)}%`,
         isIncrease: prDiff >= 0,
@@ -196,5 +196,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 272;
-export const height = 272;
+export const width = 216;
+export const height = 216;

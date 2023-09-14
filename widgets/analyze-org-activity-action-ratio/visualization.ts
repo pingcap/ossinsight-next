@@ -90,9 +90,12 @@ export default function (
         return `${name}: ${value}`;
       },
     },
+    grid: simpleGrid(2),
     legend: {
       left: 'center',
-      bottom: '5%',
+      bottom: '0%',
+      itemWidth: 5,
+      itemHeight: 5,
     },
     series: [
       {

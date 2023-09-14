@@ -22,29 +22,30 @@ export default function CodeReviewEfficiencyContent() {
             searchParams={{
               activity: 'reviews/reviewed',
             }}
-            width={272}
-            height={272}
+            width={216}
+            height={216}
           />
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-recent-pr-review-stats'
             searchParams={{}}
-            width={700}
-            height={272}
+            width={648}
+            height={216}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          <ChartTemplate
+          {/* TODO - waiting for API fix */}
+          {/* <ChartTemplate
             name='@ossinsight/widget-analyze-org-pull-requests-open-to-review'
             searchParams={{}}
-            width={486}
+            width={432}
             height={274}
-          />
+          /> */}
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-activity-action-top-repos'
             searchParams={{
               activity: 'reviews/review-comments',
             }}
-            width={486}
+            width={432}
             height={274}
           />
         </div>

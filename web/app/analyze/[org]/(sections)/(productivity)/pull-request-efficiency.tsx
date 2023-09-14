@@ -21,16 +21,16 @@ export default function PRRequestEfficiencyContent() {
             searchParams={{
               activity: 'pull-requests/merged',
             }}
-            width={272}
-            height={272}
+            width={216}
+            height={216}
           />
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-activity-efficiency'
             searchParams={{
               activity: 'pull-requests',
             }}
-            width={700}
-            height={272}
+            width={648}
+            height={216}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -39,7 +39,7 @@ export default function PRRequestEfficiencyContent() {
             searchParams={{
               activity: 'pull-requests',
             }}
-            width={486}
+            width={432}
             height={274}
           />
           <ChartTemplate
@@ -47,7 +47,7 @@ export default function PRRequestEfficiencyContent() {
             searchParams={{
               activity: 'pull-requests',
             }}
-            width={486}
+            width={432}
             height={274}
           />
         </div>

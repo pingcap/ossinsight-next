@@ -147,7 +147,13 @@ export default function (
       type: 'value',
       show: false,
     },
-    grid: simpleGrid(2),
+    grid: {
+      left: 2,
+      top: 20,
+      right: 2,
+      bottom: 2,
+      containLabel: false,
+    },
     series: getSeries(activity),
     tooltip: {
       show: true,
@@ -171,5 +177,5 @@ export default function (
 
 export const type = 'echarts';
 
-export const height = 272;
-export const width = 700;
+export const height = 216;
+export const width = 648;
