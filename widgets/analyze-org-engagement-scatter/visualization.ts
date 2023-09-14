@@ -51,21 +51,27 @@ export default function (
       },
     ],
     xAxis: {
-      name: 'engagements',
+      // name: 'engagements',
       splitLine: { show: false },
     },
     yAxis: {
       name: 'repos',
       splitLine: { show: false },
     },
-    grid: simpleGrid(8, true),
+    grid: {
+      left: 8,
+      top: 8,
+      right: 30,
+      bottom: 8,
+      containLabel: true,
+    },
     series: {
       type: 'scatter',
       encode: {
         x: 'engagements',
         y: 'repos',
       },
-      symbolSize: 15,
+      symbolSize: 30,
       itemStyle: {
         borderColor: '#555',
       },
@@ -73,7 +79,7 @@ export default function (
       symbol: (value, params) => {
         return `image://https://github.com/${
           value?.participant_logins?.split(',')[0]
-        }.png?size=30`;
+        }.png`;
       },
     },
     tooltip: {
@@ -94,5 +100,5 @@ export default function (
 
 export const type = 'echarts';
 
-export const width = 1042;
-export const height = 259;
+export const width = 864;
+export const height = 518;

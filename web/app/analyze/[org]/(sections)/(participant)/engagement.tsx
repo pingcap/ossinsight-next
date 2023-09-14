@@ -23,7 +23,7 @@ export default function EngagementContent() {
             searchParams={{
               activity: 'participants',
             }}
-            width={988}
+            width={648}
             height={389}
           />
           <ChartTemplate
@@ -31,7 +31,7 @@ export default function EngagementContent() {
             searchParams={{
               activity: 'participants',
             }}
-            width={300}
+            width={216}
             height={389}
           />
         </div>
@@ -39,7 +39,7 @@ export default function EngagementContent() {
           <ChartTemplate
             name='@ossinsight/widget-compose-org-participants-roles-ratio'
             searchParams={{}}
-            width={1042}
+            width={864}
             height={259}
           />
         </div>
@@ -47,8 +47,8 @@ export default function EngagementContent() {
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-engagement-scatter'
             searchParams={{}}
-            width={1042}
-            height={259}
+            width={864}
+            height={518}
           />
         </div>
       </SectionTemplate>
