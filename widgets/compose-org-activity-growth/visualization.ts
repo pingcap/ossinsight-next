@@ -144,7 +144,7 @@ export default function (
           '@ossinsight/widget-analyze-org-recent-stats',
           [handledData],
           ctx.parameters
-        )
+        ).flex(0.8)
       )
     ).padding([0, PADDING, PADDING]),
     0,
@@ -156,5 +156,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 988;
+export const width = 648;
 export const height = 389;

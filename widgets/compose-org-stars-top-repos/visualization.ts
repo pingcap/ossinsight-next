@@ -149,5 +149,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 300;
+export const width = 219;
 export const height = 389;

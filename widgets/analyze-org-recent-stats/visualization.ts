@@ -136,9 +136,15 @@ export default function (
       },
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
     },
-    grid: simpleGrid(2, true),
+    grid: {
+      left: 6,
+      top: 6,
+      right: 14,
+      bottom: 2,
+      containLabel: true,
+    },
     aria: {
       enabled: true,
       decal: {
@@ -196,7 +202,7 @@ export default function (
       },
     ],
     tooltip: {
-      show: false,
+      show: true,
       trigger: 'axis',
       axisPointer: {
         type: 'line',

@@ -8,7 +8,6 @@ import {
   getOrgActivityLocations,
   getOrgActivityOrgs,
 } from '@/components/Analyze/utils';
-import { type } from 'os';
 
 const mock_data = new Array(10)
   .fill(0)
@@ -126,7 +125,7 @@ function Table(props: {
                     {row?.slice(1).map((r) => (
                       <td
                         key={r?.toString()}
-                        className='whitespace-nowrap px-3 py-1 text-sm text-gray-300'
+                        className='whitespace-normal px-3 py-1 text-sm text-gray-300'
                       >
                         {r}
                       </td>
@@ -178,15 +177,21 @@ export async function GeoRankTablePromise(props: {
 export function GeoRankTable(props: {
   id?: number;
   type?: 'stars' | 'participants';
+  className?: string;
 }) {
-  const { id, type = 'stars' } = props;
+  const { id, type = 'stars', className } = props;
 
   if (!id) {
     return null;
   }
 
   return (
-    <div className='px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-around'>
+    <div
+      className={twMerge(
+        'px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-around',
+        className
+      )}
+    >
       <h1 className='px-1 text-base font-semibold leading-6 text-white'>
         Top locations
       </h1>
@@ -224,15 +229,21 @@ export async function CompanyRankTablePromise(props: {
 export function CompanyRankTable(props: {
   id?: number;
   type?: 'stars' | 'participants';
+  className?: string;
 }) {
-  const { id, type = 'stars' } = props;
+  const { id, type = 'stars', className } = props;
 
   if (!id) {
     return null;
   }
 
   return (
-    <div className='px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-around'>
+    <div
+      className={twMerge(
+        'px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-around',
+        className
+      )}
+    >
       <h1 className='px-1 text-base font-semibold leading-6 text-white'>
         Top companies
       </h1>

@@ -30,39 +30,47 @@ export default function StarGrowthContent() {
             searchParams={{
               activity: 'stars',
             }}
-            width={988}
+            width={648}
             height={389}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-stars-top-repos'
             searchParams={{}}
-            width={300}
+            width={219}
             height={389}
           />
         </div>
 
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          <ChartTemplate
+          {/* TODO - waiting for API fix */}
+          {/* <ChartTemplate
             name='@ossinsight/widget-analyze-org-company'
             searchParams={{
               activity: 'stars',
             }}
-            width={726}
+            width={648}
             height={405}
           />
-          <CompanyRankTable id={orgId} type='stars' />
+          <CompanyRankTable
+            id={orgId}
+            type='stars'
+            className='w-[219px] h-[365px] overflow-x-hidden overflow-y-auto'
+          /> */}
         </div>
 
-        <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
+        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-stars-map'
             searchParams={{
               activity: 'stars',
             }}
-            width={726}
-            height={405}
+            width={648}
+            height={365}
           />
-          <GeoRankTable id={orgId} />
+          <GeoRankTable
+            id={orgId}
+            className='w-[219px] h-[365px] overflow-x-hidden overflow-y-auto'
+          />
         </div>
       </SectionTemplate>
     </SectionTemplate>

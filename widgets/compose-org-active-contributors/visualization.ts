@@ -85,6 +85,7 @@ export default function (
               label: '',
               size: size,
               imgSrc: item.login ? `https://github.com/${item.login}.png` : '',
+              href: item.login ? `https://ossinsight.io/analyze/${item.login}` : '',
             })
           )
         ).gap(4)

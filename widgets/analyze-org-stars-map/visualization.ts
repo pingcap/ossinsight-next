@@ -75,10 +75,13 @@ export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): EChartsVisualizationConfig {
-  const main = ctx.parameters.owner_id;
-  const vs = ctx.parameters.owner_id;
+  const { getOrg } = ctx;
+
+  const main = getOrg(Number(ctx.parameters.owner_id)).login;
+  const vs = getOrg(Number(ctx.parameters.owner_id)).login;
 
   const { activity = 'stars' } = ctx.parameters;
+  
 
   const max = input
     .flat()
@@ -105,3 +108,5 @@ export default function (
 }
 
 export const type = 'echarts';
+export const width = 648;
+export const height = 365;
