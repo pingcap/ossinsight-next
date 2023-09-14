@@ -1,7 +1,6 @@
 'use client';
 import * as React from 'react';
 import NextImage from 'next/image';
-import CircleFill from 'bootstrap-icons/icons/circle-fill.svg';
 import { RepoIcon, StarIcon, PeopleIcon } from '@primer/octicons-react';
 
 import {
@@ -10,6 +9,7 @@ import {
 } from '@/components/Context/Analyze/AnalyzeOrg';
 import { Tooltip } from '@ossinsight/ui';
 import { twMerge } from 'tailwind-merge';
+import { formatNumber } from '@ossinsight/widgets-utils/src/utils';
 
 import { useOrgOverview } from '@/components/Analyze/hooks';
 import OrgAnalyzePageHeaderAction from '@/components/Analyze/Header/OrgHeaderAction';
@@ -57,7 +57,10 @@ export default function OrgAnalyzePageHeader() {
           icon={<StarIcon />}
         />
         <div className='ml-auto inline-flex gap-2 items-center'>
-          <CircleFill className='text-title w-2 h-2' />
+          <span className='flex h-3 w-3 relative'>
+            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75'></span>
+            <span className='relative inline-flex rounded-full h-3 w-3 bg-green-500'></span>
+          </span>
           <span>Last active at</span>
           {loading && <ValueSkeleton />}
           {!loading && finishedAt && (
@@ -93,7 +96,7 @@ const LabelItemWithCount = ({
   return (
     <div className='flex gap-2 items-center cursor-default'>
       {icon && <div className=''>{icon}</div>}
-      {!loading && <div className='text-title'>{count}</div>}
+      {!loading && <div className='text-title'>{formatNumber(count)}</div>}
       {loading && <ValueSkeleton />}
       <div className='inline-flex items-center'>
         {label}
