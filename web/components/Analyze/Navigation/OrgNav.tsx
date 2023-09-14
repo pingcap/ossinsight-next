@@ -12,6 +12,8 @@ import {
 } from '@primer/octicons-react';
 import clsx from 'clsx';
 
+import { mergeURLSearchParams } from '@ossinsight/widgets-utils/src/utils';
+
 export default function OrgNav(props: { org: string }) {
   const { org } = props;
 
@@ -20,12 +22,15 @@ export default function OrgNav(props: { org: string }) {
   // https://github.com/vercel/next.js/discussions/49465#discussioncomment-5845312
   // const params = useParams();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   React.useEffect(() => {
-    const section =
-      pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+    // const section =
+    //   pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+    // selectedId !== section && setSelectedId(section);
+    const section = searchParams.get('section') || DEFAULT_NAV_ID;
     selectedId !== section && setSelectedId(section);
-  }, [org, pathname, selectedId]);
+  }, [org, pathname, searchParams, selectedId]);
 
   const highlightIdMemo = React.useMemo(() => {
     return calcSelectedIdParents(navItems, selectedId);
@@ -80,7 +85,13 @@ const NavList = (props: {
             >
               {item?.anchor ? (
                 <NextLink
-                  href={`${basePath}/${item.id}?${searchParams.toString()}`}
+                  // href={`${basePath}/${item.id}?${searchParams.toString()}`}
+                  href={`${basePath}?${mergeURLSearchParams(
+                    searchParams.toString(),
+                    {
+                      section: item.id,
+                    }
+                  ).toString()}`}
                   className={clsx(
                     'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
                     item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',

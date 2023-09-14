@@ -1,4 +1,5 @@
 import OrgNav from '@/components/Analyze/Navigation/OrgNav';
+import OrgBottomNav from '@/components/Analyze/Navigation/OrgBottomNav';
 
 export default function UserOrgAnalyzeLayout({
   children,
@@ -20,6 +21,7 @@ export default function UserOrgAnalyzeLayout({
           </aside>
           <main className='flex-1 overflow-x-hidden'>
             <div className='pl-6 pr-28 py-8'>{children}</div>
+            <OrgBottomNav org={org} />
           </main>
         </div>
       </div>

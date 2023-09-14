@@ -12,6 +12,7 @@ import {
   navItems,
   DEFAULT_NAV_ID,
 } from '@/components/Analyze/Navigation/OrgNav';
+import { mergeURLSearchParams } from '@ossinsight/widgets-utils/src/utils';
 
 export default function OrgBottomNav(props: { org: string }) {
   const { org } = props;
@@ -21,21 +22,30 @@ export default function OrgBottomNav(props: { org: string }) {
   const searchParams = useSearchParams();
 
   const { prevId, nextId, prevItem, nextItem } = React.useMemo(() => {
-    const currentID =
-      pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+    // const currentID =
+    //   pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
+    const currentID = searchParams.get('section') || DEFAULT_NAV_ID;
     const { prevId, nextId, prevItem, nextItem } = calcPrevNextId(
       navItems,
       currentID
     );
     return { currentID, prevId, nextId, prevItem, nextItem };
-  }, [org, pathname]);
+  }, [searchParams]);
 
   return (
     <>
       <div className='flex items-center justify-between'>
         {prevId && (
           <NavButton
-            onClick={() => router.push(`/analyze/${org}/${prevId}?${searchParams.toString()}`)}
+            // onClick={() => router.push(`/analyze/${org}/${prevId}?${searchParams.toString()}`)}
+            onClick={() =>
+              router.push(
+                `/analyze/${org}?${mergeURLSearchParams(
+                  searchParams.toString(),
+                  { section: prevId }
+                ).toString()}`
+              )
+            }
             title={prevItem?.title || ''}
             subTitle='Previous'
             icon={<ChevronLeftIcon className='w-4 h-4' />}
@@ -43,7 +53,19 @@ export default function OrgBottomNav(props: { org: string }) {
         )}
         {nextId && (
           <NavButton
-            onClick={() => router.push(`/analyze/${org}/${nextId}?${searchParams.toString()}`)}
+            // onClick={() =>
+            //   router.push(
+            //     `/analyze/${org}/${nextId}?${searchParams.toString()}`
+            //   )
+            // }
+            onClick={() =>
+              router.push(
+                `/analyze/${org}?${mergeURLSearchParams(
+                  searchParams.toString(),
+                  { section: nextId }
+                ).toString()}`
+              )
+            }
             title={nextItem?.title || ''}
             subTitle='Next'
             icon={<ChevronRightIcon className='w-4 h-4' />}

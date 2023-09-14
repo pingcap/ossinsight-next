@@ -59,3 +59,18 @@ export function upperFirst (str: string): string {
 export function formatNumber(num: number): string {
   return num.toLocaleString();
 }
+
+export function mergeURLSearchParams(
+  searchParamsStr: string,
+  ...args: Record<string, any>[]
+): URLSearchParams {
+  const params = new URLSearchParams(searchParamsStr);
+  for (const arg of args) {
+    for (const [key, value] of Object.entries(arg)) {
+      if (value != null) {
+        params.set(key, value);
+      }
+    }
+  }
+  return params;
+}
