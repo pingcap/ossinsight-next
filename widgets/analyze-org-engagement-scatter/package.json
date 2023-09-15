@@ -2,6 +2,7 @@
   "name": "@ossinsight/widget-analyze-org-engagement-scatter",
   "version": "1.0.0",
   "description": "Most engaged people in an organization",
+  "private": true,
   "type": "module",
   "main": "visualization.ts",
   "keywords": [

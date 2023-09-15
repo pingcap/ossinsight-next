@@ -5,10 +5,11 @@ import {
 
 const generateMetadata: MetadataGenerator<{
   owner_id: string;
-}> = ({ parameters: { owner_id }, getOrg }) => {
+  activity: string;
+}> = ({ parameters: { owner_id, activity }, getOrg }) => {
   const main = getOrg(parseInt(owner_id));
   return {
-    title: `Pull Request Review Over Time`,
+    title: `Company Affiliation of ${main.login}`,
   };
 };
 

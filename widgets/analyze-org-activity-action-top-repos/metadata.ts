@@ -15,4 +15,15 @@ const generateMetadata: MetadataGenerator<{
   };
 };
 
+const getTitle = (activity: string) => {
+  switch (activity) {
+    case 'issues/issue-comments':
+      return 'Which repositories are actively engaged in issue discussions?';
+    case 'reviews/review-comments':
+      return 'Which Repository Generates the Most Discussion during Pull Request Reviews?';
+    default:
+      return 'Ranking of repos';
+  }
+};
+
 export default generateMetadata;

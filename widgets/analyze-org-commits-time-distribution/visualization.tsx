@@ -6,14 +6,8 @@ import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 type Params = {
   owner_id: number;
   period?: string;
+  zone?: string;
 };
-
-// type DataPoint = {
-//   cnt: number
-//   dayofweek: number
-//   hour: number
-//   type: string
-// }
 
 type DataPoint = {
   dayofweek: number;
@@ -43,6 +37,7 @@ const transformData = (data: DataPoint[]) => {
 export default function (input: Input, ctx: WidgetVisualizerContext<Params>) {
   const data = useFilteredData(input, ctx.runtime);
   // const user = ctx.getUser(ctx.parameters.user_id);
+  const timezone = Number(ctx.parameters.zone) || 0;
 
   return (
     <TimeDistribution
@@ -53,7 +48,7 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>) {
       size={18}
       gap={4}
       data={data}
-      offset={0}
+      offset={timezone}
       title={`@${ctx.parameters.owner_id}'s Contribution time distribution (UTC +0)`}
       colorScheme={ctx.theme.colorScheme}
     />

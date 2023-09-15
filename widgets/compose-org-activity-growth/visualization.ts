@@ -56,6 +56,7 @@ const handleData = (data: DataPoint[], activity: string) => {
       );
       const diff2 = (commitsSum / pushesSum) * 100;
       return {
+        title: 'Code Submission Count Over Time',
         data,
         label: commitsSum,
         // value: `↑${diff2.toFixed(2)}%`,
@@ -64,6 +65,7 @@ const handleData = (data: DataPoint[], activity: string) => {
       };
     case 'reviews/review-prs':
       return {
+        title: 'Pull Request Review Over Time',
         data,
         label: ' ',
         value: ' ',
@@ -79,8 +81,15 @@ const handleData = (data: DataPoint[], activity: string) => {
         },
         [0, 0]
       );
+      let tmpTitle = 'Star earned over time';
+      if (activity === 'participants') {
+        tmpTitle = 'Participants Over Time';
+      } else if (activity === 'pull-requests') {
+        tmpTitle = 'Pull Requests Over Time';
+      }
       const diff = currentSum - lastSum;
       return {
+        title: tmpTitle,
         data,
         label: currentSum,
         value: diff >= 0 ? `↑${diff}%` : `↓${diff}%`,
@@ -107,12 +116,13 @@ export default function (
     label,
     value,
     increase,
+    title,
   } = handleData(data, activity);
 
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: `${upperFirst(ctx.parameters?.activity)} Over Time`,
+        title: title,
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       vertical(
@@ -156,5 +166,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 864;
+export const width = 648;
 export const height = 389;

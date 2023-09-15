@@ -1,8 +1,13 @@
 'use client';
+import * as React from 'react';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
 
 export default function CodeSubmissionContent() {
+  const zoneMemo = React.useMemo(() => {
+    return -new Date().getTimezoneOffset() / 60;
+  }, []);
+
   return (
     <SectionTemplate
       title='Productivity'
@@ -28,7 +33,9 @@ export default function CodeSubmissionContent() {
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-commits-time-distribution'
-            searchParams={{}}
+            searchParams={{
+              zone: `${zoneMemo}`,
+            }}
             width={432}
             height={274}
           />

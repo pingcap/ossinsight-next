@@ -10,5 +10,8 @@
   "main": "visualization.ts",
   "devDependencies": {
     "@ossinsight/widgets-types": "workspace:^"
+  },
+  "dependencies": {
+    "luxon": "^3.3.0"
   }
 }

@@ -74,6 +74,39 @@ const handleData = (items: DataPoint[], activity: string) => {
   }
 };
 
+const calcSumFromData = (data: DataPoint[], activity: string) => {
+  switch (activity) {
+    case 'issues/closed':
+      return (data as IssueClosedDataPoint[]).reduce(
+        (acc, cur) => {
+          acc[0] += cur.current_period_issues;
+          acc[1] += cur.past_period_issues;
+          return acc;
+        },
+        [0, 0]
+      );
+    case 'reviews/reviewed':
+      return (data as ReviewedDataPoint[]).reduce(
+        (acc, cur) => {
+          acc[0] += cur.current_period_prs;
+          acc[1] += cur.past_period_prs;
+          return acc;
+        },
+        [0, 0]
+      );
+    case 'pull-requests/merged':
+    default:
+      return (data as PRMergedDataPoint[]).reduce(
+        (acc, cur) => {
+          acc[0] += cur.current_period_prs;
+          acc[1] += cur.past_period_prs;
+          return acc;
+        },
+        [0, 0]
+      );
+  }
+};
+
 export default function (
   data: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -81,12 +114,30 @@ export default function (
   const [main, vs] = data;
   const activity = ctx.parameters.activity ?? 'pull-requests/merged';
 
+  const handledData = handleData(main, activity);
+  const sum = calcSumFromData(main, activity);
+
   return {
     tooltip: {
       trigger: 'item',
-      position: 'top',
+      position: 'inside',
       formatter: (params) => {
         const { name, value } = params;
+        if (activity === 'pull-requests/merged') {
+          return `<b>${name}</b>
+            <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>
+            <br />
+            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and merged by the original PR author</div>
+          `;
+        }
+        if (activity === 'reviews/reviewed') {
+          return `<b>${name}</b>
+            <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
+        }
+        if (activity === 'issues/closed') {
+          return `<b>${name}</b>
+            <div>${value} Issues(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
+        }
         return `${name}: ${value}`;
       },
     },
@@ -116,7 +167,7 @@ export default function (
         labelLine: {
           show: false,
         },
-        data: handleData(main, activity),
+        data: handledData,
       },
     ],
   };

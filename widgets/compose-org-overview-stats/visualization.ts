@@ -25,6 +25,19 @@ type DataPoint = {
 
 type Input = [DataPoint[]];
 
+const parseTitle = (activity: string) => {
+  switch (activity) {
+    case 'issues':
+      return 'Issues';
+    case 'pull-requests':
+      return 'Pull Requests';
+    case 'reviews':
+      return 'Code Reviews';
+    default:
+      return upperFirst(activity);
+  }
+};
+
 export default function (
   [data]: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -48,19 +61,10 @@ export default function (
 
   const stars = transferData2Star(data);
 
-  const item = (name: string, label: string, valueKey: string, data: any) =>
-    horizontal(
-      widget('builtin:label-value', undefined, {
-        label: label,
-        value: data[0][valueKey],
-      }).flex(0.3),
-      widget(name, [data], ctx.parameters).flex(0.7)
-    ).gap(SPACING);
-
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: upperFirst(ctx.parameters?.activity),
+        title: parseTitle(ctx.parameters?.activity),
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       vertical(

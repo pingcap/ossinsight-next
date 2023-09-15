@@ -208,6 +208,10 @@ export default function (
         type: 'line',
       },
     },
+    legend: {
+      left: 'center',
+      top: '5%',
+    },
   };
 }
 

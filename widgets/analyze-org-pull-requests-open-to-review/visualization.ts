@@ -99,9 +99,9 @@ export default function (
     yAxis: {
       type: 'category',
       name: 'Repo',
-      // axisLabel: {
-      //   formatter: (value: string) => value.split('/')[1],
-      // },
+      axisLabel: {
+        formatter: (value: string) => value.split('/')[1],
+      },
     },
     tooltip: axisTooltip('cross', {
       renderMode: 'html',

@@ -9,8 +9,19 @@ const generateMetadata: MetadataGenerator<{
 }> = ({ parameters: { owner_id, activity }, getOrg }) => {
   const main = getOrg(parseInt(owner_id));
   return {
-    title: `Compare ${activity} first-response time of ${main.login}`,
+    title: getTitle(activity),
   };
+};
+
+const getTitle = (activity: string) => {
+  switch (activity) {
+    case 'issue':
+      return 'Which Repository Exhibit Exceptional Efficiency in Addressing Issues?';
+    case 'pull-requests':
+      return 'Which Repository Achieves the Shortest Pull Request Completion Time?';
+    default:
+      return 'Top repos of open to close time';
+  }
 };
 
 export default generateMetadata;

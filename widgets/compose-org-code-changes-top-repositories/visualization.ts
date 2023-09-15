@@ -101,7 +101,7 @@ export default function (
                   maxVal: 100,
                 }).flex(0.3),
                 widget('builtin:label', undefined, {
-                  label: item.changes.toString(),
+                  label: item.changes,
                   labelProps: {
                     style: {
                       fontSize: 12,

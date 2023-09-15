@@ -8,6 +8,7 @@ import {
   simpleGrid,
   timeAxis,
 } from '@ossinsight/widgets-utils/src/options';
+import { DateTime } from 'luxon';
 
 type Params = {
   owner_id: string;
@@ -141,18 +142,25 @@ export default function (
     },
     xAxis: {
       type: 'category',
-      show: false,
+      show: true,
+      axisLabel: {
+        formatter: (value: string) => {
+          return `${DateTime.fromJSDate(new Date(value)).toFormat(
+            'MM-dd-yyyy'
+          )}`;
+        },
+      },
     },
     yAxis: {
       type: 'value',
-      show: false,
+      show: true,
     },
     grid: {
       left: 2,
-      top: 20,
+      top: 30,
       right: 2,
       bottom: 2,
-      containLabel: false,
+      containLabel: true,
     },
     series: getSeries(activity),
     tooltip: {

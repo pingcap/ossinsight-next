@@ -4,8 +4,8 @@ export interface BuiltinWidgetsMap {
   'builtin:avatar-label': { label?: string; imgSrc: string; size?: number, href?: string };
   'builtin:card-heading': { title: string; subtitle?: string };
   'builtin:label-value': {
-    label: string;
-    value?: string;
+    label: string | number;
+    value?: string | number;
     labelProps?: {
       style?: CSSProperties;
       className?: string;
@@ -16,7 +16,7 @@ export interface BuiltinWidgetsMap {
     };
     column?: boolean;
   };
-  'builtin:label': { label: string };
+  'builtin:label': { label: string | number };
   'builtin:empty': {};
   'builtin:avatar-progress': {
     label?: string;

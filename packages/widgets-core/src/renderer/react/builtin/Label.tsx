@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { formatNumber } from '@ossinsight/widgets-utils/src/utils';
 import { BuiltinProps, useTheme } from './common';
 
 export function Label({ className, style, label, colorScheme, labelProps = {} }: BuiltinProps<'builtin:label-value'>) {
@@ -18,7 +19,7 @@ export function Label({ className, style, label, colorScheme, labelProps = {} }:
           ...labelProps.style,
         }}
       >
-        {label}
+        {typeof label === 'number' ? formatNumber(label) : label || ''}
       </span>
     </div>
   );

@@ -25,26 +25,26 @@ export default function OriginsContent() {
         classname='pt-8 flex flex-col gap-4'
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          <ChartTemplate
-            name='@ossinsight/widget-analyze-org-company'
+          {/* <ChartTemplate
+            name='@ossinsight/widget-compose-org-activity-company'
             searchParams={{
               activity: 'participants',
             }}
-            width={720}
-            height={405}
-          />
-          <CompanyRankTable id={orgId} type='participants' />
+            width={648}
+            height={365}
+          /> */}
+          {/* <CompanyRankTable id={orgId} type='participants' /> */}
         </div>
         <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
-          <ChartTemplate
-            name='@ossinsight/widget-analyze-org-stars-map'
+          {/* <ChartTemplate
+            name="@ossinsight/widget-compose-org-activity-map"
             searchParams={{
               activity: 'participants',
             }}
-            width={720}
-            height={405}
-          />
-          <GeoRankTable id={orgId} type='participants' />
+            width={648}
+            height={365}
+          /> */}
+          {/* <GeoRankTable id={orgId} type='participants' /> */}
         </div>
       </SectionTemplate>
     </SectionTemplate>

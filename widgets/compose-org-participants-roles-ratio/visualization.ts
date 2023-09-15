@@ -50,6 +50,7 @@ const handleData = (data: DataPoint) => {
     pr_commenters_ratio: getRatio(data.pr_commenters, sum),
     pr_creators_ratio: getRatio(data.pr_creators, sum),
     pr_reviewers_ratio: getRatio(data.pr_reviewers, sum),
+    commit_authors_ratio: getRatio(data.commit_authors, sum),
   };
 };
 
@@ -115,6 +116,13 @@ export default function (
             '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
             'Reviewer',
             { ...ctx.parameters, activity: 'pr_reviewers_ratio' },
+            [handledData]
+          )
+          ,
+          item(
+            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
+            'Commit Author',
+            { ...ctx.parameters, activity: 'commit_authors_ratio' },
             [handledData]
           )
         )

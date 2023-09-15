@@ -125,30 +125,30 @@ export default function (
         title,
         subtitle,
       }).fix(HEADER_HEIGHT),
-      widget('builtin:label-value', undefined, {
-        label: `${current_period_total}`,
-        value:
-          growth_percentage >= 0
-            ? `↑${percentage.toFixed(2)}%`
-            : `↓${percentage.toFixed(2)}%`,
-        labelProps: {
-          style: {
-            fontSize: 24,
-            fontWeight: 'bold',
-          },
-        },
-        valueProps: {
-          style: {
-            fontSize: 12,
-            lineHeight: 2,
-            color:
-              growth_percentage >= 0
-                ? ctx.theme.colors.green['400']
-                : ctx.theme.colors.red['400'],
-          },
-        },
-        column: false,
-      }).flex(0.2),
+      // widget('builtin:label-value', undefined, {
+      //   label: current_period_total,
+      //   value:
+      //     growth_percentage >= 0
+      //       ? `↑${percentage.toFixed(2)}%`
+      //       : `↓${percentage.toFixed(2)}%`,
+      //   labelProps: {
+      //     style: {
+      //       fontSize: 24,
+      //       fontWeight: 'bold',
+      //     },
+      //   },
+      //   valueProps: {
+      //     style: {
+      //       fontSize: 12,
+      //       lineHeight: 2,
+      //       color:
+      //         growth_percentage >= 0
+      //           ? ctx.theme.colors.green['400']
+      //           : ctx.theme.colors.red['400'],
+      //     },
+      //   },
+      //   column: false,
+      // }).flex(0.2),
       widget('builtin:label-value', undefined, {
         label,
         value,
@@ -180,7 +180,7 @@ export default function (
                 maxVal,
               })
             )
-          ).flex(0.7)
+          ).flex(0.9)
           // widget('@ossinsight/widget-analyze-repo-recent-top-contributors', [sortedContributors], ctx.parameters),
         )
       )

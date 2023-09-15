@@ -9,7 +9,7 @@ const generateMetadata: MetadataGenerator<{ owner_id: string }> = ({
 }) => {
   const main = getOrg(parseInt(owner_id));
   return {
-    title: `Ranking of repos with most proactive Pull Request Review responses of ${main.login}`,
+    title: `Which Repository Shows the Most Proactive Pull Request Review Responses?`,
   };
 };
 

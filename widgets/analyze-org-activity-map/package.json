@@ -1,13 +1,12 @@
 {
-  "name": "@ossinsight/widget-analyze-org-company",
+  "name": "@ossinsight/widget-analyze-org-activity-map",
   "version": "1.0.0",
-  "description": "Analyze company affiliations of repository stargazers and participants.",
+  "description": "Visualize and compare the geographic distribution of stars/participants worldwide.",
   "private": true,
   "type": "module",
   "main": "visualization.ts",
   "keywords": [
-    "Organization",
-    "Company"
+    "Organization"
   ],
   "author": "OSSInsight",
   "devDependencies": {

@@ -24,7 +24,7 @@ export default function StarGrowthContent() {
         level={3}
         classname='pt-8 flex flex-col gap-4'
       >
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+        {/* <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-growth'
             searchParams={{
@@ -39,12 +39,12 @@ export default function StarGrowthContent() {
             width={219}
             height={389}
           />
-        </div>
+        </div> */}
 
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           {/* TODO - waiting for API fix */}
           {/* <ChartTemplate
-            name='@ossinsight/widget-analyze-org-company'
+            name='@ossinsight/widget-compose-org-activity-company'
             searchParams={{
               activity: 'stars',
             }}
@@ -60,7 +60,7 @@ export default function StarGrowthContent() {
 
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
-            name='@ossinsight/widget-analyze-org-stars-map'
+            name='@ossinsight/widget-compose-org-activity-map'
             searchParams={{
               activity: 'stars',
             }}
@@ -69,7 +69,7 @@ export default function StarGrowthContent() {
           />
           <GeoRankTable
             id={orgId}
-            className='w-[219px] h-[365px] overflow-x-hidden overflow-y-auto'
+            className='w-[219px] h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar'
           />
         </div>
       </SectionTemplate>

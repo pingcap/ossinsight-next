@@ -1,6 +1,7 @@
 import { Canvas } from '@napi-rs/canvas';
 import { getTheme } from '../../../utils/theme';
 import { BuiltinProps } from './commons';
+import { formatNumber } from '@ossinsight/widgets-utils/src/utils';
 
 export function renderLabelValue (
   canvas: Canvas,
@@ -25,9 +26,10 @@ export function renderLabelValue (
 
   ctx.font = `${labelProps?.style?.fontWeight || 'normal'} ${(Number(labelProps?.style?.fontSize) || 12) * dpr}px`;
   ctx.fillStyle = labelProps?.style?.color || Label.color;
-  ctx.fillText(label, left, top, width);
+  const labelStr = typeof label === 'number' ? formatNumber(label) : label;
+  ctx.fillText(labelStr, left, top, width);
 
-  const measured = ctx.measureText(label);
+  const measured = ctx.measureText(labelStr);
   const fontHeight =
     measured.fontBoundingBoxAscent + measured.fontBoundingBoxDescent;
 
@@ -35,8 +37,9 @@ export function renderLabelValue (
   ctx.fillStyle = valueProps?.style?.color || Value.color;
   const valMarginLeftAuto = valueProps?.style?.marginLeft === 'auto';
   valMarginLeftAuto && (ctx.textAlign = 'right');
-  column && value && ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
-  !column && value && ctx.fillText(String(value), valMarginLeftAuto ? width : width / 2, top, width);
+  const valueStr = typeof value === 'number' ? formatNumber(value) : value;
+  column && value && ctx.fillText(valueStr, left, top + fontHeight + 4 * dpr, width);
+  !column && value && ctx.fillText(valueStr, valMarginLeftAuto ? width : width / 2, top, width);
 
   ctx.restore();
 }
