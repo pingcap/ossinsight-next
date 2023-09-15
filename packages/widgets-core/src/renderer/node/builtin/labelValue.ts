@@ -37,7 +37,8 @@ export function renderLabelValue (
   ctx.fillStyle = valueProps?.style?.color || Value.color;
   const valMarginLeftAuto = valueProps?.style?.marginLeft === 'auto';
   valMarginLeftAuto && (ctx.textAlign = 'right');
-  const valueStr = typeof value === 'number' ? formatNumber(value) : value;
+  const valueStr =
+    (typeof value === 'number' ? formatNumber(value) : value) || '';
   column && value && ctx.fillText(valueStr, left, top + fontHeight + 4 * dpr, width);
   !column && value && ctx.fillText(valueStr, valMarginLeftAuto ? width : width / 2, top, width);
 
