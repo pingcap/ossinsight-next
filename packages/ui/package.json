@@ -6,6 +6,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@ossinsight/widgets-utils": "workspace:^",
+    "@primer/octicons-react": "^19.7.0",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.0.3",
