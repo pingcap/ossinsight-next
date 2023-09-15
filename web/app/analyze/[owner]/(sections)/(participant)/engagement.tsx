@@ -45,7 +45,7 @@ export default function EngagementContent() {
         </div>
         <div className='w-full overflow-x-auto'>
           <ChartTemplate
-            name='@ossinsight/widget-analyze-org-engagement-scatter'
+            name='@ossinsight/widget-compose-org-engagement-scatter'
             searchParams={{}}
             width={864}
             height={518}

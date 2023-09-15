@@ -26,7 +26,7 @@ export default function CodeSubmissionContent() {
             searchParams={{
               activity: 'commits',
             }}
-            width={864}
+            width={648}
             height={389}
           />
         </div>
