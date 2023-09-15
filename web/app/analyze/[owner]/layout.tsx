@@ -6,9 +6,9 @@ export default function UserOrgAnalyzeLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { org: string };
+  params: { owner: string };
 }) {
-  const { org } = params;
+  const { owner } = params;
 
   return (
     <>
@@ -16,12 +16,12 @@ export default function UserOrgAnalyzeLayout({
         <div className='flex w-full flex-col md:flex-row'>
           <aside className='bg-toolbar border-r md:min-h-[calc(100vh-var(--site-header-height))]'>
             <div className='sticky top-[var(--site-header-height)] h-full overflow-y-auto max-h-[calc(100vh-var(--site-header-height))] styled-scrollbar'>
-              <OrgNav org={org} />
+              <OrgNav org={owner} />
             </div>
           </aside>
           <main className='flex-1 overflow-x-hidden'>
             <div className='pl-6 pr-28 py-8'>{children}</div>
-            <OrgBottomNav org={org} />
+            <OrgBottomNav org={owner} />
           </main>
         </div>
       </div>

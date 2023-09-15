@@ -7,12 +7,12 @@ export default function Layout({
   params,
 }: {
   children: React.ReactNode;
-  params: { org: string };
+  params: { owner: string };
 }) {
   return (
     <>
       {children}
-      <OrgBottomNav org={params.org} />
+      <OrgBottomNav org={params.owner} />
     </>
   );
 }

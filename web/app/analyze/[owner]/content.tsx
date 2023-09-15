@@ -13,11 +13,11 @@ import {
   getNavItemById,
   DEFAULT_NAV_ID,
 } from '@/components/Analyze/Navigation/OrgNav';
-import Overview from '@/app/analyze/[org]/(sections)/overview';
-import StarGrowth from '@/app/analyze/[org]/(sections)/star-growth';
-import Issue from '@/app/analyze/[org]/(sections)/issue';
-import Origins from '@/app/analyze/[org]/(sections)/(participant)/origins';
-import Engagement from '@/app/analyze/[org]/(sections)/(participant)/engagement';
+import Overview from '@/app/analyze/[owner]/(sections)/overview';
+import StarGrowth from '@/app/analyze/[owner]/(sections)/star-growth';
+import Issue from '@/app/analyze/[owner]/(sections)/issue';
+import Origins from '@/app/analyze/[owner]/(sections)/(participant)/origins';
+import Engagement from '@/app/analyze/[owner]/(sections)/(participant)/engagement';
 import PRRequestEfficiency from './(sections)/(productivity)/pull-request-efficiency';
 import CodeReviewEfficiency from './(sections)/(productivity)/code-review-efficiency';
 import CodeSubmissionEfficiency from './(sections)/(productivity)/code-submission';

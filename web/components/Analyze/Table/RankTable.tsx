@@ -8,6 +8,7 @@ import {
   getOrgActivityLocations,
   getOrgActivityOrgs,
 } from '@/components/Analyze/utils';
+import Loader from '@/components/Widget/loading';
 
 const mock_data = [
   {
@@ -330,7 +331,7 @@ export function upperFirst(str: string) {
 }
 
 export function TableSkeleton() {
-  return <>loading</>;
+  return <><Loader /></>;
 }
 
 export async function GeoRankTablePromise(props: {
