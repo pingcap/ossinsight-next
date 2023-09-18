@@ -53,7 +53,7 @@ export function GHOrgRepoSelector({
                 id={props.id}
                 item={item}
                 compat={compat}
-                onClear={() => onRepoRemoved(item)}
+                onClear={() => onRepoRemoved && onRepoRemoved(item)}
               />
             ))}
           </>

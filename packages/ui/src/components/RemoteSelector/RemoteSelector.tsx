@@ -158,7 +158,7 @@ export function RemoteSelector<Item> ({
   } else if (value.length > 0 && isMultiSelect) {
     return (
       <>
-        {renderSelectedItems(value)}
+        {renderSelectedItems && renderSelectedItems(value)}
         <InputPopover
           open={open}
           onOpenChange={onOpenChange}
