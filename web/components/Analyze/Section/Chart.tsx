@@ -32,14 +32,31 @@ export default function ChartTemplate(props: ChartTemplateProps) {
     return searchParamsFromUrl.get('period') || 'past_28_days';
   }, [searchParamsFromUrl]);
 
+  const repoIdsMemo = React.useMemo(() => {
+    const repoIdsStr = searchParamsFromUrl.get('repoIds') || '';
+    // return repoIdsStr.split(',').reduce((acc, cur) => {
+    //   if (cur) {
+    //     try {
+    //       const tmp = Number.parseInt(cur.trim());
+    //       if (!Number.isNaN(tmp)) {
+    //         acc.push(tmp);
+    //       }
+    //     } catch (error) {}
+    //   }
+    //   return acc;
+    // }, [] as number[]);
+    return repoIdsStr;
+  }, [searchParamsFromUrl]);
+
   const searchParamsMemo = React.useMemo(
     () => ({
       ...widgetPageParams,
       ...searchParams,
       owner_id: `${orgId}`,
       period: periodMemo,
+      ...(repoIdsMemo.length > 0 && { repo_ids: repoIdsMemo }),
     }),
-    [orgId, periodMemo, searchParams]
+    [orgId, periodMemo, repoIdsMemo, searchParams]
   );
 
   const linkedDataMemo = React.useMemo(

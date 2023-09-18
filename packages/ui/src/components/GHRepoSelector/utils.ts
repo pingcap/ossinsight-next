@@ -17,3 +17,21 @@ export function searchRepo (text: string): CancelablePromise<RemoteRepoInfo[]> {
 export function getRepoText (repo: RemoteRepoInfo) {
   return repo.fullName;
 }
+
+export function getRepoById(repoId: number | string) {
+  return cancellableFetch(`https://api.ossinsight.io/gh/repositories/${repoId}`)
+    .then((res) => res.json())
+    .then(
+      (res: {
+        data: {
+          id: number;
+          full_name: string;
+          default_branch:string;
+        };
+      }) => ({
+        id: res.data.id,
+        fullName: res.data.full_name,
+        defaultBranch: res.data.default_branch,
+      })
+    );
+}

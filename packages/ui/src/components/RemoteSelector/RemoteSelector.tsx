@@ -29,6 +29,12 @@ export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, P
   renderError? (error: unknown): ReactElement;
 
   equals?: (item: Item, Item: Item) => boolean;
+
+  isMultiSelect?: boolean;
+
+  inputPrefix?: string;
+
+  filterResults?: (items: Item[]) => Item[];
 }
 
 export interface RemoteSelectorInputProps {
@@ -37,6 +43,8 @@ export interface RemoteSelectorInputProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onFocus: (event: FocusEvent<HTMLInputElement>) => void;
   onBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  placeholder?: string;
 }
 
 export interface RemoteSelectorListProps {
@@ -67,6 +75,9 @@ export function RemoteSelector<Item> ({
   popoverPortalProps,
   equals = Object.is,
   getItemText = String,
+  isMultiSelect = false,
+  inputPrefix = '',
+  filterResults = (items: Item[]) => items,
 }: RemoteSelectorProps<Item>) {
   const [open, setOpen] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -76,14 +87,14 @@ export function RemoteSelector<Item> ({
 
   useEffect(() => {
     if (executeOnMount) {
-      reload(input);
+      reload(inputPrefix + input);
     }
   }, []);
 
   const onInputChange = useCallback((ev: ChangeEvent<HTMLInputElement>) => {
     const value = ev.target.value;
     setInput(value);
-    reload(value);
+    reload(inputPrefix + value);
   }, []);
 
   const onInputFocus = useCallback((ev: FocusEvent<HTMLInputElement>) => {
@@ -101,7 +112,7 @@ export function RemoteSelector<Item> ({
   const handleClearSelect = useCallback(() => {
     onSelect?.(undefined, null);
     setInput('');
-    reload('');
+    reload(inputPrefix + '');
     setOpen(true);
   }, [onSelect]);
 
@@ -118,7 +129,7 @@ export function RemoteSelector<Item> ({
     if (loading) {
       return renderLoading();
     }
-    if (items.length === 0) {
+    if (filterResults(items).length === 0) {
       return renderEmpty();
     }
 
@@ -128,7 +139,7 @@ export function RemoteSelector<Item> ({
     };
 
     return renderList({
-      children: items.map(item => (
+      children: filterResults(items).map(item => (
         renderListItem({
           item,
           disabled: false,
@@ -139,12 +150,36 @@ export function RemoteSelector<Item> ({
     });
   };
 
-  if (value.length > 0) {
+  if (value.length > 0 && !isMultiSelect) {
     if (!renderSelectedItems) {
       return defaultRenderSelectedItem({ item: value[0], getItemText, onClear: handleClearSelect });
     }
     return renderSelectedItems(value);
-  } else {
+  } else if (value.length > 0 && isMultiSelect) {
+    return (
+      <>
+        {renderSelectedItems(value)}
+        <InputPopover
+          open={open}
+          onOpenChange={onOpenChange}
+          input={cloneElement(
+            renderInput({
+              id,
+              value: input,
+              onChange: onInputChange,
+              onFocus: onInputFocus,
+              onBlur: onInputBlur,
+            }),
+            { ref: inputRef }
+          )}
+          popperContent={renderChildren()}
+          popoverPortalProps={popoverPortalProps}
+          popoverContentProps={popoverContentProps}
+        />
+      </>
+    );
+  }
+  else {
     return (
       <InputPopover
         open={open}

@@ -6,6 +6,7 @@ const PATH_GET_ORG_STARS_ORGS = `/q/orgs/stars/organizations`;
 const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/q/orgs/participants/locations`;
 const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
 const PATH_GET_USERS = `/gh/users/`;
+const PATH_GET_REPO_BY_ID = `/gh/repositories/`;
 
 export const getOrgInfo = (login: string) => {
   return fetch(`${API_SERVER}${PATH_GET_ORG_INFO}?login=${login}`)
@@ -85,4 +86,15 @@ export const getUserInfo = (login: string | number) => {
   return fetch(`${API_SERVER}${PATH_GET_USERS}${login}`)
     .then((res) => res.json())
     .then((data) => data.data);
+};
+
+export const getRepoInfoById = (repoId: number | string) => {
+  return fetch(`${API_SERVER}${PATH_GET_REPO_BY_ID}${repoId}`)
+    .then((res) => res.json())
+    .then((data) => data.data)
+    .then((data) => ({
+      id: data.id,
+      fullName: data.full_name,
+      defaultBranch: data.default_branch,
+    }));
 };
