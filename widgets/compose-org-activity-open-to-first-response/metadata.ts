@@ -15,7 +15,7 @@ const generateMetadata: MetadataGenerator<{
 
 const getTitle = (activity: string) => {
   switch (activity) {
-    case 'issues':
+    case 'issue':
       return 'Which Repository Exhibit Exceptional Efficiency in Addressing Issues?';
     case 'pull-requests':
       return 'Which Repository Achieves the Shortest Pull Request Completion Time?';

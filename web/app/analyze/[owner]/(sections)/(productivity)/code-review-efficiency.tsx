@@ -34,7 +34,7 @@ export default function CodeReviewEfficiencyContent() {
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
-            name='@ossinsight/widget-analyze-org-pull-requests-open-to-review'
+            name='@ossinsight/widget-compose-org-pull-requests-open-to-review'
             searchParams={{}}
             width={432}
             height={274}

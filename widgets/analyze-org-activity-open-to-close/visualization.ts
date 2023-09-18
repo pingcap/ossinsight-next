@@ -99,9 +99,9 @@ export default function (
     yAxis: {
       type: 'category',
       name: 'Repo',
-      // axisLabel: {
-      //   formatter: (value: string) => value.split('/')[1],
-      // },
+      axisLabel: {
+        formatter: (value: string) => value.split('/')[1],
+      },
     },
     tooltip: axisTooltip('cross', {
       renderMode: 'html',
@@ -143,5 +143,3 @@ export default function (
 }
 
 export const type = 'echarts';
-export const width = 432;
-export const height = 274;

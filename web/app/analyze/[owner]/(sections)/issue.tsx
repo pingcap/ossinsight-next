@@ -32,7 +32,7 @@ export default function IssueContent() {
       </div>
       <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
         <ChartTemplate
-          name='@ossinsight/widget-analyze-org-activity-open-to-close'
+          name='@ossinsight/widget-compose-org-activity-open-to-close'
           searchParams={{
             activity: 'issues',
           }}
@@ -40,7 +40,7 @@ export default function IssueContent() {
           height={274}
         />
         <ChartTemplate
-          name='@ossinsight/widget-analyze-org-activity-open-to-first-response'
+          name='@ossinsight/widget-compose-org-activity-open-to-first-response'
           searchParams={{
             activity: 'issues',
           }}

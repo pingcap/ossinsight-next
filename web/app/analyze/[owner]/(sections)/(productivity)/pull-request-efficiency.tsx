@@ -35,7 +35,7 @@ export default function PRRequestEfficiencyContent() {
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
-            name='@ossinsight/widget-analyze-org-activity-open-to-close'
+            name='@ossinsight/widget-compose-org-activity-open-to-close'
             searchParams={{
               activity: 'pull-requests',
             }}
@@ -43,7 +43,7 @@ export default function PRRequestEfficiencyContent() {
             height={274}
           />
           <ChartTemplate
-            name='@ossinsight/widget-analyze-org-activity-open-to-first-response'
+            name='@ossinsight/widget-compose-org-activity-open-to-first-response'
             searchParams={{
               activity: 'pull-requests',
             }}
