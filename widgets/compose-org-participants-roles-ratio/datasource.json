@@ -8,7 +8,8 @@
     },
     "params": {
       "ownerId": "owner_id",
-      "period": "period"
+      "period": "period",
+      "repoIds": "repo_ids"
     },
     "when": ["owner_id", "period"]
   }
