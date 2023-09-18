@@ -18,7 +18,7 @@ export default function OrgAnalyzePageHeader() {
   const { orgName, orgId } =
     React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
 
-  const { data, loading, error, finishedAt } = useOrgOverview(orgId, orgName);
+  const { data, loading, error } = useOrgOverview(orgId, orgName);
 
   return (
     <>
@@ -63,9 +63,9 @@ export default function OrgAnalyzePageHeader() {
           </span>
           <span>Last active at</span>
           {loading && <ValueSkeleton />}
-          {!loading && finishedAt && (
+          {!loading && data?.last_participated_at && (
             <span className='text-title'>{`${beautifySeconds(
-              calcDateDiff(finishedAt)
+              calcDateDiff(new Date(data.last_participated_at))
             )} ago`}</span>
           )}
         </div>

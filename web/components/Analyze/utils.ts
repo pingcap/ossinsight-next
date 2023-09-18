@@ -14,9 +14,9 @@ export const getOrgInfo = (login: string) => {
 };
 
 export const getOrgOverview = (id: number) => {
-  return fetch(`${API_SERVER}${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`).then(
-    (res) => res.json()
-  );
+  return fetch(`${API_SERVER}${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`)
+    .then((res) => res.json())
+    .then((data) => data.data);
 };
 
 export const params2UrlSearch = (params: {

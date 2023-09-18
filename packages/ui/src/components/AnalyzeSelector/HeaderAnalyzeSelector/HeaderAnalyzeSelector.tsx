@@ -148,7 +148,9 @@ export function HeaderAnalyzeSelector(props: HeaderAnalyzeSelectorProps) {
         className='inline-flex items-center gap-2 w-full max-w-[12rem] rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-[var(--border-color-default)]'
       >
         <SearchIcon />
-        Type <span className='kbd kbd-sm'>/</span> to search
+        Search ...
+        <span className='kbd kbd-sm'>/</span>
+        {/* Type <span className='kbd kbd-sm'>/</span> to search */}
       </button>
 
       <Transition appear show={isOpen} as={React.Fragment}>
@@ -165,7 +167,7 @@ export function HeaderAnalyzeSelector(props: HeaderAnalyzeSelectorProps) {
             <div className='fixed inset-0 bg-black bg-opacity-25' />
           </Transition.Child>
 
-          <div className='fixed inset-0 overflow-y-auto'>
+          <div className='fixed inset-0 overflow-y-auto bg-slate-900/25 backdrop-blur'>
             <div className='flex min-h-full justify-center p-4 text-center'>
               <Transition.Child
                 as={React.Fragment}

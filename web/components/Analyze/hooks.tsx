@@ -8,24 +8,22 @@ export interface OrgOverviewDataProps {
   stars: number;
   repos: number;
   bio: string;
+  last_participated_at: string;
+  
 }
 
 export function useOrgOverview(id?: number, name?: string) {
   const [loading, setLoading] = React.useState(true);
   const [data, setData] = React.useState<OrgOverviewDataProps | null>(null);
   const [error, setError] = React.useState<Error | null>(null);
-  const [finishedAt, setFinishedAt] = React.useState<Date | null>(null);
 
   React.useEffect(() => {
     const fetchOrgOverview = async (id: number, name: string) => {
       try {
         setLoading(true);
-        const res = await getOrgOverview(id);
+        const data = await getOrgOverview(id);
         const userData = await getUserInfo(name);
-        const { finishedAt, data: dataArray } = res;
-        const data = dataArray[0];
-        setFinishedAt(new Date(finishedAt));
-        setData({ ...data, repos: userData.public_repos, bio: userData.bio });
+        setData({ ...data[0], repos: userData.public_repos, bio: userData.bio });
       } catch (error: any) {
         setError(error);
       } finally {
@@ -40,6 +38,5 @@ export function useOrgOverview(id?: number, name?: string) {
     loading,
     data,
     error,
-    finishedAt,
   };
 }
