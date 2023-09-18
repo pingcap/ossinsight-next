@@ -24,7 +24,7 @@ export default function StarGrowthContent() {
         level={3}
         classname='pt-8 flex flex-col gap-4'
       >
-        {/* <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-growth'
             searchParams={{
@@ -39,11 +39,10 @@ export default function StarGrowthContent() {
             width={219}
             height={389}
           />
-        </div> */}
+        </div>
 
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          {/* TODO - waiting for API fix */}
-          {/* <ChartTemplate
+          <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-company'
             searchParams={{
               activity: 'stars',
@@ -54,8 +53,8 @@ export default function StarGrowthContent() {
           <CompanyRankTable
             id={orgId}
             type='stars'
-            className='w-[219px] h-[365px] overflow-x-hidden overflow-y-auto'
-          /> */}
+            className='w-[219px] h-[405px] overflow-x-hidden overflow-y-auto'
+          />
         </div>
 
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>

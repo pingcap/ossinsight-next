@@ -57,17 +57,14 @@ export default function OverviewContent() {
             height={186}
           />
         </div>
-        {/* TODO - waiting for API fix */}
-        {/* <ChartTemplate
+        <ChartTemplate
           name='@ossinsight/widget-compose-org-activity-active-ranking'
           searchParams={{
-            owner_id: '11855343',
             activity: 'repos',
-            period: 'past_28_days',
           }}
-          width={300}
+          width={216}
           height={389}
-        /> */}
+        />
       </div>
     </SectionTemplate>
   );

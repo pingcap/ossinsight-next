@@ -1,17 +1,50 @@
 'use client';
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export default function Content(props: {
-  title: string;
-  nextLink?: string;
-  prevLink?: string;
-}) {
-  const { title, nextLink, prevLink } = props;
+import {
+  calcPrevNextId,
+  navItems,
+  DEFAULT_NAV_ID,
+} from '@/components/Analyze/Navigation/OrgNav';
+import { mergeURLSearchParams } from '@ossinsight/widgets-utils/src/utils';
+
+export interface OrgPageNavWrapperProps {
+  children: React.ReactNode;
+  org: string;
+}
+
+export function OrgPageNavWrapper(props: OrgPageNavWrapperProps) {
+  const { children, org } = props;
 
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const topRef = React.useRef<HTMLDivElement>(null);
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const { prevLink, nextLink } = React.useMemo(() => {
+    const currentID = searchParams.get('section') || DEFAULT_NAV_ID;
+    const { prevId, nextId, prevItem, nextItem } = calcPrevNextId(
+      navItems,
+      currentID
+    );
+    return {
+      currentID,
+      prevId,
+      nextId,
+      prevItem,
+      nextItem,
+      prevLink: `/analyze/${org}?${mergeURLSearchParams(
+        searchParams.toString(),
+        { section: prevId }
+      ).toString()}`,
+      nextLink: `/analyze/${org}?${mergeURLSearchParams(
+        searchParams.toString(),
+        { section: nextId }
+      ).toString()}`,
+    };
+  }, [org, searchParams]);
 
   // handle scroll(desktop) and touchmove(mobile) event, and navigate to next/prev page
   React.useEffect(() => {
@@ -84,15 +117,9 @@ export default function Content(props: {
 
   return (
     <>
-      <div ref={topRef}>top</div>
-      <h1 className='text-4xl'>{title} - Content</h1>
-      {new Array(100).fill(0).map((_, i) => (
-        <p key={i}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-          voluptatum.
-        </p>
-      ))}
-      <div ref={bottomRef}>bottom</div>
+      <div ref={topRef} />
+      {children}
+      <div ref={bottomRef} />
     </>
   );
 }

@@ -26,7 +26,7 @@ type ParticipantDataPoint = {
 type ActivityDataPoint = {
   repo_id: number;
   repo_name: string;
-  stars: number;
+  activities: number;
 };
 
 type TotalDataPoint = {
@@ -44,28 +44,28 @@ const handleInputData = (data: DataPoint[], activity: string) => {
     case 'repos':
       return {
         data: (data as ActivityDataPoint[])
-          .sort((a, b) => b.stars - a.stars)
+          .sort((a, b) => b.activities - a.activities)
           .slice(0, 5),
         title: 'Active Repositories',
         subtitle: ' ',
         label: 'Top Repositories',
         value: 'Star earned',
         maxVal: (data as ActivityDataPoint[]).reduce(
-          (acc, cur) => acc + cur.stars,
+          (acc, cur) => acc + cur.activities,
           0
         ),
       };
     case 'stars':
       return {
         data: (data as ActivityDataPoint[])
-          .sort((a, b) => b.stars - a.stars)
+          .sort((a, b) => b.activities - a.activities)
           .slice(0, 5),
         title: 'Top Repositories by Stars',
         subtitle: ' ',
         label: 'Repositories',
         value: 'Star earned',
         maxVal: (data as ActivityDataPoint[]).reduce(
-          (acc, cur) => acc + cur.stars,
+          (acc, cur) => acc + cur.activities,
           0
         ),
       };
@@ -96,7 +96,7 @@ const getLabel = (item: DataPoint) => {
   if (item.hasOwnProperty('login')) {
     return (item as ParticipantDataPoint).login;
   }
-  return (item as ActivityDataPoint).repo_name;
+  return (item as ActivityDataPoint).repo_name.split('/').pop();
 };
 
 export default function (
@@ -176,7 +176,7 @@ export default function (
                 label: getLabel(item),
                 imgSrc: `https://github.com/${getLogin(item)}.png`,
                 size: 24,
-                value: item?.stars || item?.engagements,
+                value: item?.activities || item?.engagements,
                 maxVal,
               })
             )

@@ -33,13 +33,12 @@ export default function CodeReviewEfficiencyContent() {
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          {/* TODO - waiting for API fix */}
-          {/* <ChartTemplate
+          <ChartTemplate
             name='@ossinsight/widget-analyze-org-pull-requests-open-to-review'
             searchParams={{}}
             width={432}
             height={274}
-          /> */}
+          />
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-activity-action-top-repos'
             searchParams={{

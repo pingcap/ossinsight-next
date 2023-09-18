@@ -14,6 +14,8 @@ import {
 } from '@/components/Analyze/Navigation/OrgNav';
 import { mergeURLSearchParams } from '@ossinsight/widgets-utils/src/utils';
 
+// ! TODO - remove this file
+
 export default function OrgBottomNav(props: { org: string }) {
   const { org } = props;
 

@@ -1,5 +1,6 @@
 import OrgNav from '@/components/Analyze/Navigation/OrgNav';
 import OrgBottomNav from '@/components/Analyze/Navigation/OrgBottomNav';
+import { OrgPageNavWrapper } from '@/components/Analyze/Navigation/OrgPageWrapper';
 
 export default function UserOrgAnalyzeLayout({
   children,
@@ -19,10 +20,12 @@ export default function UserOrgAnalyzeLayout({
               <OrgNav org={owner} />
             </div>
           </aside>
-          <main className='flex-1 overflow-x-hidden'>
-            <div className='pl-6 pr-28 py-8'>{children}</div>
-            <OrgBottomNav org={owner} />
-          </main>
+          <OrgPageNavWrapper org={owner}>
+            <main className='flex-1 overflow-x-hidden'>
+              <div className='pl-6 pr-28 py-8'>{children}</div>
+              {/* <OrgBottomNav org={owner} /> */}
+            </main>
+          </OrgPageNavWrapper>
         </div>
       </div>
       {/* <footer className='bg-toolbar border-t'>

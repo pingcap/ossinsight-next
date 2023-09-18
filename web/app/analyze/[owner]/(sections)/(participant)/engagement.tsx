@@ -39,7 +39,7 @@ export default function EngagementContent() {
           <ChartTemplate
             name='@ossinsight/widget-compose-org-participants-roles-ratio'
             searchParams={{}}
-            width={864}
+            width={864 + 16}
             height={259}
           />
         </div>
@@ -47,7 +47,7 @@ export default function EngagementContent() {
           <ChartTemplate
             name='@ossinsight/widget-compose-org-engagement-scatter'
             searchParams={{}}
-            width={864}
+            width={864 + 16}
             height={518}
           />
         </div>
