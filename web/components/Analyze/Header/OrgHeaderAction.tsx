@@ -105,7 +105,7 @@ export default function OrgAnalyzePageHeaderAction() {
   return (
     <>
       {/* -- action bar -- */}
-      <div className='flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end'>
+      <div className='sticky top-[var(--site-header-height)] flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end py-4 bg-[var(--background-color-body)] z-10'>
         {periodSelect}
         <GHOrgRepoSelector
           repos={repos}
