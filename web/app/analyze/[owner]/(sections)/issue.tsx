@@ -10,7 +10,7 @@ export default function IssueContent() {
       title='Issue'
       description={`Analyze your organization's issue management practices to gain insights into user feedback, suggestions, and discussions, indirectly revealing valuable product insights and user sentiments. Evaluate issue closure rates, response times, and active discussions to enhance organizational efficiency and collaboration while aligning with user needs for continuous improvement.`}
       level={2}
-      classname='pt-8 flex flex-col gap-4'
+      className='pt-8 flex flex-col gap-4'
     >
       <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
         <ChartTemplate

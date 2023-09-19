@@ -33,7 +33,7 @@ export const Select = React.forwardRef<
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
         <SelectPrimitive.Portal>
-          <SelectPrimitive.Content className={clsx('SelectContent')} position={position}>
+          <SelectPrimitive.Content className={clsx('SelectContent z-10')} position={position}>
             <SelectPrimitive.ScrollUpButton
               className={clsx('SelectScrollButton')}
             >

@@ -1,19 +1,20 @@
 import * as React from 'react';
 import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export interface SectionTemplateProps {
   children: React.ReactNode;
   title: string | React.ReactNode;
   description?: string | React.ReactNode;
   level?: number;
-  classname?: string;
+  className?: string;
 }
 
 export default function SectionTemplate(props: SectionTemplateProps) {
-  const { children, title, description, level = 1, classname } = props;
+  const { children, title, description, level = 1, className } = props;
 
   return (
-    <section className={classname}>
+    <section className={twMerge(className)}>
       <TitleWrapper level={level} className=''>
         {title}
       </TitleWrapper>

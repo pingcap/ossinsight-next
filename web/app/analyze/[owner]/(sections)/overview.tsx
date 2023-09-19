@@ -4,7 +4,7 @@ import ChartTemplate from '@/components/Analyze/Section/Chart';
 
 export default function OverviewContent() {
   return (
-    <SectionTemplate title='Overview' level={2} classname='pt-8'>
+    <SectionTemplate title='Overview' level={2} className='pt-8'>
       <div className='flex gap-4 w-full flex-wrap'>
         <div className='flex flex-col gap-4 overflow-x-auto'>
           <ChartTemplate

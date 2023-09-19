@@ -9,12 +9,12 @@ export default function CodeReviewEfficiencyContent() {
       title='Productivity'
       description='Analyze the development productivity of your organization in handling Pull Requests, Code Reviews, and Code Submissions. Identify bottlenecks in the development process, measure the efficiency of code review and issue resolution, and optimize the workflow for increased productivity.'
       level={2}
-      classname='pt-8'
+      className='pt-8'
     >
       <SectionTemplate
         title='Code Review Efficiency'
         level={3}
-        classname='pt-8 flex flex-col gap-4'
+        className='pt-8 flex flex-col gap-4'
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate

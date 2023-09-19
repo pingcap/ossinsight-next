@@ -10,12 +10,12 @@ export default function EngagementContent() {
       title='Participant'
       description='Examine participation dynamics within your organization, analyzing participant activity, engagement depth, roles, affiliations, and geographic distribution. Uncover valuable insights into participate involvement, preferences, and demographics, enabling targeted strategies for enhanced engagement and tailored experiences.'
       level={2}
-      classname='pt-8'
+      className='pt-8'
     >
       <SectionTemplate
         title='Engagement'
         level={3}
-        classname='pt-8 flex flex-col gap-4'
+        className='pt-8 flex flex-col gap-4'
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate

@@ -17,12 +17,12 @@ export default function StarGrowthContent() {
       title='Popularity'
       description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
       level={2}
-      classname='pt-8'
+      className='pt-8'
     >
       <SectionTemplate
         title='Star Growth'
         level={3}
-        classname='pt-8 flex flex-col gap-4'
+        className='pt-8 flex flex-col gap-4'
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
