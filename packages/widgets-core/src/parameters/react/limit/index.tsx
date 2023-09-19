@@ -17,6 +17,7 @@ export function LimitInput({
     { key: '30', title: '30' },
     { key: '50', title: '50' },
     { key: '100', title: '100' },
+    { key: '200', title: '200' },
   ];
 
   const { select: limitSelect, value: limit } = useSimpleSelect(

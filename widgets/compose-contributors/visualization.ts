@@ -63,7 +63,7 @@ export default function (
     vertical(
       widget('builtin:card-heading', undefined, {
         title: 'Active Contributors',
-        subtitle: `Date: ${subtitle}`,
+        subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       nonEmptyDataWidget(contributors, () => grid(
         rows,
