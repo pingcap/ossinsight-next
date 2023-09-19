@@ -9,6 +9,6 @@
     "type": "limit",
     "title": "Limit",
     "required": true,
-    "default": 200
+    "default": 30
   }
 }

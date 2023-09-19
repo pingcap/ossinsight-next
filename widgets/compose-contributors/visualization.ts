@@ -62,7 +62,7 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Active Contributors',
+        title: 'Contributors',
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       nonEmptyDataWidget(contributors, () => grid(
