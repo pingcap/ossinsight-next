@@ -46,6 +46,7 @@ export default function StarGrowthContent() {
             name='@ossinsight/widget-compose-org-activity-company'
             searchParams={{
               activity: 'stars',
+              role: 'participants'
             }}
             width={648}
             height={405}
@@ -53,7 +54,7 @@ export default function StarGrowthContent() {
           <CompanyRankTable
             id={orgId}
             type='stars'
-            className='w-[219px] h-[405px] overflow-x-hidden overflow-y-auto'
+            className='w-[219px] h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar'
           />
         </div>
 
@@ -62,6 +63,7 @@ export default function StarGrowthContent() {
             name='@ossinsight/widget-compose-org-activity-map'
             searchParams={{
               activity: 'stars',
+              role: 'participants'
             }}
             width={648}
             height={365}
