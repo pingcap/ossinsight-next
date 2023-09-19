@@ -9,8 +9,9 @@
     "params": {
       "ownerId": "owner_id",
       "period": "period",
-      "repoIds": "repo_ids"
+      "repoIds": "repo_ids",
+      "role": "role"
     },
-    "when": ["owner_id", "activity", "period"]
+    "when": ["owner_id", "activity", "period", "role"]
   }
 ]

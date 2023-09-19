@@ -17,5 +17,18 @@
     "title": "Activity type",
     "enums": ["participants", "stars"],
     "default": "participants"
+  },
+  "role": {
+    "type": "activity-type",
+    "title": "Role type",
+    "enums": [
+      "pr_creators",
+      "pr_reviewers",
+      "pr_commenters",
+      "issue_creators",
+      "issue_commenters",
+      "commit_authors"
+    ],
+    "default": "pr_creators"
   }
 }

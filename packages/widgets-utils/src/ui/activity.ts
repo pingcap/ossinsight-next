@@ -1,4 +1,35 @@
 export type ActivityTypeOption = { key: string; title: string };
+export const PARTICIPANTS_ROLES_OPTIONS: ActivityTypeOption[] = [
+  {
+    key: 'pr_creators',
+    title: 'PR Creators',
+  },
+  {
+    key: 'pr_reviewers',
+    title: 'PR Reviewers',
+  },
+  {
+    key: 'pr_commenters',
+    title: 'PR Commenters',
+  },
+  {
+    key: 'issue_creators',
+    title: 'Issue Creators',
+  },
+  {
+    key: 'issue_commenters',
+    title: 'Issue Commenters',
+  },
+  {
+    key: 'commit_authors',
+    title: 'Commit Authors',
+  },
+  {
+    key: 'participants',
+    title: 'Participants',
+  },
+];
+
 export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'stars',
@@ -88,6 +119,7 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     key: 'reviews',
     title: 'Reviews',
   },
+  ...PARTICIPANTS_ROLES_OPTIONS,
 ];
 
 export function activityDisplayName(key: string) {

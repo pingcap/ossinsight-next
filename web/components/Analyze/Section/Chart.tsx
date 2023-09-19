@@ -20,10 +20,11 @@ export interface ChartTemplateProps {
   className?: string;
   width?: number;
   height?: number;
+  children?: React.ReactNode;
 }
 
 export default function ChartTemplate(props: ChartTemplateProps) {
-  const { name, searchParams = {}, className, width, height } = props;
+  const { name, searchParams = {}, className, width, height, children } = props;
 
   const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
   const searchParamsFromUrl = useSearchParams();
@@ -118,6 +119,7 @@ export default function ChartTemplate(props: ChartTemplateProps) {
             </button>
           </NextLink>
         )}
+        {children}
       </React.Suspense>
     </div>
   );

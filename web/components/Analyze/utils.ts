@@ -40,7 +40,7 @@ export type ParticipantLocationDataType = {
 
 export const getOrgActivityLocations = (
   id: number,
-  params: { activity: 'stars' | 'participants'; period?: string }
+  params: { activity: 'stars' | 'participants'; period?: string; role?: string }
 ): Promise<StarLocationDataType[] | ParticipantLocationDataType[]> => {
   let path = PATH_GET_ORG_STARS_LOCATIONS;
 
@@ -67,7 +67,11 @@ export type StarOrgDataType = {
 
 export const getOrgActivityOrgs = (
   id: number,
-  params?: { period?: string; activity: 'stars' | 'participants' }
+  params?: {
+    period?: string;
+    activity: 'stars' | 'participants';
+    role?: string;
+  }
 ): Promise<ParticipateOrgDataType[] | StarOrgDataType[]> => {
   const { activity = 'stars', ...restParams } = params || {};
   const paramsStr = params2UrlSearch({ ...restParams, ownerId: id });

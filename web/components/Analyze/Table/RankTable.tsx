@@ -66,17 +66,25 @@ export function upperFirst(str: string) {
 }
 
 export function TableSkeleton() {
-  return <><Loader /></>;
+  return (
+    <>
+      <Loader />
+    </>
+  );
 }
 
 export async function GeoRankTablePromise(props: {
   id: number;
   type: 'stars' | 'participants';
+  role?: string;
   maxRows?: number;
 }) {
-  const { id, type, maxRows = 10 } = props;
+  const { id, type, maxRows = 10, role } = props;
 
-  const data = await getOrgActivityLocations(id, { activity: type });
+  const data = await getOrgActivityLocations(id, {
+    activity: type,
+    ...(role && { role }),
+  });
 
   const rows = data
     .slice(0, maxRows)
@@ -98,26 +106,22 @@ export async function GeoRankTablePromise(props: {
 export function GeoRankTable(props: {
   id?: number;
   type?: 'stars' | 'participants';
+  role?: string;
   className?: string;
 }) {
-  const { id, type = 'stars', className } = props;
+  const { id, type = 'stars', className, role } = props;
 
   if (!id) {
     return null;
   }
 
   return (
-    <div
-      className={twMerge(
-        'px-1 items-center justify-around',
-        className
-      )}
-    >
+    <div className={twMerge('px-1 items-center justify-around', className)}>
       <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top locations
       </div>
       <React.Suspense fallback={<TableSkeleton />}>
-        <GeoRankTablePromise id={id} type={type} />
+        <GeoRankTablePromise id={id} type={type} role={role} />
       </React.Suspense>
     </div>
   );
@@ -126,12 +130,14 @@ export function GeoRankTable(props: {
 export async function CompanyRankTablePromise(props: {
   id: number;
   type: 'stars' | 'participants';
+  role?: string;
   maxRows?: number;
 }) {
-  const { id, maxRows = 10, type } = props;
+  const { id, maxRows = 10, type, role } = props;
 
   const data = await getOrgActivityOrgs(id, {
     activity: type,
+    ...(role && { role }),
   });
 
   const rows = data
@@ -150,26 +156,22 @@ export async function CompanyRankTablePromise(props: {
 export function CompanyRankTable(props: {
   id?: number;
   type?: 'stars' | 'participants';
+  role?: string;
   className?: string;
 }) {
-  const { id, type = 'stars', className } = props;
+  const { id, type = 'stars', className, role } = props;
 
   if (!id) {
     return null;
   }
 
   return (
-    <div
-      className={twMerge(
-        'px-1 items-center justify-around',
-        className
-      )}
-    >
+    <div className={twMerge('px-1 items-center justify-around', className)}>
       <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top companies
       </div>
       <React.Suspense fallback={<TableSkeleton />}>
-        <CompanyRankTablePromise id={id} type='stars' />
+        <CompanyRankTablePromise id={id} type='stars' role={role} />
       </React.Suspense>
     </div>
   );
