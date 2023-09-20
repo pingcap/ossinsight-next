@@ -10,7 +10,7 @@ export default async function renderSvg (props: WidgetNodeVisualizationProps) {
   height = visualizer.height ?? height;
 
   const option = visualizer.default(data, {
-    ...createVisualizationContext({ width, height, dpr, colorScheme }),
+    ...createVisualizationContext({ width: width * dpr, height: height * dpr, dpr, colorScheme }),
     ...createWidgetContext('server', parameters, linkedData),
   });
 

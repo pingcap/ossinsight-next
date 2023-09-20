@@ -32,7 +32,7 @@ export function renderCardHeading (
   } else {
     ctx.textAlign = 'center';
     ctx.font = `bold ${14 * dpr}px`;
-    ctx.fillStyle = CardHeader.subtitleColor;
+    ctx.fillStyle = CardHeader.titleColor;
     ctx.fillText(title, left + width / 2, top + height / 2, width);
   }
 
