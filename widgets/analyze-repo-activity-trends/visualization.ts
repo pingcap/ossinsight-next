@@ -40,7 +40,7 @@ export default function (
       id: name,
       source: data,
     })),
-    grid: { ...simpleGrid(0, true), top: 24, left: 8, right: 8 },
+    grid: { ...simpleGrid(0, true), top: 48, left: 8, right: 8 },
     xAxis: {
       type: 'time',
       splitNumber: 4,
@@ -51,7 +51,7 @@ export default function (
         show: false,
       },
       axisLabel: {
-        fontSize: 8,
+        fontSize: 10,
         color: '#777',
         hideOverlap: true,
         showMinLabel: false,
@@ -73,7 +73,7 @@ export default function (
         show: false,
       },
       axisLabel: {
-        fontSize: 8,
+        fontSize: 10,
         color: '#777',
         hideOverlap: true,
         verticalAlign: 'middle',
@@ -130,7 +130,7 @@ export default function (
     },
     legend: {
       show: true,
-      top: -4,
+      top: 0,
       left: 0,
       icon: 'circle',
       itemStyle: {
@@ -139,7 +139,7 @@ export default function (
       itemWidth: 8,
       itemHeight: 8,
       textStyle: {
-        fontSize: 10,
+        fontSize: 12,
       },
       formatter: (name) => `Count all different types of events triggered by activity(pull a request,etc.) on GitHub`,
     },
