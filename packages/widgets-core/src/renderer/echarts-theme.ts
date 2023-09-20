@@ -1,7 +1,7 @@
 import { registerTheme } from 'echarts';
 
 function registerThemeDark () {
-  const contrastColor = 'rgb(200, 200, 200)';
+  const contrastColor = '#979797';
   const bgColor = 'rgb(36, 35, 49)';
   const boxColor = 'rgb(37, 37, 39)';
   const borderColor = 'rgb(81, 81, 81)';
@@ -23,7 +23,7 @@ function registerThemeDark () {
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: '#2c2c2c',
+          color: '#484848',
           width: 0.5,
         },
       },
@@ -152,7 +152,7 @@ function registerThemeDark () {
 }
 
 function registerThemeLight () {
-  const contrastColor = 'rgb(200, 200, 200)';
+  const contrastColor = '#3c3c3c';
   const bgColor = '#ffffff';
   const boxColor = '#eeeeee';
   const borderColor = '#dddddd';
@@ -169,12 +169,12 @@ function registerThemeLight () {
         },
       },
       axisLabel: {
-        color: '#ccc',
+        color: '#3C3C3C',
       },
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: '#d8d8d8',
+          color: '#DADADA',
           width: 0.5,
         },
       },

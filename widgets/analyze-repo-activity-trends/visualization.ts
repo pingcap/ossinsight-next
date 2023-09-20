@@ -1,9 +1,6 @@
-import type {
-  EChartsVisualizationConfig,
-  WidgetVisualizerContext,
-} from '@ossinsight/widgets-types';
-import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
+import type { EChartsVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { simpleGrid } from '@ossinsight/widgets-utils/src/options';
+import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 
 type Params = {
   repo_id: string;
@@ -19,11 +16,21 @@ type DataPoint = {
 
 type Input = [DataPoint[], DataPoint[] | undefined];
 
+const fmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: '2-digit',
+});
+
+function fmtDate (val: number) {
+  const parts = fmt.formatToParts(val);
+  return `${parts[2].value}-${parts[0].value}`;
+}
+
 // TODO: This is a copy of the widget from widgets/analyze-repo-stars-history
 // TODO: We should update after APIs are updated
 export default function (
   input: Input,
-  ctx: WidgetVisualizerContext<Params>
+  ctx: WidgetVisualizerContext<Params>,
 ): EChartsVisualizationConfig {
   const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
   const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
@@ -33,9 +40,10 @@ export default function (
       id: name,
       source: data,
     })),
-    grid: { ...simpleGrid(0, true), top: 8, left: 8, right: 8 },
+    grid: { ...simpleGrid(0, true), top: 24, left: 8, right: 8 },
     xAxis: {
       type: 'time',
+      splitNumber: 4,
       axisLine: {
         show: false,
       },
@@ -49,21 +57,33 @@ export default function (
         showMinLabel: false,
         showMaxLabel: false,
         verticalAlign: 'middle',
+        formatter: fmtDate,
+      },
+      splitLine: {
+        show: false,
+      },
+    },
+    yAxis: {
+      type: 'value',
+      splitNumber: 2,
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        fontSize: 8,
+        color: '#777',
+        hideOverlap: true,
+        verticalAlign: 'middle',
       },
       splitLine: {
         show: true,
         lineStyle: {
-          type: 'solid',
+          type: 'dashed',
         },
         interval: 'auto',
-      },
-    },
-    yAxis: {
-      show: false,
-      type: 'value',
-      axisLabel: {
-        show: false,
-        formatter: format,
       },
     },
     series: compare([main, vs], (data, name) => ({
@@ -110,7 +130,7 @@ export default function (
     },
     legend: {
       show: true,
-      top: 0,
+      top: -4,
       left: 0,
       icon: 'circle',
       itemStyle: {
@@ -121,14 +141,14 @@ export default function (
       textStyle: {
         fontSize: 10,
       },
-      formatter: (name) => `Count all different types of events triggered by activity(pull a request,etc.) on GitHub in ${name}`
+      formatter: (name) => `Count all different types of events triggered by activity(pull a request,etc.) on GitHub`,
     },
   };
 }
 
 const units = ['', 'k', 'm', 'b'];
 
-function format(value: number) {
+function format (value: number) {
   if (value === 0) {
     return '0';
   }
