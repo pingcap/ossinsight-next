@@ -149,7 +149,7 @@ export function HeaderAnalyzeSelector(props: HeaderAnalyzeSelectorProps) {
       >
         <SearchIcon />
         Search ...
-        <span className='kbd kbd-sm'>/</span>
+        <span className='kbd kbd-sm ml-auto'>/</span>
         {/* Type <span className='kbd kbd-sm'>/</span> to search */}
       </button>
 

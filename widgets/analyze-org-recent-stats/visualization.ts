@@ -119,6 +119,10 @@ export default function (
 
   const { source, mainSeries, vsSeries } = handleData(main, activity);
 
+  // Server side rendering doesn't support decal
+  // Canvas doesn't support full dom api(such as setAttribute) when setting echarts option
+  const enableDecal = ctx.runtime === 'client';
+
   return {
     dataset: {
       source,
@@ -145,7 +149,7 @@ export default function (
       bottom: 2,
       containLabel: true,
     },
-    aria: {
+    aria: enableDecal && {
       enabled: true,
       decal: {
         show: true,
@@ -159,7 +163,7 @@ export default function (
           ...mainSeries.encode,
         },
         itemStyle: {
-          decal: {
+          decal: enableDecal && {
             symbol: 'none',
           },
           borderRadius: [2, 2, 0, 0],
@@ -191,7 +195,7 @@ export default function (
           color: '#ED5C53',
           opacity: 0.5,
           borderRadius: [2, 2, 0, 0],
-          decal: {
+          decal: enableDecal && {
             color: 'rgba(0, 0, 0, 0.8)',
             dashArrayX: [1, 0],
             dashArrayY: [2, 5],
