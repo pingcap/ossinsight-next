@@ -1,5 +1,6 @@
 import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
 import { getTheme } from '../../../utils/theme';
+import { withTimeout } from '../../../utils/timeout';
 import { BuiltinProps } from './commons';
 
 export async function renderAvatarLabel (
@@ -26,11 +27,20 @@ export async function renderAvatarLabel (
   label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
 
   try {
-    const buffer = await fetch(imgSrc, { cache: 'force-cache' }).then((res) =>
-      res.arrayBuffer(),
-    );
+    const buffer = await withTimeout(async (signal) => {
+      return await fetch(imgSrc, { cache: 'force-cache', signal }).then((res) => {
+        if (res.ok) {
+          return res.arrayBuffer();
+        } else {
+          throw new Error(`${res.status} ${res.statusText} ${imgSrc}`);
+        }
+      });
+    }, 2000);
     const avatar = await loadImage(buffer, {
       alt: 'label',
+      requestOptions: {
+        timeout: 1000,
+      },
     });
     let circlePath = new Path2D();
     circlePath.arc(

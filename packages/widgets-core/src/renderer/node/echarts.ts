@@ -11,7 +11,7 @@ export default function renderEcharts (props: WidgetNodeVisualizationProps) {
   let canvas = createCanvas(width, dynamicHeight ?? height);
 
   const option = visualizer.default(data, {
-    ...createVisualizationContext({ width, height, dpr }),
+    ...createVisualizationContext({ width, height, dpr, colorScheme }),
     ...createWidgetContext('server', parameters, linkedData),
   });
 
