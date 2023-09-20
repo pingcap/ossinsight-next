@@ -661,7 +661,7 @@ function CombinedSearch(props: {
           />
         </div>
         <div className='border-b border-[var(--divide-color-default)] mt-4'>
-          <label>Repository</label>
+          <label className='text-sm	font-semibold'>Repository</label>
           <CommonResultList
             loading={repoLoading}
             error={repoError}
@@ -673,7 +673,7 @@ function CombinedSearch(props: {
           />
         </div>
         <div className='mt-4'>
-          <label>Organization</label>
+          <label className='text-sm	font-semibold'>Organization</label>
           <CommonResultList
             loading={orgLoading}
             error={orgError}
