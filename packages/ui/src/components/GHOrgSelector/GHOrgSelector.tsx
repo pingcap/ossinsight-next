@@ -40,6 +40,7 @@ export function GHOrgSelector({
         <GHOrgListItem key={props.item.id} {...props} />
       )}
       equals={isOrgEquals}
+      executeOnMount
     />
   );
 }

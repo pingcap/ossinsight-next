@@ -448,6 +448,10 @@ function UserSearch(props: {
     []
   );
 
+  React.useEffect(() => {
+    reload('recommend-user-list-keyword');
+  }, []);
+
   return (
     <CommonSearch
       placeholder='Enter a GitHub ID'
@@ -483,6 +487,14 @@ function RepoSearch(props: {
     []
   );
 
+  React.useEffect(() => {
+    reload('recommend-repo-list-2-keyword');
+  }, []);
+
+  if (error) {
+    console.error(error);
+  }
+
   return (
     <CommonSearch
       placeholder='Enter a GitHub Repo Name'
@@ -517,6 +529,10 @@ function OrgSearch(
     (item: RemoteOrgInfo) => item.login,
     []
   );
+
+  React.useEffect(() => {
+    reload('recommend-org-list-keyword');
+  }, []);
 
   return (
     <CommonSearch
@@ -617,6 +633,13 @@ function CombinedSearch(props: {
       document.removeEventListener('keydown', handleKeyUpDown);
     };
   }, [repoItems, orgItems, userItems]);
+
+  React.useEffect(() => {
+    // search on mount
+    orgReload('recommend-org-list-keyword');
+    repoReload('recommend-repo-list-1-keyword');
+    userReload('recommend-user-list-keyword');
+  }, []);
 
   return (
     <>

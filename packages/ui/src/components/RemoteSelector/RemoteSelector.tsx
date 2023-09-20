@@ -35,6 +35,8 @@ export interface RemoteSelectorProps<Item> extends UseRemoteListOptions<Item>, P
   inputPrefix?: string;
 
   filterResults?: (items: Item[]) => Item[];
+
+  executeOnMountQuery?: string;
 }
 
 export interface RemoteSelectorInputProps {
@@ -62,6 +64,7 @@ export function RemoteSelector<Item> ({
   value,
   getRemoteOptions,
   executeOnMount = false,
+  executeOnMountQuery = '',
   id,
   renderInput,
   renderSelectedItems,
@@ -87,7 +90,7 @@ export function RemoteSelector<Item> ({
 
   useEffect(() => {
     if (executeOnMount) {
-      reload(inputPrefix + input);
+      reload(inputPrefix + input || executeOnMountQuery);
     }
   }, []);
 

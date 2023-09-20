@@ -67,6 +67,8 @@ export function GHOrgRepoSelector({
       filterResults={(items) => {
         return items.filter((item) => item.fullName.startsWith(`${orgName}/`));
       }}
+      executeOnMount
+      executeOnMountQuery={`${orgName}/`}
     />
   );
 }
