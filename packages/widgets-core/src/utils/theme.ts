@@ -17,7 +17,11 @@ type Theme = {
     backgroundColor: string
     Card: {
       backgroundColor: string
+      /**
+       * @deprecated
+       */
       shadowColor: string
+      borderColor: string
     }
   }
 
@@ -48,6 +52,7 @@ const light: Theme = {
     Card: {
       backgroundColor: '#fff',
       shadowColor: 'rgba(219, 216, 199, 0.75)',
+      borderColor: '#E0E0E0',
     },
   },
   Orphan: {
@@ -74,6 +79,7 @@ const dark: Theme = {
     Card: {
       backgroundColor: 'rgb(36, 35, 49)',
       shadowColor: 'rgba(36, 39, 56, 0.25)',
+      borderColor: '#2F2E35',
     },
   },
   Orphan: {

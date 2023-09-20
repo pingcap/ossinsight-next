@@ -9,8 +9,7 @@ import { transformBox } from './builtin/commons';
 import render from './index';
 
 const WRAP_BORDER_RADIUS = 12;
-const WRAP_SHADOW_BLUR = 4;
-const WRAP_PADDING = 8;
+const WRAP_PADDING = 0.5;
 
 export default async function renderCompose (props: WidgetNodeVisualizationProps) {
   const { data, visualizer, dpr, parameters, linkedData, colorScheme, root, sizeName } = props;
@@ -26,7 +25,6 @@ export default async function renderCompose (props: WidgetNodeVisualizationProps
   const offY = shouldWrap ? WRAP_PADDING : 0;
 
   const canvasPadding = (shouldWrap ? WRAP_PADDING : 0) * dpr;
-  const canvasWrapperShadowBlur = WRAP_SHADOW_BLUR * dpr;
   const canvasBorderRadius = WRAP_BORDER_RADIUS * dpr;
   const canvasWidth = width * dpr + canvasPadding * 2;
   const canvasHeight = height * dpr + canvasPadding * 2;
@@ -45,15 +43,16 @@ export default async function renderCompose (props: WidgetNodeVisualizationProps
     ctx.fillStyle = theme.Container.backgroundColor;
     ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-    ctx.fillStyle = theme.Container.Card.backgroundColor;
     ctx.save();
-    ctx.shadowColor = theme.Container.Card.shadowColor;
-    ctx.shadowOffsetY = canvasWrapperShadowBlur;
-    ctx.shadowBlur = canvasWrapperShadowBlur;
     ctx.beginPath();
+    ctx.strokeStyle = theme.Container.Card.borderColor;
+
+    ctx.fillStyle = theme.Container.Card.backgroundColor;
     ctx.moveTo(canvasOffX, canvasOffY);
     ctx.roundRect(canvasOffX, canvasOffY, containerWidth, containerHeight, canvasBorderRadius);
     ctx.fill();
+    ctx.lineWidth = dpr;
+    ctx.stroke();
     ctx.restore();
   } else {
     ctx.fillStyle = theme.Orphan.backgroundColor;
