@@ -31,17 +31,19 @@ export async function renderAvatarProgress(
   label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
   ctx.textAlign = 'right';
   ctx.fillStyle = backgroundColor || Label.color;
-  label && ctx.fillText(valueFormatter(value), width, top + 7 * dpr, width);
+  value && ctx.fillText(valueFormatter(value), left + width, top + 7 * dpr, width);
+
+  ctx.textAlign = 'start';
 
   ctx.fillStyle = backgroundColor;
-  ctx.fillRect(left + 30 * dpr, top + 20 * dpr, width - left, 4 * dpr);
+  ctx.fillRect(left + 30 * dpr, top + 20 * dpr, Math.abs(width - left), 4 * dpr);
 
   ctx.fillStyle = color;
   const percent = value / maxVal;
   ctx.fillRect(
     left + 30 * dpr,
     top + 20 * dpr,
-    (width - left) * percent,
+    Math.abs(width - left) * percent,
     4 * dpr
   );
 

@@ -2,6 +2,7 @@ import { Canvas, loadImage, Path2D } from '@napi-rs/canvas';
 import { getTheme } from '../../../utils/theme';
 import { withTimeout } from '../../../utils/timeout';
 import { BuiltinProps } from './commons';
+import { formatNumber } from '@ossinsight/widgets-utils/src/utils';
 
 export async function renderAvatarLabel (
   canvas: Canvas,
@@ -24,7 +25,8 @@ export async function renderAvatarLabel (
 
   ctx.font = `normal ${12 * dpr}px`;
   ctx.fillStyle = Label.color;
-  label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
+  const labelStr = typeof label === 'number' ? formatNumber(label) : label;
+  label && ctx.fillText(labelStr, left + 30 * dpr, top + 7 * dpr, width);
 
   try {
     const buffer = await withTimeout(async (signal) => {

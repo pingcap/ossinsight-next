@@ -149,25 +149,19 @@ export default function (
       //   },
       //   column: false,
       // }).flex(0.2),
-      widget('builtin:label-value', undefined, {
-        label,
-        value,
-        labelProps: {
-          style: {
-            fontSize: 12,
-            fontWeight: 'normal',
-          },
-        },
-        valueProps: {
-          style: {
-            fontSize: 12,
-            fontWeight: 'normal',
-            // color: ctx.theme.colors.green['400'],
+      horizontal(
+        widget('builtin:label-value', undefined, {
+          label,
+          value: '',
+        }).flex(0.5),
+        widget('builtin:label-value', undefined, {
+          label: value,
+          value: '',
+          labelProps: {
             marginLeft: 'auto',
-          },
-        },
-        column: false,
-      }).flex(0.1),
+          }
+        }).flex(0.3),
+      ).flex(0.1),
       nonEmptyDataWidget(data, () =>
         horizontal(
           vertical(

@@ -6,6 +6,7 @@ import { axisTooltip, simpleGrid } from '@ossinsight/widgets-utils/src/options';
 
 type Params = {
   owner_id: string;
+  hideData?: boolean;
 };
 
 type DataPoint = {
@@ -17,51 +18,62 @@ type DataPoint = {
 
 type Input = [DataPoint[], DataPoint[] | undefined];
 
+const calcMinMax = (data: DataPoint[]) => {
+  let repoMin = Infinity;
+  let repoMax = -Infinity;
+  let engagementsMin = Infinity;
+  let engagementsMax = -Infinity;
+  for (const d of data) {
+    if (d.repos < repoMin) {
+      repoMin = d.repos;
+    }
+    if (d.repos > repoMax) {
+      repoMax = d.repos;
+    }
+    if (d.engagements < engagementsMin) {
+      engagementsMin = d.engagements;
+    }
+    if (d.engagements > engagementsMax) {
+      engagementsMax = d.engagements;
+    }
+  }
+  return [repoMin, repoMax, engagementsMin, engagementsMax];
+};
+
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): EChartsVisualizationConfig {
   const main = ctx.parameters.owner_id;
   const vs = ctx.parameters.owner_id;
+  const hideData = !!ctx.parameters.hideData;
 
   const [data] = input;
 
-  // const { maxRpos, maxEngagements, maxParticipants } = input.flat().reduce(
-  //   (prev, current) => {
-  //     return {
-  //       maxRpos: Math.max(prev.maxRpos, current?.repos || 0),
-  //       maxEngagements: Math.max(
-  //         prev.maxEngagements,
-  //         current?.engagements || 0
-  //       ),
-  //       maxParticipants: Math.max(
-  //         prev.maxParticipants,
-  //         current?.participants || 0
-  //       ),
-  //     };
-  //   },
-  //   { maxRpos: 0, maxEngagements: 0, maxParticipants: 0 }
-  // );
+  const [repoMin, repoMax, engagementsMin, engagementsMax] = calcMinMax(data);
 
   return {
     dataset: [
       {
         id: 'main',
-        source: data,
+        source: hideData ? [] : data,
       },
     ],
     xAxis: {
-      // name: 'engagements',
+      name: 'engagements',
       splitLine: { show: false },
+      max: engagementsMax,
     },
     yAxis: {
       name: 'repos',
+      offset: 40,
       splitLine: { show: false },
+      max: repoMax,
     },
     grid: {
       left: 8,
       top: 8,
-      right: 30,
+      right: 90,
       bottom: 8,
       containLabel: true,
     },

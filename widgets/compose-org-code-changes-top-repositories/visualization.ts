@@ -56,7 +56,7 @@ export default function (
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       horizontal(
-        widget('builtin:label', undefined, {
+        widget('builtin:label-value', undefined, {
           label: 'Repo',
           labelProps: {
             style: {
@@ -66,7 +66,7 @@ export default function (
             },
           },
         }).flex(0.3),
-        widget('builtin:label', undefined, {
+        widget('builtin:label-value', undefined, {
           label: 'Lines of Code Changed',
           labelProps: {
             style: {
@@ -74,17 +74,19 @@ export default function (
               fontWeight: 'normal',
             },
           },
-        }).flex(1),
-        widget('builtin:label', undefined, {
+        }).flex(0.3),
+        widget('builtin:label-value', undefined, {
+          label: '',
+        }).flex(0.2),
+        widget('builtin:label-value', undefined, {
           label: 'Add/Delete',
           labelProps: {
             style: {
               fontSize: 12,
               fontWeight: 'normal',
-              marginLeft: 'auto',
             },
           },
-        })
+        }).flex(0.2)
       ).flex(0.1),
       nonEmptyDataWidget(data, () =>
         horizontal(
@@ -97,8 +99,6 @@ export default function (
                     item.repo_name.split('/')[0]
                   }.png`,
                   size: 24,
-                  value: 10,
-                  maxVal: 100,
                 }).flex(0.3),
                 widget('builtin:label', undefined, {
                   label: item.changes,

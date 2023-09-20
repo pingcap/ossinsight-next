@@ -72,7 +72,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       const issueDiff = (issueCurrent - issuePast) / issuePast;
       return {
         title: 'Issues Closed Ratio',
-        label: `${issueCurrent.toFixed(2)}%`,
+        label: `${issueCurrent.toFixed(0)}%`,
         value: `${issueDiff >= 0 ? '↑' : '↓'}${Math.abs(issueDiff).toFixed(
           2
         )}%`,
@@ -96,7 +96,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       const reviewDiff = (reviewCurrent - reviewPast) / reviewPast;
       return {
         title: 'PR Reviewed Ratio',
-        label: `${reviewCurrent.toFixed(2)}%`,
+        label: `${reviewCurrent.toFixed(0)}%`,
         value: `${reviewDiff >= 0 ? '↑' : '↓'}${Math.abs(reviewDiff).toFixed(
           2
         )}%`,
@@ -126,7 +126,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       const prDiff = (prCurrent - prPast) / prPast;
       return {
         title: 'PRs Merged Ratio',
-        label: `${prCurrent.toFixed(2)}%`,
+        label: `${prCurrent.toFixed(0)}%`,
         value: `${prDiff >= 0 ? '↑' : '↓'}${Math.abs(prDiff).toFixed(2)}%`,
         isIncrease: prDiff >= 0,
       };
@@ -162,7 +162,7 @@ export default function (
             value,
             labelProps: {
               style: {
-                fontSize: 24,
+                fontSize: ctx.runtime === 'server' ? 18 : 24,
                 fontWeight: 'bold',
               },
             },
