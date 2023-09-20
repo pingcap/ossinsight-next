@@ -35,6 +35,8 @@ export default function (
   const main = ctx.getRepo(parseInt(ctx.parameters.repo_id));
   const vs = ctx.getRepo(parseInt(ctx.parameters.vs_repo_id));
 
+  const { theme: { colorScheme } } = ctx;
+
   return {
     dataset: compare(input, (data, name) => ({
       id: name,
@@ -95,7 +97,7 @@ export default function (
         y: 'events',
       },
       lineStyle: {
-        color: '#E47C42',
+        color: '#FF7628',
         width: 1,
       },
       showSymbol: false,
@@ -110,11 +112,11 @@ export default function (
           colorStops: [
             {
               offset: 0,
-              color: '#CA7342', // color at 0%
+              color: colorScheme === 'light' ? 'rgba(255, 173, 128, 1)' : 'rgba(223, 106, 40, 1)', // color at 0%
             },
             {
               offset: 1,
-              color: 'rgba(173, 108, 71, 0.00)', // color at 100%
+              color: colorScheme === 'light' ? 'rgba(255, 219, 199, 0)' : 'rgba(102, 70, 51, 0)', // color at 100%
             },
           ],
           global: false, // default is false
