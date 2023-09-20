@@ -1,6 +1,6 @@
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { scaleToFit } from '@ossinsight/widgets-utils/src/utils'
-import { autoSize } from '@ossinsight/widgets-utils/src/compose/size'
+import { autoSize } from '@ossinsight/widgets-utils/src/compose/size';
+import { scaleToFit } from '@ossinsight/widgets-utils/src/utils';
 import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 
 type Params = {
@@ -48,8 +48,8 @@ interface TimeDistributionProps {
   width: number;
   height: number;
   dpr: number;
-  runtime: 'client' | 'server'
-  colorScheme: string
+  runtime: 'client' | 'server';
+  colorScheme: string;
 }
 
 const times = Array(24).fill(0).map((_, i) => i);
@@ -64,12 +64,12 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
     return data.reduce((max, cur) => Math.max(max, cur.cnt), 0);
   }, [data]);
 
-  const paddingTop = 36;
+  const paddingTop = 8;
   const paddingLeft = 28;
   const width = size * 24 + gap * 23 + paddingLeft;
   const height = size * 7 + gap * 6 + 40;
 
-  const { width: realWidth, height: realHeight} = scaleToFit(width, height + paddingTop, autoSize({ runtime, dpr }, tw), autoSize({ runtime, dpr }, th))
+  const { width: realWidth, height: realHeight } = scaleToFit(width, height + paddingTop, autoSize({ runtime, dpr }, tw), autoSize({ runtime, dpr }, th));
 
   const colors = colorScheme === 'light' ? contributeDistributionColorsLight : contributeDistributionColors;
 
@@ -157,7 +157,7 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
 });
 
 const contributeDistributionColors = ['#2C2C2C', '#00480D', '#017420', '#34A352', '#6CDE8C', '#B5FFC9'];
-const contributeDistributionColorsLight = ['#e8e8e8', '#B5FFC9', '#6CDE8C', '#34A352', '#017420', '#00480D', ]
+const contributeDistributionColorsLight = ['#e8e8e8', '#B5FFC9', '#6CDE8C', '#34A352', '#017420', '#00480D'];
 
 const getColor = (num: number, max: number, colors: string[]) => {
   const d = num / max;
