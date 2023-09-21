@@ -22,7 +22,7 @@ export default function UserOrgAnalyzeLayout({
           </aside>
           {/* <OrgPageNavWrapper org={owner}> */}
           <main className='flex-1 block'>
-            <div className='pl-6 pr-28 py-8'>{children}</div>
+            <div className='p-8 max-w-screen-xl mx-auto'>{children}</div>
             <OrgBottomNav org={owner} />
           </main>
           {/* </OrgPageNavWrapper> */}
