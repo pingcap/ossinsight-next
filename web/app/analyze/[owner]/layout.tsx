@@ -20,12 +20,12 @@ export default function UserOrgAnalyzeLayout({
               <OrgNav org={owner} />
             </div>
           </aside>
-          <OrgPageNavWrapper org={owner}>
-            <main className='flex-1 block'>
-              <div className='pl-6 pr-28 py-8'>{children}</div>
-              {/* <OrgBottomNav org={owner} /> */}
-            </main>
-          </OrgPageNavWrapper>
+          {/* <OrgPageNavWrapper org={owner}> */}
+          <main className='flex-1 block'>
+            <div className='pl-6 pr-28 py-8'>{children}</div>
+            <OrgBottomNav org={owner} />
+          </main>
+          {/* </OrgPageNavWrapper> */}
         </div>
       </div>
       {/* <footer className='bg-toolbar border-t'>

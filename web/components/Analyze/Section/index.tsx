@@ -8,14 +8,15 @@ export interface SectionTemplateProps {
   description?: string | React.ReactNode;
   level?: number;
   className?: string;
+  id?: string;
 }
 
 export default function SectionTemplate(props: SectionTemplateProps) {
-  const { children, title, description, level = 1, className } = props;
+  const { children, title, description, level = 1, id, className } = props;
 
   return (
     <section className={twMerge(className)}>
-      <TitleWrapper level={level} className=''>
+      <TitleWrapper level={level} id={id} className=''>
         {title}
       </TitleWrapper>
       {description && <p className='max-w-[864px]'>{description}</p>}
@@ -33,7 +34,8 @@ function TitleWrapper({
 }: {
   children: React.ReactNode;
   level: number;
-  className?: string;
+    className?: string;
+  id?: string;
   [key: string]: any;
 }) {
   switch (level) {
