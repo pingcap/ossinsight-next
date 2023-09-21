@@ -7,7 +7,7 @@ import {
   widgetPageParams,
   WidgetPageProps,
 } from '@/app/widgets/[vendor]/[name]/utils';
-import { ServerWidget } from '@/components/Widget/server';
+import { ClientWidget } from '@/components/Analyze/Section/ClientWidget';
 import ArrowUpRightCircleFill from 'bootstrap-icons/icons/arrow-up-right-circle-fill.svg';
 import { twMerge } from 'tailwind-merge';
 
@@ -93,34 +93,23 @@ export default function ChartTemplate(props: ChartTemplateProps) {
         height: height ? `${height}px` : undefined,
       }}
     >
-      <React.Suspense
-        fallback={
-          <ChartSkeleton
-            style={{
-              width: width ? `${width}px` : undefined,
-              height: height ? `${height}px` : undefined,
-            }}
-          />
-        }
-      >
-        <ServerWidget
-          className='WidgetContainer'
-          name={name}
-          searchParams={searchParamsMemo}
-          linkedDataPromise={linkedDataMemo}
-          showShadow={false}
-          showThemeSwitch={false}
-          dense
-        />
-        {targetLinkMemo && (
-          <NextLink target='_blank' href={targetLinkMemo}>
-            <button className='absolute top-4 right-4'>
-              <ArrowUpRightCircleFill />
-            </button>
-          </NextLink>
-        )}
-        {children}
-      </React.Suspense>
+      <ClientWidget
+        className='WidgetContainer'
+        name={name}
+        searchParams={searchParamsMemo}
+        linkedDataPromise={linkedDataMemo}
+        showShadow={false}
+        showThemeSwitch={false}
+        dense
+      />
+      {targetLinkMemo && (
+        <NextLink target='_blank' href={targetLinkMemo}>
+          <button className='absolute top-4 right-4'>
+            <ArrowUpRightCircleFill />
+          </button>
+        </NextLink>
+      )}
+      {children}
     </div>
   );
 }
