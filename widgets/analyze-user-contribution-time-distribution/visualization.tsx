@@ -135,12 +135,12 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
         ))}
       </g>
       <g id="legend">
-        <text fontSize={12} fill="#dadada" x="0" y={height - 29} alignmentBaseline="text-before-edge">less</text>
+        <text fontSize={12} fill="#777" x={-26} y={height - 16}>less</text>
         {colors.map((color, i) => (
           <rect
             key={color}
             fill={color}
-            x={36 + i * (size + 4)}
+            x={i * (size + 4)}
             y={height - 28}
             width={size}
             height={size}
@@ -148,9 +148,7 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
             ry={3}
           />
         ))}
-        <text fontSize={12} fill="#dadada" x={48 + contributeDistributionColors.length * (size + 4)} y={height - 28}
-              alignmentBaseline="text-before-edge">more
-        </text>
+        <text fontSize={12} fill="#777" x={contributeDistributionColors.length * (size + 4)} y={height - 16}>more</text>
       </g>
     </svg>
   );
@@ -158,6 +156,9 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
 
 const contributeDistributionColors = ['#2C2C2C', '#00480D', '#017420', '#34A352', '#6CDE8C', '#B5FFC9'];
 const contributeDistributionColorsLight = ['#e8e8e8', '#B5FFC9', '#6CDE8C', '#34A352', '#017420', '#00480D'];
+
+export const width = 720;
+export const height = 310;
 
 const getColor = (num: number, max: number, colors: string[]) => {
   const d = num / max;

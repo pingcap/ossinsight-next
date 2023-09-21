@@ -21,17 +21,17 @@ export default async function renderSvg (props: WidgetNodeVisualizationProps) {
   width *= dpr;
   height *= dpr;
 
-  let canvas = createCanvas(width, height);
-  const ctx = canvas.getContext('2d');
-
   const { width: imageWidth, height: imageHeight } = scaleToFit(image.width, image.height, width, height);
+
+  let canvas = createCanvas(imageWidth, imageHeight);
+  const ctx = canvas.getContext('2d');
 
   ctx.save();
   ctx.fillStyle = colorScheme === 'light' ? 'white' : 'rgb(36, 35, 49)';
   ctx.rect(0, 0, width, height);
   ctx.fill();
   ctx.restore();
-  ctx.drawImage(image, (width - imageWidth) / 2, (height - imageHeight) / 2, imageWidth, imageHeight);
 
+  ctx.drawImage(image, 0, 0, imageWidth, imageHeight);
   return canvas;
 }

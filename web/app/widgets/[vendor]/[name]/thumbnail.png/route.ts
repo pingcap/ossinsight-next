@@ -71,8 +71,8 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     dpr = 2;
   } else {
     const resolved = resolveImageSizeConfig(config, size);
-    width = resolved.width;
-    height = resolved.height;
+    width = visualizer.width ?? resolved.width;
+    height = visualizer.height ?? resolved.height;
     dpr = resolved.dpr ?? 2;
   }
 

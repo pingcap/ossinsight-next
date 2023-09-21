@@ -3,7 +3,7 @@ import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { ComposeVisualizationConfig, MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import { computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 
 export function isWidget (name: string) {
   return !!widgets[name];
@@ -85,8 +85,8 @@ type DefaultComposeLayoutOptions = {
 export function createDefaultComposeLayout (name: string, data: any, { generateMetadata, ctx, isDynamicHeight }: DefaultComposeLayoutOptions): VisualizerModule<'compose', ComposeVisualizationConfig, any, any> {
   const title = generateMetadata(ctx).title;
 
-  const HEADER_HEIGHT = autoSize(ctx, 48);
-  const PADDING = autoSize(ctx, 24);
+  const HEADER_HEIGHT = 48;
+  const PADDING = 24;
 
   const realHeight = ctx.height + (isDynamicHeight ? HEADER_HEIGHT + PADDING : 0);
 
@@ -103,7 +103,7 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
             ? widget('builtin:empty', undefined, {})
             : widget(name, data, ctx.parameters).padding([0, PADDING, PADDING]),
         ),
-        0, 0, autoSize(ctx, ctx.width), autoSize(ctx, realHeight),
+        0, 0, ctx.width, realHeight,
       );
     },
     type: 'compose',
