@@ -26,6 +26,10 @@ export default function OrgAnalyzePageHeaderAction() {
   const [editMode, setEditMode] = React.useState<boolean>(false);
   const [loadingRepoFromUrl, setLoadingRepoFromUrl] =
     React.useState<boolean>(true);
+  const [currentRepoIds, setCurrentRepoIds] = React.useState<string[]>([]);
+  const [currentPeriod, setCurrentPeriod] = React.useState<string>(
+    options[0].key
+  );
 
   const { orgName, orgId } =
     React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
@@ -33,8 +37,10 @@ export default function OrgAnalyzePageHeaderAction() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentPeriod = searchParams.get('period') || options[0].key;
-  const currentRepoIds = searchParams.get('repoIds') || '';
+  React.useEffect(() => {
+    setCurrentRepoIds(searchParams.getAll('repoIds') || []);
+    setCurrentPeriod(searchParams.get('period') || options[0].key);
+  }, [searchParams]);
 
   const { select: periodSelect, value: periodSelected } = useSimpleSelect(
     options,
@@ -72,9 +78,8 @@ export default function OrgAnalyzePageHeaderAction() {
         setLoadingRepoFromUrl(false);
         return;
       }
-      const repoIds = currentRepoIds.split(',');
       const repoInfos = await Promise.all(
-        repoIds.map((id) => getRepoInfoById(id))
+        currentRepoIds.map((id) => getRepoInfoById(id))
       );
       const filteredRepoInfos = repoInfos.filter((r) =>
         r.fullName.startsWith(`${orgName}/`)
@@ -91,13 +96,11 @@ export default function OrgAnalyzePageHeaderAction() {
       Array.from(searchParams.entries())
     );
     // update repoId
-    const currentRepoIdArray = currentRepoIds.split(',');
     const selectedRepoIds = repos.map((r) => r.id);
-    if (!isArrayItemsEqual(currentRepoIdArray, selectedRepoIds)) {
-      currentParams.set('repoIds', selectedRepoIds.join(','));
+    if (!isArrayItemsEqual(currentRepoIds, selectedRepoIds)) {
+      currentParams.delete('repoIds');
+      selectedRepoIds.forEach((id) => currentParams.append('repoIds', `${id}`));
     }
-    // update url
-    // router.push(pathname + '?' + currentParams.toString());
     typeof window !== 'undefined' &&
       window.location.replace(pathname + '?' + currentParams.toString());
   };
