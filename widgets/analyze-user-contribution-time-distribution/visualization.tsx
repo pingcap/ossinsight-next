@@ -115,7 +115,7 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
             textAnchor="end"
             fontSize={12}
             fill="#aaa"
-            fontFamily="monospace"
+            fontFamily="Menlo"
           >
             {name}
           </text>
@@ -128,7 +128,7 @@ const TimeDistribution = forwardRef(({ runtime, dpr, width: tw, height: th, titl
             textAnchor="middle"
             fontSize={12}
             fill="#aaa"
-            fontFamily="monospace"
+            fontFamily="Menlo"
           >
             {name}
           </text>
