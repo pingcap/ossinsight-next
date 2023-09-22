@@ -10,7 +10,7 @@ export function renderMarkdown (value: string): ReactElement {
 }
 
 const validate: Plugin<[], import('mdast').Root, import('mdast').Root> = function () {
-  return (node) => {
+  return (node: any) => {
     if (node.children.length !== 1 || node.children[0].type !== 'paragraph') {
       throw new Error('Banner markdown support only one toplevel paragraph block');
     }
