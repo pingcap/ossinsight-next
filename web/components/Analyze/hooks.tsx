@@ -8,7 +8,7 @@ export interface OrgOverviewDataProps {
   stars: number;
   repos: number;
   bio: string;
-  last_participated_at: string;
+  last_event_at: string;
   
 }
 

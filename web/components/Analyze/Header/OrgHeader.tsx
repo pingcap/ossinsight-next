@@ -63,9 +63,9 @@ export default function OrgAnalyzePageHeader() {
           </span>
           <span>Last active at</span>
           {loading && <ValueSkeleton />}
-          {!loading && data?.last_participated_at && (
+          {!loading && data?.last_event_at && (
             <span className='text-title'>{`${beautifySeconds(
-              calcDateDiff(new Date(data.last_participated_at))
+              calcDateDiff(new Date(data.last_event_at))
             )} ago`}</span>
           )}
         </div>
