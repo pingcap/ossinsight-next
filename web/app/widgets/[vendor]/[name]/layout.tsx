@@ -1,5 +1,5 @@
+import BackButton from '@/app/widgets/[vendor]/[name]/BackButton';
 import { Providers } from '@/app/widgets/[vendor]/[name]/Providers';
-import NextLink from 'next/link';
 import { ReactElement } from 'react';
 
 type Params = {
@@ -14,23 +14,7 @@ export default function Layout ({ parameters, info, share, children }: Params) {
     <Providers>
       <div className="flex flex-col lg:flex-row min-h-page lg:max-h-page">
         <aside className="lg:flex-1 p-4 bg-toolbar lg:max-h-page lg:min-h-page overflow-y-auto sticky top-header lg:border-r order-2">
-          <NextLink href="/widgets" className="Button Button-secondary inline-flex items-center gap-1 mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-4 h-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-              />
-            </svg>
-            Back
-          </NextLink>
+          <BackButton />
           {info}
           <h2 className="text-md text-subtitle font-bold mt-8 mb-2">
             Widget configuration
