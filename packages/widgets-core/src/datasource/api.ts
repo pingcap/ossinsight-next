@@ -56,7 +56,7 @@ function setUrlParams(url: URL, urlParams: Record<string, string>, parameters: R
         });
         continue;
       }
-      url.searchParams.set(name, value);
+      value && url.searchParams.set(name, value);
     }
   }
 }

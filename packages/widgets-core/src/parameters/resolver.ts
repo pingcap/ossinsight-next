@@ -24,6 +24,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
     }
     const parse = parsers[def.type];
     originParam = parse?.(originParam, def as any) ?? originParam;
+    // Note that we only use the last param for now
     const param = typeof originParam === 'object' ? originParam[originParam.length - 1] : originParam;
     switch (def.type) {
       case 'repo-id':
@@ -70,13 +71,35 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
         if (param) {
           if (linkedData.collections[param]) return Promise.resolve();
           return collectionsPromise
-            .then(res => res.find(collection => collection.id === param))
-            .then(collection => {
+            .then((res) => res.find((collection) => collection.id === param))
+            .then((collection) => {
               if (collection) {
                 linkedData.collections[param] = collection;
               }
             });
         }
+        break;
+      case 'repo-ids':
+        if (originParam) {
+          const originParamList = Array.isArray(originParam)
+            ? originParam
+            : [originParam];
+          return Promise.allSettled(
+            originParamList.map((param) => {
+              if (linkedData.repos[param]) return Promise.resolve();
+              return fetch(`https://api.ossinsight.io/gh/repositories/${param}`)
+                .then(handleOApi)
+                .then((data) => {
+                  linkedData.repos[param] = { 
+                    id: param as number,
+                    fullName: data.full_name,
+                    defaultBranch: data.default_branch,
+                  };
+                });
+            })
+          );
+        }
+        break;
     }
 
     return Promise.resolve();

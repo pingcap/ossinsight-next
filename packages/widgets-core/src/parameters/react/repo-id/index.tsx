@@ -65,7 +65,7 @@ export function RepoIdsInput({
   return (
     <>
       <GHOrgRepoSelector
-        repos={[]}
+        repos={repos}
         onRepoSelected={handleSelectRepo}
         renderInput={renderInput}
         onRepoRemoved={handleRemoveRepo}

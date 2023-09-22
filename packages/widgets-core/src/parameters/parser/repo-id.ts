@@ -7,7 +7,6 @@ export default function parse (repoId: string): number {
 }
 
 export function parseRepoIds(repoIds: string | string[]): number[] {
-  // TODO - check if this is a valid repo_id
   if (typeof repoIds === 'string') {
     const parsed = Number(repoIds);
     if (!isFinite(parsed) || !Number.isSafeInteger(parsed)) {
