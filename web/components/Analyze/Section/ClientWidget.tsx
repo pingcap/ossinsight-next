@@ -14,7 +14,7 @@ import Loader from '@/components/Widget/loading';
 export interface ClientWidgetProps
   extends Omit<WidgetProps, 'linkedData' | 'data' | 'params'> {
   linkedDataPromise: Promise<LinkedData>;
-  searchParams: any;
+  searchParams: Record<string, string | string[]>;
 }
 
 export function ClientWidget({

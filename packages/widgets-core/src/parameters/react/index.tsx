@@ -4,7 +4,7 @@ import { ExtractParameterType, ParameterDefinition, ParameterDefinitionMap } fro
 import { ReactElement } from 'react';
 import { CollectionIdInput } from './collection-id';
 import { LimitInput } from './limit';
-import { RepoIdInput } from './repo-id';
+import { RepoIdInput, RepoIdsInput } from './repo-id';
 import { TimePeriodSelect, TimeZoneSelect } from './time';
 import { UserIdInput } from './user-id';
 import { OrgIdInput } from './org-id';
@@ -27,13 +27,15 @@ const types: ComponentMap = {
   'activity-type': ActivityTypeSelector,
   'event-type': EventTypeSelector,
   'limit': LimitInput,
+  'repo-ids': RepoIdsInput,
 };
 
-export function ParamInput ({ id, config, value, onValueChange }: {
+export function ParamInput ({ id, config, value, onValueChange, ownerId }: {
   id: string,
   config: ParameterDefinition,
   value: any,
-  onValueChange: (value: any) => void
+  onValueChange: (value: any) => void,
+  ownerId?: number | null,
 }) {
   const Component = types[config.type];
   if (!Component) {
@@ -43,6 +45,7 @@ export function ParamInput ({ id, config, value, onValueChange }: {
 
   const otherProps: any = {
     id,
+    ownerId,
   };
   if ('enums' in config) {
     otherProps.enums = config.enums;

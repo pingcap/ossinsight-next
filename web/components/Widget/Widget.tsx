@@ -21,7 +21,7 @@ export interface WidgetProps {
   className?: string;
   style?: CSSProperties;
   name: string;
-  params: Record<string, string>;
+  params: Record<string, string | string[]>;
   data: any;
   linkedData: LinkedData;
   showShadow?: boolean;

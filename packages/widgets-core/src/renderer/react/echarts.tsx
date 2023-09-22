@@ -10,7 +10,7 @@ import '../echarts-theme';
 interface EChartsComponentProps extends WidgetReactVisualizationProps {
   data: any;
   visualizer: VisualizerModule<'echarts', EChartsOption, any, any>;
-  parameters: any;
+  parameters: Record<string, string | string[]>;
   linkedData: LinkedData;
 }
 

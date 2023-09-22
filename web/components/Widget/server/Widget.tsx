@@ -7,7 +7,7 @@ import { createWidgetBaseContext } from '@ossinsight/widgets-core/src/utils/cont
 
 export interface ServerWidgetProps extends Omit<WidgetProps, 'linkedData' | 'data' | 'params'> {
   linkedDataPromise: Promise<LinkedData>;
-  searchParams: any;
+  searchParams: Record<string, string | string[]>;
 }
 
 export async function ServerWidget ({ name, searchParams, linkedDataPromise, ...props }: ServerWidgetProps) {

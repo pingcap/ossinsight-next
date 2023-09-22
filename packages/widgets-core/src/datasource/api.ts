@@ -46,10 +46,17 @@ function allExists (required: string[] | undefined, params: Record<string, strin
   return true;
 }
 
-function setUrlParams (url: URL, urlParams: Record<string, string>, parameters: Record<string, string>) {
+function setUrlParams(url: URL, urlParams: Record<string, string>, parameters: Record<string, string | string[]>) {
   for (let [name, paramName] of Object.entries(urlParams)) {
     if (paramName in parameters) {
-      url.searchParams.set(name, parameters[paramName]);
+      const value = parameters[paramName];
+      if (Array.isArray(value)) {
+        value.forEach((value) => {
+          url.searchParams.append(name, value);
+        });
+        continue;
+      }
+      url.searchParams.set(name, value);
     }
   }
 }

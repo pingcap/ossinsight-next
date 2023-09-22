@@ -10,7 +10,7 @@ export type LinkedData = {
   collections: Record<string, { id: number, name: string, public: boolean }>
 }
 
-export async function resolveParameters (definitions: ParameterDefinitions, params: any, defaultLinkedData?: LinkedData) {
+export async function resolveParameters (definitions: ParameterDefinitions, params: Record<string, string | string[]>, defaultLinkedData?: LinkedData) {
   const linkedData = defaultLinkedData ?? {
     repos: {},
     users: {},
@@ -18,12 +18,13 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
     collections: {},
   };
   const results = await Promise.allSettled(Object.entries(definitions).map(([name, def]) => {
-    let param = params[name];
-    if (param == null) {
+    let originParam: string | number | string[] | number[] = params[name];
+    if (originParam == null) {
       return Promise.resolve();
     }
     const parse = parsers[def.type];
-    param = parse?.(param, def as any) ?? param;
+    originParam = parse?.(originParam, def as any) ?? originParam;
+    const param = typeof originParam === 'object' ? originParam[originParam.length - 1] : originParam;
     switch (def.type) {
       case 'repo-id':
         if (param) {
@@ -32,7 +33,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
             .then(handleOApi)
             .then((data) => {
               linkedData.repos[param] = {
-                id: param,
+                id: param as number,
                 fullName: data.full_name,
                 defaultBranch: data.default_branch,
               };
@@ -46,7 +47,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
             .then(handleOApi)
             .then((data) => {
               linkedData.users[param] = {
-                id: param,
+                id: param as number,
                 login: data.login,
               };
             });
@@ -59,7 +60,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
             .then(handleOApi)
             .then((data) => {
               linkedData.orgs[param] = {
-                id: param,
+                id: param as number,
                 login: data.login,
               };
             });

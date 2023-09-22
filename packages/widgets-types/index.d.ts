@@ -106,6 +106,7 @@ export interface BaseParameterDefinition<T> {
   [SYMBOL_FOR_TYPING]?: T;
   type: string;
   title?: string;
+  array?: boolean;
   description?: string;
   required: boolean;
   default?: unknown;
@@ -156,6 +157,10 @@ export interface DateParameterDefinition extends BaseParameterDefinition<string>
   expression?: string;
 }
 
+export interface RepoIdsParameterDefinition extends BaseParameterDefinition<number[]> {
+  type: 'repo-ids';
+}
+
 export type ExtractParameterType<T extends BaseParameterDefinition<any>> = T extends BaseParameterDefinition<infer E> ? E : never;
 
 export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefinitionMap];
@@ -172,6 +177,7 @@ export interface ParameterDefinitionMap {
   'limit': LimitParameterDefinition;
   'day': DateParameterDefinition;
   'month': DateParameterDefinition;
+  'repo-ids': RepoIdsParameterDefinition;
 }
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;

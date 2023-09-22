@@ -34,31 +34,28 @@ export default function ChartTemplate(props: ChartTemplateProps) {
   }, [searchParamsFromUrl]);
 
   const repoIdsMemo = React.useMemo(() => {
-    const repoIdsStr = searchParamsFromUrl.get('repoIds') || '';
-    // return repoIdsStr.split(',').reduce((acc, cur) => {
-    //   if (cur) {
-    //     try {
-    //       const tmp = Number.parseInt(cur.trim());
-    //       if (!Number.isNaN(tmp)) {
-    //         acc.push(tmp);
-    //       }
-    //     } catch (error) {}
-    //   }
-    //   return acc;
-    // }, [] as number[]);
-    return repoIdsStr;
+    return searchParamsFromUrl.getAll('repoIds') || [];
   }, [searchParamsFromUrl]);
 
-  const searchParamsMemo = React.useMemo(
-    () => ({
+  const [searchParamsMemo, searchParamsStrMemo] = React.useMemo(() => {
+    const combinedSearchParams = {
       ...widgetPageParams,
       ...searchParams,
       owner_id: `${orgId}`,
       period: periodMemo,
-      ...(repoIdsMemo.length > 0 && { repo_ids: repoIdsMemo }),
-    }),
-    [orgId, periodMemo, repoIdsMemo, searchParams]
-  );
+    };
+    const newSearchParams = new URLSearchParams(combinedSearchParams);
+    if (repoIdsMemo.length > 0) {
+      repoIdsMemo.forEach((repoId) => {
+        newSearchParams.append('repo_ids', repoId);
+      });
+      return [
+        { ...combinedSearchParams, repo_ids: repoIdsMemo },
+        newSearchParams.toString(),
+      ];
+    }
+    return [combinedSearchParams, newSearchParams.toString()];
+  }, [orgId, periodMemo, repoIdsMemo, searchParams]);
 
   const linkedDataMemo = React.useMemo(
     () => makeLinkedData(name, searchParamsMemo),
@@ -79,11 +76,10 @@ export default function ChartTemplate(props: ChartTemplateProps) {
   const targetLinkMemo = React.useMemo(() => {
     if (name.includes(`@ossinsight/widget-`)) {
       const widget = name.split('@ossinsight/widget-').pop();
-      const searchStr = new URLSearchParams(searchParamsMemo).toString();
-      return `/widgets/official/${widget}?${searchStr}`;
+      return `/widgets/official/${widget}?${searchParamsStrMemo}`;
     }
     return null;
-  }, [name, searchParamsMemo]);
+  }, [name, searchParamsStrMemo]);
 
   return (
     <div

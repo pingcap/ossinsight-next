@@ -3,7 +3,7 @@ import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/s
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../parameters/resolver';
 
-export function createWidgetBaseContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P) {
+export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P) {
   return {
     runtime,
     parameters,
@@ -35,7 +35,7 @@ export function createLinkedDataContext (linkedData: LinkedData): LinkedDataCont
   };
 }
 
-export function createWidgetContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData) {
+export function createWidgetContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData) {
   return {
     ...createWidgetBaseContext(runtime, parameters),
     ...createLinkedDataContext(linkedData),
