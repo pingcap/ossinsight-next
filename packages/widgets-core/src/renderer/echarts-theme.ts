@@ -1,7 +1,10 @@
 import { registerTheme } from 'echarts';
 
+export const darkColorPalette = ['#dd6b66', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53', '#eedd78', '#73a373', '#73b9bc', '#7289ab', '#91ca8c', '#f49f42'];
+export const lightColorPalette = ['#dd6b66', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53', '#eedd78', '#73a373', '#73b9bc', '#7289ab', '#91ca8c', '#f49f42'];
+
 function registerThemeDark () {
-  const contrastColor = 'rgb(200, 200, 200)';
+  const contrastColor = '#979797';
   const bgColor = 'rgb(36, 35, 49)';
   const boxColor = 'rgb(37, 37, 39)';
   const borderColor = 'rgb(81, 81, 81)';
@@ -23,7 +26,7 @@ function registerThemeDark () {
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: '#2c2c2c',
+          color: '#484848',
           width: 0.5,
         },
       },
@@ -44,7 +47,7 @@ function registerThemeDark () {
     };
   };
 
-  const colorPalette = ['#dd6b66', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53', '#eedd78', '#73a373', '#73b9bc', '#7289ab', '#91ca8c', '#f49f42'];
+  const colorPalette = darkColorPalette;
   const theme = {
     color: colorPalette,
     backgroundColor: bgColor,
@@ -152,7 +155,7 @@ function registerThemeDark () {
 }
 
 function registerThemeLight () {
-  const contrastColor = 'rgb(200, 200, 200)';
+  const contrastColor = '#3c3c3c';
   const bgColor = '#ffffff';
   const boxColor = '#eeeeee';
   const borderColor = '#dddddd';
@@ -169,12 +172,12 @@ function registerThemeLight () {
         },
       },
       axisLabel: {
-        color: '#ccc',
+        color: '#3C3C3C',
       },
       splitLine: {
         lineStyle: {
           type: 'dashed',
-          color: '#d8d8d8',
+          color: '#DADADA',
           width: 0.5,
         },
       },
@@ -195,7 +198,7 @@ function registerThemeLight () {
     };
   };
 
-  const colorPalette = ['#dd6b66', '#759aa0', '#e69d87', '#8dc1a9', '#ea7e53', '#eedd78', '#73a373', '#73b9bc', '#7289ab', '#91ca8c', '#f49f42'];
+  const colorPalette = lightColorPalette;
   const theme = {
     color: colorPalette,
     backgroundColor: bgColor,

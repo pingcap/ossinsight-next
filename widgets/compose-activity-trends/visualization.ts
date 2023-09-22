@@ -42,5 +42,5 @@ export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params
 
 export const type = 'compose';
 
-export const width = 359 * 1.5;
-export const height = 96 * 1.5;
+export const width = 814;
+export const height = 216;

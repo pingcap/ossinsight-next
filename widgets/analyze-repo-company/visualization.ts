@@ -71,7 +71,7 @@ export default function (
         transformCompanyData(data ?? [], valueIndex).map((item) => {
           item.id = `${i}-${item.name}`;
           item.index = index++;
-          item.color = ['#dd6b66', '#759aa0'][i];
+          item.color = ctx.theme.echartsColorPalette[i];
           return item;
         })
       )

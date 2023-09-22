@@ -2,6 +2,7 @@ import { LinkedDataContext, VisualizationContext } from '@ossinsight/widgets-typ
 import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../parameters/resolver';
+import { darkColorPalette, lightColorPalette } from '../renderer/echarts-theme';
 
 export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P) {
   return {
@@ -47,6 +48,6 @@ export function createVisualizationContext ({ width, height, dpr, colorScheme = 
     width,
     height,
     dpr,
-    theme: { colors, colorScheme: colorScheme },
+    theme: { colors, colorScheme: colorScheme, echartsColorPalette: colorScheme === 'light' ? lightColorPalette : darkColorPalette },
   };
 }

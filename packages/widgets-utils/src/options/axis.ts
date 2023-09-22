@@ -146,6 +146,7 @@ export function recentStatsChartXAxis<T extends 'x'>(
 ): AxisOption<T> {
   return merge<AxisOption<T>>(option, {
     type: 'category',
+    inverse: true,
     axisLine: {
       show: false,
     },

@@ -37,6 +37,7 @@ export interface VisualizationContext {
   theme: {
     colors: typeof colors
     colorScheme: string
+    echartsColorPalette: string[]
   };
 }
 
