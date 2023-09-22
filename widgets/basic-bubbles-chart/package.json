@@ -9,8 +9,8 @@
   "author": "OSSInsight",
   "devDependencies": {
     "@ossinsight/widgets-parent": "workspace:^",
-    "@types/luxon": "^3.3.1",
+    "@types/luxon": "^3.3.2",
     "@types/react": "18.2.15",
-    "luxon": "^3.3.0"
+    "luxon": "^3.4.3"
   }
 }
