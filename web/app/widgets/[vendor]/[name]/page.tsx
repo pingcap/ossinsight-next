@@ -4,7 +4,7 @@ import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context'
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { Suspense } from 'react';
-import { makeLinkedData, widgetPageParams, WidgetPageProps } from './utils';
+import { makeLinkedData, widgetPageParams, WidgetPageProps, stringArrayRecord2UrlSearch } from './utils';
 
 export default function page (props: WidgetPageProps) {
   const { name } = widgetPageParams(props.params);
@@ -32,7 +32,7 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
 
   const linkedData = await makeLinkedData(name, searchParams);
 
-  const usp = new URLSearchParams(searchParams);
+  const usp = stringArrayRecord2UrlSearch(searchParams);
   const twitterImageUsp = new URLSearchParams(usp);
 
   const { title, description, keywords } = generateMetadata(

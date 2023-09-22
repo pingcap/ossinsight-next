@@ -9,7 +9,7 @@ import parseUserId from './user-id';
 import parseOwnerId from './owner-id';
 
 type Parsers = {
-  [K in keyof ParameterDefinitionMap]: (value: string | string[], config: ParameterDefinitionMap[K]) => ExtractParameterType<ParameterDefinitionMap[K]>
+  [K in keyof ParameterDefinitionMap]: (value: any, config: ParameterDefinitionMap[K]) => ExtractParameterType<ParameterDefinitionMap[K]>
 }
 
 const parsers: Parsers = {

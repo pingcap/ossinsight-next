@@ -28,3 +28,15 @@ export function widgetSignature (props: WidgetPageProps) {
 export const makeLinkedData = cache((name: string, searchParams: Record<string, string | string[]>) => {
   return widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams));
 });
+
+export function stringArrayRecord2UrlSearch(values: Record<string, string | string[]>) {
+  const newValues = new URLSearchParams();
+  for (const [k, v] of Object.entries(values)) {
+    if (Array.isArray(v)) {
+      v.forEach((i) => newValues.append(k, i));
+    } else {
+      newValues.set(k, v);
+    }
+  }
+  return newValues;
+}
