@@ -9,7 +9,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { DateTime } from 'luxon';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -112,5 +112,5 @@ const transferData2Star = (data: DataPoint[]) => {
 
 export const type = 'compose';
 
-export const width = 465 * 1.5;
-export const height = 100 * 1.5;
+export const width = getWidgetSize().widgetWidth(6, 2);
+export const height = getWidgetSize().widgetWidth(2);

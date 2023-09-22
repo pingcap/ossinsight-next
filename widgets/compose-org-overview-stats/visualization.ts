@@ -8,7 +8,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
+import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -71,14 +71,16 @@ export default function (
         horizontal(
           widget('builtin:label-value', undefined, {
             label: currentSum,
-            value: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
             labelProps: {
               style: {
                 fontSize: 24,
                 fontWeight: 'bold',
               },
             },
-            valueProps: {
+          }).flex(0.5),
+          widget('builtin:label-value', undefined, {
+            label: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
+            labelProps: {
               style: {
                 fontSize: 12,
                 lineHeight: 2,
@@ -88,20 +90,15 @@ export default function (
                     : ctx.theme.colors.red['400'],
               },
             },
-            column: false,
-          })
-        )
-          .gap(SPACING)
-          .flex(0.3),
+          }).flex(0.5)
+        ),
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
           ctx.parameters
         )
       )
-    )
-      .padding([0, PADDING, PADDING])
-      .gap(SPACING),
+    ).padding([0, PADDING, PADDING]),
     0,
     0,
     WIDTH,
@@ -125,5 +122,5 @@ const transferData2Star = (data: DataPoint[]) => {
 
 export const type = 'compose';
 
-export const width = 148 * 1.5;
-export const height = 148 * 1.5;
+export const width = getWidgetSize().widgetWidth(2);
+export const height = getWidgetSize().widgetWidth(2);

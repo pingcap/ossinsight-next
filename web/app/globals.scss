@@ -11,6 +11,11 @@ html, body {
 
 :root {
   --site-header-height: 60px;
+  // ! TODO - remove legacy values
+  --site-left-nav-width: 160px;
+  --site-widget-gap: 16px;
+  // TODO - apply new values
+  // --site-left-nav-width: 240px;
 }
 
 .min-h-page {

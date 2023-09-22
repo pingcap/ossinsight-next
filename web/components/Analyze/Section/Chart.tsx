@@ -1,14 +1,14 @@
 'use client';
 import * as React from 'react';
 import NextLink from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import {
   makeLinkedData,
   widgetPageParams,
   WidgetPageProps,
 } from '@/app/widgets/[vendor]/[name]/utils';
 import { ClientWidget } from '@/components/Analyze/Section/ClientWidget';
-import ArrowUpRightCircleFill from 'bootstrap-icons/icons/arrow-up-right-circle-fill.svg';
+import { CodeIcon, ArrowUpRightIcon } from '@primer/octicons-react';
 import { twMerge } from 'tailwind-merge';
 
 import { AnalyzeOrgContext } from '@/components/Context/Analyze/AnalyzeOrg';
@@ -21,13 +21,23 @@ export interface ChartTemplateProps {
   width?: number;
   height?: number;
   children?: React.ReactNode;
+  innerSectionId?: string;
 }
 
 export default function ChartTemplate(props: ChartTemplateProps) {
-  const { name, searchParams = {}, className, width, height, children } = props;
+  const {
+    name,
+    searchParams = {},
+    className,
+    width,
+    height,
+    children,
+    innerSectionId,
+  } = props;
 
   const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
   const searchParamsFromUrl = useSearchParams();
+  const pathname = usePathname();
 
   const periodMemo = React.useMemo(() => {
     return searchParamsFromUrl.get('period') || 'past_28_days';
@@ -73,13 +83,18 @@ export default function ChartTemplate(props: ChartTemplateProps) {
     [className, width, height]
   );
 
-  const targetLinkMemo = React.useMemo(() => {
+  const [targetWidgetLinkMemo, targetSectionLinkMemo] = React.useMemo(() => {
+    let targetWidgetLink = null;
+    let targetSectionLink = null;
     if (name.includes(`@ossinsight/widget-`)) {
       const widget = name.split('@ossinsight/widget-').pop();
-      return `/widgets/official/${widget}?${searchParamsStrMemo}`;
+      targetWidgetLink = `/widgets/official/${widget}?${searchParamsStrMemo}`;
     }
-    return null;
-  }, [name, searchParamsStrMemo]);
+    if (innerSectionId) {
+      targetSectionLink = `${pathname}?${searchParamsStrMemo}#${innerSectionId}`;
+    }
+    return [targetWidgetLink, targetSectionLink];
+  }, [innerSectionId, name, pathname, searchParamsStrMemo]);
 
   return (
     <div
@@ -98,13 +113,25 @@ export default function ChartTemplate(props: ChartTemplateProps) {
         showThemeSwitch={false}
         dense
       />
-      {targetLinkMemo && (
-        <NextLink target='_blank' href={targetLinkMemo}>
-          <button className='absolute top-4 right-4'>
-            <ArrowUpRightCircleFill />
-          </button>
-        </NextLink>
-      )}
+      <div className='absolute top-4 right-4 flex gap-2'>
+        {targetSectionLinkMemo && (
+          <NextLink
+            href={targetSectionLinkMemo}
+            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
+          >
+            <ArrowUpRightIcon className='w-3 h-3' />
+          </NextLink>
+        )}
+        {targetWidgetLinkMemo && (
+          <NextLink
+            target='_blank'
+            href={targetWidgetLinkMemo}
+            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
+          >
+            <CodeIcon className='w-3 h-3' />
+          </NextLink>
+        )}
+      </div>
       {children}
     </div>
   );

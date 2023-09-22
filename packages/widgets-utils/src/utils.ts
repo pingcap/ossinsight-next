@@ -74,3 +74,18 @@ export function mergeURLSearchParams(
   }
   return params;
 }
+
+export function getWidgetSize(
+  col: number = 12,
+  maxWidth: number = 960,
+  gap: number = 16
+) {
+  const stepWidth = maxWidth / col;
+  const widgetWidth = (colNum: number, gapNum: number = 0) => {
+    return colNum * stepWidth + gapNum * gap;
+  };
+  return {
+    stepWidth,
+    widgetWidth,
+  };
+}
