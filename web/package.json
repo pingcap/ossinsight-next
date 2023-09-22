@@ -11,7 +11,7 @@
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
-    "@napi-rs/canvas": "^0.1.41",
+    "@napi-rs/canvas": "^0.1.44",
     "@next/mdx": "13.4.18",
     "@ossinsight/widgets-core": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",
@@ -21,22 +21,22 @@
     "autoprefixer": "10.4.14",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.18",
-    "next": "^13.4.18",
+    "next": "^13.5.2",
     "next-plugin-svgr": "^1.1.8",
     "postcss": "8.4.26",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-next": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
-    "@tailwindcss/typography": "^0.5.9",
-    "@types/mdx": "^2.0.5",
-    "bootstrap-icons": "^1.10.5",
-    "sass": "^1.63.6",
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/mdx": "^2.0.7",
+    "bootstrap-icons": "^1.11.1",
+    "sass": "^1.68.0",
     "tailwind-merge": "^1.14.0"
   }
 }

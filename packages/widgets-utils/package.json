@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
-    "@types/lodash": "^4.14.195",
-    "echarts": "^5.4.3",
-    "@ossinsight/widgets-types": "workspace:^"
+    "@ossinsight/widgets-types": "workspace:^",
+    "@types/lodash": "^4.14.198",
+    "echarts": "^5.4.3"
   },
   "peerDependencies": {
     "echarts": "^5.4.3",
@@ -16,7 +16,7 @@
     "deepmerge": "^4.3.1",
     "human-format": "^1.2.0",
     "lodash": "^4.17.21",
-    "luxon": "^3.3.0",
+    "luxon": "^3.4.3",
     "pretty-ms": "^8.0.0"
   }
 }
