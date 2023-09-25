@@ -23,7 +23,6 @@ export function AvatarLabel({
         <div
           className={clsx(
             `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
-            `h-[${size}px] w-[${size}px]`
           )}
           style={{
             height: `${size}px`,

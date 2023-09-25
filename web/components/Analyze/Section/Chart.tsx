@@ -77,10 +77,8 @@ export default function ChartTemplate(props: ChartTemplateProps) {
       twMerge(
         'relative w-fit h-fit',
         className,
-        width && `w-[${width}px]`,
-        height && `h-[${height}px]`
       ),
-    [className, width, height]
+    [className]
   );
 
   const [targetWidgetLinkMemo, targetSectionLinkMemo] = React.useMemo(() => {
