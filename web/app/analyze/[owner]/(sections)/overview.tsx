@@ -4,7 +4,6 @@ import ChartTemplate from '@/components/Analyze/Section/Chart';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function OverviewContent() {
-  console.log('getWidgetSize().widgetWidth(2)', getWidgetSize().fullWidth, getWidgetSize().widgetWidth(2));
   return (
     <SectionTemplate title='Organization Overview' level={2} className='pt-8'>
       <div className='flex gap-[var(--site-widget-gap)] w-full flex-wrap'>

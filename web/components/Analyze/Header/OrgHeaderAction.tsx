@@ -6,6 +6,7 @@ import {
   RemoteRepoInfo,
 } from '@ossinsight/ui/src/components/GHRepoSelector';
 import { Button } from '@ossinsight/ui/src/components/Button';
+import { CalendarIcon } from '@primer/octicons-react';
 
 import {
   AnalyzeOrgContextProps,
@@ -45,7 +46,8 @@ export default function OrgAnalyzePageHeaderAction() {
   const { select: periodSelect, value: periodSelected } = useSimpleSelect(
     options,
     options.find((i) => i.key === currentPeriod) || options[0],
-    'period-select'
+    'period-select',
+    <CalendarIcon />
   );
 
   const handleSelectRepo = (repo: RemoteRepoInfo | undefined) => {
@@ -64,10 +66,10 @@ export default function OrgAnalyzePageHeaderAction() {
     const currentParams = new URLSearchParams(
       Array.from(searchParams.entries())
     );
-    const currentPeriod = searchParams.get('period') || options[0].key;
-    if (currentPeriod !== periodSelected) {
+    const urlPeriod = currentParams.get('period') || options[0].key;
+    if (urlPeriod !== periodSelected) {
       currentParams.set('period', periodSelected);
-      window.location.href = pathname + '?' + currentParams.toString();
+      router.push(pathname + '?' + currentParams.toString());
     }
   }, [pathname, periodSelected, router, searchParams]);
 

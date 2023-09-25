@@ -15,8 +15,9 @@ export const Select = React.forwardRef<
   className?: string;
   placeholder?: string;
   renderValue?: (value: string) => ReactNode;
+  startIcon?: ReactNode;
 } & Pick<SelectPrimitive.SelectContentProps, 'position'>
->(({ id, children, className, position, placeholder, renderValue, ...props }, forwardedRef) => {
+>(({ id, children, className, position, placeholder, renderValue, startIcon, ...props }, forwardedRef) => {
   return (
     <div className={clsx('SelectWrapper', className)}>
       <SelectPrimitive.Root {...props}>
@@ -25,6 +26,7 @@ export const Select = React.forwardRef<
           id={id}
           ref={forwardedRef}
         >
+          {startIcon}
           {renderValue
             ? props.value == null ? <span className="text-content text-sm">{placeholder}</span> : renderValue(props.value)
             : <SelectPrimitive.Value placeholder={<span className="text-content text-sm">{placeholder}</span>} />}
@@ -117,6 +119,7 @@ export function useSimpleSelect<T extends number | string = string> (
   options: Array<SelectParamOption<T>>, // TODO support inheritance options, such as [[SelectParamOption<T>, SelectParamOption<T>], SelectParamOption<T>]
   defaultVal: SelectParamOption<T>,
   id?: string,
+  startIcon?: ReactNode
 ) {
   const [value, setValue] = React.useState<string>(defaultVal.key.toString());
 
@@ -131,6 +134,7 @@ export function useSimpleSelect<T extends number | string = string> (
           id={id}
           defaultValue={defaultVal.key.toString()}
           onValueChange={onChange}
+          startIcon={startIcon}
         >
           {options.map((option) => (
             <SelectItem key={option.key} value={option.key.toString()}>
