@@ -66,13 +66,12 @@ export default function (
     },
     yAxis: {
       name: 'repos',
-      offset: 40,
       splitLine: { show: false },
       max: repoMax,
     },
     grid: {
       left: 8,
-      top: 8,
+      top: 40,
       right: 90,
       bottom: 8,
       containLabel: true,
@@ -85,14 +84,14 @@ export default function (
       },
       symbolSize: 30,
       itemStyle: {
-        borderColor: '#555',
+        color: '#4E9FFF',
       },
       id: 'main',
-      symbol: (value, params) => {
-        return `image://https://github.com/${
-          value?.participant_logins?.split(',')[0]
-        }.png`;
-      },
+      // symbol: (value, params) => {
+      //   return `image://https://github.com/${
+      //     value?.participant_logins?.split(',')[0]
+      //   }.png`;
+      // },
     },
     tooltip: {
       show: true,
@@ -100,7 +99,8 @@ export default function (
         const { data } = params;
         return `<p>Involved in: <b>${data?.repos} repos</b></p>
         <p>Contribution count: <b>${data?.engagements}</b></p>
-        <p>Participants: <b>${data?.participant_logins}</b></p>`;
+        <p><hr style="margin-bottom: .5rem;" /></p>
+        ${generateHtmlFromLogins(data?.participant_logins)}`;
       },
     },
     legend: {
@@ -108,6 +108,19 @@ export default function (
       top: '6%',
     },
   };
+}
+
+function generateHtmlFromLogins(loginStr: string, max = 4) {
+  const logins = loginStr.split(',');
+  const innerHtml = logins
+    .slice(0, max)
+    .map(
+      (login) =>
+        `<img alt="${login}" src="https://github.com/${login}.png" style="width:1rem;height:1rem;" />`
+    )
+    .join('');
+  const moreHtml = logins.length > max ? `+${logins.length - max}` : '';
+  return `<p style="display:inline-flex; gap:0.25rem;">${innerHtml}${moreHtml}</p>`;
 }
 
 export const type = 'echarts';

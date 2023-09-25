@@ -24,11 +24,11 @@ export default function CodeSubmissionContent() {
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-growth'
+            name='@ossinsight/widget-compose-org-commits-growth'
             searchParams={{
               activity: 'commits',
             }}
-            width={getWidgetSize().widgetWidth(9)}
+            width={getWidgetSize().widgetWidth(12, 1)}
             height={getWidgetSize().widgetWidth(4, 1)}
           />
         </div>

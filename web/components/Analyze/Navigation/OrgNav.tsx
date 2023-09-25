@@ -232,7 +232,7 @@ export const DEFAULT_NAV_ID = 'overview';
 export const navItems: NavItemType[] = [
   {
     id: 'overview',
-    title: 'Overview',
+    title: 'Organization Overview',
     anchor: 'overview',
     Icon: TelescopeIcon,
   },

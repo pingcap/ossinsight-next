@@ -1,7 +1,12 @@
 'use client';
 import * as React from 'react';
 import NextImage from 'next/image';
-import { RepoIcon, StarIcon, PeopleIcon } from '@primer/octicons-react';
+import {
+  RepoIcon,
+  StarIcon,
+  PeopleIcon,
+  OrganizationIcon,
+} from '@primer/octicons-react';
 
 import {
   AnalyzeOrgContextProps,
@@ -23,7 +28,7 @@ export default function OrgAnalyzePageHeader() {
   return (
     <>
       {/* -- header -- */}
-      <h1 className='font-semibold text-3xl	text-title'>
+      <h1 className='font-semibold text-3xl	text-title inline-flex items-center cursor-default'>
         <NextImage
           src={`https://github.com/${orgName}.png`}
           alt={`${orgName} logo`}
@@ -32,6 +37,9 @@ export default function OrgAnalyzePageHeader() {
           height={40}
         />
         {orgName}
+        <span className='bg-[#3C3C47] text-[#62E487] text-xs font-medium border border-solid border-[#376845] ml-4 px-2.5 py-1.5 rounded-full inline-flex items-center gap-2'>
+          <OrganizationIcon size={8} /> Organization
+        </span>
       </h1>
       <p className='my-4'>{data?.bio || ''}</p>
 
