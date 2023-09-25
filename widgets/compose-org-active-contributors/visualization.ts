@@ -71,7 +71,10 @@ export default function (
           style: {
             fontSize: 12,
             lineHeight: 2,
-            color: ctx.theme.colors.green['400'],
+            color:
+              totalData?.growth_percentage >= 0
+                ? ctx.theme.colors.green['400']
+                : ctx.theme.colors.red['400'],
           },
         },
         column: false,
@@ -85,7 +88,9 @@ export default function (
               label: '',
               size: size,
               imgSrc: item.login ? `https://github.com/${item.login}.png` : '',
-              href: item.login ? `https://ossinsight.io/analyze/${item.login}` : '',
+              href: item.login
+                ? `https://ossinsight.io/analyze/${item.login}`
+                : '',
             })
           )
         ).gap(4)

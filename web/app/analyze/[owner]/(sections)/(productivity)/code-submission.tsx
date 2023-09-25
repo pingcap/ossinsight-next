@@ -28,8 +28,8 @@ export default function CodeSubmissionContent() {
             searchParams={{
               activity: 'commits',
             }}
-            width={getWidgetSize().widgetWidth(12, 1)}
-            height={getWidgetSize().widgetWidth(4, 1)}
+            width={getWidgetSize().widgetWidth(12)}
+            height={getWidgetSize().widgetWidth(4)}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>

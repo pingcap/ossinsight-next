@@ -1,6 +1,7 @@
 import OrgNav from '@/components/Analyze/Navigation/OrgNav';
 import OrgBottomNav from '@/components/Analyze/Navigation/OrgBottomNav';
 import { OrgPageNavWrapper } from '@/components/Analyze/Navigation/OrgPageWrapper';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function UserOrgAnalyzeLayout({
   children,
@@ -22,7 +23,7 @@ export default function UserOrgAnalyzeLayout({
           </aside>
           {/* <OrgPageNavWrapper org={owner}> */}
           <main className='flex-1 block'>
-            <div className='p-8 max-w-screen-xl mx-auto'>{children}</div>
+            <div className={`p-8 max-w-[1200px] mx-auto`}>{children}</div>
             <OrgBottomNav org={owner} />
           </main>
           {/* </OrgPageNavWrapper> */}

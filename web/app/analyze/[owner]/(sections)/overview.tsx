@@ -4,13 +4,14 @@ import ChartTemplate from '@/components/Analyze/Section/Chart';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function OverviewContent() {
+  console.log('getWidgetSize().widgetWidth(2)', getWidgetSize().fullWidth, getWidgetSize().widgetWidth(2));
   return (
     <SectionTemplate title='Organization Overview' level={2} className='pt-8'>
       <div className='flex gap-[var(--site-widget-gap)] w-full flex-wrap'>
         <div className='flex flex-col gap-[var(--site-widget-gap)] overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-overview-stars'
-            width={getWidgetSize().widgetWidth(6, 2)}
+            width={getWidgetSize().widgetWidth(6)}
             height={getWidgetSize().widgetWidth(2)}
             innerSectionId='star-growth'
           />
@@ -70,7 +71,7 @@ export default function OverviewContent() {
             activity: 'repos',
           }}
           width={getWidgetSize().widgetWidth(3)}
-          height={getWidgetSize().widgetWidth(4, 1)}
+          height={getWidgetSize().widgetWidth(4)}
         />
       </div>
     </SectionTemplate>

@@ -25,7 +25,7 @@ export default function EngagementContent() {
               activity: 'participants',
             }}
             width={getWidgetSize().widgetWidth(9)}
-            height={getWidgetSize().widgetWidth(4, 1)}
+            height={getWidgetSize().widgetWidth(4)}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-active-ranking'
@@ -33,23 +33,23 @@ export default function EngagementContent() {
               activity: 'participants',
             }}
             width={getWidgetSize().widgetWidth(3)}
-            height={getWidgetSize().widgetWidth(4, 1)}
+            height={getWidgetSize().widgetWidth(4)}
           />
         </div>
         <div className='w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-participants-roles-ratio'
             searchParams={{}}
-            width={getWidgetSize().widgetWidth(12, 1)}
-            height={getWidgetSize().widgetWidth(3, 1)}
+            width={getWidgetSize().widgetWidth(12)}
+            height={getWidgetSize().widgetWidth(3)}
           />
         </div>
         <div className='w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-engagement-scatter'
             searchParams={{}}
-            width={getWidgetSize().widgetWidth(12, 1)}
-            height={getWidgetSize().widgetWidth(6, 1)}
+            width={getWidgetSize().widgetWidth(12)}
+            height={getWidgetSize().widgetWidth(6)}
           />
         </div>
       </SectionTemplate>

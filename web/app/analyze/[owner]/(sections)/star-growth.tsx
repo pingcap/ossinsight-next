@@ -32,13 +32,13 @@ export default function StarGrowthContent() {
               activity: 'stars',
             }}
             width={getWidgetSize().widgetWidth(9)}
-            height={getWidgetSize().widgetWidth(4, 1)}
+            height={getWidgetSize().widgetWidth(4)}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-stars-top-repos'
             searchParams={{}}
             width={getWidgetSize().widgetWidth(3)}
-            height={getWidgetSize().widgetWidth(4, 1)}
+            height={getWidgetSize().widgetWidth(4)}
           />
         </div>
 
@@ -55,7 +55,7 @@ export default function StarGrowthContent() {
           <CompanyRankTable
             id={orgId}
             type='stars'
-            className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`w-[272px] h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
         </div>
 
@@ -71,7 +71,7 @@ export default function StarGrowthContent() {
           />
           <GeoRankTable
             id={orgId}
-            className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`w-[272px] h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
         </div>
       </SectionTemplate>

@@ -103,7 +103,7 @@ function OrgActivityCompany(props: { orgId?: number }) {
       <CompanyRankTable
         id={orgId}
         type='participants'
-        className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`w-[272px] h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
         role={role}
       />
     </>
@@ -143,7 +143,7 @@ function OrgActivityMap(props: { orgId?: number }) {
         id={orgId}
         type='participants'
         role={role}
-        className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`w-[272px] h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
       />
     </>
   );
