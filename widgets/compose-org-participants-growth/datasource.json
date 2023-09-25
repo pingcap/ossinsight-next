@@ -1,0 +1,16 @@
+[
+  {
+    "type": "api",
+    "url": "https://api.ossinsight.io/q/orgs/participants/{activity}/trends",
+    "parser": {
+      "type": "json",
+      "extract": "$.data[*]"
+    },
+    "params": {
+      "ownerId": "owner_id",
+      "period": "period",
+      "repoIds": "repo_ids"
+    },
+    "when": ["owner_id", "activity", "period"]
+  }
+]

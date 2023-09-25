@@ -49,7 +49,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         title: 'Active Repositories',
         subtitle: ' ',
         label: 'Top Repositories',
-        value: 'Activities',
+        value: 'Star earned',
         maxVal: (data as ActivityDataPoint[]).reduce(
           (acc, cur) => acc + cur.activities,
           0
@@ -103,7 +103,7 @@ export default function (
   [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  const { activity = 'activities' } = ctx.parameters;
+  const { activity = 'participants' } = ctx.parameters;
 
   const { title, subtitle, label, value, data, maxVal } = handleInputData(
     inputData,

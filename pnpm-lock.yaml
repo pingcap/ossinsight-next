@@ -731,6 +731,18 @@ importers:
         specifier: workspace:^
         version: link:..
 
+  widgets/compose-org-activity-new-ranking:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
   widgets/compose-org-activity-open-to-close:
     devDependencies:
       '@ossinsight/widgets-parent':
@@ -797,6 +809,25 @@ importers:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-participants-growth:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
       '@types/luxon':
         specifier: ^3.3.1
         version: 3.3.1

@@ -145,7 +145,7 @@ export default function (
     grid: {
       left: 6,
       top: 6,
-      right: 14,
+      right: 20,
       bottom: 2,
       containLabel: true,
     },

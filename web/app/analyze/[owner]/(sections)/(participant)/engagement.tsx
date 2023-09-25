@@ -20,15 +20,33 @@ export default function EngagementContent() {
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
           <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-growth'
+            name='@ossinsight/widget-compose-org-participants-growth'
             searchParams={{
-              activity: 'participants',
+              activity: 'active',
             }}
             width={getWidgetSize().widgetWidth(9)}
             height={getWidgetSize().widgetWidth(4)}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-active-ranking'
+            searchParams={{
+              activity: 'participants',
+            }}
+            width={getWidgetSize().widgetWidth(3)}
+            height={getWidgetSize().widgetWidth(4)}
+          />
+        </div>
+        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+          <ChartTemplate
+            name='@ossinsight/widget-compose-org-participants-growth'
+            searchParams={{
+              activity: 'new',
+            }}
+            width={getWidgetSize().widgetWidth(9)}
+            height={getWidgetSize().widgetWidth(4)}
+          />
+          <ChartTemplate
+            name='@ossinsight/widget-compose-org-activity-new-ranking'
             searchParams={{
               activity: 'participants',
             }}
