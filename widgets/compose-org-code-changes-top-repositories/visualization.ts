@@ -10,7 +10,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { DateTime } from 'luxon';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -136,5 +136,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 432;
+export const width = getWidgetSize().widgetWidth(6);
 export const height = 272;

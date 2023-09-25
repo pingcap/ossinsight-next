@@ -1,6 +1,7 @@
 'use client';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function PRRequestEfficiencyContent() {
   return (
@@ -21,16 +22,16 @@ export default function PRRequestEfficiencyContent() {
             searchParams={{
               activity: 'pull-requests/merged',
             }}
-            width={216}
-            height={216}
+            width={getWidgetSize().widgetWidth(3)}
+            height={getWidgetSize().widgetWidth(3)}
           />
           <ChartTemplate
             name='@ossinsight/widget-analyze-org-activity-efficiency'
             searchParams={{
               activity: 'pull-requests',
             }}
-            width={648}
-            height={216}
+            width={getWidgetSize().widgetWidth(9)}
+            height={getWidgetSize().widgetWidth(3)}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
@@ -39,7 +40,7 @@ export default function PRRequestEfficiencyContent() {
             searchParams={{
               activity: 'pull-requests',
             }}
-            width={432}
+            width={getWidgetSize().widgetWidth(6)}
             height={274}
           />
           <ChartTemplate
@@ -47,7 +48,7 @@ export default function PRRequestEfficiencyContent() {
             searchParams={{
               activity: 'pull-requests',
             }}
-            width={432}
+            width={getWidgetSize().widgetWidth(6)}
             height={274}
           />
         </div>

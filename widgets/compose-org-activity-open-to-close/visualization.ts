@@ -10,6 +10,7 @@ import {
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
 import { prettyMs } from '@ossinsight/widgets-utils/src/utils';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -73,7 +74,7 @@ export default function (
         widget('builtin:label-value', undefined, {
           label: fmtHours(current_period_medium),
           value:
-            percentage >= 0 ? `↑${percentage * 100}%` : `↓${percentage * 100}%`,
+            percentage >= 0 ? `↑${(percentage * 100).toFixed(2)}%` : `↓${(percentage * 100).toFixed(2)}%`,
           labelProps: {
             style: {
               fontSize: 24,
@@ -108,5 +109,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 432;
+export const width = getWidgetSize().widgetWidth(6);
 export const height = 274;

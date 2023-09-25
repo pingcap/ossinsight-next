@@ -3,6 +3,7 @@ import * as React from 'react';
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
 import { TimeZoneSelector } from '@ossinsight/ui/src/components/Selector/TimeZoneSelector';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function CodeSubmissionContent() {
   const zoneMemo = React.useMemo(() => {
@@ -27,24 +28,16 @@ export default function CodeSubmissionContent() {
             searchParams={{
               activity: 'commits',
             }}
-            width={648}
-            height={389}
+            width={getWidgetSize().widgetWidth(9)}
+            height={getWidgetSize().widgetWidth(4, 1)}
           />
         </div>
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          {/* <ChartTemplate
-            name='@ossinsight/widget-analyze-org-commits-time-distribution'
-            searchParams={{
-              zone: `${zoneMemo}`,
-            }}
-            width={432}
-            height={274}
-          /> */}
           <OrgCommitsTimeDistribution defaultZone={`${zoneMemo}`} />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-code-changes-top-repositories'
             searchParams={{}}
-            width={432}
+            width={getWidgetSize().widgetWidth(6)}
             height={274}
           />
         </div>
@@ -70,7 +63,7 @@ function OrgCommitsTimeDistribution(props: { defaultZone: string }) {
         searchParams={{
           zone,
         }}
-        width={432}
+        width={getWidgetSize().widgetWidth(6)}
         height={274}
       >
         <div className='absolute top-10 left-5'>

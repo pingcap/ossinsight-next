@@ -9,6 +9,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -69,5 +70,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 648;
+export const width = getWidgetSize().widgetWidth(9);
 export const height = 405;

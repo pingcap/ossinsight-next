@@ -7,6 +7,7 @@ import {
   recentStatsLineSeries,
   simpleGrid,
 } from '@ossinsight/widgets-utils/src/options';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -126,5 +127,6 @@ export default function (
 }
 
 export const type = 'echarts';
-export const width = 648;
-export const height = 216;
+
+export const width = getWidgetSize().widgetWidth(9);
+export const height = getWidgetSize().widgetWidth(3);

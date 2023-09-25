@@ -4,6 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 
 import { simpleGrid } from '@ossinsight/widgets-utils/src/options';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -165,5 +166,6 @@ export default function (
 }
 
 export const type = 'echarts';
-export const width = 432;
+
+export const width = getWidgetSize().widgetWidth(6);
 export const height = 274;

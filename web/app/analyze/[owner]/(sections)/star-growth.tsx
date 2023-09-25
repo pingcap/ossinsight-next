@@ -8,6 +8,7 @@ import {
   CompanyRankTable,
   GeoRankTable,
 } from '@/components/Analyze/Table/RankTable';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function StarGrowthContent() {
   const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
@@ -30,14 +31,14 @@ export default function StarGrowthContent() {
             searchParams={{
               activity: 'stars',
             }}
-            width={648}
-            height={389}
+            width={getWidgetSize().widgetWidth(9)}
+            height={getWidgetSize().widgetWidth(4, 1)}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-stars-top-repos'
             searchParams={{}}
-            width={219}
-            height={389}
+            width={getWidgetSize().widgetWidth(3)}
+            height={getWidgetSize().widgetWidth(4, 1)}
           />
         </div>
 
@@ -48,13 +49,13 @@ export default function StarGrowthContent() {
               activity: 'stars',
               role: 'participants'
             }}
-            width={648}
+            width={getWidgetSize().widgetWidth(9)}
             height={405}
           />
           <CompanyRankTable
             id={orgId}
             type='stars'
-            className='w-[219px] h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar'
+            className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
         </div>
 
@@ -65,12 +66,12 @@ export default function StarGrowthContent() {
               activity: 'stars',
               role: 'participants'
             }}
-            width={648}
+            width={getWidgetSize().widgetWidth(9)}
             height={365}
           />
           <GeoRankTable
             id={orgId}
-            className='w-[219px] h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar'
+            className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
         </div>
       </SectionTemplate>

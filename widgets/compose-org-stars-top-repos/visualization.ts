@@ -10,7 +10,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { DateTime } from 'luxon';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -130,7 +130,7 @@ export default function (
                 maxVal,
               })
             )
-          ).flex(1),
+          ).flex(1)
           // widget('@ossinsight/widget-analyze-repo-recent-top-contributors', [sortedContributors], ctx.parameters),
         )
       )
@@ -149,5 +149,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 219;
-export const height = 389;
+export const width = getWidgetSize().widgetWidth(3);
+export const height = getWidgetSize().widgetWidth(4, 1);

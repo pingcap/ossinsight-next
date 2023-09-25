@@ -17,5 +17,10 @@
     "enums": ["pull-requests", "issues"],
     "title": "Type",
     "default": "pull-requests"
+  },
+  "repo_ids": {
+    "type": "repo-ids",
+    "title": "Repo",
+    "array": true
   }
 }

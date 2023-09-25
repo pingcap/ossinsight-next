@@ -22,6 +22,7 @@ export default function OverviewContent() {
               }}
               width={getWidgetSize().widgetWidth(2)}
               height={getWidgetSize().widgetWidth(2)}
+              innerSectionId='pull-request-efficiency'
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-overview-stats'
@@ -30,6 +31,7 @@ export default function OverviewContent() {
               }}
               width={getWidgetSize().widgetWidth(2)}
               height={getWidgetSize().widgetWidth(2)}
+              innerSectionId='code-review-efficiency'
             />
             <ChartTemplate
               name='@ossinsight/widget-compose-org-overview-stats'
@@ -38,6 +40,7 @@ export default function OverviewContent() {
               }}
               width={getWidgetSize().widgetWidth(2)}
               height={getWidgetSize().widgetWidth(2)}
+              innerSectionId='issue'
             />
           </div>
         </div>
@@ -49,6 +52,7 @@ export default function OverviewContent() {
             }}
             width={getWidgetSize().widgetWidth(3)}
             height={getWidgetSize().widgetWidth(2)}
+            innerSectionId='engagement'
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-active-contributors'
@@ -57,6 +61,7 @@ export default function OverviewContent() {
             }}
             width={getWidgetSize().widgetWidth(3)}
             height={getWidgetSize().widgetWidth(2)}
+            innerSectionId='engagement'
           />
         </div>
         <ChartTemplate

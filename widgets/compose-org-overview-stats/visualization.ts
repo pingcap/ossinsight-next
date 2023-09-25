@@ -90,7 +90,7 @@ export default function (
                     : ctx.theme.colors.red['400'],
               },
             },
-          }).flex(0.5)
+          }).flex(0.3)
         ),
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',

@@ -10,6 +10,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   hideData?: boolean;
@@ -169,5 +170,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 864 + 16;
-export const height = 518;
+export const width = getWidgetSize().widgetWidth(12, 1);
+export const height = getWidgetSize().widgetWidth(6, 1);

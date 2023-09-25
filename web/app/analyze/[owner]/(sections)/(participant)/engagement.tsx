@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function EngagementContent() {
   return (
@@ -23,32 +24,32 @@ export default function EngagementContent() {
             searchParams={{
               activity: 'participants',
             }}
-            width={648}
-            height={389}
+            width={getWidgetSize().widgetWidth(9)}
+            height={getWidgetSize().widgetWidth(4, 1)}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-active-ranking'
             searchParams={{
               activity: 'participants',
             }}
-            width={216}
-            height={389}
+            width={getWidgetSize().widgetWidth(3)}
+            height={getWidgetSize().widgetWidth(4, 1)}
           />
         </div>
         <div className='w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-participants-roles-ratio'
             searchParams={{}}
-            width={864 + 16}
-            height={259}
+            width={getWidgetSize().widgetWidth(12, 1)}
+            height={getWidgetSize().widgetWidth(3, 1)}
           />
         </div>
         <div className='w-full overflow-x-auto'>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-engagement-scatter'
             searchParams={{}}
-            width={864 + 16}
-            height={518}
+            width={getWidgetSize().widgetWidth(12, 1)}
+            height={getWidgetSize().widgetWidth(6, 1)}
           />
         </div>
       </SectionTemplate>

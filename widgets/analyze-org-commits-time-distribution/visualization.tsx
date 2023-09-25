@@ -2,6 +2,7 @@ import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { scaleToFit } from '@ossinsight/widgets-utils/src/utils';
 import { autoSize } from '@ossinsight/widgets-utils/src/compose/size';
 import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: number;
@@ -56,7 +57,8 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>) {
 }
 
 export const type = 'react-svg';
-export const width = 432;
+
+export const width = getWidgetSize().widgetWidth(6);
 export const height = 274;
 
 interface TimeDistributionProps {

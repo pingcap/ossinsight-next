@@ -9,7 +9,7 @@ import {
   GeoRankTable,
 } from '@/components/Analyze/Table/RankTable';
 import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
-import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
+import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function OriginsContent() {
   const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
@@ -27,35 +27,9 @@ export default function OriginsContent() {
         className='pt-8 flex flex-col gap-4'
       >
         <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          {/* <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-company'
-            searchParams={{
-              activity: 'participants',
-            }}
-            width={648}
-            height={405}
-          />
-          <CompanyRankTable
-            id={orgId}
-            type='participants'
-            className='w-[216px] h-[405px] overflow-x-hidden overflow-auto styled-scrollbar'
-          /> */}
           <OrgActivityCompany orgId={orgId} />
         </div>
         <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
-          {/* <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-map'
-            searchParams={{
-              activity: 'participants',
-            }}
-            width={648}
-            height={365}
-          />
-          <GeoRankTable
-            id={orgId}
-            type='participants'
-            className='w-[216px] h-[365px] overflow-x-hidden overflow-auto styled-scrollbar'
-          /> */}
           <OrgActivityMap orgId={orgId} />
         </div>
       </SectionTemplate>
@@ -115,7 +89,7 @@ function OrgActivityCompany(props: { orgId?: number }) {
           activity: 'participants',
           role,
         }}
-        width={648}
+        width={getWidgetSize().widgetWidth(9)}
         height={405}
       >
         <div className='absolute top-10 left-5'>
@@ -129,7 +103,7 @@ function OrgActivityCompany(props: { orgId?: number }) {
       <CompanyRankTable
         id={orgId}
         type='participants'
-        className='w-[216px] h-[405px] overflow-x-hidden overflow-auto styled-scrollbar'
+        className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
         role={role}
       />
     </>
@@ -154,7 +128,7 @@ function OrgActivityMap(props: { orgId?: number }) {
           activity: 'participants',
           role,
         }}
-        width={648}
+        width={getWidgetSize().widgetWidth(9)}
         height={365}
       >
         <div className='absolute top-10 left-5'>
@@ -169,7 +143,7 @@ function OrgActivityMap(props: { orgId?: number }) {
         id={orgId}
         type='participants'
         role={role}
-        className='w-[216px] h-[365px] overflow-x-hidden overflow-auto styled-scrollbar'
+        className={`w-[${getWidgetSize().widgetWidth(3)}px] h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
       />
     </>
   );

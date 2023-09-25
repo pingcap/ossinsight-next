@@ -8,7 +8,7 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -57,7 +57,7 @@ const handleData = (data: DataPoint[], activity: string) => {
       const diff2 = (commitsSum / pushesSum) * 100;
       return {
         title: 'Code Submission Count Over Time',
-        data,
+        data: data.sort((a, b) => b.idx - a.idx),
         label: commitsSum,
         // value: `↑${diff2.toFixed(2)}%`,
         value: ' ',
@@ -166,5 +166,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = 648;
-export const height = 389;
+export const width = getWidgetSize().widgetWidth(9);
+export const height = getWidgetSize().widgetWidth(4, 1);
