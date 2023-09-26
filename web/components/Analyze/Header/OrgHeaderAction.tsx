@@ -14,8 +14,6 @@ import {
   AnalyzeOrgContext,
 } from '@/components/Context/Analyze/AnalyzeOrg';
 import {
-  useSimpleSelect,
-  useHLSelect,
   HLSelect,
   SelectParamOption,
 } from '@ossinsight/ui/src/components/Selector/Select';
