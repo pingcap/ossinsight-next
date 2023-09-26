@@ -1,40 +1,19 @@
 'use client';
-import * as React from 'react';
-import NextLink from 'next/link';
-import { useParams, usePathname, useSearchParams } from 'next/navigation';
-import FileBarGraphIcon from 'bootstrap-icons/icons/file-bar-graph.svg';
-import {
-  TelescopeIcon,
-  StarIcon,
-  PeopleIcon,
-  ToolsIcon,
-  IssueOpenedIcon,
-} from '@primer/octicons-react';
+import { ScrollspySection, useScrollspyContext, useScrollspyCurrentSection } from '@/components/Scrollspy';
+import { IssueOpenedIcon, PeopleIcon, StarIcon, TelescopeIcon, ToolsIcon } from '@primer/octicons-react';
 import clsx from 'clsx';
+import { useSearchParams } from 'next/navigation';
+import * as React from 'react';
+import { useEffect } from 'react';
 
-import { mergeURLSearchParams } from '@ossinsight/widgets-utils/src/utils';
-
-export default function OrgNav(props: { org: string }) {
+export default function OrgNav (props: { org: string }) {
+  const currentSection = useScrollspyCurrentSection();
   const { org } = props;
 
-  const [selectedId, setSelectedId] = React.useState<string | null>(null);
-
-  // https://github.com/vercel/next.js/discussions/49465#discussioncomment-5845312
-  // const params = useParams();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  React.useEffect(() => {
-    // const section =
-    //   pathname.split(`/${org}`).pop()?.replace('/', '') || DEFAULT_NAV_ID;
-    // selectedId !== section && setSelectedId(section);
-    const section = searchParams.get('section') || DEFAULT_NAV_ID;
-    selectedId !== section && setSelectedId(section);
-  }, [org, pathname, searchParams, selectedId]);
-
   const highlightIdMemo = React.useMemo(() => {
-    return calcSelectedIdParents(navItems, selectedId);
-  }, [selectedId]);
+    return calcSelectedIdParents(navItems, currentSection?.id ?? null);
+  }, [currentSection]);
+
   const basePathMemo = React.useMemo(() => {
     return `/analyze/${org}`;
   }, [org]);
@@ -43,7 +22,7 @@ export default function OrgNav(props: { org: string }) {
     <>
       <NavList
         items={navItems}
-        selectedId={selectedId}
+        selectedId={currentSection?.id ?? null}
         highlightId={highlightIdMemo}
         basePath={basePathMemo}
       />
@@ -59,6 +38,18 @@ const NavList = (props: {
   basePath: string;
 }) => {
   const { items, selectedId, depth = 0, highlightId = [], basePath } = props;
+  const spy = useScrollspyContext();
+  useEffect(() => {
+    const fn = (current: ScrollspySection | null) => {
+      if (current) {
+        history.replaceState(history.state, '', '#' + encodeURIComponent(current.id));
+      }
+    };
+    spy.subscribe(fn);
+    return () => {
+      spy.unsubscribe(fn);
+    };
+  }, [spy]);
 
   const searchParams = useSearchParams();
 
@@ -80,35 +71,36 @@ const NavList = (props: {
                 {
                   'border-b-2 border-[var(--color-primary)] md:border-r-2 md:border-b-0':
                     selectedId === item.id,
-                }
+                },
               )}
             >
               {item?.anchor ? (
-                <NextLink
+                <button
+                  type="button"
                   // href={`${basePath}/${item.id}?${searchParams.toString()}`}
-                  href={`${basePath}?${mergeURLSearchParams(
-                    searchParams.toString(),
-                    {
-                      section: item.id,
-                    }
-                  ).toString()}`}
+                  onClick={() => {
+                    document.getElementById(item.id)?.scrollIntoView({
+                      behavior: 'smooth',
+                    });
+                    history.replaceState(history.state, '', '#' + encodeURIComponent(item.id));
+                  }}
                   className={clsx(
                     'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
                     item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
                     {
                       'hover:text-[var(--color-primary)]': item.anchor,
                       'cursor-default': !item.anchor,
-                    }
+                    },
                   )}
                 >
                   {item.Icon && <item.Icon width={20} height={20} />}
                   <span>{item.title}</span>
-                </NextLink>
+                </button>
               ) : (
                 <div
                   className={clsx(
                     'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
-                    item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9'
+                    item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
                   )}
                 >
                   {item.Icon && <item.Icon width={20} height={20} />}
@@ -135,7 +127,7 @@ const NavList = (props: {
 
 const calcSelectedIdParents = (
   items: NavItemType[],
-  selectedId: string | null
+  selectedId: string | null,
 ): string[] => {
   const parents: string[] = [];
   const find = (items: NavItemType[], selectedId: string | null) => {
@@ -158,7 +150,7 @@ const calcSelectedIdParents = (
 };
 
 const flattenNavItems = (
-  items: NavItemType[]
+  items: NavItemType[],
 ): Omit<NavItemType, 'children'>[] => {
   const result: NavItemType[] = [];
   const find = (items: NavItemType[]) => {
@@ -174,9 +166,9 @@ const flattenNavItems = (
   return result;
 };
 
-export function calcPrevNextId(
+export function calcPrevNextId (
   items: NavItemType[],
-  selectedId: string | null
+  selectedId: string | null,
 ): {
   prevId: string | null;
   nextId: string | null;
@@ -200,7 +192,7 @@ export function calcPrevNextId(
   return { prevId, nextId, prevItem, nextItem };
 }
 
-export function getNavItemById(id: string): NavItemType | null {
+export function getNavItemById (id: string): NavItemType | null {
   const find = (items: NavItemType[]): NavItemType | null => {
     for (const item of items) {
       if (item.id === id) {
