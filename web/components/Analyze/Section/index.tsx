@@ -19,7 +19,7 @@ export default function SectionTemplate(props: SectionTemplateProps) {
       <TitleWrapper level={level} id={id} className=''>
         {title}
       </TitleWrapper>
-      {description && <p className='max-w-[864px]'>{description}</p>}
+      {description && <p className=''>{description}</p>}
       {children}
     </section>
   );

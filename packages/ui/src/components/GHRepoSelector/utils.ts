@@ -56,3 +56,17 @@ export function getRepoById(repoId: number | string) {
       })
     );
 }
+
+export function getRepoListByOrgId(ownerId: number | string) {
+  return cancellableFetch(
+    `https://api.ossinsight.io/q/orgs/repos?ownerId=${ownerId}&format=array`
+  )
+    .then((res) => res.json())
+    .then((res: { data: [number, string][] }) =>
+      res.data.map(([id, name]) => ({
+        id,
+        name: name.split('/')[1],
+        fullName: name,
+      }))
+    );
+}

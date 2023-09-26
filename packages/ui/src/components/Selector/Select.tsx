@@ -14,7 +14,7 @@ export const Select = React.forwardRef<
   label?: string | React.ReactNode;
   className?: string;
   placeholder?: string;
-  renderValue?: (value: string) => ReactNode;
+  renderValue?: (value: any) => ReactNode;
   startIcon?: ReactNode;
 } & Pick<SelectPrimitive.SelectContentProps, 'position'>
 >(({ id, children, className, position, placeholder, renderValue, startIcon, ...props }, forwardedRef) => {

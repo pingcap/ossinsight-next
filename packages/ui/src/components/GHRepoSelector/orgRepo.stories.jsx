@@ -1,5 +1,5 @@
-import { GHOrgRepoSelector } from './GHOrgRepoSelector';
-import { useState } from 'react';
+import { GHOrgRepoSelector, HLGHOrgRepoSelector } from './GHOrgRepoSelector';
+import React, { useState } from 'react';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -28,7 +28,6 @@ function Wrapper() {
       defaultBranch: 'master',
     },
   ]);
-
   const handleSelectRepo = (repo) => {
     setRepos([...repos, repo]);
   };
@@ -37,14 +36,22 @@ function Wrapper() {
   };
 
   return (
-    <GHOrgRepoSelector
-      repos={repos}
-      onRepoSelected={handleSelectRepo}
-      renderInput={renderInput}
-      onRepoRemoved={handleRemoveRepo}
-      orgName='pingcap'
-      maxItems={5}
-    />
+    <>
+      <GHOrgRepoSelector
+        repos={repos}
+        onRepoSelected={handleSelectRepo}
+        renderInput={renderInput}
+        onRepoRemoved={handleRemoveRepo}
+        orgName='pingcap'
+        maxItems={5}
+      />
+      <div className='my-4' />
+      <HLGHOrgRepoSelector
+        ownerId={11855343}
+        maxSelected={50}
+        defaultSelectedIds={repos.map((r) => r.id)}
+      />
+    </>
   );
 }
 

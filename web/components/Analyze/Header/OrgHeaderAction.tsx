@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   GHOrgRepoSelector,
   RemoteRepoInfo,
+  HLGHOrgRepoSelector,
 } from '@ossinsight/ui/src/components/GHRepoSelector';
 import { Button } from '@ossinsight/ui/src/components/Button';
 import { CalendarIcon } from '@primer/octicons-react';
@@ -24,11 +25,12 @@ const options = [
 ];
 
 export default function OrgAnalyzePageHeaderAction() {
-  const [repos, setRepos] = React.useState<RemoteRepoInfo[]>([]);
-  const [editMode, setEditMode] = React.useState<boolean>(false);
+  const [repos, setRepos] = React.useState<
+    Omit<RemoteRepoInfo, 'defaultBranch'>[]
+  >([]);
   const [loadingRepoFromUrl, setLoadingRepoFromUrl] =
     React.useState<boolean>(true);
-  const [currentRepoIds, setCurrentRepoIds] = React.useState<string[]>([]);
+  const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>([]);
   const [currentPeriod, setCurrentPeriod] = React.useState<string>(
     options[1].key
   );
@@ -40,7 +42,9 @@ export default function OrgAnalyzePageHeaderAction() {
   const searchParams = useSearchParams();
 
   React.useEffect(() => {
-    setCurrentRepoIds(searchParams.getAll('repoIds') || []);
+    setCurrentRepoIds(
+      stringArray2NumberArray(searchParams.getAll('repoIds')) || []
+    );
     setCurrentPeriod(searchParams.get('period') || options[0].key);
   }, [searchParams]);
 
@@ -50,18 +54,6 @@ export default function OrgAnalyzePageHeaderAction() {
     'period-select',
     <CalendarIcon />
   );
-
-  const handleSelectRepo = (repo: RemoteRepoInfo | undefined) => {
-    !editMode && setEditMode(true);
-    if (!repo) {
-      return;
-    }
-    setRepos([...repos, repo]);
-  };
-  const handleRemoveRepo = (repo: RemoteRepoInfo) => {
-    !editMode && setEditMode(true);
-    setRepos(repos.filter((r) => r.id !== repo.id));
-  };
 
   React.useEffect(() => {
     const currentParams = new URLSearchParams(
@@ -93,19 +85,20 @@ export default function OrgAnalyzePageHeaderAction() {
     handler();
   }, [currentRepoIds, orgId, orgName]);
 
-  const handleApplyRepoIdsChanges = () => {
+  const handleApplyRepoIdsChanges = (input: RemoteRepoInfo[]) => {
     // get param from url
     const currentParams = new URLSearchParams(
       Array.from(searchParams.entries())
     );
     // update repoId
-    const selectedRepoIds = repos.map((r) => r.id);
+    const selectedRepoIds = input.map((r) => r.id);
     if (!isArrayItemsEqual(currentRepoIds, selectedRepoIds)) {
       currentParams.delete('repoIds');
       selectedRepoIds.forEach((id) => currentParams.append('repoIds', `${id}`));
+
+      typeof window !== 'undefined' &&
+        window.location.replace(pathname + '?' + currentParams.toString());
     }
-    typeof window !== 'undefined' &&
-      window.location.replace(pathname + '?' + currentParams.toString());
   };
 
   return (
@@ -113,26 +106,23 @@ export default function OrgAnalyzePageHeaderAction() {
       {/* -- action bar -- */}
       <div className='sticky top-[var(--site-header-height)] flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end py-4 bg-[var(--background-color-body)] z-10'>
         {periodSelect}
-        <GHOrgRepoSelector
-          repos={repos}
-          onRepoSelected={handleSelectRepo}
-          renderInput={renderInput}
-          onRepoRemoved={handleRemoveRepo}
-          orgName={orgName}
-          disableInput={loadingRepoFromUrl}
-          maxItems={5}
-        />
-        {editMode && (
-          <div className='w-full'>
-            <Button
-              className=''
-              variant='primary'
-              onClick={handleApplyRepoIdsChanges}
-            >
-              Apply Changes
-            </Button>
-          </div>
-        )}
+        <div className='relative'>
+          {orgId && (
+            <HLGHOrgRepoSelector
+              disabled={loadingRepoFromUrl}
+              ownerId={orgId}
+              defaultSelectedIds={currentRepoIds}
+              onComplete={(input) => {
+                const inputRepos = input.map((r) => ({
+                  id: r.id,
+                  fullName: r.fullName,
+                  defaultBranch: '',
+                }));
+                handleApplyRepoIdsChanges(inputRepos);
+              }}
+            />
+          )}
+        </div>
       </div>
     </>
   );
@@ -147,4 +137,19 @@ function isArrayItemsEqual(a: any[], b: any[]) {
     return false;
   }
   return a.every((item) => b.includes(item));
+}
+
+function stringArray2NumberArray(arr: (string | number)[]) {
+  return arr.reduce((acc: number[], cur: string | number) => {
+    try {
+      const num = Number(cur);
+      if (isNaN(num)) {
+        throw new Error('NaN');
+      }
+      acc.push(num);
+    } catch (e) {
+      console.error(e);
+    }
+    return acc;
+  }, []);
 }
