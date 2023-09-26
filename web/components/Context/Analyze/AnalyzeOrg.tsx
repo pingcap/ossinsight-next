@@ -10,7 +10,7 @@ import {
 export interface AnalyzeOrgContextProps {
   orgName: string;
   orgId?: number;
-  period?: 'past_28_days' | 'past_90_days' | 'past_12_months';
+  period?: 'past_7_days' | 'past_28_days' | 'past_90_days' | 'past_12_months';
   // orgInfo?: OrgInfo;
 }
 

@@ -17,6 +17,7 @@ import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
 import { getRepoInfoById } from '@/components/Analyze/utils';
 
 const options = [
+  { key: 'past_7_days', title: 'Past 7 days' },
   { key: 'past_28_days', title: 'Past 28 days' },
   { key: 'past_90_days', title: 'Past 90 days' },
   { key: 'past_12_months', title: 'Past 12 months' },
@@ -29,7 +30,7 @@ export default function OrgAnalyzePageHeaderAction() {
     React.useState<boolean>(true);
   const [currentRepoIds, setCurrentRepoIds] = React.useState<string[]>([]);
   const [currentPeriod, setCurrentPeriod] = React.useState<string>(
-    options[0].key
+    options[1].key
   );
 
   const { orgName, orgId } =

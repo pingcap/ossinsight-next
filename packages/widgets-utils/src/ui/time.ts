@@ -20,6 +20,10 @@ export const PERIOD_OPTIONS = [
     title: 'Past 3 years',
   },
   {
+    key: 'past_7_days',
+    title: 'Past 7 days',
+  },
+  {
     key: 'past_28_days',
     title: 'Past 28 days',
   },
