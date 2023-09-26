@@ -1,3 +1,5 @@
+'use client';
+
 import { useScrollspyContext } from './ScrollspyContext';
 import { cloneElement, ReactElement, RefAttributes, useContext, useEffect, useRef } from 'react';
 
