@@ -230,7 +230,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
             <>
               <Popover.Button
                 disabled={disabled}
-                className='relative w-full cursor-default rounded-lg bg-[var(--background-color-popover)] py-2 pl-3 pr-20 text-[var(--text-color-subtitle)] text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
+                className='relative w-full cursor-pointer rounded-lg bg-[var(--background-color-popover)] py-2 pl-3 pr-20 text-[var(--text-color-subtitle)] text-left shadow-md border border-[#6958FF] focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
               >
                 <span className='block truncate w-80 overflow-hidden'>
                   <RepoIcon className='mr-2' />

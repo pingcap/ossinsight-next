@@ -13,7 +13,12 @@ import {
   AnalyzeOrgContextProps,
   AnalyzeOrgContext,
 } from '@/components/Context/Analyze/AnalyzeOrg';
-import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
+import {
+  useSimpleSelect,
+  useHLSelect,
+  HLSelect,
+  SelectParamOption,
+} from '@ossinsight/ui/src/components/Selector/Select';
 
 import { getRepoInfoById } from '@/components/Analyze/utils';
 
@@ -31,9 +36,8 @@ export default function OrgAnalyzePageHeaderAction() {
   const [loadingRepoFromUrl, setLoadingRepoFromUrl] =
     React.useState<boolean>(true);
   const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>([]);
-  const [currentPeriod, setCurrentPeriod] = React.useState<string>(
-    options[1].key
-  );
+  const [currentPeriod, setCurrentPeriod] = React.useState<string>();
+  // options[1].key
 
   const { orgName, orgId } =
     React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
@@ -48,23 +52,17 @@ export default function OrgAnalyzePageHeaderAction() {
     setCurrentPeriod(searchParams.get('period') || options[0].key);
   }, [searchParams]);
 
-  const { select: periodSelect, value: periodSelected } = useSimpleSelect(
-    options,
-    options.find((i) => i.key === currentPeriod) || options[0],
-    'period-select',
-    <CalendarIcon />
-  );
-
-  React.useEffect(() => {
+  const handlePeriodChange = (v: SelectParamOption<string>) => {
+    setCurrentPeriod(v.key);
     const currentParams = new URLSearchParams(
       Array.from(searchParams.entries())
     );
-    const urlPeriod = currentParams.get('period') || options[0].key;
-    if (urlPeriod !== periodSelected) {
-      currentParams.set('period', periodSelected);
+    const urlPeriod = currentParams.get('period') || options[1].key;
+    if (urlPeriod !== v.key) {
+      currentParams.set('period', v.key);
       router.push(pathname + '?' + currentParams.toString());
     }
-  }, [pathname, periodSelected, router, searchParams]);
+  };
 
   // load repo from url
   React.useEffect(() => {
@@ -105,7 +103,14 @@ export default function OrgAnalyzePageHeaderAction() {
     <>
       {/* -- action bar -- */}
       <div className='sticky top-[var(--site-header-height)] flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end py-4 bg-[var(--background-color-body)] z-10'>
-        {periodSelect}
+        {currentPeriod && (
+          <HLSelect
+            options={options}
+            value={options.find((i) => i.key === currentPeriod) || options[1]}
+            onChange={handlePeriodChange}
+            startIcon={<CalendarIcon />}
+          />
+        )}
         <div className='relative'>
           {orgId && (
             <HLGHOrgRepoSelector
