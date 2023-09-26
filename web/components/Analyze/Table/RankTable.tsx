@@ -5,6 +5,10 @@ import { twMerge } from 'tailwind-merge';
 import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 
 import {
+  ParticipantLocationDataType,
+  ParticipateOrgDataType,
+  StarLocationDataType,
+  StarOrgDataType,
   getOrgActivityLocations,
   getOrgActivityOrgs,
 } from '@/components/Analyze/utils';
@@ -73,7 +77,7 @@ export function TableSkeleton() {
   );
 }
 
-export async function GeoRankTablePromise(props: {
+export function GeoRankTableContent(props: {
   id: number;
   type: 'stars' | 'participants';
   role?: string;
@@ -81,24 +85,44 @@ export async function GeoRankTablePromise(props: {
 }) {
   const { id, type, maxRows = 10, role } = props;
 
-  const data = await getOrgActivityLocations(id, {
-    activity: type,
-    ...(role && { role }),
-  });
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState<
+    StarLocationDataType[] | ParticipantLocationDataType[]
+  >([]);
 
-  const rows = data
-    .slice(0, maxRows)
-    .map((d: any, idx: number) => [
-      idx + 1,
-      alpha2ToTitle(d.country_code),
-      d[type],
-    ]);
+  React.useEffect(() => {
+    const handler = async () => {
+      const data = await getOrgActivityLocations(id, {
+        activity: type,
+        ...(role && { role }),
+      });
+      setData(data);
+      setLoading(false);
+    };
+    handler();
+  }, [id, type, role]);
 
-  const header = ['No.', 'Location', upperFirst(type)];
+  const rowsMemo = React.useMemo(() => {
+    return data
+      .slice(0, maxRows)
+      .map((d: any, idx: number) => [
+        idx + 1,
+        alpha2ToTitle(d.country_code),
+        d[type],
+      ]);
+  }, [data, maxRows, type]);
+
+  const headerMemo = React.useMemo(() => {
+    return ['No.', 'Location', upperFirst(type)];
+  }, [type]);
 
   return (
     <>
-      <Table rows={rows} header={header} />
+      {loading ? (
+        <TableSkeleton />
+      ) : (
+        <Table rows={rowsMemo} header={headerMemo} />
+      )}
     </>
   );
 }
@@ -120,35 +144,52 @@ export function GeoRankTable(props: {
       <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top locations
       </div>
-      <React.Suspense fallback={<TableSkeleton />}>
-        <GeoRankTablePromise id={id} type={type} role={role} />
-      </React.Suspense>
+      <GeoRankTableContent id={id} type={type} role={role} />
     </div>
   );
 }
 
-export async function CompanyRankTablePromise(props: {
+export function CompanyRankTableContent(props: {
   id: number;
   type: 'stars' | 'participants';
   role?: string;
   maxRows?: number;
 }) {
   const { id, maxRows = 10, type, role } = props;
+  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = React.useState<
+    ParticipateOrgDataType[] | StarOrgDataType[]
+  >([]);
 
-  const data = await getOrgActivityOrgs(id, {
-    activity: type,
-    ...(role && { role }),
-  });
+  React.useEffect(() => {
+    const handler = async () => {
+      const data = await getOrgActivityOrgs(id, {
+        activity: type,
+        ...(role && { role }),
+      });
+      setData(data);
+      setLoading(false);
+    };
+    handler();
+  }, [id, type, role]);
 
-  const rows = data
-    .slice(0, maxRows)
-    .map((d: any, idx) => [idx + 1, d.organization_name, d[type]]);
+  const rowsMemo = React.useMemo(() => {
+    return data
+      .slice(0, maxRows)
+      .map((d: any, idx: number) => [idx + 1, d.organization_name, d[type]]);
+  }, [data, maxRows, type]);
 
-  const header = ['No.', 'Company', upperFirst(type)];
+  const headerMemo = React.useMemo(() => {
+    return ['No.', 'Company', upperFirst(type)];
+  }, [type]);
 
   return (
     <>
-      <Table rows={rows} header={header} />
+      {loading ? (
+        <TableSkeleton />
+      ) : (
+        <Table rows={rowsMemo} header={headerMemo} />
+      )}
     </>
   );
 }
@@ -170,9 +211,7 @@ export function CompanyRankTable(props: {
       <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top companies
       </div>
-      <React.Suspense fallback={<TableSkeleton />}>
-        <CompanyRankTablePromise id={id} type='stars' role={role} />
-      </React.Suspense>
+      <CompanyRankTableContent id={id} type='stars' role={role} />
     </div>
   );
 }
