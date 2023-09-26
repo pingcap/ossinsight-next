@@ -1,3 +1,4 @@
+'use client';
 import { useScrollspyContext } from '@/components/Scrollspy/ScrollspyContext';
 import { useContext, useEffect, useState } from 'react';
 
