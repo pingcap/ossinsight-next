@@ -22,6 +22,7 @@ export default function OriginsContent() {
       className='pt-8'
     >
       <SectionTemplate
+        id='origins'
         title='Origins'
         level={3}
         className='pt-8 flex flex-col gap-4'

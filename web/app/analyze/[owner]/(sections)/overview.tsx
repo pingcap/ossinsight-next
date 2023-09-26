@@ -5,7 +5,7 @@ import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function OverviewContent() {
   return (
-    <SectionTemplate title='Organization Overview' level={2} className='pt-8'>
+    <SectionTemplate id='overview' title='Organization Overview' level={2} className='pt-8'>
       <div className='flex gap-[var(--site-widget-gap)] w-full flex-wrap'>
         <div className='flex flex-col gap-[var(--site-widget-gap)] overflow-x-auto'>
           <ChartTemplate

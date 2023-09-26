@@ -1,6 +1,7 @@
 import OrgNav from '@/components/Analyze/Navigation/OrgNav';
 import OrgBottomNav from '@/components/Analyze/Navigation/OrgBottomNav';
 import { OrgPageNavWrapper } from '@/components/Analyze/Navigation/OrgPageWrapper';
+import { ScrollspyContextProvider } from '@/components/Scrollspy';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function UserOrgAnalyzeLayout({
@@ -13,7 +14,7 @@ export default function UserOrgAnalyzeLayout({
   const { owner } = params;
 
   return (
-    <>
+    <ScrollspyContextProvider>
       <div className='flex'>
         <div className='flex w-full flex-col md:flex-row'>
           <aside className='bg-toolbar border-r md:min-h-[calc(100vh-var(--site-header-height))]'>
@@ -32,6 +33,6 @@ export default function UserOrgAnalyzeLayout({
       {/* <footer className='bg-toolbar border-t'>
         footer
       </footer> */}
-    </>
+    </ScrollspyContextProvider>
   );
 }
