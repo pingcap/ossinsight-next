@@ -1,20 +1,23 @@
-import { cloneElement, lazy } from 'react';
+import { cloneElement, ForwardedRef, forwardRef, lazy, ReactElement } from 'react';
 import { WidgetReactVisualizationProps } from '../../types';
 import Svg from './react-svg';
 
 const ECharts = lazy(() => import('./echarts'));
 const Compose = lazy(() => import('./compose'));
-export default function WidgetVisualization ({ dynamicHeight, ...props }: WidgetReactVisualizationProps) {
+
+
+
+export default forwardRef(function WidgetVisualization ({ dynamicHeight, ...props }: WidgetReactVisualizationProps, ref: ForwardedRef<any>) {
   let el;
   switch (props.type) {
     case 'echarts':
-      el = <ECharts {...props} />;
+      el = <ECharts ref={ref} {...props} />;
       break;
     case 'react-svg':
-      el = <Svg {...props} />;
+      el = <Svg ref={ref} {...props} />;
       break;
     case 'compose':
-      el = <Compose {...props} />;
+      el = <Compose ref={ref} {...props} />;
       break;
     default:
       throw new Error(`visualize type '${props.type}' not supported.`);
@@ -29,4 +32,4 @@ export default function WidgetVisualization ({ dynamicHeight, ...props }: Widget
   }
 
   return el;
-}
+})
