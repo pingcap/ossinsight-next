@@ -1,6 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import { dispose, EChartsOption, EChartsType, init } from 'echarts';
-import { useEffect, useRef } from 'react';
+import mergeRefs from 'merge-refs';
+import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -14,7 +15,7 @@ interface EChartsComponentProps extends WidgetReactVisualizationProps {
   linkedData: LinkedData;
 }
 
-function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: EChartsComponentProps) {
+function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: EChartsComponentProps, ref: ForwardedRef<HTMLDivElement>) {
   const echartsRef = useRef<EChartsType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -49,9 +50,9 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
     <div
       className={className}
       style={style}
-      ref={containerRef}
+      ref={mergeRefs(containerRef, ref)}
     />
   );
 }
 
-export default EChartsComponent;
+export default forwardRef(EChartsComponent);

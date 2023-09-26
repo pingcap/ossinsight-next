@@ -2,7 +2,8 @@
 
 import { visualizers } from '@ossinsight/widgets';
 import { ComposeVisualizationConfig, VisualizerModule } from '@ossinsight/widgets-types';
-import { cloneElement, use, useEffect, useMemo, useRef, useState } from 'react';
+import mergeRefs from 'merge-refs';
+import { cloneElement, createElement, ForwardedRef, forwardRef, ReactElement, use, useEffect, useMemo, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -18,7 +19,7 @@ interface ComposeComponentProps extends WidgetReactVisualizationProps {
 
 const dpr = typeof devicePixelRatio === 'number' ? devicePixelRatio : 2;
 
-export default function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: ComposeComponentProps) {
+export default forwardRef(function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: ComposeComponentProps, ref: ForwardedRef<HTMLDivElement>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: visualizer.width ?? 0,
@@ -69,7 +70,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
 
   return (
     <div
-      ref={containerRef}
+      ref={mergeRefs(containerRef, ref)}
       className={className}
       style={{
         ...style,
@@ -88,7 +89,7 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
         if (widget.startsWith('builtin:')) {
           return <Builtin key={i} className="absolute" style={props} name={widget as any} colorScheme={colorScheme}  {...parameters} />;
         } else {
-          const el = render({
+          const el = createElement(render, {
             dynamicHeight: undefined,
             className: undefined,
             style: props,
@@ -112,4 +113,4 @@ export default function ComposeComponent ({ className, style, data, visualizer, 
       })}
     </div>
   );
-}
+})

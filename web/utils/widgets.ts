@@ -1,9 +1,13 @@
+import { makeLinkedData } from '@/app/widgets/[vendor]/[name]/utils';
 import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
+import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
+import { createWidgetBaseContext } from '@ossinsight/widgets-core/src/utils/context';
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { ComposeVisualizationConfig, MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+import { createElement, FC, lazy } from 'react';
 
 export function isWidget (name: string) {
   return !!widgets[name];
@@ -109,5 +113,31 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
     type: 'compose',
     width: ctx.width,
     height: realHeight,
+  };
+}
+
+export type WidgetData = Awaited<ReturnType<typeof fetchWidgetData>>;
+
+export async function fetchWidgetData (name: string, searchParams: Record<string, string | string[]>) {
+  const fetcher = widgetDatasourceFetcher(name);
+  const [params, linkedData] = await Promise.all([
+    widgetParameterDefinitions(name),
+    makeLinkedData(name, searchParams),
+  ]);
+
+  const parameters = {
+    ...searchParams,
+    ...resolveExpressions(params),
+  };
+
+  const data = await fetcher(createWidgetBaseContext('server', {
+    ...searchParams,
+    ...resolveExpressions(params),
+  }));
+
+  return {
+    parameters,
+    data,
+    linkedData,
   };
 }
