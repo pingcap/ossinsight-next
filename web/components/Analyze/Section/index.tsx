@@ -1,4 +1,4 @@
-import { ScrollspySection, ScrollspySectionWrapper } from '@/components/Scrollspy';
+import { ScrollspySectionWrapper } from '@/components/Scrollspy';
 import clsx from 'clsx';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';

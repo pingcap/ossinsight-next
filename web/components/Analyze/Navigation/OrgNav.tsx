@@ -149,49 +149,6 @@ const calcSelectedIdParents = (
   return parents;
 };
 
-const flattenNavItems = (
-  items: NavItemType[],
-): Omit<NavItemType, 'children'>[] => {
-  const result: NavItemType[] = [];
-  const find = (items: NavItemType[]) => {
-    for (const item of items) {
-      const { children, ...rest } = item;
-      result.push({ ...rest });
-      if (children) {
-        find(children);
-      }
-    }
-  };
-  find(items);
-  return result;
-};
-
-export function calcPrevNextId (
-  items: NavItemType[],
-  selectedId: string | null,
-): {
-  prevId: string | null;
-  nextId: string | null;
-  prevItem: NavItemType | null;
-  nextItem: NavItemType | null;
-} {
-  let prevItem: NavItemType | null = null;
-  let nextItem: NavItemType | null = null;
-  let prevId: string | null = null;
-  let nextId: string | null = null;
-  const flattenItems = flattenNavItems(items).filter((item) => item.anchor);
-  const index = flattenItems.findIndex((item) => item.id === selectedId);
-  if (index > 0) {
-    prevItem = flattenItems[index - 1];
-    prevId = prevItem.id;
-  }
-  if (index < flattenItems.length - 1) {
-    nextItem = flattenItems[index + 1];
-    nextId = nextItem.id;
-  }
-  return { prevId, nextId, prevItem, nextItem };
-}
-
 export function getNavItemById (id: string): NavItemType | null {
   const find = (items: NavItemType[]): NavItemType | null => {
     for (const item of items) {
