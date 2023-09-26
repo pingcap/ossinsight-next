@@ -1,6 +1,6 @@
 'use client';
 
-import { cloneElement, createContext, createElement, ReactElement, ReactNode, RefAttributes, RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, createElement, ReactNode, RefObject, useContext, useEffect, useState } from 'react';
 
 export interface ScrollspySection {
   id: string;
@@ -133,7 +133,7 @@ class ScrollspyContextClass {
 
       // get initial currentSection
       if (!this.currentSection) {
-        this.onScroll()
+        this.onScroll();
       }
     });
     this.sections.forEach(s => {
@@ -202,40 +202,4 @@ export function ScrollspyContextProvider ({ children, scrollTarget }: { children
 
 export function useScrollspyContext () {
   return useContext(ScrollspyContext);
-}
-
-export function ScrollspySectionWrapper ({ id, children }: { id?: string, children: ReactElement<RefAttributes<HTMLDivElement>> }) {
-  const spy = useContext(ScrollspyContext);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (id != null && ref.current) {
-      spy.register(id, ref.current);
-      return () => {
-        spy.unregister(id);
-      };
-    }
-  }, [id, spy]);
-
-  if (id != null) {
-    return cloneElement(children, {
-      ref,
-    });
-  } else {
-    return children;
-  }
-}
-
-export function useScrollspyCurrentSection () {
-  const spy = useContext(ScrollspyContext);
-  const [current, setCurrent] = useState(spy.currentSection);
-
-  useEffect(() => {
-    spy.subscribe(setCurrent);
-    return () => {
-      spy.unsubscribe(setCurrent);
-    };
-  }, [spy]);
-
-  return current;
 }
