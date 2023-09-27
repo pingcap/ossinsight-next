@@ -12,37 +12,30 @@ export default function CodeSubmissionContent() {
 
   return (
     <SectionTemplate
-      title='Productivity'
-      description='Analyze the development productivity of your organization in handling Pull Requests, Code Reviews, and Code Submissions. Identify bottlenecks in the development process, measure the efficiency of code review and issue resolution, and optimize the workflow for increased productivity.'
-      level={2}
-      className='pt-8'
+      id="code-submission"
+      title="Code Submission"
+      level={3}
+      className="pt-8 flex flex-col gap-4"
     >
-      <SectionTemplate
-        id='code-submission'
-        title='Code Submission'
-        level={3}
-        className='pt-8 flex flex-col gap-4'
-      >
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          <ChartTemplate
-            name='@ossinsight/widget-compose-org-commits-growth'
-            searchParams={{
-              activity: 'commits',
-            }}
-            width={getWidgetSize().widgetWidth(12)}
-            height={getWidgetSize().widgetWidth(4)}
-          />
-        </div>
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          <OrgCommitsTimeDistribution defaultZone={`${zoneMemo}`} />
-          <ChartTemplate
-            name='@ossinsight/widget-compose-org-code-changes-top-repositories'
-            searchParams={{}}
-            width={getWidgetSize().widgetWidth(6)}
-            height={274}
-          />
-        </div>
-      </SectionTemplate>
+      <div className="flex gap-4 flex-wrap w-full overflow-x-auto">
+        <ChartTemplate
+          name="@ossinsight/widget-compose-org-commits-growth"
+          searchParams={{
+            activity: 'commits',
+          }}
+          width={getWidgetSize().widgetWidth(12)}
+          height={getWidgetSize().widgetWidth(4)}
+        />
+      </div>
+      <div className="flex gap-4 flex-wrap w-full overflow-x-auto">
+        <OrgCommitsTimeDistribution defaultZone={`${zoneMemo}`} />
+        <ChartTemplate
+          name="@ossinsight/widget-compose-org-code-changes-top-repositories"
+          searchParams={{}}
+          width={getWidgetSize().widgetWidth(6)}
+          height={274}
+        />
+      </div>
     </SectionTemplate>
   );
 }

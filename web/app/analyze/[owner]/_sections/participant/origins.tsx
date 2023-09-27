@@ -16,24 +16,17 @@ export default function OriginsContent() {
 
   return (
     <SectionTemplate
-      title='Participant'
-      description='Examine participation dynamics within your organization, analyzing participant activity, engagement depth, roles, affiliations, and geographic distribution. Uncover valuable insights into participate involvement, preferences, and demographics, enabling targeted strategies for enhanced engagement and tailored experiences.'
-      level={2}
-      className='pt-8'
+      id="origins"
+      title="Origins"
+      level={3}
+      className="pt-8 flex flex-col gap-4"
     >
-      <SectionTemplate
-        id='origins'
-        title='Origins'
-        level={3}
-        className='pt-8 flex flex-col gap-4'
-      >
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
-          <OrgActivityCompany orgId={orgId} />
-        </div>
-        <div className='flex gap-4 flex-wrap w-full h-fit overflow-x-auto'>
-          <OrgActivityMap orgId={orgId} />
-        </div>
-      </SectionTemplate>
+      <div className="flex gap-4 flex-wrap w-full overflow-x-auto">
+        <OrgActivityCompany orgId={orgId} />
+      </div>
+      <div className="flex gap-4 flex-wrap w-full h-fit overflow-x-auto">
+        <OrgActivityMap orgId={orgId} />
+      </div>
     </SectionTemplate>
   );
 }
