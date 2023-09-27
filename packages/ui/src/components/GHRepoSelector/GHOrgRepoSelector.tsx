@@ -109,7 +109,7 @@ function SearchInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
           type='text'
           name='repo-search'
           id='repo-search'
-          className='block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+          className='block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[var(--selector-border-color)] sm:text-sm sm:leading-6'
           placeholder='Search repo...'
           {...props}
         />
@@ -215,7 +215,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
             disabled={isDisabledMemo}
             tabIndex={isDisabledMemo ? -1 : 0}
             readOnly
-            className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
+            className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 focus:ring-indigo-600 accent-[var(--selector-fill-color)]'
           />
         </>
       </div>
@@ -230,7 +230,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
             <>
               <Popover.Button
                 disabled={disabled}
-                className='relative w-full cursor-pointer rounded-lg bg-[var(--background-color-popover)] py-2 pl-3 pr-20 text-[var(--text-color-subtitle)] text-left shadow-md border border-[#6958FF] focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
+                className='relative w-full cursor-pointer rounded-lg bg-[var(--background-color-popover)] py-2 pl-3 pr-20 text-[var(--text-color-subtitle)] text-left shadow-md border border-[var(--selector-border-color)] focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
               >
                 <span className='block truncate w-80 overflow-hidden'>
                   <RepoIcon className='mr-2' />
@@ -241,7 +241,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                   )}
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-                  <span className='bg-[#877AFF] text-xs font-medium px-2 py-1 mr-2 rounded-full inline-flex items-center gap-2'>
+                  <span className='bg-[var(--selector-fill-color)] text-white text-xs font-medium px-2 py-1 mr-2 rounded-full inline-flex items-center gap-2'>
                     {parseItemsLength(
                       selectedItems.length === 0
                         ? repos.length
@@ -298,7 +298,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                           type='checkbox'
                           checked={selectedItems.length === 0}
                           readOnly
-                          className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
+                          className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 focus:ring-[var(--selector-border-color)] accent-[var(--selector-fill-color)]'
                         />
                       </>
                     </div>

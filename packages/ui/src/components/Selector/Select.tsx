@@ -133,7 +133,7 @@ export function HLSelect<T extends string | number = string>(props: {
     <>
       <Listbox value={value} onChange={onChange}>
         <div className='relative mt-1'>
-          <Listbox.Button className='relative w-full cursor-default rounded-lg bg-[var(--background-color-popover)] text-[var(--text-color-subtitle)] border border-[#6958FF] py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
+          <Listbox.Button className='relative w-full cursor-default rounded-lg bg-[var(--background-color-popover)] text-[var(--text-color-subtitle)] border border-[var(--selector-border-color)] py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
             <span className='inline-flex gap-2 truncate'>
               {startIcon}
               {value.title}
