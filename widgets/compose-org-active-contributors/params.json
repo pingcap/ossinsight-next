@@ -17,10 +17,5 @@
     "title": "Activity type",
     "enums": ["active", "new"],
     "default": "active"
-  },
-  "repo_ids": {
-    "type": "repo-ids",
-    "title": "Repo",
-    "array": true
   }
 }
