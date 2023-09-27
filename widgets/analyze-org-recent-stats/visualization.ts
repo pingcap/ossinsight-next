@@ -144,7 +144,7 @@ export default function (
     },
     grid: {
       left: 6,
-      top: 6,
+      top: 20,
       right: 20,
       bottom: 2,
       containLabel: true,
@@ -214,7 +214,6 @@ export default function (
     },
     legend: {
       left: 'center',
-      top: '5%',
     },
   };
 }

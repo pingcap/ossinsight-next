@@ -35,8 +35,7 @@ export default function OrgAnalyzePageHeaderAction() {
   const [loadingRepoFromUrl, setLoadingRepoFromUrl] =
     React.useState<boolean>(true);
   const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>(stringArray2NumberArray(searchParams.getAll('repoIds')) || []);
-  const [currentPeriod, setCurrentPeriod] = React.useState<string>(searchParams.get('period') || options[0].key);
-  // options[1].key
+  const [currentPeriod, setCurrentPeriod] = React.useState<string>(searchParams.get('period') || options[1].key);
 
   const { name: orgName, id: orgId } =
     React.useContext(AnalyzeOwnerContext);
@@ -47,7 +46,7 @@ export default function OrgAnalyzePageHeaderAction() {
     setCurrentRepoIds(
       stringArray2NumberArray(searchParams.getAll('repoIds')) || []
     );
-    setCurrentPeriod(searchParams.get('period') || options[0].key);
+    setCurrentPeriod(searchParams.get('period') || options[1].key);
   }, [searchParams]);
 
   const handlePeriodChange = (v: SelectParamOption<string>) => {
@@ -58,7 +57,8 @@ export default function OrgAnalyzePageHeaderAction() {
     const urlPeriod = currentParams.get('period') || options[1].key;
     if (urlPeriod !== v.key) {
       currentParams.set('period', v.key);
-      router.push(pathname + '?' + currentParams.toString());
+      typeof window !== 'undefined' &&
+        window.location.replace(pathname + '?' + currentParams.toString());
     }
   };
 

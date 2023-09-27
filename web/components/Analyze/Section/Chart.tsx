@@ -2,11 +2,14 @@
 import { widgetPageParams } from '@/app/widgets/[vendor]/[name]/utils';
 
 import { EmbeddedWidget } from '@/components/EmbeddedWidget';
-import { ArrowUpRightIcon, CodeIcon } from '@primer/octicons-react';
+// import { ArrowUpRightIcon, CodeIcon } from '@primer/octicons-react';
 import NextLink from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { Tooltip } from '@ossinsight/ui';
+import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
+import CodeIcon from 'bootstrap-icons/icons/code.svg';
 
 import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
 
@@ -80,10 +83,10 @@ export default function ChartTemplate (props: ChartTemplateProps) {
       targetWidgetLink = `/widgets/official/${widget}?${searchParamsStrMemo}`;
     }
     if (innerSectionId) {
-      targetSectionLink = `${pathname}?${searchParamsStrMemo}#${innerSectionId}`;
+      targetSectionLink = `#${innerSectionId}`;
     }
     return [targetWidgetLink, targetSectionLink];
-  }, [innerSectionId, name, pathname, searchParamsStrMemo]);
+  }, [innerSectionId, name, searchParamsStrMemo]);
 
   return (
     <div
@@ -94,26 +97,40 @@ export default function ChartTemplate (props: ChartTemplateProps) {
       }}
     >
       <EmbeddedWidget
-        className="WidgetContainer"
+        className='WidgetContainer'
         name={name}
         params={searchParamsMemo}
       />
-      <div className="absolute top-4 right-4 flex gap-2">
+      <div className='absolute top-4 right-4 flex gap-2'>
         {targetSectionLinkMemo && (
           <NextLink
             href={targetSectionLinkMemo}
-            className="w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center"
+            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
           >
-            <ArrowUpRightIcon className="w-3 h-3" />
+            <Tooltip.InfoTooltip
+              Icon={ArrowUpRightIcon}
+              iconProps={{
+                className: 'w-3 h-3',
+              }}
+            >
+              See Details
+            </Tooltip.InfoTooltip>
           </NextLink>
         )}
         {targetWidgetLinkMemo && (
           <NextLink
-            target="_blank"
+            target='_blank'
             href={targetWidgetLinkMemo}
-            className="w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center"
+            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
           >
-            <CodeIcon className="w-3 h-3" />
+            <Tooltip.InfoTooltip
+              Icon={CodeIcon}
+              iconProps={{
+                className: 'w-3 h-3',
+              }}
+            >
+              Embed
+            </Tooltip.InfoTooltip>
           </NextLink>
         )}
       </div>

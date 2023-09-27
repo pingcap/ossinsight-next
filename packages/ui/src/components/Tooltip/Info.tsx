@@ -5,7 +5,10 @@ import clsx from 'clsx';
 
 export interface InfoTooltipProps {
   delayDuration?: number;
-  Icon?: React.ReactNode;
+  Icon?: React.FC<
+    React.SVGAttributes<SVGSVGElement> & React.RefAttributes<SVGSVGElement>
+  >;
+  iconElement?: React.ReactNode;
   rootProps?: Omit<Tooltip.TooltipProps, 'delayDuration'>;
   triggerProps?: Tooltip.TooltipTriggerProps;
   portalProps?: Tooltip.TooltipPortalProps;
@@ -31,7 +34,13 @@ export const InfoTooltip = (props: InfoTooltipProps) => {
     <Tooltip.Provider>
       <Tooltip.Root delayDuration={delayDuration} {...rootProps}>
         <Tooltip.Trigger asChild {...triggerProps}>
-          {props?.Icon ? props.Icon : <InfoCircle {...iconProps} />}
+          {props?.iconElement ? (
+            props.iconElement
+          ) : props?.Icon ? (
+            <props.Icon {...iconProps} />
+          ) : (
+            <InfoCircle {...iconProps} />
+          )}
         </Tooltip.Trigger>
         <Tooltip.Portal {...portalProps}>
           <Tooltip.Content

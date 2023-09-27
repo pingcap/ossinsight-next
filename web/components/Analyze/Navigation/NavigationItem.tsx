@@ -28,7 +28,7 @@ function NavigationAnchorItem ({ item }: { item: NavItemType & { anchor: string 
       type="button"
       onClick={handleClick}
       className={twMerge(
-        'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
+        'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2 text-left',
         item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
       )}
     >
@@ -42,7 +42,7 @@ function NavigationTextItem ({ item }: { item: NavItemType }) {
   return (
     <div
       className={clsx(
-        'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2',
+        'flex items-center justify-start gap-2 md:justify-center lg:justify-start w-full p-2 text-left',
         item.Icon ? 'text-base font-medium' : 'text-sm md:pl-9',
       )}
     >
