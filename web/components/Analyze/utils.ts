@@ -10,7 +10,16 @@ const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
 const PATH_GET_USERS = `/gh/users/`;
 const PATH_GET_REPO_BY_ID = `/gh/repositories/`;
 
-export const getOwnerInfo = (owner: string): Promise<{ type: 'User' | 'Organization' | 'Bot', login: string, name: string, id: number }> => {
+export interface OwnerInfo {
+  type: 'User' | 'Organization' | 'Bot';
+  login: string;
+  name: string;
+  id: number;
+  bio: string;
+  public_repos: number;
+}
+
+export const getOwnerInfo = (owner: string): Promise<OwnerInfo> => {
   return fetch(`${API_SERVER}${PATH_GET_USERS}${encodeURIComponent(owner)}`)
     .then(handleOApi);
 };

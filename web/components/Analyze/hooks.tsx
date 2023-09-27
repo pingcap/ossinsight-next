@@ -6,10 +6,7 @@ import { getOrgOverview, getUserInfo } from '@/components/Analyze/utils';
 export interface OrgOverviewDataProps {
   participants: number;
   stars: number;
-  repos: number;
-  bio: string;
   last_event_at: string;
-  
 }
 
 export function useOrgOverview(id?: number, name?: string) {
@@ -22,8 +19,7 @@ export function useOrgOverview(id?: number, name?: string) {
       try {
         setLoading(true);
         const data = await getOrgOverview(id);
-        const userData = await getUserInfo(name);
-        setData({ ...data[0], repos: userData.public_repos, bio: userData.bio });
+        setData({ ...data[0] });
       } catch (error: any) {
         setError(error);
       } finally {

@@ -10,9 +10,8 @@ import { Button } from '@ossinsight/ui/src/components/Button';
 import { CalendarIcon } from '@primer/octicons-react';
 
 import {
-  AnalyzeOrgContextProps,
-  AnalyzeOrgContext,
-} from '@/components/Context/Analyze/AnalyzeOrg';
+  AnalyzeOwnerContext,
+} from '@/components/Context/Analyze/AnalyzeOwner';
 import {
   HLSelect,
   SelectParamOption,
@@ -39,8 +38,8 @@ export default function OrgAnalyzePageHeaderAction() {
   const [currentPeriod, setCurrentPeriod] = React.useState<string>(searchParams.get('period') || options[0].key);
   // options[1].key
 
-  const { orgName, orgId } =
-    React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
+  const { name: orgName, id: orgId } =
+    React.useContext(AnalyzeOwnerContext);
   const router = useRouter();
   const pathname = usePathname();
 

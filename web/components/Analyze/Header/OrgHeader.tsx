@@ -10,9 +10,8 @@ import {
 } from '@primer/octicons-react';
 
 import {
-  AnalyzeOrgContextProps,
-  AnalyzeOrgContext,
-} from '@/components/Context/Analyze/AnalyzeOrg';
+  AnalyzeOwnerContext,
+} from '@/components/Context/Analyze/AnalyzeOwner';
 import { Tooltip } from '@ossinsight/ui';
 import { twMerge } from 'tailwind-merge';
 import { formatNumber } from '@ossinsight/widgets-utils/src/utils';
@@ -21,8 +20,8 @@ import { useOrgOverview } from '@/components/Analyze/hooks';
 import OrgAnalyzePageHeaderAction from '@/components/Analyze/Header/OrgHeaderAction';
 
 export default function OrgAnalyzePageHeader() {
-  const { orgName, orgId } =
-    React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
+  const { name: orgName, id: orgId, bio, public_repos } =
+    React.useContext(AnalyzeOwnerContext);
 
   const { data, loading, error } = useOrgOverview(orgId, orgName);
 
@@ -43,16 +42,15 @@ export default function OrgAnalyzePageHeader() {
         </span>
       </h1>
       <p className='my-4'>
-        {loading && <TextSkeleton characters={42} />}
-        {data?.bio || ''}
+        {bio}
       </p>
 
       {/* -- status bar -- */}
       <div className='flex gap-6 flex-wrap flex-col md:flex-row md:items-end'>
         <LabelItemWithCount
           label='Public repositories'
-          loading={loading}
-          count={data?.repos || 0}
+          loading={false}
+          count={public_repos || 0}
           icon={<RepoIcon />}
         />
         <LabelItemWithCount

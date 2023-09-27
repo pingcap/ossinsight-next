@@ -8,7 +8,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { AnalyzeOrgContext } from '@/components/Context/Analyze/AnalyzeOrg';
+import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
 
 export interface ChartTemplateProps {
   name: string;
@@ -31,7 +31,7 @@ export default function ChartTemplate (props: ChartTemplateProps) {
     innerSectionId,
   } = props;
 
-  const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
+  const { id: orgId } = React.useContext(AnalyzeOwnerContext);
   const searchParamsFromUrl = useSearchParams();
   const pathname = usePathname();
 

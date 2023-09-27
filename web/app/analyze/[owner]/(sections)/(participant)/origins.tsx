@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
-import { AnalyzeOrgContext } from '@/components/Context/Analyze/AnalyzeOrg';
+import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
 import {
   CompanyRankTable,
   GeoRankTable,
@@ -12,7 +12,7 @@ import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
 import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export default function OriginsContent() {
-  const { orgName, orgId } = React.useContext(AnalyzeOrgContext);
+  const { id: orgId } = React.useContext(AnalyzeOwnerContext);
 
   return (
     <SectionTemplate
