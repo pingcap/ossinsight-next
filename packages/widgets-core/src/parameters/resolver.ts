@@ -84,6 +84,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
           const originParamList = Array.isArray(originParam)
             ? originParam
             : [originParam];
+          // TODO: fix this
           return Promise.allSettled(
             originParamList.map((param) => {
               if (linkedData.repos[param]) return Promise.resolve();
