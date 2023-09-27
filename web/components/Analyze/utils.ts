@@ -1,3 +1,5 @@
+import { handleOApi } from '@ossinsight/widgets-core/src/utils/oapi';
+
 const API_SERVER = 'https://api.ossinsight.io';
 const PATH_GET_ORG_INFO = `/q/get-user-by-login`;
 const PATH_GET_ORG_OVERVIEW = `/q/orgs/overview`;
@@ -8,16 +10,19 @@ const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
 const PATH_GET_USERS = `/gh/users/`;
 const PATH_GET_REPO_BY_ID = `/gh/repositories/`;
 
+export const getOwnerInfo = (owner: string): Promise<{ type: 'User' | 'Organization' | 'Bot', login: string, name: string, id: number }> => {
+  return fetch(`${API_SERVER}${PATH_GET_USERS}${encodeURIComponent(owner)}`)
+    .then(handleOApi);
+};
+
 export const getOrgInfo = (login: string) => {
   return fetch(`${API_SERVER}${PATH_GET_ORG_INFO}?login=${login}`)
-    .then((res) => res.json())
-    .then((data) => data.data);
+    .then(handleOApi);
 };
 
 export const getOrgOverview = (id: number) => {
   return fetch(`${API_SERVER}${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`)
-    .then((res) => res.json())
-    .then((data) => data.data);
+    .then(handleOApi);
 };
 
 export const params2UrlSearch = (params: {
@@ -40,7 +45,7 @@ export type ParticipantLocationDataType = {
 
 export const getOrgActivityLocations = (
   id: number,
-  params: { activity: 'stars' | 'participants'; period?: string; role?: string }
+  params: { activity: 'stars' | 'participants'; period?: string; role?: string },
 ): Promise<StarLocationDataType[] | ParticipantLocationDataType[]> => {
   let path = PATH_GET_ORG_STARS_LOCATIONS;
 
@@ -51,8 +56,7 @@ export const getOrgActivityLocations = (
   const paramsStr = params2UrlSearch({ ...params, ownerId: id });
 
   return fetch(`${API_SERVER}${path}?${paramsStr}`)
-    .then((res) => res.json())
-    .then((data) => data.data);
+    .then(handleOApi);
 };
 
 export type ParticipateOrgDataType = {
@@ -71,7 +75,7 @@ export const getOrgActivityOrgs = (
     period?: string;
     activity: 'stars' | 'participants';
     role?: string;
-  }
+  },
 ): Promise<ParticipateOrgDataType[] | StarOrgDataType[]> => {
   const { activity = 'stars', ...restParams } = params || {};
   const paramsStr = params2UrlSearch({ ...restParams, ownerId: id });
@@ -82,20 +86,17 @@ export const getOrgActivityOrgs = (
   }
 
   return fetch(`${API_SERVER}${path}?${paramsStr}`)
-    .then((res) => res.json())
-    .then((data) => data.data);
+    .then(handleOApi);
 };
 
 export const getUserInfo = (login: string | number) => {
   return fetch(`${API_SERVER}${PATH_GET_USERS}${login}`)
-    .then((res) => res.json())
-    .then((data) => data.data);
+    .then(handleOApi);
 };
 
 export const getRepoInfoById = (repoId: number | string) => {
   return fetch(`${API_SERVER}${PATH_GET_REPO_BY_ID}${repoId}`)
-    .then((res) => res.json())
-    .then((data) => data.data)
+    .then(handleOApi)
     .then((data) => ({
       id: data.id,
       fullName: data.full_name,

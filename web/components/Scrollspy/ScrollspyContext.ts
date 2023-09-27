@@ -8,7 +8,7 @@ export interface ScrollspySection {
   runtime?: { offsetTop: number };
 }
 
-type ScrollspySubscribeFn = (section: ScrollspySection | null, activeSections: ScrollspySection[]) => void
+export type ScrollspySubscribeFn = (section: ScrollspySection | null, activeSections: ScrollspySection[]) => void
 
 class ScrollspyContextClass {
   scrollTarget: HTMLElement | null = null;
