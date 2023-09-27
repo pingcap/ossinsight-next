@@ -330,7 +330,7 @@ export function HLGHOrgRepoSelector(props: {
   defaultSelectedIds?: number[];
   onComplete?: (items: ItemType[]) => void;
 }) {
-  const { ownerId, defaultSelectedIds, onComplete, disabled } = props;
+  const { ownerId, defaultSelectedIds = [], onComplete, disabled } = props;
   const [repos, setRepos] = React.useState<ItemType[] | null>(defaultSelectedIds.length === 0 ? [] : null);
 
   React.useEffect(() => {
