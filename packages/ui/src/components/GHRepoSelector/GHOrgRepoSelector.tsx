@@ -277,31 +277,90 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                       value={text}
                       onChange={(e) => setText(e.target.value)}
                     />
-                    {/* -- default: all checked -- */}
-                    <div
-                      className={`relative cursor-default select-none py-2 pl-10 pr-4 text-[var(--text-color-subtitle)] text-sm hover:bg-[var(--list-item-active)] hover:text-[var(--text-color-active)]`}
-                      onClick={() => {
-                        setSelectedItems([]);
-                      }}
-                    >
-                      <>
-                        <span
-                          className={`block truncate ${
-                            selectedItems.length === 0
-                              ? 'font-medium'
-                              : 'font-normal'
-                          }`}
-                        >
-                          {allItem.name}
-                        </span>
-                        <input
-                          type='checkbox'
-                          checked={selectedItems.length === 0}
-                          readOnly
-                          className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 focus:ring-[var(--selector-border-color)] accent-[var(--selector-fill-color)]'
-                        />
-                      </>
-                    </div>
+                    {/* -- default: all repos -- */}
+                    {!deferredText && (
+                      <div
+                        className={`relative cursor-default select-none py-2 pl-10 pr-4 text-[var(--text-color-subtitle)] text-sm hover:bg-[var(--list-item-active)] hover:text-[var(--text-color-active)]`}
+                        onClick={() => {
+                          setSelectedItems([]);
+                        }}
+                      >
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selectedItems.length === 0
+                                ? 'font-medium'
+                                : 'font-normal'
+                            }`}
+                          >
+                            {allItem.name}
+                          </span>
+                          <input
+                            type='checkbox'
+                            checked={selectedItems.length === 0}
+                            readOnly
+                            className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 focus:ring-[var(--selector-border-color)] accent-[var(--selector-fill-color)]'
+                          />
+                        </>
+                      </div>
+                    )}
+                    {/* -- select: all filtered repos -- */}
+                    {deferredText && (
+                      <div
+                        className={`relative cursor-default select-none py-2 pl-10 pr-4 text-[var(--text-color-subtitle)] text-sm hover:bg-[var(--list-item-active)] hover:text-[var(--text-color-active)] ${
+                          filteredReposMemo.length === 0
+                            ? 'disabled opacity-50'
+                            : ''
+                        }`}
+                        onClick={() => {
+                          // empty result, disable select all
+                          if (filteredReposMemo.length === 0) return;
+                          // all selected, unselect all
+                          if (
+                            filteredReposMemo.every((i) =>
+                              selectedItems.includes(i)
+                            )
+                          ) {
+                            const result = selectedItems.filter(
+                              (i) => !filteredReposMemo.includes(i)
+                            );
+                            setSelectedItems(result);
+                            return;
+                          }
+                          // partial selected, select all
+                          const result = [
+                            ...selectedItems,
+                            ...filteredReposMemo.filter(
+                              (i) => !selectedItems.includes(i)
+                            ),
+                          ];
+                          setSelectedItems(result);
+                        }}
+                      >
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selectedItems.length === 0
+                                ? 'font-medium'
+                                : 'font-normal'
+                            }`}
+                          >
+                            {`Select all '${deferredText}'`}
+                          </span>
+                          <input
+                            type='checkbox'
+                            checked={
+                              filteredReposMemo.length > 0 &&
+                              filteredReposMemo.every((i) =>
+                                selectedItems.includes(i)
+                              )
+                            }
+                            readOnly
+                            className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 focus:ring-[var(--selector-border-color)] accent-[var(--selector-fill-color)]'
+                          />
+                        </>
+                      </div>
+                    )}
                     <div className='w-full my-2 border-t border-gray-300' />
                     {/* -- list all repos -- */}
                     <FixedSizeList
@@ -331,7 +390,9 @@ export function HLGHOrgRepoSelector(props: {
   onComplete?: (items: ItemType[]) => void;
 }) {
   const { ownerId, defaultSelectedIds = [], onComplete, disabled } = props;
-  const [repos, setRepos] = React.useState<ItemType[] | null>(defaultSelectedIds.length === 0 ? [] : null);
+  const [repos, setRepos] = React.useState<ItemType[] | null>(
+    defaultSelectedIds.length === 0 ? [] : null
+  );
 
   React.useEffect(() => {
     const init = async (ownerId: string | number) => {
