@@ -34,9 +34,15 @@ class ScrollspyContextClass {
       return;
     }
 
-    // Pick the first section with top boundary inside viewport and positioned in top half part
-    for (let section of this.sortedActiveSections) {
+    let nearestTopSection: ScrollspySection | undefined = undefined;
+
+    for (const section of this.sortedActiveSections) {
       const top = (section.runtime?.offsetTop ?? 9999999) - scrollTop;
+      // Record nearest section with top boundary outside viewport
+      if (top < 0) {
+        nearestTopSection = section;
+      }
+      // Pick the first section with top boundary inside viewport and positioned in top half part
       if (top > 0 && top < windowHeight / 2) {
         this.setCurrentSection(section);
         return;
@@ -44,7 +50,7 @@ class ScrollspyContextClass {
     }
 
     // If none, take the first active section
-    this.setCurrentSection(this.sortedActiveSections[0]);
+    this.setCurrentSection(nearestTopSection ?? this.sortedActiveSections[0]);
   };
 
   constructor () {}
