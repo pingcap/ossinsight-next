@@ -1,37 +1,91 @@
-import OrgNav from '@/components/Analyze/Navigation/OrgNav';
-import OrgBottomNav from '@/components/Analyze/Navigation/OrgBottomNav';
-import { OrgPageNavWrapper } from '@/components/Analyze/Navigation/OrgPageWrapper';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+'use client';
 
-export default function UserOrgAnalyzeLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { owner: string };
-}) {
-  const { owner } = params;
+import Navigation, { NavItemType } from '@/components/Analyze/Navigation/Navigation';
+import { ScrollspyContextProvider } from '@/components/Scrollspy';
+import { IssueOpenedIcon, PeopleIcon, StarIcon, TelescopeIcon, ToolsIcon } from '@primer/octicons-react';
 
+export default function UserOrgAnalyzeLayout ({ children }: { children: React.ReactNode; }) {
   return (
-    <>
-      <div className='flex'>
-        <div className='flex w-full flex-col md:flex-row'>
-          <aside className='bg-toolbar border-r md:min-h-[calc(100vh-var(--site-header-height))]'>
-            <div className='sticky top-[var(--site-header-height)] h-full overflow-y-auto max-h-[calc(100vh-var(--site-header-height))] styled-scrollbar'>
-              <OrgNav org={owner} />
+    <ScrollspyContextProvider>
+      <div className="flex">
+        <div className="flex w-full flex-col md:flex-row">
+          <aside className="bg-toolbar border-r md:min-h-[calc(100vh-var(--site-header-height))]">
+            <div className="sticky top-[var(--site-header-height)] h-full overflow-y-auto max-h-[calc(100vh-var(--site-header-height))] styled-scrollbar">
+              <Navigation items={navItems} />
             </div>
           </aside>
-          {/* <OrgPageNavWrapper org={owner}> */}
-          <main className='flex-1 block'>
+          <main className="flex-1 block">
             <div className={`p-8 max-w-[1200px] mx-auto`}>{children}</div>
-            <OrgBottomNav org={owner} />
           </main>
-          {/* </OrgPageNavWrapper> */}
         </div>
       </div>
-      {/* <footer className='bg-toolbar border-t'>
-        footer
-      </footer> */}
-    </>
+    </ScrollspyContextProvider>
   );
 }
+
+const navItems: NavItemType[] = [
+  {
+    id: 'overview',
+    title: 'Organization Overview',
+    anchor: 'overview',
+    Icon: TelescopeIcon,
+  },
+  {
+    id: 'popularity',
+    title: 'Popularity',
+    Icon: StarIcon,
+    children: [
+      {
+        id: 'star-growth',
+        title: 'Star Growth',
+        anchor: 'star-growth',
+      },
+    ],
+  },
+  {
+    id: 'participant',
+    title: 'Participant',
+    Icon: PeopleIcon,
+    children: [
+      {
+        id: 'engagement',
+        title: 'Engagement',
+        anchor: 'engagement',
+      },
+      {
+        id: 'origins',
+        title: 'Origins',
+        anchor: 'origins',
+      },
+    ],
+  },
+  {
+    id: 'productivity',
+    title: 'Productivity',
+    Icon: ToolsIcon,
+    children: [
+      {
+        id: 'pull-request-efficiency',
+        title: 'Pull Request Efficiency',
+        anchor: 'pull-request-efficiency',
+      },
+      {
+        id: 'code-review-efficiency',
+        title: 'Code Review Efficiency',
+        anchor: 'code-review-efficiency',
+      },
+      {
+        id: 'code-submission',
+        title: 'Code Submission',
+        anchor: 'code-submission',
+      },
+    ],
+  },
+  {
+    id: 'issue',
+    title: 'Issue',
+    Icon: IssueOpenedIcon,
+    anchor: 'issue',
+  },
+];
+

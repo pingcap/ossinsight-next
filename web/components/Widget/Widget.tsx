@@ -72,11 +72,6 @@ export default function Widget({
         'bg-body': colorScheme !== 'light',
         'p-4': !dense,
       })}
-      style={
-        {
-          // background: 'radial-gradient(50.4% 48.07% at 50.4% 51.93%, #6760A4 0%, rgb(31,30,40) 100%)',
-        }
-      }
     >
       <div
         className={clsx('rounded-xl max-w-full overflow-hidden', {

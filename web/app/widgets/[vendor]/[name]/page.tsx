@@ -1,19 +1,15 @@
-import { ServerWidget } from '@/components/Widget/server';
-import { widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
+import Widget from '@/components/Widget';
+import { fetchWidgetData, widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { Suspense } from 'react';
-import { makeLinkedData, widgetPageParams, WidgetPageProps, stringArrayRecord2UrlSearch } from './utils';
+import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps } from './utils';
 
-export default function page (props: WidgetPageProps) {
+export default async function page (props: WidgetPageProps) {
   const { name } = widgetPageParams(props.params);
-  const linkedData = makeLinkedData(name, props.searchParams);
-
+  const { data, linkedData, parameters } = await fetchWidgetData(name, props.searchParams);
   return (
-    <Suspense>
-      <ServerWidget className="WidgetContainer" name={name} searchParams={props.searchParams} linkedDataPromise={linkedData} />
-    </Suspense>
+    <Widget name={name} params={parameters} data={data} linkedData={linkedData} />
   );
 }
 

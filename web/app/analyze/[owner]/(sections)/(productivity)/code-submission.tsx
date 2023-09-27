@@ -18,6 +18,7 @@ export default function CodeSubmissionContent() {
       className='pt-8'
     >
       <SectionTemplate
+        id='code-submission'
         title='Code Submission'
         level={3}
         className='pt-8 flex flex-col gap-4'

@@ -12,6 +12,7 @@ export default function CodeReviewEfficiencyContent() {
       className='pt-8'
     >
       <SectionTemplate
+        id='code-review-efficiency'
         title='Code Review Efficiency'
         level={3}
         className='pt-8 flex flex-col gap-4'

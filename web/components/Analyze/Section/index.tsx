@@ -1,5 +1,6 @@
-import * as React from 'react';
+import { ScrollspySectionWrapper } from '@/components/Scrollspy';
 import clsx from 'clsx';
+import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export interface SectionTemplateProps {
@@ -11,22 +12,22 @@ export interface SectionTemplateProps {
   id?: string;
 }
 
-export default function SectionTemplate(props: SectionTemplateProps) {
+export default function SectionTemplate (props: SectionTemplateProps) {
   const { children, title, description, level = 1, id, className } = props;
 
   return (
-    <section className={twMerge(className)}>
-      <TitleWrapper level={level} id={id} className=''>
+    <ScrollspySectionWrapper anchor={id} className={twMerge(className)}>
+      <TitleWrapper level={level} id={id} className="">
         {title}
       </TitleWrapper>
-      {description && <p className=''>{description}</p>}
+      {description && <p className="">{description}</p>}
       {children}
-    </section>
+    </ScrollspySectionWrapper>
   );
 }
 
 // Max level is 3
-function TitleWrapper({
+function TitleWrapper ({
   children,
   level,
   className,
@@ -34,7 +35,7 @@ function TitleWrapper({
 }: {
   children: React.ReactNode;
   level: number;
-    className?: string;
+  className?: string;
   id?: string;
   [key: string]: any;
 }) {
@@ -43,6 +44,9 @@ function TitleWrapper({
       return (
         <h1
           className={clsx('text-title font-semibold pb-3 text-3xl', className)}
+          style={{
+            scrollMarginTop: '140px',
+          }}
           {...rest}
         >
           {children}
@@ -52,6 +56,9 @@ function TitleWrapper({
       return (
         <h2
           className={clsx('text-title font-semibold pb-3 text-2xl', className)}
+          style={{
+            scrollMarginTop: '140px',
+          }}
           {...rest}
         >
           {children}
@@ -62,6 +69,9 @@ function TitleWrapper({
       return (
         <h3
           className={clsx('text-title font-semibold pb-3 text-xl', className)}
+          style={{
+            scrollMarginTop: '140px',
+          }}
           {...rest}
         >
           {children}

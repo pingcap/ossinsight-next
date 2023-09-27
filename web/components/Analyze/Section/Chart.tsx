@@ -1,18 +1,14 @@
 'use client';
-import * as React from 'react';
+import { widgetPageParams } from '@/app/widgets/[vendor]/[name]/utils';
+
+import { EmbeddedWidget } from '@/components/EmbeddedWidget';
+import { ArrowUpRightIcon, CodeIcon } from '@primer/octicons-react';
 import NextLink from 'next/link';
-import { useSearchParams, usePathname } from 'next/navigation';
-import {
-  makeLinkedData,
-  widgetPageParams,
-  WidgetPageProps,
-} from '@/app/widgets/[vendor]/[name]/utils';
-import { ClientWidget } from '@/components/Analyze/Section/ClientWidget';
-import { CodeIcon, ArrowUpRightIcon } from '@primer/octicons-react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { AnalyzeOrgContext } from '@/components/Context/Analyze/AnalyzeOrg';
-import { ChartSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 
 export interface ChartTemplateProps {
   name: string;
@@ -24,7 +20,7 @@ export interface ChartTemplateProps {
   innerSectionId?: string;
 }
 
-export default function ChartTemplate(props: ChartTemplateProps) {
+export default function ChartTemplate (props: ChartTemplateProps) {
   const {
     name,
     searchParams = {},
@@ -67,11 +63,6 @@ export default function ChartTemplate(props: ChartTemplateProps) {
     return [combinedSearchParams, newSearchParams.toString()];
   }, [orgId, periodMemo, repoIdsMemo, searchParams]);
 
-  const linkedDataMemo = React.useMemo(
-    () => makeLinkedData(name, searchParamsMemo),
-    [name, searchParamsMemo]
-  );
-
   const classNameMemo = React.useMemo(
     () =>
       twMerge(
@@ -102,31 +93,27 @@ export default function ChartTemplate(props: ChartTemplateProps) {
         height: height ? `${height}px` : undefined,
       }}
     >
-      <ClientWidget
-        className='WidgetContainer'
+      <EmbeddedWidget
+        className="WidgetContainer"
         name={name}
-        searchParams={searchParamsMemo}
-        linkedDataPromise={linkedDataMemo}
-        showShadow={false}
-        showThemeSwitch={false}
-        dense
+        params={searchParamsMemo}
       />
-      <div className='absolute top-4 right-4 flex gap-2'>
+      <div className="absolute top-4 right-4 flex gap-2">
         {targetSectionLinkMemo && (
           <NextLink
             href={targetSectionLinkMemo}
-            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
+            className="w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center"
           >
-            <ArrowUpRightIcon className='w-3 h-3' />
+            <ArrowUpRightIcon className="w-3 h-3" />
           </NextLink>
         )}
         {targetWidgetLinkMemo && (
           <NextLink
-            target='_blank'
+            target="_blank"
             href={targetWidgetLinkMemo}
-            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
+            className="w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center"
           >
-            <CodeIcon className='w-3 h-3' />
+            <CodeIcon className="w-3 h-3" />
           </NextLink>
         )}
       </div>

@@ -8,6 +8,7 @@ import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 export default function IssueContent() {
   return (
     <SectionTemplate
+      id='issue'
       title='Issue'
       description={`Analyze your organization's issue management practices to gain insights into user feedback, suggestions, and discussions, indirectly revealing valuable product insights and user sentiments. Evaluate issue closure rates, response times, and active discussions to enhance organizational efficiency and collaboration while aligning with user needs for continuous improvement.`}
       level={2}

@@ -1,6 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import clsx from 'clsx';
-import { cloneElement, ReactElement, useEffect, useRef, useState } from 'react';
+import mergeRefs from 'merge-refs';
+import { cloneElement, forwardRef, ReactElement, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -12,7 +13,7 @@ interface SvgComponentProps extends WidgetReactVisualizationProps {
   linkedData: LinkedData;
 }
 
-export default function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme }: SvgComponentProps) {
+export default forwardRef(function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme }: SvgComponentProps, ref) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: 0,
@@ -46,6 +47,6 @@ export default function Svg ({ visualizer, data, parameters, linkedData, classNa
       ...el.props.style,
       ...style,
     },
-    ref: containerRef,
+    ref: mergeRefs(containerRef, ref),
   });
-}
+});

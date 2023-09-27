@@ -22,6 +22,7 @@ export default function StarGrowthContent() {
     >
       <SectionTemplate
         title='Star Growth'
+        id='star-growth'
         level={3}
         className='pt-8 flex flex-col gap-4'
       >
