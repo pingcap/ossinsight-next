@@ -15,12 +15,12 @@ export default function OrgAnalyzePageContent () {
     <>
       <Overview />
       <StarGrowth />
-      <Issue />
-      <Origins />
       <Engagement />
+      <Origins />
       <PRRequestEfficiency />
       <CodeReviewEfficiency />
       <CodeSubmissionEfficiency />
+      <Issue />
     </>
   );
 }
