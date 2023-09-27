@@ -17,7 +17,7 @@ import {
   SelectParamOption,
 } from '@ossinsight/ui/src/components/Selector/Select';
 
-import { getRepoInfoById } from '@/components/Analyze/utils';
+import { getRepoInfoByOwnerId } from '@/components/Analyze/utils';
 
 const options = [
   { key: 'past_7_days', title: 'Past 7 days' },
@@ -69,13 +69,29 @@ export default function OrgAnalyzePageHeaderAction() {
         setLoadingRepoFromUrl(false);
         return;
       }
-      const repoInfos = await Promise.all(
-        currentRepoIds.map((id) => getRepoInfoById(id))
+      const orgRepos = await getRepoInfoByOwnerId(orgId);
+      const repoInfos = currentRepoIds.reduce(
+        (
+          acc: {
+            id: number;
+            fullName: string;
+            defaultBranch: string;
+          }[],
+          cur: number
+        ) => {
+          const repoFullName = orgRepos[cur];
+          if (repoFullName) {
+            acc.push({
+              id: cur,
+              fullName: repoFullName,
+              defaultBranch: '',
+            });
+          }
+          return acc;
+        },
+        []
       );
-      const filteredRepoInfos = repoInfos.filter((r) =>
-        r.fullName.startsWith(`${orgName}/`)
-      );
-      setRepos(filteredRepoInfos);
+      setRepos(repoInfos);
       setLoadingRepoFromUrl(false);
     };
     handler();

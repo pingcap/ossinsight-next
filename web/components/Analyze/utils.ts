@@ -103,12 +103,36 @@ export const getUserInfo = (login: string | number) => {
     .then(handleOApi);
 };
 
-export const getRepoInfoById = (repoId: number | string) => {
-  return fetch(`${API_SERVER}${PATH_GET_REPO_BY_ID}${repoId}`)
-    .then(handleOApi)
-    .then((data) => ({
-      id: data.id,
-      fullName: data.full_name,
-      defaultBranch: data.default_branch,
-    }));
+// // ! TODO remove this, use getRepoInfoByOwnerId instead
+// export const getRepoInfoById = (repoId: number | string) => {
+//   return fetch(`${API_SERVER}${PATH_GET_REPO_BY_ID}${repoId}`)
+//     .then(handleOApi)
+//     .then((data) => ({
+//       id: data.id,
+//       fullName: data.full_name,
+//       defaultBranch: data.default_branch,
+//     }));
+// };
+
+export function getRepoListByOrgId(ownerId: number | string) {
+  return fetch(
+    `https://api.ossinsight.io/q/orgs/repos?ownerId=${ownerId}&format=array`
+  )
+    .then((res) => res.json())
+    .then((res: { data: [number, string][] }) => res.data);
+  // .then((res: { data: [number, string][] }) =>
+  //   res.data.map(([id, name]) => ({
+  //     id,
+  //     name: name.split('/')[1],
+  //     fullName: name,
+  //   }))
+  // );
+}
+
+export const getRepoInfoByOwnerId = async (ownerId: number | string) => {
+  const reposInfo = await getRepoListByOrgId(ownerId);
+  return reposInfo.reduce((acc: Record<number, string>, cur) => {
+    acc[cur[0]] = cur[1];
+    return acc;
+  }, {});
 };
