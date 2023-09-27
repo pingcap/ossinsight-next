@@ -16,14 +16,12 @@ export default function SectionTemplate (props: SectionTemplateProps) {
   const { children, title, description, level = 1, id, className } = props;
 
   return (
-    <ScrollspySectionWrapper id={id}>
-      <section className={twMerge(className)}>
-        <TitleWrapper level={level} id={id} className=''>
-          {title}
-        </TitleWrapper>
-        {description && <p className=''>{description}</p>}
-        {children}
-      </section>
+    <ScrollspySectionWrapper anchor={id} className={twMerge(className)}>
+      <TitleWrapper level={level} id={id} className="">
+        {title}
+      </TitleWrapper>
+      {description && <p className="">{description}</p>}
+      {children}
     </ScrollspySectionWrapper>
   );
 }
@@ -47,7 +45,7 @@ function TitleWrapper ({
         <h1
           className={clsx('text-title font-semibold pb-3 text-3xl', className)}
           style={{
-            scrollMarginTop: '140px'
+            scrollMarginTop: '140px',
           }}
           {...rest}
         >
@@ -59,7 +57,7 @@ function TitleWrapper ({
         <h2
           className={clsx('text-title font-semibold pb-3 text-2xl', className)}
           style={{
-            scrollMarginTop: '140px'
+            scrollMarginTop: '140px',
           }}
           {...rest}
         >
@@ -72,7 +70,7 @@ function TitleWrapper ({
         <h3
           className={clsx('text-title font-semibold pb-3 text-xl', className)}
           style={{
-            scrollMarginTop: '140px'
+            scrollMarginTop: '140px',
           }}
           {...rest}
         >

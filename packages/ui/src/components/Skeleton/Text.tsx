@@ -15,7 +15,7 @@ export function TextSkeleton ({ className, color, visualCharacter = '\u2003', ch
   const content = useMemo(() => visualCharacter.repeat(characters), [visualCharacter, characters]);
   return (
     <span className={clsx('inline-block', className)} style={style}>
-      <span className="inline skeleton rounded select-none" style={{ backgroundColor: color }}>
+      <span className="inline skeleton rounded select-none" style={{ backgroundColor: color ?? 'currentcolor' }}>
         {children ?? content}
       </span>
     </span>

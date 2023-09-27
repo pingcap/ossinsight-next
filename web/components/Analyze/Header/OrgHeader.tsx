@@ -1,4 +1,5 @@
 'use client';
+import { TextSkeleton } from '@ossinsight/ui/src/components/Skeleton';
 import * as React from 'react';
 import NextImage from 'next/image';
 import {
@@ -41,7 +42,10 @@ export default function OrgAnalyzePageHeader() {
           <OrganizationIcon size={8} /> Organization
         </span>
       </h1>
-      <p className='my-4'>{data?.bio || ''}</p>
+      <p className='my-4'>
+        {loading && <TextSkeleton characters={42} />}
+        {data?.bio || ''}
+      </p>
 
       {/* -- status bar -- */}
       <div className='flex gap-6 flex-wrap flex-col md:flex-row md:items-end'>
@@ -70,7 +74,7 @@ export default function OrgAnalyzePageHeader() {
             <span className='relative inline-flex rounded-full h-3 w-3 bg-green-500'></span>
           </span>
           <span>Last active at</span>
-          {loading && <ValueSkeleton />}
+          {loading && <TextSkeleton characters={4} className='text-title' />}
           {!loading && data?.last_event_at && (
             <span className='text-title'>{`${beautifySeconds(
               calcDateDiff(new Date(data.last_event_at))
@@ -105,7 +109,7 @@ const LabelItemWithCount = ({
     <div className='flex gap-2 items-center cursor-default'>
       {icon && <div className=''>{icon}</div>}
       {!loading && <div className='text-title'>{formatNumber(count)}</div>}
-      {loading && <ValueSkeleton />}
+      {loading && <TextSkeleton characters={2} className='text-title' />}
       <div className='inline-flex items-center'>
         {label}
         {description && (
@@ -121,18 +125,6 @@ const LabelItemWithCount = ({
         )}
       </div>
     </div>
-  );
-};
-
-const ValueSkeleton = (props: { className?: string }) => {
-  const { className } = props;
-  return (
-    <div
-      className={twMerge(
-        'text-title animate-pulse h-4 w-6 bg-slate-200 dark:bg-slate-700 rounded',
-        className
-      )}
-    ></div>
   );
 };
 

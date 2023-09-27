@@ -331,7 +331,7 @@ export function HLGHOrgRepoSelector(props: {
   onComplete?: (items: ItemType[]) => void;
 }) {
   const { ownerId, defaultSelectedIds, onComplete, disabled } = props;
-  const [repos, setRepos] = React.useState<ItemType[] | null>(null);
+  const [repos, setRepos] = React.useState<ItemType[] | null>(defaultSelectedIds.length === 0 ? [] : null);
 
   React.useEffect(() => {
     const init = async (ownerId: string | number) => {

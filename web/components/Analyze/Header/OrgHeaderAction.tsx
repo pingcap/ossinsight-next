@@ -28,20 +28,21 @@ const options = [
 ];
 
 export default function OrgAnalyzePageHeaderAction() {
+  const searchParams = useSearchParams();
+
   const [repos, setRepos] = React.useState<
     Omit<RemoteRepoInfo, 'defaultBranch'>[]
   >([]);
   const [loadingRepoFromUrl, setLoadingRepoFromUrl] =
     React.useState<boolean>(true);
-  const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>([]);
-  const [currentPeriod, setCurrentPeriod] = React.useState<string>();
+  const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>(stringArray2NumberArray(searchParams.getAll('repoIds')) || []);
+  const [currentPeriod, setCurrentPeriod] = React.useState<string>(searchParams.get('period') || options[0].key);
   // options[1].key
 
   const { orgName, orgId } =
     React.useContext<AnalyzeOrgContextProps>(AnalyzeOrgContext);
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   React.useEffect(() => {
     setCurrentRepoIds(
