@@ -1,11 +1,11 @@
 'use client';
-import * as React from 'react';
-
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
+import { MainSideGridTemplate } from '@/components/Analyze/Section/gridTemplates/MainSideGridTemplate';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import * as React from 'react';
 
-export default function EngagementContent() {
+export default function EngagementContent () {
   return (
     <SectionTemplate
       id="engagement"
@@ -13,13 +13,12 @@ export default function EngagementContent() {
       level={3}
       className="pt-8 flex flex-col gap-4"
     >
-      <div className="flex gap-4 flex-wrap w-full overflow-x-auto">
+      <MainSideGridTemplate>
         <ChartTemplate
           name="@ossinsight/widget-compose-org-participants-growth"
           searchParams={{
             activity: 'active',
           }}
-          width={getWidgetSize().widgetWidth(9)}
           height={getWidgetSize().widgetWidth(4)}
         />
         <ChartTemplate
@@ -27,17 +26,15 @@ export default function EngagementContent() {
           searchParams={{
             activity: 'participants',
           }}
-          width={getWidgetSize().widgetWidth(3)}
           height={getWidgetSize().widgetWidth(4)}
         />
-      </div>
-      <div className="flex gap-4 flex-wrap w-full overflow-x-auto">
+      </MainSideGridTemplate>
+      <MainSideGridTemplate>
         <ChartTemplate
           name="@ossinsight/widget-compose-org-participants-growth"
           searchParams={{
             activity: 'new',
           }}
-          width={getWidgetSize().widgetWidth(9)}
           height={getWidgetSize().widgetWidth(4)}
         />
         <ChartTemplate
@@ -45,26 +42,21 @@ export default function EngagementContent() {
           searchParams={{
             activity: 'participants',
           }}
-          width={getWidgetSize().widgetWidth(3)}
           height={getWidgetSize().widgetWidth(4)}
         />
-      </div>
-      <div className="w-full overflow-x-auto">
-        <ChartTemplate
-          name="@ossinsight/widget-compose-org-participants-roles-ratio"
-          searchParams={{}}
-          width={getWidgetSize().widgetWidth(12)}
-          height={getWidgetSize().widgetWidth(3)}
-        />
-      </div>
-      <div className="w-full overflow-x-auto">
-        <ChartTemplate
-          name="@ossinsight/widget-compose-org-engagement-scatter"
-          searchParams={{}}
-          width={getWidgetSize().widgetWidth(12)}
-          height={getWidgetSize().widgetWidth(6)}
-        />
-      </div>
+      </MainSideGridTemplate>
+      <ChartTemplate
+        name="@ossinsight/widget-compose-org-participants-roles-ratio"
+        className="w-full"
+        searchParams={{}}
+        height={getWidgetSize().widgetWidth(3)}
+      />
+      <ChartTemplate
+        name="@ossinsight/widget-compose-org-engagement-scatter"
+        className="w-full"
+        searchParams={{}}
+        height={getWidgetSize().widgetWidth(6)}
+      />
     </SectionTemplate>
   );
 }

@@ -14,7 +14,7 @@ export default function OrgAnalyzePageContent () {
       <StarGrowth />
       <ParticipantSection />
       <ProductivitySection />
-      <Issue />
+      {/*<Issue />*/}
     </>
   );
 }

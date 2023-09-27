@@ -46,16 +46,15 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
   }, []);
 
   const items = useMemo(() => {
-    const { width, height } = size;
     return visualizer.default(data, {
-      ...createVisualizationContext({ width, height, dpr, colorScheme }),
+      ...createVisualizationContext({ ...size, dpr, colorScheme }),
       ...createWidgetContext('client', parameters, linkedData),
     });
-  }, [size.width, size.height, dpr, data, colorScheme]);
+  }, [size, dpr, data, colorScheme]);
 
   const itemNames = useMemo(() => {
     return items.map(i => i.widget).join(',');
-  }, []);
+  }, [items]);
 
   const visualizerPromise = useMemo(() => {
     return Promise.all(items.map(item => {

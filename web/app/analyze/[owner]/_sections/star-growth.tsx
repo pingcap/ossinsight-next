@@ -1,4 +1,5 @@
 'use client';
+import { MainSideGridTemplate } from '@/components/Analyze/Section/gridTemplates/MainSideGridTemplate';
 import * as React from 'react';
 
 import SectionTemplate from '@/components/Analyze/Section';
@@ -26,55 +27,51 @@ export default function StarGrowthContent() {
         level={3}
         className='pt-8 flex flex-col gap-4'
       >
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+        <MainSideGridTemplate>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-growth'
             searchParams={{
               activity: 'stars',
             }}
-            width={getWidgetSize().widgetWidth(9)}
             height={getWidgetSize().widgetWidth(4)}
           />
           <ChartTemplate
             name='@ossinsight/widget-compose-org-stars-top-repos'
             searchParams={{}}
-            width={getWidgetSize().widgetWidth(3)}
             height={getWidgetSize().widgetWidth(4)}
           />
-        </div>
+        </MainSideGridTemplate>
 
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+        <MainSideGridTemplate>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-company'
             searchParams={{
               activity: 'stars',
               role: 'participants'
             }}
-            width={getWidgetSize().widgetWidth(9)}
             height={405}
           />
           <CompanyRankTable
             id={orgId}
             type='stars'
-            className={`w-[272px] h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
-        </div>
+        </MainSideGridTemplate>
 
-        <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+        <MainSideGridTemplate>
           <ChartTemplate
             name='@ossinsight/widget-compose-org-activity-map'
             searchParams={{
               activity: 'stars',
               role: 'participants'
             }}
-            width={getWidgetSize().widgetWidth(9)}
             height={365}
           />
           <GeoRankTable
             id={orgId}
-            className={`w-[272px] h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
-        </div>
+        </MainSideGridTemplate>
       </SectionTemplate>
     </SectionTemplate>
   );

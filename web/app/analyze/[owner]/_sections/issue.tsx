@@ -1,4 +1,6 @@
 'use client';
+import { MainSideGridTemplate } from '@/components/Analyze/Section/gridTemplates/MainSideGridTemplate';
+import { SplitTemplate } from '@/components/Analyze/Section/gridTemplates/SplitTemplate';
 import * as React from 'react';
 
 import SectionTemplate from '@/components/Analyze/Section';
@@ -14,13 +16,12 @@ export default function IssueContent() {
       level={2}
       className='pt-8 flex flex-col gap-4'
     >
-      <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+      <MainSideGridTemplate inverse>
         <ChartTemplate
           name='@ossinsight/widget-compose-org-productivity-ratio'
           searchParams={{
             activity: 'issues/closed',
           }}
-          width={getWidgetSize().widgetWidth(3)}
           height={getWidgetSize().widgetWidth(3)}
         />
         <ChartTemplate
@@ -28,17 +29,15 @@ export default function IssueContent() {
           searchParams={{
             activity: 'issues',
           }}
-          width={getWidgetSize().widgetWidth(9)}
           height={getWidgetSize().widgetWidth(3)}
         />
-      </div>
-      <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
+      </MainSideGridTemplate>
+      <SplitTemplate>
         <ChartTemplate
           name='@ossinsight/widget-compose-org-activity-open-to-close'
           searchParams={{
             activity: 'issues',
           }}
-          width={getWidgetSize().widgetWidth(6)}
           height={274}
         />
         <ChartTemplate
@@ -46,10 +45,9 @@ export default function IssueContent() {
           searchParams={{
             activity: 'issues',
           }}
-          width={getWidgetSize().widgetWidth(6)}
           height={274}
         />
-      </div>
+      </SplitTemplate>
       <div className='flex gap-4 flex-wrap w-full overflow-x-auto'>
         <ChartTemplate
           name='@ossinsight/widget-analyze-org-activity-action-top-repos'

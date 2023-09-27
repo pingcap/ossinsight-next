@@ -86,8 +86,8 @@ class ScrollspyContextClass {
         this.io.unobserve(s.el);
         this.activeSections.delete(s);
         this.sortActiveSections();
+        this.ro.unobserve(s.el);
       }
-      this.ro.unobserve(s.el);
     }
   }
 

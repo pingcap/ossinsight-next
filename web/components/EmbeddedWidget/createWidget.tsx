@@ -1,4 +1,3 @@
-import siteConfig from '@/site.config';
 import { createDefaultComposeLayout, widgetMetadataGenerator, widgetVisualizer } from '@/utils/widgets';
 import { ColorSchemeContext } from '@ossinsight/ui/src/components/ColorScheme/context';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
@@ -31,9 +30,9 @@ export async function createWidget (name: string) {
       return visualizer.computeDynamicHeight?.(data);
     }, [data]);
 
-    const width = visualizer.width ?? siteConfig.sizes.default.width;
+    const width = visualizer.width ?? 0;
     const height =
-      dynamicHeight ?? visualizer.height ?? siteConfig.sizes.default.height;
+      dynamicHeight ?? visualizer.height ?? 0;
 
     const finalVisualizer = (() => {
       if (visualizer.type !== 'compose') {
@@ -50,23 +49,21 @@ export async function createWidget (name: string) {
           },
         });
       }
-
       return visualizer;
     })();
 
     return (
-      <div ref={forwardedRef}>
-        <WidgetVisualization
-          className={className}
-          style={style}
-          type={finalVisualizer.type}
-          visualizer={finalVisualizer}
-          data={data}
-          parameters={params}
-          linkedData={linkedData}
-          colorScheme={colorScheme}
-        />
-      </div>
+      <WidgetVisualization
+        className={className}
+        style={style}
+        type={finalVisualizer.type}
+        visualizer={finalVisualizer}
+        data={data}
+        parameters={params}
+        linkedData={linkedData}
+        colorScheme={colorScheme}
+        ref={forwardedRef}
+      />
     );
   });
 

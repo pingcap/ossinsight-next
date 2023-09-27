@@ -136,5 +136,5 @@ export default function (
 
 export const type = 'compose';
 
-export const width = getWidgetSize().widgetWidth(6);
-export const height = 272;
+// export const width = getWidgetSize().widgetWidth(6);
+// export const height = 272;
