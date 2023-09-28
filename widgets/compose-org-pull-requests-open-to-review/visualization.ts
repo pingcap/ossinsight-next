@@ -64,7 +64,7 @@ export default function (
         widget('builtin:label-value', undefined, {
           label: fmtHours(current_period_medium),
           value:
-            percentage >= 0 ? `↑${percentage * 100}%` : `↓${percentage * 100}%`,
+            percentage >= 0 ? `↑${(percentage * 100).toFixed(0)}%` : `↓${(percentage * 100).toFixed(0)}%`,
           labelProps: {
             style: {
               fontSize: 24,
