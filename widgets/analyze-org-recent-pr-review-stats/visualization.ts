@@ -46,9 +46,9 @@ export default function (
       axisLine: {
         show: false,
       },
-      axisLabel: {
-        show: false,
-      },
+      // axisLabel: {
+      //   show: false,
+      // },
       axisTick: {
         show: false,
       },
@@ -57,7 +57,13 @@ export default function (
       type: 'value',
       show: false,
     },
-    grid: simpleGrid(2),
+    grid: {
+      left: 2,
+      top: 30,
+      right: 20,
+      bottom: 2,
+      containLabel: true,
+    },
     aria: enableDecal && {
       enabled: true,
       decal: {
@@ -69,7 +75,7 @@ export default function (
         type: 'bar',
         name: 'Current period',
         encode: {
-          x: 'idx',
+          x: 'current_period_day',
           y: 'current_period_day_total',
         },
         itemStyle: {
@@ -99,7 +105,7 @@ export default function (
         type: 'bar',
         name: 'Last period',
         encode: {
-          x: 'idx',
+          x: 'current_period_day',
           y: 'past_period_day_total',
         },
         itemStyle: {
@@ -117,11 +123,18 @@ export default function (
       },
     ],
     tooltip: {
-      show: false,
       trigger: 'axis',
       axisPointer: {
         type: 'line',
       },
+    },
+    legend: {
+      show: true,
+      type: 'scroll',
+      orient: 'horizontal',
+      top: 0,
+      itemWidth: 5,
+      itemHeight: 5,
     },
   };
 }

@@ -120,15 +120,25 @@ export default function (
   return {
     tooltip: {
       trigger: 'item',
-      position: 'inside',
+      position: function (pos, params, dom, rect, size) {
+        // tooltip will be fixed on the right if mouse hovering on the left,
+        // and on the left if hovering on the right.
+        var obj = { top: 60 };
+        obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
+        return obj;
+      },
       formatter: (params) => {
         const { name, value } = params;
-        if (activity === 'pull-requests/merged') {
+        if (activity === 'pull-requests/merged' && name === 'self-merged') {
           return `<b>${name}</b>
             <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>
             <br />
             <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and merged by the original PR author</div>
           `;
+        }
+        if (activity === 'pull-requests/merged') {
+          return `<b>${name}</b>
+            <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
         }
         if (activity === 'reviews/reviewed') {
           return `<b>${name}</b>
@@ -136,7 +146,9 @@ export default function (
         }
         if (activity === 'issues/closed') {
           return `<b>${name}</b>
-            <div>${value} Issues(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
+            <div>${value} Issues(${((value / sum[0]) * 100).toFixed(
+            0
+          )}%)</div>`;
         }
         return `${name}: ${value}`;
       },

@@ -147,7 +147,7 @@ export default function (
       axisLabel: {
         formatter: (value: string) => {
           return `${DateTime.fromJSDate(new Date(value)).toFormat(
-            'MM-dd-yyyy'
+            'yyyy-MM-dd'
           )}`;
         },
       },
@@ -159,7 +159,7 @@ export default function (
     grid: {
       left: 2,
       top: 30,
-      right: 2,
+      right: 20,
       bottom: 2,
       containLabel: true,
     },
@@ -169,6 +169,16 @@ export default function (
       trigger: 'axis',
       axisPointer: {
         type: 'line',
+      },
+      formatter: (params) => {
+        const { value = {} } = params[0];
+        const { date, closed, opened } = value;
+        const parsedDate = DateTime.fromJSDate(new Date(date)).toFormat(
+          'yyyy-MM-dd'
+        );
+        return `<b>${parsedDate}</b>
+        <div>Closed: ${closed}</div>
+        <div>opened: ${opened}</div>`;
       },
     },
     legend: {

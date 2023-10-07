@@ -73,7 +73,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
     default:
       return {
         data: (data as ParticipantDataPoint[]).slice(0, 5),
-        title: 'Top Participants',
+        title: 'Top New Participants',
         subtitle: ' ',
         label: 'Name',
         value: 'Activity Count',
