@@ -92,6 +92,7 @@ export default function (
             },
           },
           column: false,
+          tooltip: 'Medium time',
         }).flex(0.2),
         widget(
           '@ossinsight/widget-analyze-org-activity-open-to-close',

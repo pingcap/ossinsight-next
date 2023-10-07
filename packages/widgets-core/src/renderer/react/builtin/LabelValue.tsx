@@ -11,12 +11,13 @@ export function LabelValue({
   labelProps = {},
   valueProps = {},
   column = true,
+  tooltip = '',
 }: BuiltinProps<'builtin:label-value'>) {
   const { Label, Value } = useTheme(colorScheme);
 
   return (
     <div
-      className={clsx(className, 'flex items-start gap-1', {
+      className={clsx(className, 'group flex items-start gap-1', {
         'flex-col': column,
       })}
       style={{ zIndex: 1, ...style }}
@@ -28,11 +29,22 @@ export function LabelValue({
           color: Label.color,
           overflow: 'visible',
           whiteSpace: 'nowrap',
+          position: 'relative',
           ...labelProps.style,
         }}
         className={labelProps.className}
       >
         {typeof label === 'number' ? formatNumber(label) : label || ''}
+        {tooltip && (
+          <span
+            className={clsx(
+              'invisible group-hover:visible w-auto h-auto px-4 py-2 bg-[var(--background-color-popover)] text-[var(--text-color-content)] rounded absolute text-sm top-[150%] left-0',
+              `after:content-[' '] after:absolute after:top-0 after:top-[-10px] after:left-1/2 after:border-transparent after:border-b-[var(--background-color-popover)] after:border-solid after:border-[5px]`
+            )}
+          >
+            {tooltip}
+          </span>
+        )}
       </span>
       <span
         style={{

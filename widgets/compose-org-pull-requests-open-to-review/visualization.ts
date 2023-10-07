@@ -82,6 +82,7 @@ export default function (
             },
           },
           column: false,
+          tooltip: 'Medium time',
         }).flex(0.2),
         widget(
           '@ossinsight/widget-analyze-org-pull-requests-open-to-review',

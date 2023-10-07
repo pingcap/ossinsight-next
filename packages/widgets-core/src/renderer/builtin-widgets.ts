@@ -15,6 +15,7 @@ export interface BuiltinWidgetsMap {
       className?: string;
     };
     column?: boolean;
+    tooltip?: string;
   };
   'builtin:label': { label: string | number };
   'builtin:empty': {};
