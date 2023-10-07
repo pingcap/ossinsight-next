@@ -30,7 +30,7 @@ export default function OrgAnalyzePageHeader() {
       {/* -- header -- */}
       <h1 className='font-semibold text-3xl	text-title inline-flex items-center cursor-default'>
         <NextImage
-          src={`https://github.com/${orgName}.png`}
+          src={`https://avatars.githubusercontent.com/u/${orgId}`}
           alt={`${orgName} logo`}
           className='inline mr-[10px]'
           width={40}
