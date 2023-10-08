@@ -22,9 +22,6 @@ class ScrollspyContextClass {
   currentSection: ScrollspySection | null = null;
   private currentSectionSubscribers: (ScrollspySubscribeFn)[] = [];
 
-  // TEMP FIX
-  private _shouldEnableAfterRegister = false;
-
   private onScroll = () => {
     if (this.sortedActiveSections.length === 0) {
       this.setCurrentSection(null);
@@ -76,13 +73,8 @@ class ScrollspyContextClass {
     if (this.enabled) {
       this.io.observe(el);
       this.onScroll();
-    } else {
-      if (this._shouldEnableAfterRegister) {
-        this._shouldEnableAfterRegister = false;
-        this.enable();
-      }
     }
-    this.ro.observe(el);
+    this.ro.unobserve(el);
   }
 
   unregister (id: string) {
@@ -134,10 +126,6 @@ class ScrollspyContextClass {
   }
 
   enable () {
-    if (!this.ro) {
-      this._shouldEnableAfterRegister = true;
-      return;
-    }
     if (this.enabled) {
       return;
     }
