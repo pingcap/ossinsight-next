@@ -145,7 +145,7 @@ export function HeaderAnalyzeSelector(props: HeaderAnalyzeSelectorProps) {
       <button
         type='button'
         onClick={openModal}
-        className='inline-flex items-center gap-2 w-full max-w-[12rem] rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-[var(--border-color-default)]'
+        className='inline-flex items-center gap-2 w-full max-w-[12rem] rounded-md border-0 py-1.5 px-2 shadow-sm ring-1 ring-inset ring-[var(--border-color-default)] whitespace-nowrap'
       >
         <SearchIcon />
         Search ...

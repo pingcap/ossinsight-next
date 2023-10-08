@@ -68,30 +68,27 @@ export default function (
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       vertical(
-        horizontal(
-          widget('builtin:label-value', undefined, {
-            label: currentSum,
-            labelProps: {
-              style: {
-                fontSize: 24,
-                fontWeight: 'bold',
-              },
+        widget('builtin:label-value', undefined, {
+          label: currentSum,
+          value: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
+          labelProps: {
+            style: {
+              fontSize: 24,
+              fontWeight: 'bold',
             },
-          }).flex(0.5),
-          widget('builtin:label-value', undefined, {
-            label: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
-            labelProps: {
-              style: {
-                fontSize: 12,
-                lineHeight: 2,
-                color:
-                  diff >= 0
-                    ? ctx.theme.colors.green['400']
-                    : ctx.theme.colors.red['400'],
-              },
+          },
+          valueProps: {
+            style: {
+              fontSize: 12,
+              lineHeight: 2,
+              color:
+                diff >= 0
+                  ? ctx.theme.colors.green['400']
+                  : ctx.theme.colors.red['400'],
             },
-          }).flex(0.3)
-        ),
+          },
+          column: false,
+        }),
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],

@@ -43,7 +43,7 @@ const NavList = (props: {
   return (
     <ul
       className={clsx('w-full flex md:flex-col md:w-[var(--site-left-nav-width)]', {
-        'sticky overflow-x-auto lg:h-full pt-8': depth === 0,
+        'sticky overflow-x-auto lg:h-full md:pt-8': depth === 0,
       })}
     >
       {items.map((item) => {

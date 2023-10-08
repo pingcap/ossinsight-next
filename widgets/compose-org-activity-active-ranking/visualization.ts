@@ -125,43 +125,26 @@ export default function (
         title,
         subtitle,
       }).fix(HEADER_HEIGHT),
-      // widget('builtin:label-value', undefined, {
-      //   label: current_period_total,
-      //   value:
-      //     growth_percentage >= 0
-      //       ? `↑${percentage.toFixed(2)}%`
-      //       : `↓${percentage.toFixed(2)}%`,
-      //   labelProps: {
-      //     style: {
-      //       fontSize: 24,
-      //       fontWeight: 'bold',
-      //     },
-      //   },
-      //   valueProps: {
-      //     style: {
-      //       fontSize: 12,
-      //       lineHeight: 2,
-      //       color:
-      //         growth_percentage >= 0
-      //           ? ctx.theme.colors.green['400']
-      //           : ctx.theme.colors.red['400'],
-      //     },
-      //   },
-      //   column: false,
-      // }).flex(0.2),
-      horizontal(
-        widget('builtin:label-value', undefined, {
-          label,
-          value: '',
-        }).flex(0.5),
-        widget('builtin:label-value', undefined, {
-          label: value,
-          value: '',
-          labelProps: {
+
+      widget('builtin:label-value', undefined, {
+        label,
+        value,
+        labelProps: {
+          style: {
+            fontSize: 12,
+            fontWeight: 'normal',
+          },
+        },
+        valueProps: {
+          style: {
+            fontSize: 12,
+            fontWeight: 'normal',
+            // color: ctx.theme.colors.green['400'],
             marginLeft: 'auto',
-          }
-        }).flex(0.3),
-      ).flex(0.1),
+          },
+        },
+        column: false,
+      }).flex(0.1),
       nonEmptyDataWidget(data, () =>
         horizontal(
           vertical(
