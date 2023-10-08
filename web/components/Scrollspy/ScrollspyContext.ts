@@ -72,9 +72,9 @@ class ScrollspyContextClass {
     this.sectionsMap.set(el, section);
     if (this.enabled) {
       this.io.observe(el);
+      this.ro.observe(el);
       this.onScroll();
     }
-    this.ro.observe(el);
   }
 
   unregister (id: string) {
