@@ -25,7 +25,7 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
     width: visualizer.width ?? 0,
     height: visualizer.height ?? 0,
   }));
-  const [resolvedVisualizers, setResolvedVisualizers] = useState<VisualizerModule<any, any, any, any>[]>([]);
+  const [resolvedVisualizers, setResolvedVisualizers] = useState<(VisualizerModule<any, any, any, any> | undefined)[]>([]);
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState<ComposeVisualizationConfig>([]);
   const mountedRef = useRef(true);
