@@ -69,5 +69,5 @@ export async function createWidget (name: string) {
 
   Widget.displayName = `Widget:${name}`;
 
-  return Widget;
+  return { default: Widget };
 }

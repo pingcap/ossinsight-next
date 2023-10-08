@@ -1,7 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
-import { dispose, EChartsOption, EChartsType, init } from 'echarts';
+import { EChartsOption, EChartsType, init } from 'echarts';
 import mergeRefs from 'merge-refs';
-import { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
+import { ForwardedRef, forwardRef, RefObject, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -19,24 +19,36 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
   const echartsRef = useRef<EChartsType>();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ec = echartsRef.current = init(containerRef.current!, colorScheme === 'auto' ? 'dark' : colorScheme, {});
+  const size = useSize(containerRef);
 
-    const ro = new ResizeObserver(([entry]) => {
-      const { width, height } = entry.contentRect;
-      ec.resize({
-        width,
-        height,
-      });
-    });
-    ro.observe(containerRef.current!);
+  // create or resize echarts instance
+  useEffect(() => {
+    let ec = echartsRef.current;
+    if (ec) {
+      if (isAvailableSize(size)) {
+        ec.resize(size);
+      } else {
+        ec.dispose();
+        echartsRef.current = undefined;
+      }
+    } else if (isAvailableSize(size)) {
+      ec = echartsRef.current = init(containerRef.current!, colorScheme === 'auto' ? 'dark' : colorScheme, {});
+    }
+  }, [colorScheme, size]);
+
+  // dispose echarts instance if exists
+  useEffect(() => {
     return () => {
-      ro.disconnect();
-      dispose(ec);
+      if (echartsRef.current) {
+        echartsRef.current.dispose();
+      }
     };
-  }, [colorScheme]);
+  }, []);
 
   useEffect(() => {
+    if (!isAvailableSize(size)) {
+      return;
+    }
     const { clientWidth: width, clientHeight: height } = containerRef.current!;
 
     const option = visualizer.default(data, {
@@ -44,7 +56,7 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       ...createWidgetContext('client', parameters, linkedData),
     });
     echartsRef.current!.setOption(option);
-  }, [data, visualizer, parameters, colorScheme]);
+  }, [data, visualizer, parameters, colorScheme, size]);
 
   return (
     <div
@@ -53,6 +65,30 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       ref={mergeRefs(containerRef, ref)}
     />
   );
+}
+
+const INITIAL_SIZE = { width: 0, height: 0 };
+
+function useSize (ref: RefObject<HTMLDivElement | null>) {
+  const [size, setSize] = useState(INITIAL_SIZE);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (el) {
+      const ro = new ResizeObserver(([entry]) => {
+        setSize(entry.contentRect);
+      });
+
+      ro.observe(el);
+      return () => ro.disconnect();
+    }
+  }, []);
+
+  return size;
+}
+
+function isAvailableSize (size: typeof INITIAL_SIZE) {
+  return size.width > 0 && size.height > 0;
 }
 
 export default forwardRef(EChartsComponent);
