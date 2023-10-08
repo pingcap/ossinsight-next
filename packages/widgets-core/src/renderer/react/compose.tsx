@@ -3,7 +3,7 @@
 import { visualizers } from '@ossinsight/widgets';
 import { ComposeVisualizationConfig, VisualizerModule } from '@ossinsight/widgets-types';
 import mergeRefs from 'merge-refs';
-import { cloneElement, createElement, ForwardedRef, forwardRef, ReactElement, use, useEffect, useMemo, useRef, useState } from 'react';
+import { cloneElement, createElement, ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -25,6 +25,10 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
     width: visualizer.width ?? 0,
     height: visualizer.height ?? 0,
   }));
+  const [resolvedVisualizers, setResolvedVisualizers] = useState<(VisualizerModule<any, any, any, any> | undefined)[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [config, setConfig] = useState<ComposeVisualizationConfig>([]);
+  const mountedRef = useRef(true);
 
   const fixedSize = !!(visualizer.width && visualizer.height);
 
@@ -45,28 +49,38 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
     };
   }, []);
 
-  const items = useMemo(() => {
-    const { width, height } = size;
-    return visualizer.default(data, {
-      ...createVisualizationContext({ width, height, dpr, colorScheme }),
-      ...createWidgetContext('client', parameters, linkedData),
-    });
-  }, [size.width, size.height, dpr, data, colorScheme]);
+  useEffect(() => {
+    if (size.width === 0 || size.height === 0) {
+      setConfig([]);
+    } else {
+      const items = visualizer.default(data, {
+        ...createVisualizationContext({ ...size, dpr, colorScheme }),
+        ...createWidgetContext('client', parameters, linkedData),
+      });
+      setConfig(items);
+      setLoading(true);
+      Promise
+        .all(items.map(item => {
+          if (item.widget.startsWith('builtin:')) {
+            return undefined;
+          }
+          return visualizers[item.widget]();
+        }))
+        .then(resolvedVisualizers => {
+          if (mountedRef.current) {
+            setResolvedVisualizers(resolvedVisualizers);
+            setLoading(false);
+          }
+        });
+    }
+  }, [size, dpr, data, colorScheme]);
 
-  const itemNames = useMemo(() => {
-    return items.map(i => i.widget).join(',');
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
-
-  const visualizerPromise = useMemo(() => {
-    return Promise.all(items.map(item => {
-      if (item.widget.startsWith('builtin:')) {
-        return undefined;
-      }
-      return visualizers[item.widget]();
-    }));
-  }, [itemNames]);
-
-  const resolvedVisualizers = use(visualizerPromise);
 
   return (
     <div
@@ -85,10 +99,13 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
         boxShadow: '0px 4px 4px 0px rgba(36, 39, 56, 0.25)',
       }}
     >
-      {items.map(({ parameters, widget, data, ...props }, i) => {
+      {config.map(({ parameters, widget, data, ...props }, i) => {
         if (widget.startsWith('builtin:')) {
           return <Builtin key={i} className="absolute" style={props} name={widget as any} colorScheme={colorScheme}  {...parameters} />;
         } else {
+          if (loading) {
+            return undefined;
+          }
           const el = createElement(render, {
             dynamicHeight: undefined,
             className: undefined,
@@ -113,4 +130,4 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
       })}
     </div>
   );
-})
+});

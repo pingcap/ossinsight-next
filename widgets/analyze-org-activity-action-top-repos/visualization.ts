@@ -167,5 +167,5 @@ export default function (
 
 export const type = 'echarts';
 
-export const width = getWidgetSize().widgetWidth(6);
-export const height = 274;
+// export const width = getWidgetSize().widgetWidth(6);
+// export const height = 274;

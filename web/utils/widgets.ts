@@ -92,10 +92,8 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
   const HEADER_HEIGHT = 48;
   const PADDING = 24;
 
-  const realHeight = ctx.height + (isDynamicHeight ? HEADER_HEIGHT + PADDING : 0);
-
   return {
-    default () {
+    default (_, _ctx) {
       return computeLayout(
         vertical(
           widget('builtin:card-heading', undefined, {
@@ -107,12 +105,12 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
             ? widget('builtin:empty', undefined, {})
             : widget(name, data, ctx.parameters).padding([0, PADDING, PADDING]),
         ),
-        0, 0, ctx.width, realHeight,
+        0, 0, _ctx.width, _ctx.height,
       );
     },
     type: 'compose',
-    width: ctx.width,
-    height: realHeight,
+    width: 0,
+    height: 0,
   };
 }
 

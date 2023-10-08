@@ -3,8 +3,7 @@ import { useShouldLoadWidget } from '@/components/EmbeddedWidget/PerformanceWidg
 import Loading from '@/components/Widget/loading';
 import { useVisible } from '@/utils/hooks';
 import { fetchWidgetData, WidgetData } from '@/utils/widgets';
-import dynamic from 'next/dynamic';
-import { CSSProperties, ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CSSProperties, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export function EmbeddedWidget ({
   className, style, name, params,
@@ -45,14 +44,16 @@ export function EmbeddedWidget ({
   }, [visible, shouldLoadWidget, reload]);
 
   const Widget = useMemo(() => {
-    return dynamic(() => createWidget(name), { ssr: false, loading: Loading });
+    return lazy(() => createWidget(name));
   }, [name]);
 
-  let el: ReactElement;
-
   if (wd) {
-    return <Widget ref={ref} className={className} style={style} name={name} data={wd.data} linkedData={wd.linkedData} params={wd.parameters} />;
+    return (
+      <Suspense fallback={<div className={className} style={style}><Loading ref={ref} /></div>}>
+        <Widget ref={ref} className={className} style={style} name={name} data={wd.data} linkedData={wd.linkedData} params={wd.parameters} />
+      </Suspense>
+    );
   } else {
-    return <Loading ref={ref} />;
+    return <div className={className} style={style}><Loading ref={ref} /></div>;
   }
 }

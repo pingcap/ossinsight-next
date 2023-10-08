@@ -1,15 +1,13 @@
 'use client';
 import { widgetPageParams } from '@/app/widgets/[vendor]/[name]/utils';
+import { ChartLinks } from '@/components/Analyze/Section/ChartLinks';
 
 import { EmbeddedWidget } from '@/components/EmbeddedWidget';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 // import { ArrowUpRightIcon, CodeIcon } from '@primer/octicons-react';
-import NextLink from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { Tooltip } from '@ossinsight/ui';
-import ArrowUpRightIcon from 'bootstrap-icons/icons/arrow-up-right.svg';
-import CodeIcon from 'bootstrap-icons/icons/code.svg';
 
 import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
 
@@ -66,74 +64,22 @@ export default function ChartTemplate (props: ChartTemplateProps) {
     return [combinedSearchParams, newSearchParams.toString()];
   }, [orgId, periodMemo, repoIdsMemo, searchParams]);
 
-  const classNameMemo = React.useMemo(
-    () =>
-      twMerge(
-        'relative w-fit h-fit',
-        className,
-      ),
-    [className]
-  );
-
-  const [targetWidgetLinkMemo, targetSectionLinkMemo] = React.useMemo(() => {
-    let targetWidgetLink = null;
-    let targetSectionLink = null;
-    if (name.includes(`@ossinsight/widget-`)) {
-      const widget = name.split('@ossinsight/widget-').pop();
-      targetWidgetLink = `/widgets/official/${widget}?${searchParamsStrMemo}`;
-    }
-    if (innerSectionId) {
-      targetSectionLink = `#${innerSectionId}`;
-    }
-    return [targetWidgetLink, targetSectionLink];
-  }, [innerSectionId, name, searchParamsStrMemo]);
-
   return (
     <div
-      className={classNameMemo}
+      className={twMerge('relative w-fit h-fit overflow-hidden', className)}
       style={{
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
       }}
     >
-      <EmbeddedWidget
-        className='WidgetContainer'
-        name={name}
-        params={searchParamsMemo}
-      />
-      <div className='absolute top-4 right-4 flex gap-2'>
-        {targetSectionLinkMemo && (
-          <NextLink
-            href={targetSectionLinkMemo}
-            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
-          >
-            <Tooltip.InfoTooltip
-              Icon={ArrowUpRightIcon}
-              iconProps={{
-                className: 'w-3 h-3',
-              }}
-            >
-              See Details
-            </Tooltip.InfoTooltip>
-          </NextLink>
-        )}
-        {targetWidgetLinkMemo && (
-          <NextLink
-            target='_blank'
-            href={targetWidgetLinkMemo}
-            className='w-4 h-4 rounded-full inline-flex text-[#D9D9D9] items-center justify-center'
-          >
-            <Tooltip.InfoTooltip
-              Icon={CodeIcon}
-              iconProps={{
-                className: 'w-3 h-3',
-              }}
-            >
-              Embed
-            </Tooltip.InfoTooltip>
-          </NextLink>
-        )}
-      </div>
+      <ErrorBoundary errorComponent={({ error }) => <p className='p-2 text-red-700 font-medium leading-6'>{error.message}</p>}>
+        <EmbeddedWidget
+          className='w-full h-full overflow-hidden'
+          name={name}
+          params={searchParamsMemo}
+        />
+      </ErrorBoundary>
+      <ChartLinks name={name} searchParamsStr={searchParamsStrMemo} innerSectionId={innerSectionId} />
       {children}
     </div>
   );

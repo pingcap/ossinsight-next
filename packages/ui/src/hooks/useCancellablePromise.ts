@@ -54,6 +54,7 @@ export function useCancellablePromise<Params, Result> ({ executor, defaultResult
   }, []);
 
   useEffect(() => {
+    mounted.current = true;
     return () => {
       mounted.current = false;
       lastCancellableRef.current?.cancel();

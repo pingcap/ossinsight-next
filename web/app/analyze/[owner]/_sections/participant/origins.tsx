@@ -1,17 +1,14 @@
 'use client';
-import * as React from 'react';
-
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
+import { MainSideGridTemplate } from '@/components/Analyze/Section/gridTemplates/MainSideGridTemplate';
+import { CompanyRankTable, GeoRankTable } from '@/components/Analyze/Table/RankTable';
 import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
-import {
-  CompanyRankTable,
-  GeoRankTable,
-} from '@/components/Analyze/Table/RankTable';
 import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
-import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
+import * as React from 'react';
 
-export default function OriginsContent() {
+export default function OriginsContent () {
   const { id: orgId } = React.useContext(AnalyzeOwnerContext);
 
   return (
@@ -21,17 +18,13 @@ export default function OriginsContent() {
       level={3}
       className="pt-8 flex flex-col gap-4"
     >
-      <div className="flex gap-4 flex-wrap w-full overflow-x-auto">
-        <OrgActivityCompany orgId={orgId} />
-      </div>
-      <div className="flex gap-4 flex-wrap w-full h-fit overflow-x-auto">
-        <OrgActivityMap orgId={orgId} />
-      </div>
+      <OrgActivityCompany orgId={orgId} />
+      <OrgActivityMap orgId={orgId} />
     </SectionTemplate>
   );
 }
 
-function RoleInput({
+function RoleInput ({
   id,
   onValueChange,
   value = 'pr_creators',
@@ -55,7 +48,7 @@ function RoleInput({
   const { select: roleSelect, value: role } = useSimpleSelect(
     options,
     options.find((i) => i.key === value) || options[0],
-    id
+    id,
   );
 
   React.useEffect(() => {
@@ -65,7 +58,7 @@ function RoleInput({
   return <>{roleSelect}</>;
 }
 
-function OrgActivityCompany(props: { orgId?: number }) {
+function OrgActivityCompany (props: { orgId?: number }) {
   const { orgId } = props;
 
   const [role, setRole] = React.useState<string>('pr_creators');
@@ -75,20 +68,19 @@ function OrgActivityCompany(props: { orgId?: number }) {
   }, []);
 
   return (
-    <>
+    <MainSideGridTemplate>
       <ChartTemplate
         key={role}
-        name='@ossinsight/widget-compose-org-activity-company'
+        name="@ossinsight/widget-compose-org-activity-company"
         searchParams={{
           activity: 'participants',
           role,
         }}
-        width={getWidgetSize().widgetWidth(9)}
         height={405}
       >
-        <div className='absolute top-10 left-5'>
+        <div className="absolute top-10 left-5">
           <RoleInput
-            id='role-co'
+            id="role-co"
             value={role}
             onValueChange={handleChangeRole}
           />
@@ -96,15 +88,15 @@ function OrgActivityCompany(props: { orgId?: number }) {
       </ChartTemplate>
       <CompanyRankTable
         id={orgId}
-        type='participants'
-        className={`w-[272px] h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        type="participants"
+        className={`h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
         role={role}
       />
-    </>
+    </MainSideGridTemplate>
   );
 }
 
-function OrgActivityMap(props: { orgId?: number }) {
+function OrgActivityMap (props: { orgId?: number }) {
   const { orgId } = props;
 
   const [role, setRole] = React.useState<string>('pr_creators');
@@ -114,20 +106,19 @@ function OrgActivityMap(props: { orgId?: number }) {
   }, []);
 
   return (
-    <>
+    <MainSideGridTemplate>
       <ChartTemplate
         key={role}
-        name='@ossinsight/widget-compose-org-activity-map'
+        name="@ossinsight/widget-compose-org-activity-map"
         searchParams={{
           activity: 'participants',
           role,
         }}
-        width={getWidgetSize().widgetWidth(9)}
         height={365}
       >
-        <div className='absolute top-10 left-5'>
+        <div className="absolute top-10 left-5">
           <RoleInput
-            id='role-map'
+            id="role-map"
             value={role}
             onValueChange={handleChangeRole}
           />
@@ -135,10 +126,10 @@ function OrgActivityMap(props: { orgId?: number }) {
       </ChartTemplate>
       <GeoRankTable
         id={orgId}
-        type='participants'
+        type="participants"
         role={role}
-        className={`w-[272px] h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
       />
-    </>
+    </MainSideGridTemplate>
   );
 }

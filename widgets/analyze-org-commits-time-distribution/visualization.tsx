@@ -58,8 +58,8 @@ export default function (input: Input, ctx: WidgetVisualizerContext<Params>) {
 
 export const type = 'react-svg';
 
-export const width = getWidgetSize().widgetWidth(6);
-export const height = 274;
+// export const width = getWidgetSize().widgetWidth(6);
+// export const height = 274;
 
 interface TimeDistributionProps {
   title: string;
