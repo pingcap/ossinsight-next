@@ -12,7 +12,7 @@ export type LinkedData = {
 
 export type PendingLinkedData = {
   [P in keyof LinkedData]: {
-    [K in keyof LinkedData[P]]: Promise<LinkedData[P][K]>
+    [K in keyof LinkedData[P]]?: Promise<LinkedData[P][K]>
   }
 }
 
@@ -104,9 +104,7 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
           return linkedData.pending.collections[param] = collectionsPromise
             .then((res) => res.find((collection) => collection.id === param))
             .then((collection) => {
-              if (collection) {
-                return linkedData.collections[param] = collection;
-              }
+              return linkedData.collections[param] = collection ?? { id: parseInt(param as any), public: false, name: 'Unknown' };
             })
             .finally(() => {
               delete linkedData.pending.collections[param];

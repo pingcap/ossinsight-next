@@ -115,6 +115,7 @@ export interface BaseParameterDefinition<T> {
 
 export interface RepoIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'repo-id';
+  orgParamName?: string;
 }
 
 export interface UserIdParameterDefinition extends BaseParameterDefinition<number> {

@@ -116,7 +116,7 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
 
 export type WidgetData = Awaited<ReturnType<typeof fetchWidgetData>>;
 
-export async function fetchWidgetData (name: string, searchParams: Record<string, string | string[]>, propLinkedData: LinkedData, signal?: AbortSignal) {
+export async function fetchWidgetData (name: string, searchParams: Record<string, string | string[]>, propLinkedData?: LinkedData, signal?: AbortSignal) {
   const fetcher = widgetDatasourceFetcher(name);
 
   const [params, linkedData] = await Promise.all([
