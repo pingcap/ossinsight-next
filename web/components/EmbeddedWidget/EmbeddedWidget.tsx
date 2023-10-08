@@ -1,9 +1,11 @@
+import { LinkedDataContext } from '@/components/Context/LinkedData';
 import { createWidget } from '@/components/EmbeddedWidget/createWidget';
 import { useShouldLoadWidget } from '@/components/EmbeddedWidget/PerformanceWidgetsContext';
 import Loading from '@/components/Widget/loading';
 import { useVisible } from '@/utils/hooks';
 import { fetchWidgetData, WidgetData } from '@/utils/widgets';
-import { CSSProperties, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CSSProperties, lazy, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useSafeCallback } from './useSafeCallback';
 
 export function EmbeddedWidget ({
   className, style, name, params,
@@ -13,35 +15,45 @@ export function EmbeddedWidget ({
   name: string;
   params: Record<string, string | string[]>;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
   const [err, setErr] = useState<unknown>();
   const [wd, setWd] = useState<WidgetData>();
+  const linkedData = useContext(LinkedDataContext);
 
+  const ref = useRef<HTMLDivElement>(null);
   const shouldLoadWidget = useShouldLoadWidget();
   const visible = useVisible(ref, false);
-  const started = useRef(false);
+
+  const show = shouldLoadWidget && visible;
+
+  const startedReloadAtRef = useRef(0);
 
   // trigger reload widget data
-  const reload = useCallback(() => {
-    started.current = true;
-    void fetchWidgetData(name, params).then(setWd, setErr);
-  }, [name, params]);
+  const { callback: reload, abort } = useSafeCallback((signal) => {
+    startedReloadAtRef.current = Date.now();
+    fetchWidgetData(name, params, linkedData, signal).then(setWd, setErr);
+  });
 
   // when `name` or `params` changed, data should reload next time.
   useEffect(() => {
     return () => {
-      started.current = false;
+      startedReloadAtRef.current = 0;
     };
-  }, [reload]);
+  }, []);
 
   useEffect(() => {
-    if (started.current) {
-      return;
-    }
-    if (visible && shouldLoadWidget) {
+    if (show) {
+      if (startedReloadAtRef.current) {
+        return;
+      }
       reload();
+    } else {
+      if (Date.now() - startedReloadAtRef.current < 200) {
+        abort('dismiss too fast');
+        startedReloadAtRef.current = 0;
+        return;
+      }
     }
-  }, [visible, shouldLoadWidget, reload]);
+  }, [show]);
 
   const Widget = useMemo(() => {
     return lazy(() => createWidget(name));

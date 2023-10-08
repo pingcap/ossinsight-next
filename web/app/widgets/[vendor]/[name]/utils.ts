@@ -1,5 +1,5 @@
 import { isWidget, widgetParameterDefinitions } from '@/utils/widgets';
-import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { LinkedData, resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
@@ -25,8 +25,8 @@ export function widgetSignature (props: WidgetPageProps) {
   return JSON.stringify(props);
 }
 
-export const makeLinkedData = cache((name: string, searchParams: Record<string, string | string[]>) => {
-  return widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams));
+export const makeLinkedData = cache((name: string, searchParams: Record<string, string | string[]>, defaultLinkedData?: LinkedData, signal?: AbortSignal) => {
+  return widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams, defaultLinkedData, signal));
 });
 
 export function stringArrayRecord2UrlSearch(values: Record<string, string | string[]>) {

@@ -1,16 +1,16 @@
 import type { WidgetBaseContext } from '@ossinsight/widgets-types';
 
-export default async function executeDatasource (config: any, ctx: WidgetBaseContext) {
+export default async function executeDatasource (config: any, ctx: WidgetBaseContext, signal?: AbortSignal) {
   try {
     if (config instanceof Array) {
-      return Promise.all(config.map(c => executeDatasource(c, ctx)));
+      return Promise.all(config.map(c => executeDatasource(c, ctx, signal)));
     }
 
     switch (config.type) {
       case 'api':
-        return import('./api').then(module => module.default(config, ctx));
+        return import('./api').then(module => module.default(config, ctx, signal));
       case 'ref':
-        return import('./ref').then(module => module.default(config, ctx));
+        return import('./ref').then(module => module.default(config, ctx, signal));
     }
   } catch (e) {
     console.error(e)

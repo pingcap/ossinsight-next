@@ -3,11 +3,11 @@ import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
 import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
+import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { createWidgetBaseContext } from '@ossinsight/widgets-core/src/utils/context';
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { ComposeVisualizationConfig, MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
-import { createElement, FC, lazy } from 'react';
 
 export function isWidget (name: string) {
   return !!widgets[name];
@@ -25,7 +25,7 @@ export function widgetMetadataGenerator<P> (name: string): Promise<MetadataGener
   return cachedImport(metadataGenerators[name]);
 }
 
-export function widgetDatasourceFetcher (name: string): (context: WidgetBaseContext) => Promise<any> {
+export function widgetDatasourceFetcher (name: string): (context: WidgetBaseContext, signal?: AbortSignal) => Promise<any> {
   return datasourceFetchers[name];
 }
 
@@ -116,11 +116,12 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
 
 export type WidgetData = Awaited<ReturnType<typeof fetchWidgetData>>;
 
-export async function fetchWidgetData (name: string, searchParams: Record<string, string | string[]>) {
+export async function fetchWidgetData (name: string, searchParams: Record<string, string | string[]>, propLinkedData: LinkedData, signal?: AbortSignal) {
   const fetcher = widgetDatasourceFetcher(name);
+
   const [params, linkedData] = await Promise.all([
     widgetParameterDefinitions(name),
-    makeLinkedData(name, searchParams),
+    makeLinkedData(name, searchParams, propLinkedData, signal),
   ]);
 
   const parameters = {
@@ -131,7 +132,7 @@ export async function fetchWidgetData (name: string, searchParams: Record<string
   const data = await fetcher(createWidgetBaseContext('server', {
     ...searchParams,
     ...resolveExpressions(params),
-  }));
+  }), signal);
 
   return {
     parameters,

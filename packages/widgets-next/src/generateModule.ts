@@ -40,7 +40,7 @@ const metadataGenerators = {}
 
       src += `visualizers[${quotedName}] = () => import(${visPath})\n`;
 
-      src += `datasourceFetchers[${quotedName}] = (ctx) => Promise.all([import(${dataPath}), import('@ossinsight/widgets-core/src/datasource')]).then(([jsonModule, core]) => core.default(jsonModule.default, ctx))\n`;
+      src += `datasourceFetchers[${quotedName}] = (ctx, signal) => Promise.all([import(${dataPath}), import('@ossinsight/widgets-core/src/datasource')]).then(([jsonModule, core]) => core.default(jsonModule.default, ctx, signal))\n`;
 
       src += `parameterDefinitions[${quotedName}] = () => import(${paramsPath}).then(module => module.default)\n`;
 

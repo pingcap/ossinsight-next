@@ -10,13 +10,31 @@ export type LinkedData = {
   collections: Record<string, { id: number, name: string, public: boolean }>
 }
 
-export async function resolveParameters (definitions: ParameterDefinitions, params: Record<string, string | string[]>, defaultLinkedData?: LinkedData) {
-  const linkedData = defaultLinkedData ?? {
+export type PendingLinkedData = {
+  [P in keyof LinkedData]: {
+    [K in keyof LinkedData[P]]: Promise<LinkedData[P][K]>
+  }
+}
+
+function withPending (linkedData: LinkedData): LinkedData & { pending: PendingLinkedData } {
+  if (!('pending' in linkedData)) {
+    (linkedData as any).pending = {
+      repos: {},
+      users: {},
+      orgs: {},
+      collections: {},
+    };
+  }
+  return linkedData as any;
+}
+
+export async function resolveParameters (definitions: ParameterDefinitions, params: Record<string, string | string[]>, defaultLinkedData?: LinkedData, signal?: AbortSignal) {
+  const linkedData = withPending(defaultLinkedData ?? {
     repos: {},
     users: {},
     orgs: {},
     collections: {},
-  };
+  });
   const results = await Promise.allSettled(Object.entries(definitions).map(([name, def]) => {
     let originParam: string | number | string[] | number[] = params[name];
     if (originParam == null) {
@@ -30,52 +48,68 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
       case 'repo-id':
         if (param) {
           if (linkedData.repos[param]) return Promise.resolve();
-          return fetch(`https://api.ossinsight.io/gh/repositories/${param}`)
+          if (linkedData.pending.repos[param]) return linkedData.pending.repos[param];
+          return linkedData.pending.repos[param] = fetch(`https://api.ossinsight.io/gh/repositories/${param}`, { signal })
             .then(handleOApi)
             .then((data) => {
-              linkedData.repos[param] = {
+              return linkedData.repos[param] = {
                 id: param as number,
                 fullName: data.full_name,
                 defaultBranch: data.default_branch,
               };
+            })
+            .finally(() => {
+              delete linkedData.pending.repos[param];
             });
         }
         break;
       case 'user-id':
         if (param) {
           if (linkedData.users[param]) return Promise.resolve();
-          return fetch(`https://api.ossinsight.io/gh/user/${param}`)
+          if (linkedData.pending.users[param]) return linkedData.pending.users[param];
+          return linkedData.pending.users[param] = fetch(`https://api.ossinsight.io/gh/user/${param}`, { signal })
             .then(handleOApi)
             .then((data) => {
-              linkedData.users[param] = {
+              return linkedData.users[param] = {
                 id: param as number,
                 login: data.login,
               };
+            })
+            .finally(() => {
+              delete linkedData.pending.users[param];
             });
         }
         break;
       case 'owner-id':
         if (param) {
           if (linkedData.orgs[param]) return Promise.resolve();
-          return fetch(`https://api.ossinsight.io/gh/user/${param}`)
+          if (linkedData.pending.orgs[param]) return linkedData.pending.orgs[param];
+          return linkedData.pending.orgs[param] = fetch(`https://api.ossinsight.io/gh/user/${param}`, { signal })
             .then(handleOApi)
             .then((data) => {
-              linkedData.orgs[param] = {
+              return linkedData.orgs[param] = {
                 id: param as number,
                 login: data.login,
               };
+            })
+            .finally(() => {
+              delete linkedData.pending.orgs[param];
             });
         }
         break;
       case 'collection-id':
         if (param) {
           if (linkedData.collections[param]) return Promise.resolve();
-          return collectionsPromise
+          if (linkedData.pending.collections[param]) return linkedData.pending.collections[param];
+          return linkedData.pending.collections[param] = collectionsPromise
             .then((res) => res.find((collection) => collection.id === param))
             .then((collection) => {
               if (collection) {
-                linkedData.collections[param] = collection;
+                return linkedData.collections[param] = collection;
               }
+            })
+            .finally(() => {
+              delete linkedData.pending.collections[param];
             });
         }
         break;
@@ -88,16 +122,20 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
           return Promise.allSettled(
             originParamList.map((param) => {
               if (linkedData.repos[param]) return Promise.resolve();
-              return fetch(`https://api.ossinsight.io/gh/repositories/${param}`)
+              if (linkedData.pending.repos[param]) return linkedData.pending.repos[param];
+              return linkedData.pending.repos[param] = fetch(`https://api.ossinsight.io/gh/repositories/${param}`, { signal })
                 .then(handleOApi)
                 .then((data) => {
-                  linkedData.repos[param] = { 
+                  return linkedData.repos[param] = {
                     id: param as number,
                     fullName: data.full_name,
                     defaultBranch: data.default_branch,
                   };
+                })
+                .finally(() => {
+                  delete linkedData.pending.repos[param];
                 });
-            })
+            }),
           );
         }
         break;

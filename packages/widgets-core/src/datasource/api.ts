@@ -12,7 +12,7 @@ export interface ApiDatasourceConfig {
   when?: string[];
 }
 
-export default async function executeApiDatasource (config: ApiDatasourceConfig, ctx: WidgetBaseContext) {
+export default async function executeApiDatasource (config: ApiDatasourceConfig, ctx: WidgetBaseContext, signal?: AbortSignal) {
   if (!allExists(config.when, ctx.parameters)) {
     return null;
   }
@@ -21,7 +21,7 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
   const url = new URL(template.expand(ctx.parameters));
   setUrlParams(url, config.params ?? {}, ctx.parameters);
 
-  const response = await fetch(url);
+  const response = await fetch(url, { signal });
 
   if (!response.ok) {
     throw new HttpRequestError(response, await response.json());
