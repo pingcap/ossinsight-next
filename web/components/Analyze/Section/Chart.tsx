@@ -66,7 +66,7 @@ export default function ChartTemplate (props: ChartTemplateProps) {
 
   return (
     <div
-      className={twMerge('relative w-fit h-fit overflow-hidden', className)}
+      className={twMerge('relative w-full h-full overflow-hidden', className)}
       style={{
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
