@@ -74,7 +74,7 @@ class ScrollspyContextClass {
       this.io.observe(el);
       this.onScroll();
     }
-    this.ro.unobserve(el);
+    this.ro.observe(el);
   }
 
   unregister (id: string) {
@@ -142,10 +142,6 @@ class ScrollspyContextClass {
         this.onScroll();
       }
     });
-    this.sections.forEach(s => {
-      this.io.observe(s.el);
-      this.ro.observe(s.el);
-    });
 
     // to track section or container resize and recompute section.top value (only active sections).
     this.ro = new ResizeObserver(() => {
@@ -156,6 +152,11 @@ class ScrollspyContextClass {
       });
     });
     this.ro.observe(document.documentElement);
+
+    this.sections.forEach(s => {
+      this.io.observe(s.el);
+      this.ro.observe(s.el);
+    });
   }
 
   disable () {
