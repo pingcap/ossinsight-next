@@ -18,8 +18,8 @@ export default async function renderCompose (props: WidgetNodeVisualizationProps
   // should wrap with shadow box if the widget is 'compose' type or the rendering context is not twitter.
   const shouldWrap = !!(root || sizeName !== 'twitter:summary_large_image');
 
-  width = (visualizer.width ?? width);
-  height = (visualizer.height ?? height);
+  width = (visualizer.width || width);
+  height = (visualizer.height || height);
 
   const offX = shouldWrap ? WRAP_PADDING : 0;
   const offY = shouldWrap ? WRAP_PADDING : 0;
