@@ -4,6 +4,7 @@ import { useShouldLoadWidget } from '@/components/EmbeddedWidget/PerformanceWidg
 import Loading from '@/components/Widget/loading';
 import { useVisible } from '@/utils/hooks';
 import { fetchWidgetData, WidgetData } from '@/utils/widgets';
+import { Scale } from '@ossinsight/ui/src/components/transitions';
 import { CSSProperties, lazy, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useSafeCallback } from './useSafeCallback';
 
@@ -61,11 +62,13 @@ export function EmbeddedWidget ({
 
   if (wd) {
     return (
-      <Suspense fallback={<div className={className} style={style}><Loading ref={ref} /></div>}>
-        <Widget ref={ref} className={className} style={style} name={name} data={wd.data} linkedData={wd.linkedData} params={wd.parameters} />
+      <Suspense fallback={<div className={className} style={style} ref={ref}><Loading /></div>}>
+        <Scale>
+          <Widget ref={ref} className={className} style={style} name={name} data={wd.data} linkedData={wd.linkedData} params={wd.parameters} />
+        </Scale>
       </Suspense>
     );
   } else {
-    return <div className={className} style={style}><Loading ref={ref} /></div>;
+    return <div className={className} style={style} ref={ref}><Loading /></div>;
   }
 }

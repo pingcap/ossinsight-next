@@ -1,11 +1,9 @@
-import { cloneElement, ForwardedRef, forwardRef, lazy, ReactElement } from 'react';
+import { cloneElement, ForwardedRef, forwardRef, lazy, Suspense } from 'react';
 import { WidgetReactVisualizationProps } from '../../types';
 import Svg from './react-svg';
 
 const ECharts = lazy(() => import('./echarts'));
 const Compose = lazy(() => import('./compose'));
-
-
 
 export default forwardRef(function WidgetVisualization ({ dynamicHeight, ...props }: WidgetReactVisualizationProps, ref: ForwardedRef<any>) {
   let el;
@@ -31,5 +29,9 @@ export default forwardRef(function WidgetVisualization ({ dynamicHeight, ...prop
     );
   }
 
-  return el;
-})
+  return (
+    <Suspense fallback={<div className="overflow-x-hidden overflow-y-auto h-full w-full" ref={ref} />}>
+      {el}
+    </Suspense>
+  );
+});
