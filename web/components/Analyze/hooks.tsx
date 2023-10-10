@@ -1,5 +1,6 @@
 'use client';
-import { usePerformanceOptimizedNetworkRequest } from '@/components/Analyze/Table/utils';
+
+import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { useEffect } from 'react';
 import * as React from 'react';
 

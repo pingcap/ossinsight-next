@@ -1,7 +1,7 @@
-import { usePerformanceOptimizedNetworkRequest } from '@/components/Analyze/Table/utils';
 import { LinkedDataContext } from '@/components/Context/LinkedData';
 import { createWidget } from '@/components/EmbeddedWidget/createWidget';
 import Loading from '@/components/Widget/loading';
+import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { fetchWidgetData } from '@/utils/widgets';
 import { Scale } from '@ossinsight/ui/src/components/transitions';
 import { CSSProperties, lazy, Suspense, useContext, useMemo } from 'react';

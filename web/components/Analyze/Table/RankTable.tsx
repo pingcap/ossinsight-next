@@ -1,8 +1,8 @@
 'use client';
-import { usePerformanceOptimizedNetworkRequest } from '@/components/Analyze/Table/utils';
 
 import { getOrgActivityLocations, getOrgActivityOrgs } from '@/components/Analyze/utils';
 import Loader from '@/components/Widget/loading';
+import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { Scale } from '@ossinsight/ui/src/components/transitions';
 import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 import * as React from 'react';
