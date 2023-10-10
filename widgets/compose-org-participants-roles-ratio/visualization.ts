@@ -109,5 +109,7 @@ export default function (
 
 export const type = 'compose';
 
-// export const width = getWidgetSize().widgetWidth(12);
-// export const height = getWidgetSize().widgetWidth(3);
+export const grid = {
+  cols: 5,
+  rows: 5,
+}

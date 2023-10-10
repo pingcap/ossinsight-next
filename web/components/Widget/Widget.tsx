@@ -13,6 +13,8 @@ import {
   createVisualizationContext,
   createWidgetContext,
 } from '@ossinsight/widgets-core/src/utils/context';
+import { VisualizerModule } from '@ossinsight/widgets-types';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 import { CSSProperties, use } from 'react';
 import clsx from 'clsx';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
@@ -45,9 +47,7 @@ export default function Widget({
   const dynamicHeight = visualizer?.computeDynamicHeight?.(data);
   const { colorScheme, setColorScheme } = useColorScheme();
 
-  const width = visualizer.width ?? siteConfig.sizes.default.width;
-  const height =
-    dynamicHeight ?? visualizer.height ?? siteConfig.sizes.default.height;
+  const { width, height } = resolveWidgetSize(visualizer, dynamicHeight);
 
   if (visualizer.type !== 'compose') {
     visualizer = createDefaultComposeLayout(name, data, {
@@ -110,4 +110,35 @@ export default function Widget({
       )}
     </div>
   );
+}
+
+function resolveWidgetSize (visualizer: VisualizerModule<any, any, any, any>, dynamicHeight: number | undefined) {
+  if (dynamicHeight) {
+    return {
+      width: visualizer.width ?? siteConfig.sizes.default.width,
+      height: dynamicHeight,
+    }
+  } else if (visualizer.grid) {
+    const gridSizes = getWidgetSize();
+
+    const cols = maxOf(visualizer.grid.cols);
+    const rows = maxOf(visualizer.grid.rows);
+
+    return {
+      width: gridSizes.widgetWidth(cols),
+      height: gridSizes.widgetWidth(rows),
+    }
+  } else {
+    return {
+      width: visualizer.width || siteConfig.sizes.default.width,
+      height: visualizer.height || siteConfig.sizes.default.height,
+    }
+  }
+}
+
+function maxOf (value: number | { min: number, max: number }) {
+  if (typeof value === 'number') {
+    return value;
+  }
+  return value.max;
 }

@@ -99,6 +99,13 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
 
   width?: number;
   height?: number;
+
+  grid?: WidgetImageGridSize;
+}
+
+export type WidgetImageGridSize = {
+  cols: number | { min: number, max: number }
+  rows: number | { min: number, max: number }
 }
 
 declare const SYMBOL_FOR_TYPING: unique symbol;
