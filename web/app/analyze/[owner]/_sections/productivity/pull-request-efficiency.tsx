@@ -9,7 +9,7 @@ export default function PRRequestEfficiencyContent() {
   return (
     <SectionTemplate
       id="pull-request-efficiency"
-      title="Pull Request Efficiency"
+      title="Pull Request"
       level={3}
       className="pt-8 flex flex-col gap-4"
     >

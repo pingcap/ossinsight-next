@@ -9,7 +9,7 @@ export default function CodeReviewEfficiencyContent() {
   return (
     <SectionTemplate
       id="code-review-efficiency"
-      title="Code Review Efficiency"
+      title="Code Review"
       level={3}
       className="pt-8 flex flex-col gap-4"
     >

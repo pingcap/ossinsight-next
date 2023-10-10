@@ -66,12 +66,12 @@ const navItems: NavItemType[] = [
     children: [
       {
         id: 'pull-request-efficiency',
-        title: 'Pull Request Efficiency',
+        title: 'Pull Request',
         anchor: 'pull-request-efficiency',
       },
       {
         id: 'code-review-efficiency',
-        title: 'Code Review Efficiency',
+        title: 'Code Review',
         anchor: 'code-review-efficiency',
       },
       {
