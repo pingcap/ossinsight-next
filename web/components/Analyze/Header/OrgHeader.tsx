@@ -23,7 +23,7 @@ export default function OrgAnalyzePageHeader() {
   const { name: orgName, id: orgId, bio, public_repos } =
     React.useContext(AnalyzeOwnerContext);
 
-  const { data, loading, error } = useOrgOverview(orgId, orgName);
+  const { data, loading, error, ref } = useOrgOverview(orgId);
 
   return (
     <>

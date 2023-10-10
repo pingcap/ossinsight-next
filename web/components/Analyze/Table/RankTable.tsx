@@ -1,29 +1,24 @@
 'use client';
-import * as React from 'react';
-import { HeadlessTabs, HeadlessTab } from '@ossinsight/ui/src/components/Tabs';
-import { twMerge } from 'tailwind-merge';
-import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
+import { usePerformanceOptimizedNetworkRequest } from '@/components/Analyze/Table/utils';
 
-import {
-  ParticipantLocationDataType,
-  ParticipateOrgDataType,
-  StarLocationDataType,
-  StarOrgDataType,
-  getOrgActivityLocations,
-  getOrgActivityOrgs,
-} from '@/components/Analyze/utils';
+import { getOrgActivityLocations, getOrgActivityOrgs } from '@/components/Analyze/utils';
 import Loader from '@/components/Widget/loading';
+import { Scale } from '@ossinsight/ui/src/components/transitions';
+import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
+import * as React from 'react';
+import { ForwardedRef, forwardRef } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-function Table(props: {
+const Table = forwardRef(function Table (props: {
   rows?: Array<Array<string | number>>;
   header?: Array<string>;
   maxRows?: number;
-}) {
+}, forwardedRef: ForwardedRef<any>) {
   const { rows, header, maxRows = 10 } = props;
 
   return (
     <>
-      <table className={twMerge('min-w-full divide-y divide-gray-700')}>
+      <table className={twMerge('min-w-full divide-y divide-gray-700')} ref={forwardedRef}>
         <thead>
           <tr>
             <th
@@ -63,21 +58,21 @@ function Table(props: {
       </table>
     </>
   );
-}
+});
 
-export function upperFirst(str: string) {
+export function upperFirst (str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function TableSkeleton() {
+export const TableSkeleton = forwardRef(function TableSkeleton ({}, forwardedRef: ForwardedRef<any>) {
   return (
     <>
-      <Loader />
+      <Loader ref={forwardedRef} />
     </>
   );
-}
+});
 
-export function GeoRankTableContent(props: {
+export function GeoRankTableContent (props: {
   id: number;
   type: 'stars' | 'participants';
   role?: string;
@@ -85,22 +80,14 @@ export function GeoRankTableContent(props: {
 }) {
   const { id, type, maxRows = 10, role } = props;
 
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState<
-    StarLocationDataType[] | ParticipantLocationDataType[]
-  >([]);
-
-  React.useEffect(() => {
-    const handler = async () => {
-      const data = await getOrgActivityLocations(id, {
-        activity: type,
-        ...(role && { role }),
-      });
-      setData(data);
-      setLoading(false);
-    };
-    handler();
-  }, [id, type, role]);
+  const {
+    result: data = [],
+    loading,
+    ref,
+  } = usePerformanceOptimizedNetworkRequest(
+    getOrgActivityLocations,
+    id, { activity: type, ...(role && { role }) },
+  );
 
   const rowsMemo = React.useMemo(() => {
     return data
@@ -119,15 +106,17 @@ export function GeoRankTableContent(props: {
   return (
     <>
       {loading ? (
-        <TableSkeleton />
+        <TableSkeleton ref={ref} />
       ) : (
-        <Table rows={rowsMemo} header={headerMemo} />
+        <Scale>
+          <Table ref={ref} rows={rowsMemo} header={headerMemo} />
+        </Scale>
       )}
     </>
   );
 }
 
-export function GeoRankTable(props: {
+export function GeoRankTable (props: {
   id?: number;
   type?: 'stars' | 'participants';
   role?: string;
@@ -141,7 +130,7 @@ export function GeoRankTable(props: {
 
   return (
     <div className={twMerge('px-1 items-center justify-around', className)}>
-      <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
+      <div className="px-1 text-base font-semibold leading-6 text-white mx-auto w-fit">
         Top locations
       </div>
       <GeoRankTableContent id={id} type={type} role={role} />
@@ -149,29 +138,20 @@ export function GeoRankTable(props: {
   );
 }
 
-export function CompanyRankTableContent(props: {
+export function CompanyRankTableContent (props: {
   id: number;
   type: 'stars' | 'participants';
   role?: string;
   maxRows?: number;
 }) {
   const { id, maxRows = 10, type, role } = props;
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState<
-    ParticipateOrgDataType[] | StarOrgDataType[]
-  >([]);
-
-  React.useEffect(() => {
-    const handler = async () => {
-      const data = await getOrgActivityOrgs(id, {
-        activity: type,
-        ...(role && { role }),
-      });
-      setData(data);
-      setLoading(false);
-    };
-    handler();
-  }, [id, type, role]);
+  const {
+    result: data = [],
+    ref,
+    loading,
+  } = usePerformanceOptimizedNetworkRequest(
+    getOrgActivityOrgs,
+    id, { activity: type, ...(role && { role }) });
 
   const rowsMemo = React.useMemo(() => {
     return data
@@ -186,15 +166,17 @@ export function CompanyRankTableContent(props: {
   return (
     <>
       {loading ? (
-        <TableSkeleton />
+        <TableSkeleton ref={ref} />
       ) : (
-        <Table rows={rowsMemo} header={headerMemo} />
+        <Scale>
+          <Table ref={ref} rows={rowsMemo} header={headerMemo} />
+        </Scale>
       )}
     </>
   );
 }
 
-export function CompanyRankTable(props: {
+export function CompanyRankTable (props: {
   id?: number;
   type?: 'stars' | 'participants';
   role?: string;
@@ -208,10 +190,10 @@ export function CompanyRankTable(props: {
 
   return (
     <div className={twMerge('px-1 items-center justify-around', className)}>
-      <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
+      <div className="px-1 text-base font-semibold leading-6 text-white mx-auto w-fit">
         Top companies
       </div>
-      <CompanyRankTableContent id={id} type='stars' role={role} />
+      <CompanyRankTableContent id={id} type="stars" role={role} />
     </div>
   );
 }

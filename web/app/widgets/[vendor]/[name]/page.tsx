@@ -61,3 +61,5 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
 }
 
 const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+
+export const dynamic = 'force-dynamic';

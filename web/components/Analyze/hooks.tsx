@@ -1,4 +1,6 @@
 'use client';
+import { usePerformanceOptimizedNetworkRequest } from '@/components/Analyze/Table/utils';
+import { useEffect } from 'react';
 import * as React from 'react';
 
 import { getOrgOverview, getUserInfo } from '@/components/Analyze/utils';
@@ -9,30 +11,20 @@ export interface OrgOverviewDataProps {
   last_event_at: string;
 }
 
-export function useOrgOverview(id?: number, name?: string) {
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState<OrgOverviewDataProps | null>(null);
-  const [error, setError] = React.useState<Error | null>(null);
+export function useOrgOverview(id: number) {
+  const { result: data, loading, error, ref } = usePerformanceOptimizedNetworkRequest(getOrgOverview, id);
 
-  React.useEffect(() => {
-    const fetchOrgOverview = async (id: number, name: string) => {
-      try {
-        setLoading(true);
-        const data = await getOrgOverview(id);
-        setData({ ...data[0] });
-      } catch (error: any) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    id && name && fetchOrgOverview(id, name);
-  }, [id, name]);
+  useEffect(() => {
+    ref(document.body);
+    return () => {
+      ref(null);
+    }
+  }, []);
 
   return {
     loading,
-    data,
+    data: data?.[0],
     error,
+    ref,
   };
 }

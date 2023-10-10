@@ -34,7 +34,15 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
     } else if (isAvailableSize(size)) {
       ec = echartsRef.current = init(containerRef.current!, colorScheme === 'auto' ? 'dark' : colorScheme, {});
     }
-  }, [colorScheme, size]);
+  }, [size]);
+
+  useEffect(() => {
+    let ec = echartsRef.current;
+    if (ec) {
+      ec.dispose();
+      ec = echartsRef.current = init(containerRef.current!, colorScheme === 'auto' ? 'dark' : colorScheme, {});
+    }
+  }, [colorScheme]);
 
   // dispose echarts instance if exists
   useEffect(() => {
@@ -56,7 +64,7 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       ...createWidgetContext('client', parameters, linkedData),
     });
     echartsRef.current!.setOption(option);
-  }, [data, visualizer, parameters, colorScheme, size]);
+  }, [data, visualizer, parameters, colorScheme, isAvailableSize(size)]);
 
   return (
     <div

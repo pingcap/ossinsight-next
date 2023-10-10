@@ -24,14 +24,17 @@ export function useDocumentVisible () {
   );
 }
 
-export function useVisible (ref: RefObject<any>, defaultVisible = true) {
+export function useVisible ({ current: ref }: RefObject<any>, defaultVisible = true) {
   const [visible, setVisible] = useState(defaultVisible);
 
   useEffect(() => {
+    if (!ref) {
+      return;
+    }
     const io = new IntersectionObserver(([entry]) => {
       setVisible(entry.intersectionRatio > 0);
     });
-    io.observe(ref.current);
+    io.observe(ref);
     return () => {
       io.disconnect();
     };

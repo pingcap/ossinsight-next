@@ -17,8 +17,6 @@ import {
   SelectParamOption,
 } from '@ossinsight/ui/src/components/Selector/Select';
 
-import { getRepoInfoByOwnerId } from '@/components/Analyze/utils';
-
 const options = [
   { key: 'past_7_days', title: 'Past 7 days' },
   { key: 'past_28_days', title: 'Past 28 days' },
@@ -29,9 +27,6 @@ const options = [
 export default function OrgAnalyzePageHeaderAction() {
   const searchParams = useSearchParams();
 
-  const [repos, setRepos] = React.useState<
-    Omit<RemoteRepoInfo, 'defaultBranch'>[]
-  >([]);
   const [loadingRepoFromUrl, setLoadingRepoFromUrl] =
     React.useState<boolean>(true);
   const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>(stringArray2NumberArray(searchParams.getAll('repoIds')) || []);
@@ -69,29 +64,6 @@ export default function OrgAnalyzePageHeaderAction() {
         setLoadingRepoFromUrl(false);
         return;
       }
-      const orgRepos = await getRepoInfoByOwnerId(orgId);
-      const repoInfos = currentRepoIds.reduce(
-        (
-          acc: {
-            id: number;
-            fullName: string;
-            defaultBranch: string;
-          }[],
-          cur: number
-        ) => {
-          const repoFullName = orgRepos[cur];
-          if (repoFullName) {
-            acc.push({
-              id: cur,
-              fullName: repoFullName,
-              defaultBranch: '',
-            });
-          }
-          return acc;
-        },
-        []
-      );
-      setRepos(repoInfos);
       setLoadingRepoFromUrl(false);
     };
     handler();

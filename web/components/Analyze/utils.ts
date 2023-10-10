@@ -29,8 +29,8 @@ export const getOrgInfo = (login: string) => {
     .then(handleOApi);
 };
 
-export const getOrgOverview = (id: number) => {
-  return fetch(`${API_SERVER}${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`)
+export const getOrgOverview = (id: number, signal?: AbortSignal) => {
+  return fetch(`${API_SERVER}${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`, { signal })
     .then(handleOApi);
 };
 
@@ -55,6 +55,7 @@ export type ParticipantLocationDataType = {
 export const getOrgActivityLocations = (
   id: number,
   params: { activity: 'stars' | 'participants'; period?: string; role?: string },
+  signal?: AbortSignal,
 ): Promise<StarLocationDataType[] | ParticipantLocationDataType[]> => {
   let path = PATH_GET_ORG_STARS_LOCATIONS;
 
@@ -64,7 +65,7 @@ export const getOrgActivityLocations = (
 
   const paramsStr = params2UrlSearch({ ...params, ownerId: id });
 
-  return fetch(`${API_SERVER}${path}?${paramsStr}`)
+  return fetch(`${API_SERVER}${path}?${paramsStr}`, { signal })
     .then(handleOApi);
 };
 
@@ -85,6 +86,7 @@ export const getOrgActivityOrgs = (
     activity: 'stars' | 'participants';
     role?: string;
   },
+  signal?: AbortSignal,
 ): Promise<ParticipateOrgDataType[] | StarOrgDataType[]> => {
   const { activity = 'stars', ...restParams } = params || {};
   const paramsStr = params2UrlSearch({ ...restParams, ownerId: id });
@@ -94,7 +96,7 @@ export const getOrgActivityOrgs = (
     path = PATH_GET_ORG_PARTICIPANT_ORGS;
   }
 
-  return fetch(`${API_SERVER}${path}?${paramsStr}`)
+  return fetch(`${API_SERVER}${path}?${paramsStr}`, { signal })
     .then(handleOApi);
 };
 
@@ -113,26 +115,3 @@ export const getUserInfo = (login: string | number) => {
 //       defaultBranch: data.default_branch,
 //     }));
 // };
-
-export function getRepoListByOrgId(ownerId: number | string) {
-  return fetch(
-    `https://api.ossinsight.io/q/orgs/repos?ownerId=${ownerId}&format=array`
-  )
-    .then((res) => res.json())
-    .then((res: { data: [number, string][] }) => res.data);
-  // .then((res: { data: [number, string][] }) =>
-  //   res.data.map(([id, name]) => ({
-  //     id,
-  //     name: name.split('/')[1],
-  //     fullName: name,
-  //   }))
-  // );
-}
-
-export const getRepoInfoByOwnerId = async (ownerId: number | string) => {
-  const reposInfo = await getRepoListByOrgId(ownerId);
-  return reposInfo.reduce((acc: Record<number, string>, cur) => {
-    acc[cur[0]] = cur[1];
-    return acc;
-  }, {});
-};

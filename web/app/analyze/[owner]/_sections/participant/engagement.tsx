@@ -2,6 +2,7 @@
 import SectionTemplate from '@/components/Analyze/Section';
 import ChartTemplate from '@/components/Analyze/Section/Chart';
 import { MainSideGridTemplate } from '@/components/Analyze/Section/gridTemplates/MainSideGridTemplate';
+import { SplitTemplate } from '@/components/Analyze/Section/gridTemplates/SplitTemplate';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 import * as React from 'react';
 
@@ -45,18 +46,20 @@ export default function EngagementContent () {
           height={getWidgetSize().widgetWidth(4)}
         />
       </MainSideGridTemplate>
-      <ChartTemplate
-        name="@ossinsight/widget-compose-org-participants-roles-ratio"
-        className="w-full"
-        searchParams={{}}
-        height={getWidgetSize().widgetWidth(5)}
-      />
-      <ChartTemplate
-        name="@ossinsight/widget-compose-org-engagement-scatter"
-        className="w-full"
-        searchParams={{}}
-        height={getWidgetSize().widgetWidth(6)}
-      />
+      <SplitTemplate>
+        <ChartTemplate
+          name="@ossinsight/widget-compose-org-participants-roles-ratio"
+          className="w-full"
+          searchParams={{}}
+          height={getWidgetSize().widgetWidth(5)}
+        />
+        <ChartTemplate
+          name="@ossinsight/widget-compose-org-engagement-scatter"
+          className="w-full"
+          searchParams={{}}
+          height={getWidgetSize().widgetWidth(5)}
+        />
+      </SplitTemplate>
     </SectionTemplate>
   );
 }
