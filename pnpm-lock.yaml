@@ -605,6 +605,15 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
+  widgets/basic-radar-chart:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
   widgets/collection-annually-ranking:
     devDependencies:
       '@ossinsight/widgets-parent':

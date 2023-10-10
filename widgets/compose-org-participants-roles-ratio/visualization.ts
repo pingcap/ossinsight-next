@@ -1,16 +1,5 @@
-import type {
-  ComposeVisualizationConfig,
-  WidgetVisualizerContext,
-} from '@ossinsight/widgets-types';
-import { DateTime } from 'luxon';
-import {
-  autoSize,
-  computeLayout,
-  horizontal,
-  vertical,
-  widget,
-} from '@ossinsight/widgets-utils/src/compose';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
+import { computeLayout, horizontal, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 
 type Params = {
   owner_id: string;
@@ -35,29 +24,43 @@ type DataPoint = {
 
 type Input = [DataPoint[]];
 
-const getRatio = (numerator: number, denominator: number) => {
-  if (denominator === 0) {
-    return 0;
-  }
-  return Math.round((numerator / denominator) * 100);
-};
+const dimensions = [
+  {
+    key: 'issue_commenters',
+    name: 'Issue Commenters',
+  },
+  {
+    key: 'issue_creators',
+    name: 'Issue Creators',
+  },
+  {
+    key: 'pr_commenters',
+    name: 'PR Commenters',
+  },
+  {
+    key: 'pr_creators',
+    name: 'PR Creators',
+  },
+  {
+    key: 'pr_reviewers',
+    name: 'PR Reviewers',
+  },
+  {
+    key: 'commit_authors',
+    name: 'Commit Authors',
+  },
+];
 
-const handleData = (data: DataPoint) => {
-  const sum = data.participants;
-  return {
-    issue_commenters_ratio: getRatio(data.issue_commenters, sum),
-    issue_creators_ratio: getRatio(data.issue_creators, sum),
-    participants_ratio: getRatio(data.participants, sum),
-    pr_commenters_ratio: getRatio(data.pr_commenters, sum),
-    pr_creators_ratio: getRatio(data.pr_creators, sum),
-    pr_reviewers_ratio: getRatio(data.pr_reviewers, sum),
-    commit_authors_ratio: getRatio(data.commit_authors, sum),
-  };
+const normalize = (data: DataPoint) => {
+  return dimensions.map(({ name, key }) => ({
+    name,
+    value: data[key],
+  }));
 };
 
 export default function (
   [input]: Input,
-  ctx: WidgetVisualizerContext<Params>
+  ctx: WidgetVisualizerContext<Params>,
 ): ComposeVisualizationConfig {
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -68,13 +71,9 @@ export default function (
 
   const data = input[0];
 
-  const handledData = handleData(data);
-
-  const item = (name: string, label: string, params: any, data: any) =>
-    vertical(
-      widget(name, [data], params).flex(0.9),
-      widget('builtin:label', undefined, { label: label }).flex(0.1)
-    ).gap(SPACING);
+  const normalizedData = normalize(input[0]);
+  const radarDimensions = normalizedData.map(item => ({ name: item.name, max: data.participants }));
+  const radarData = { name: '', value: normalizedData.map(i => i.value) };
 
   return computeLayout(
     vertical(
@@ -89,54 +88,22 @@ export default function (
             'Please note: Individuals within an organization often hold multiple roles',
         }).flex(0.1),
         horizontal(
-          item(
-            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-            'PR Creator',
-            { ...ctx.parameters, activity: 'pr_creators_ratio' },
-            [handledData]
+          widget(
+            '@ossinsight/basic-radar-chart',
+            radarData,
+            { dimensions: radarDimensions },
           ),
-          item(
-            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-            'PR Commenter',
-            { ...ctx.parameters, activity: 'pr_commenters_ratio' },
-            [handledData]
-          ),
-          item(
-            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-            'Issue Creator',
-            { ...ctx.parameters, activity: 'issue_creators_ratio' },
-            [handledData]
-          ),
-          item(
-            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-            'Issue commenter',
-            { ...ctx.parameters, activity: 'issue_commenters_ratio' },
-            [handledData]
-          ),
-          item(
-            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-            'Reviewer',
-            { ...ctx.parameters, activity: 'pr_reviewers_ratio' },
-            [handledData]
-          )
-          ,
-          item(
-            '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-            'Commit Author',
-            { ...ctx.parameters, activity: 'commit_authors_ratio' },
-            [handledData]
-          )
         )
           .gap(HORIZONTAL_SPACING)
-          .flex()
-      ).gap(HORIZONTAL_SPACING)
+          .flex(),
+      ).gap(HORIZONTAL_SPACING),
     )
       .padding([0, PADDING, PADDING])
       .gap(SPACING),
     0,
     0,
     WIDTH,
-    HEIGHT
+    HEIGHT,
   );
 }
 
