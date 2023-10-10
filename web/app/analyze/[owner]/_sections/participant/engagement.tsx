@@ -49,7 +49,7 @@ export default function EngagementContent () {
         name="@ossinsight/widget-compose-org-participants-roles-ratio"
         className="w-full"
         searchParams={{}}
-        height={getWidgetSize().widgetWidth(3)}
+        height={getWidgetSize().widgetWidth(5)}
       />
       <ChartTemplate
         name="@ossinsight/widget-compose-org-engagement-scatter"
