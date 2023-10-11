@@ -114,10 +114,10 @@ export function number2percent(
   const min = option?.min ?? defaultMin;
 
   if (num > max) {
-    return option.maxLabel || `Over 999%`;
+    return option?.maxLabel || `Over 999%`;
   }
   if (num < min) {
-    return option.minLabel || `Under -999%`;
+    return option?.minLabel || `Under -999%`;
   }
   if (num > 1 || num < -1) {
     return `${(num * 100).toFixed(0)}%`;
