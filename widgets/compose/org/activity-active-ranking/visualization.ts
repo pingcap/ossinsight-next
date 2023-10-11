@@ -10,7 +10,10 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -94,9 +97,7 @@ const handleTotal = (total: TotalDataPoint[] | undefined) => {
   const currentSum = current_period_total;
   const pastSum = past_period_total;
   const diff = currentSum - pastSum;
-  const diffPercentage = ((diff / pastSum) * 100).toFixed(
-    diff / pastSum > 1 ? 0 : 2
-  );
+  const diffPercentage = number2percent(diff / pastSum);
   return {
     current_period_total,
     past_period_total,

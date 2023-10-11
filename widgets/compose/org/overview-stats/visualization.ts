@@ -8,7 +8,11 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  upperFirst,
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -60,9 +64,7 @@ export default function (
   const currentSum = current_period_total;
   const pastSum = past_period_total;
   const diff = currentSum - pastSum;
-  const diffPercentage = ((diff / pastSum) * 100).toFixed(
-    diff / pastSum > 1 ? 0 : 2
-  );
+  const diffPercentage = number2percent(diff / pastSum);
 
   const stars = transferData2Star(data);
 
@@ -75,7 +77,7 @@ export default function (
       vertical(
         widget('builtin:label-value', undefined, {
           label: currentSum,
-          value: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
+          value: diff >= 0 ? `↑${diffPercentage}` : `↓${diffPercentage}`,
           labelProps: {
             style: {
               fontSize: 24,

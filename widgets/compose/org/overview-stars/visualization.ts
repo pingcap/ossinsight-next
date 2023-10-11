@@ -9,7 +9,10 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -44,13 +47,12 @@ export default function (
 
   const [data, total] = input;
 
-  const { current_period_total, past_period_total } =
-    total[0];
-  
+  const { current_period_total, past_period_total } = total[0];
+
   const currentStarsSum = current_period_total;
   const pastStarsSum = past_period_total;
   const diff = currentStarsSum - pastStarsSum;
-  const diffPercentage = ((diff / pastStarsSum) * 100).toFixed(2);
+  const diffPercentage = number2percent(diff / pastStarsSum);
 
   const stars = transferData2Star(data);
 
@@ -64,7 +66,7 @@ export default function (
         horizontal(
           widget('builtin:label-value', undefined, {
             label: currentStarsSum,
-            value: diff >= 0 ? `↑${diffPercentage}%` : `↓${diffPercentage}%`,
+            value: diff >= 0 ? `↑${diffPercentage}` : `↓${diffPercentage}`,
             labelProps: {
               style: {
                 fontSize: 24,

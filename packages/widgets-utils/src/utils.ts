@@ -96,3 +96,31 @@ export function getWidgetSize(
     fullWidth,
   };
 }
+
+// example: 0.1234 => 12.34%
+export function number2percent(
+  num: number,
+  option?: {
+    max?: number;
+    maxLabel?: string;
+    min?: number;
+    minLabel?: string;
+  }
+): string {
+  const defaultMax = 999;
+  const defaultMin = -999;
+
+  const max = option?.max ?? defaultMax;
+  const min = option?.min ?? defaultMin;
+
+  if (num > max) {
+    return option.maxLabel || `Over 999%`;
+  }
+  if (num < min) {
+    return option.minLabel || `Under -999%`;
+  }
+  if (num > 1 || num < -1) {
+    return `${(num * 100).toFixed(0)}%`;
+  }
+  return `${(num * 100).toFixed(2)}%`;
+}

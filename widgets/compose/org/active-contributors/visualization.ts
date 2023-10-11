@@ -9,7 +9,11 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  upperFirst,
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -63,8 +67,8 @@ export default function (
         label: totalData?.current_period_total,
         value:
           growth_percentage >= 0
-            ? `↑${Math.abs(growth_percentage * 100).toFixed(2)}%`
-            : `↓${Math.abs(growth_percentage * 100).toFixed(2)}%`,
+            ? `↑${number2percent(growth_percentage)}`
+            : `↓${number2percent(growth_percentage)}`,
         labelProps: {
           style: {
             fontSize: 24,
