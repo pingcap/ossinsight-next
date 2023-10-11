@@ -40,6 +40,7 @@ export async function generateMetadata ({ params }: { params: { owner: string } 
       twitter: {
         title,
         description,
+        card: 'summary_large_image',
       },
       openGraph: {
         title,
