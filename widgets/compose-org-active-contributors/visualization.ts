@@ -4,7 +4,7 @@ import type {
 } from '@ossinsight/widgets-types';
 import {
   computeLayout,
-  grid,
+  grid as gridUtil,
   nonEmptyDataWidget,
   vertical,
   widget,
@@ -80,7 +80,7 @@ export default function (
         column: false,
       }),
       nonEmptyDataWidget(contributors, () =>
-        grid(
+        gridUtil(
           rows,
           cols,
           ...contributors.map((item) =>
@@ -105,14 +105,7 @@ export default function (
 
 export const type = 'compose';
 
-// export const width = getWidgetSize().widgetWidth(3);
-// export const height = getWidgetSize().widgetWidth(2);
-
-// // TODO
-// export const gridSize = {
-//   rows: 2,
-//   cols: {
-//     min: 2,
-//     max: 3,
-//   }
-// }
+export const grid = {
+  cols: 3,
+  rows: 2,
+}

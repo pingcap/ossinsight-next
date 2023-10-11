@@ -112,5 +112,7 @@ const transferData2Star = (data: DataPoint[]) => {
 
 export const type = 'compose';
 
-// export const width = getWidgetSize().widgetWidth(6);
-// export const height = getWidgetSize().widgetWidth(2);
+export const grid = {
+  cols: 6,
+  rows: 2,
+}

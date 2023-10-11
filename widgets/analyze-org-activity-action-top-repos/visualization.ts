@@ -167,5 +167,7 @@ export default function (
 
 export const type = 'echarts';
 
-// export const width = getWidgetSize().widgetWidth(6);
-// export const height = 274;
+export const grid = {
+  cols: 6,
+  rows: 3,
+}

@@ -70,5 +70,7 @@ export default function (
 
 export const type = 'compose';
 
-// export const width = getWidgetSize().widgetWidth(9);
-// export const height = 405;
+export const grid = {
+  cols: 7,
+  rows: 4,
+}
