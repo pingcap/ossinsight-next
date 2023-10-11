@@ -1,5 +1,5 @@
 import { LinkedDataContext } from '@/components/Context/LinkedData';
-import { createWidget } from '@/components/EmbeddedWidget/createWidget';
+import { useWidget } from '@/components/EmbeddedWidget/useWidget';
 import Loading from '@/components/Widget/loading';
 import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { fetchWidgetData } from '@/utils/widgets';
@@ -24,9 +24,7 @@ export function EmbeddedWidget ({
     name, params, linkedData,
   );
 
-  const Widget = useMemo(() => {
-    return lazy(() => createWidget(name));
-  }, [name]);
+  const Widget = useWidget(name);
 
   if (wd) {
     return (

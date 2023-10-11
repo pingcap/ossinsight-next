@@ -3,9 +3,32 @@ import { ColorSchemeContext } from '@ossinsight/ui/src/components/ColorScheme/co
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import WidgetVisualization from '@ossinsight/widgets-core/src/renderer/react';
 import { createVisualizationContext, createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
-import { CSSProperties, forwardRef, useContext, useMemo } from 'react';
+import { CSSProperties, FC, forwardRef, ForwardRefExoticComponent, lazy, LazyExoticComponent, RefAttributes, useContext, useMemo } from 'react';
 
-export async function createWidget (name: string) {
+interface WidgetProps {
+  className?: string;
+  style?: CSSProperties;
+  name: string;
+  params: Record<string, string | string[]>;
+  data: any;
+  linkedData: LinkedData;
+}
+
+// FIXME
+const dirtyWidgetsMap = new Map<string, LazyExoticComponent<ForwardRefExoticComponent<WidgetProps & RefAttributes<HTMLDivElement>>>>;
+
+export function useWidget (name: string) {
+  const cached = dirtyWidgetsMap.get(name);
+  if (cached) {
+    return cached;
+  } else {
+    const Widget = lazy(() => createWidget(name).then(Widget => ({ default: Widget })));
+    dirtyWidgetsMap.set(name, Widget);
+    return Widget;
+  }
+}
+
+async function createWidget (name: string) {
   const [
     visualizer,
     metadataGenerator,
@@ -14,14 +37,7 @@ export async function createWidget (name: string) {
     widgetMetadataGenerator(name),
   ]);
 
-  const Widget = forwardRef<HTMLDivElement, {
-    className?: string;
-    style?: CSSProperties;
-    name: string;
-    params: Record<string, string | string[]>;
-    data: any;
-    linkedData: LinkedData;
-  }>(({
+  const Widget = forwardRef<HTMLDivElement, WidgetProps>(({
     className, style, name, data, linkedData, params,
   }, forwardedRef) => {
     const { colorScheme } = useContext(ColorSchemeContext);
@@ -69,5 +85,5 @@ export async function createWidget (name: string) {
 
   Widget.displayName = `Widget:${name}`;
 
-  return { default: Widget };
+  return Widget;
 }
