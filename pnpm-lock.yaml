@@ -397,19 +397,19 @@ importers:
         specifier: workspace:^
         version: link:../packages/eslint-plugin
 
-  widgets/analyze-org-activity-action-ratio:
+  widgets/analyze/org/activity-action-ratio:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-org-activity-action-top-repos:
+  widgets/analyze/org/activity-action-top-repos:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-org-activity-efficiency:
+  widgets/analyze/org/activity-efficiency:
     dependencies:
       luxon:
         specifier: ^3.3.0
@@ -417,187 +417,187 @@ importers:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-org-activity-map:
+  widgets/analyze/org/activity-map:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-org-activity-open-to-close:
+  widgets/analyze/org/activity-open-to-close:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-org-activity-open-to-first-response:
+  widgets/analyze/org/activity-open-to-first-response:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-org-commits-time-distribution:
+  widgets/analyze/org/commits-time-distribution:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
 
-  widgets/analyze-org-company:
+  widgets/analyze/org/company:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-org-engagement-scatter:
+  widgets/analyze/org/engagement-scatter:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-org-pull-requests-open-to-review:
+  widgets/analyze/org/pull-requests-open-to-review:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-org-recent-pr-review-stats:
+  widgets/analyze/org/recent-pr-review-stats:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-org-recent-stats:
+  widgets/analyze/org/recent-stats:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-activity-trends:
+  widgets/analyze/repo/activity-trends:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-commits-time-distribution:
+  widgets/analyze/repo/commits-time-distribution:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-company:
+  widgets/analyze/repo/company:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-issue-open-to-first-responded:
+  widgets/analyze/repo/issue-open-to-first-responded:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-issue-opened-and-closed:
+  widgets/analyze/repo/issue-opened-and-closed:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-loc-per-month:
+  widgets/analyze/repo/loc-per-month:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-pull-request-open-to-merged:
+  widgets/analyze/repo/pull-request-open-to-merged:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-pull-requests-size:
+  widgets/analyze/repo/pull-requests-size:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-pushes-and-commits-per-month:
+  widgets/analyze/repo/pushes-and-commits-per-month:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-recent-collaborative-productivity-metrics:
+  widgets/analyze/repo/recent-collaborative-productivity-metrics:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-recent-commits:
+  widgets/analyze/repo/recent-commits:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-recent-contributors:
+  widgets/analyze/repo/recent-contributors:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-recent-issues:
+  widgets/analyze/repo/recent-issues:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-recent-pull-requests:
+  widgets/analyze/repo/recent-pull-requests:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-recent-stars:
+  widgets/analyze/repo/recent-stars:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-recent-top-contributors:
+  widgets/analyze/repo/recent-top-contributors:
     devDependencies:
       '@ossinsight/widgets-types':
         specifier: workspace:^
-        version: link:../../packages/widgets-types
+        version: link:../../../../packages/widgets-types
 
-  widgets/analyze-repo-stars-history:
+  widgets/analyze/repo/stars-history:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-repo-stars-map:
+  widgets/analyze/repo/stars-map:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/analyze-user-contribution-time-distribution:
+  widgets/analyze/user/contribution-time-distribution:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
 
-  widgets/basic-bubbles-chart:
+  widgets/basic/bubbles-chart:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
@@ -608,11 +608,11 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/basic-radar-chart:
+  widgets/basic/radar-chart:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15
@@ -623,11 +623,11 @@ importers:
         specifier: workspace:^
         version: link:..
 
-  widgets/compose-activity-trends:
+  widgets/compose/activity-trends:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
@@ -635,7 +635,7 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/compose-contributors:
+  widgets/compose/contributors:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -643,7 +643,7 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/lodash':
         specifier: ^4.14.198
         version: 4.14.198
@@ -654,11 +654,11 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/compose-currently-working-on:
+  widgets/compose/currently-working-on:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
@@ -666,11 +666,11 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/compose-last-28-days-collaborative-productivity:
+  widgets/compose/last-28-days-collaborative-productivity:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
@@ -678,11 +678,11 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/compose-last-28-days-stats:
+  widgets/compose/last-28-days-stats:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
@@ -690,7 +690,7 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/compose-org-active-contributors:
+  widgets/compose/org/active-contributors:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -698,36 +698,36 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/lodash':
         specifier: ^4.14.195
-        version: 4.14.195
+        version: 4.14.198
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-activity-active-ranking:
+  widgets/compose/org/activity-active-ranking:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-activity-company:
+  widgets/compose/org/activity-company:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/compose-org-activity-growth:
+  widgets/compose/org/activity-growth:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -735,60 +735,60 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/lodash':
         specifier: ^4.14.195
-        version: 4.14.195
+        version: 4.14.198
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-activity-map:
+  widgets/compose/org/activity-map:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/compose-org-activity-new-ranking:
+  widgets/compose/org/activity-new-ranking:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-activity-open-to-close:
+  widgets/compose/org/activity-open-to-close:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/compose-org-activity-open-to-first-response:
+  widgets/compose/org/activity-open-to-first-response:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/compose-org-code-changes-top-repositories:
+  widgets/compose/org/code-changes-top-repositories:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-commits-growth:
+  widgets/compose/org/commits-growth:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -796,48 +796,48 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/lodash':
         specifier: ^4.14.195
-        version: 4.14.195
+        version: 4.14.198
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-engagement-scatter:
+  widgets/compose/org/engagement-scatter:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/compose-org-overview-stars:
+  widgets/compose/org/overview-stars:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-overview-stats:
+  widgets/compose/org/overview-stats:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-participants-growth:
+  widgets/compose/org/participants-growth:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -845,30 +845,30 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/lodash':
         specifier: ^4.14.195
-        version: 4.14.195
+        version: 4.14.198
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-participants-roles-ratio:
+  widgets/compose/org/participants-roles-ratio:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-productivity-ratio:
+  widgets/compose/org/productivity-ratio:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -876,36 +876,36 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/lodash':
         specifier: ^4.14.195
-        version: 4.14.195
+        version: 4.14.198
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-org-pull-requests-open-to-review:
+  widgets/compose/org/pull-requests-open-to-review:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
 
-  widgets/compose-org-stars-top-repos:
+  widgets/compose/org/stars-top-repos:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../../..
       '@types/luxon':
         specifier: ^3.3.1
-        version: 3.3.1
+        version: 3.3.2
       luxon:
         specifier: ^3.3.0
         version: 3.4.3
 
-  widgets/compose-recent-active-contributors:
+  widgets/compose/recent-active-contributors:
     dependencies:
       lodash:
         specifier: ^4.17.21
@@ -913,7 +913,7 @@ importers:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/lodash':
         specifier: ^4.14.198
         version: 4.14.198
@@ -924,11 +924,11 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
-  widgets/compose-recent-top-contributors:
+  widgets/compose/recent-top-contributors:
     devDependencies:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
-        version: link:..
+        version: link:../..
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
@@ -5505,16 +5505,8 @@ packages:
     resolution: {integrity: sha512-CmRqkJfGIthwvW6vbNeY8wI3opKqnvX8+ec83PcK14Ee3RSla1ErAFeY/gVsh42Dm/uLCnD+pkQEDDkKuBK2bQ==}
     dev: true
 
-  /@types/lodash@4.14.195:
-    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
-    dev: true
-
   /@types/lodash@4.14.198:
     resolution: {integrity: sha512-trNJ/vtMZYMLhfN45uLq4ShQSw0/S7xCTLLVM+WM1rmFpba/VS42jVUgaO3w/NOLiWR/09lnYk0yMaA/atdIsg==}
-    dev: true
-
-  /@types/luxon@3.3.1:
-    resolution: {integrity: sha512-XOS5nBcgEeP2PpcqJHjCWhUCAzGfXIU8ILOSLpx2FhxqMW9KdxgCGXNOEKGVBfveKtIpztHzKK5vSRVLyW/NqA==}
     dev: true
 
   /@types/luxon@3.3.2:
