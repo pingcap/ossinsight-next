@@ -8,5 +8,5 @@
     "module": "ESNext",
     "jsx": "react-jsx"
   },
-  "include": ["*/visualization.ts", "*/metadata.ts", "*/visualization.tsx"]
+  "include": ["**/*/visualization.ts", "**/*/metadata.ts", "**/*/visualization.tsx"]
 }
