@@ -7,7 +7,7 @@ export interface RefDatasourceConfig {
   params?: Record<string, string>;
 }
 
-export default async function executeRefDatasource(config: RefDatasourceConfig, ctx: WidgetBaseContext) {
+export default async function executeRefDatasource(config: RefDatasourceConfig, ctx: WidgetBaseContext, signal?: AbortSignal) {
   const parameters = config.params
     ? Object.entries(config.params).reduce((parameters, [k, v]) => {
       parameters[k] = ctx.parameters[v];
@@ -18,5 +18,5 @@ export default async function executeRefDatasource(config: RefDatasourceConfig, 
   return datasourceFetchers[config.widget]({
     ...ctx,
     parameters: parameters,
-  });
+  }, signal);
 }

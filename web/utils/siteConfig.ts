@@ -1,4 +1,6 @@
 import { SiteBannerConfig, SiteHeaderConfig, SiteWidgetsConfig } from '@ossinsight/ui/src/types/ui-config';
+import { WidgetImageGridSize } from '@ossinsight/widgets-types';
+import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 export interface SiteConfig {
   /** @deprecated not used */
@@ -9,7 +11,7 @@ export interface SiteConfig {
     measurementId: string
     measurementSecret: string
     clientId: string
-  }
+  };
   banner?: SiteBannerConfig;
   sizes: Record<string, ImageSizeConfig>;
   widgets: SiteWidgetsConfig;
@@ -28,6 +30,28 @@ export function defineSiteConfig (config: SiteConfig): SiteConfig {
   return config;
 }
 
-export function resolveImageSizeConfig (config: SiteConfig, name: string) {
+export function resolveImageSizeConfig (config: SiteConfig, name: string, grid?: WidgetImageGridSize) {
+  if (grid) {
+    const [c, r, ...none] = name.split('x');
+    if (none.length === 0) {
+      const gridSizes = getWidgetSize();
+      const cols = Number(c);
+      const rows = Number(r);
+      if (isFinite(cols) && isFinite(rows)) {
+        return {
+          width: gridSizes.widgetWidth(adapt(cols, grid.cols)),
+          height: gridSizes.widgetWidth(adapt(rows, grid.rows)),
+        };
+      }
+    }
+  }
   return config.sizes[name] || config.sizes['default'];
+}
+
+function adapt (value: number, constraint: number | { min: number, max: number }) {
+  if (typeof constraint === 'number') {
+    return constraint;
+  } else {
+    return Math.max(Math.max(Math.round(value), constraint.min), constraint.max);
+  }
 }

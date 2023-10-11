@@ -1,5 +1,6 @@
 import { RemoteRepoInfo } from '../GHRepoSelector';
 import { RemoteUserInfo } from '../GHUserSelector';
+import { RemoteOrgInfo } from '../GHOrgSelector';
 
 export type UserTuple = {
   type: 'user'
@@ -10,4 +11,9 @@ export type RepoTuple = {
   value: RemoteRepoInfo | undefined
 }
 
-export type AnalyzeTuple = UserTuple | RepoTuple;
+export type OrgTuple = {
+  type: 'org';
+  value: RemoteOrgInfo | undefined;
+};
+
+export type AnalyzeTuple = UserTuple | RepoTuple | OrgTuple;

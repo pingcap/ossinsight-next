@@ -1,19 +1,15 @@
-import { ServerWidget } from '@/components/Widget/server';
-import { widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
+import Widget from '@/components/Widget';
+import { fetchWidgetData, widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { Suspense } from 'react';
-import { makeLinkedData, widgetPageParams, WidgetPageProps } from './utils';
+import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps } from './utils';
 
-export default function page (props: WidgetPageProps) {
+export default async function page (props: WidgetPageProps) {
   const { name } = widgetPageParams(props.params);
-  const linkedData = makeLinkedData(name, props.searchParams);
-
+  const { data, linkedData, parameters } = await fetchWidgetData(name, props.searchParams);
   return (
-    <Suspense>
-      <ServerWidget className="WidgetContainer" name={name} searchParams={props.searchParams} linkedDataPromise={linkedData} />
-    </Suspense>
+    <Widget name={name} params={parameters} data={data} linkedData={linkedData} />
   );
 }
 
@@ -32,7 +28,7 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
 
   const linkedData = await makeLinkedData(name, searchParams);
 
-  const usp = new URLSearchParams(searchParams);
+  const usp = stringArrayRecord2UrlSearch(searchParams);
   const twitterImageUsp = new URLSearchParams(usp);
 
   const { title, description, keywords } = generateMetadata(
@@ -65,3 +61,5 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
 }
 
 const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+
+export const dynamic = 'force-dynamic';

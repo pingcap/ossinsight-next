@@ -23,13 +23,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
   const parameters = use(widgetParameterDefinitions(widgetName));
 
   const [values, setValues] = useState(() => {
-    const values: Record<string, string> = {};
-    searchParams.forEach((value, key) => {
-      if (key != null) {
-        values[key] = value;
-      }
-    });
-    return values;
+    return urlSearch2stringArrayRecord(searchParams);
   });
 
   const validated = useMemo(() => {
@@ -43,6 +37,17 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
     return true;
   }, [parameters, values]);
 
+  const ownerIdMemo = useMemo(() => {
+    let result = null;
+    try {
+      const ownerId = searchParams.get('owner_id');
+      if (ownerId) {
+        result = Number(ownerId);
+      }
+    } catch {}
+    return result;
+  }, [searchParams]);
+
   return (
     <ParametersContext.Provider value={{ linkedData }}>
       <div className="flex flex-col items-start gap-4 mt-4">
@@ -52,19 +57,42 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
           const value = parseValue(rawValue, config);
           const showRequiredMessage = config.required && value == null;
           return (
-            <div key={key} className="flex flex-col gap-2">
-              <label className={`text-sm${showRequiredMessage ? ' text-red-400' : ''}`} htmlFor={pId}>
+            <div key={key} className='flex flex-col gap-2'>
+              <label
+                className={`text-sm${
+                  showRequiredMessage ? ' text-red-400' : ''
+                }`}
+                htmlFor={pId}
+              >
                 {config.title ?? key}
               </label>
               <ParamInput
                 id={pId}
                 config={config}
                 value={value}
+                ownerId={ownerIdMemo}
                 onValueChange={(nv) => {
-                  setValues(values => ({ ...values, [key]: nv == null ? nv : String(nv) }));
+                  setValues((values) => {
+                    const newValues = stringArrayRecord2UrlSearch(values);
+                    if (nv == null) {
+                      newValues.delete(key);
+                    } else {
+                      if (Array.isArray(nv)) {
+                        newValues.delete(key);
+                        nv.forEach((v) => newValues.append(key, String(v)));
+                      } else {
+                        newValues.set(key, String(nv));
+                      }
+                    }
+                    return urlSearch2stringArrayRecord(newValues);
+                  });
                 }}
               />
-              {showRequiredMessage && <p className="text-xs text-red-400">{config.title} is required.</p>}
+              {showRequiredMessage && (
+                <p className='text-xs text-red-400'>
+                  {config.title} is required.
+                </p>
+              )}
             </div>
           );
         })}
@@ -75,7 +103,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
           className="w-full"
           disabled={!validated}
           onClick={() => {
-            const usp = new URLSearchParams(values);
+            const usp = stringArrayRecord2UrlSearch(values);
             push(`${pathname}?${usp.toString()}`);
           }}>
           Update
@@ -92,4 +120,29 @@ function parseValue (rawValue: any, config: ParameterDefinition) {
     }
   }
   return parsers[config.type](rawValue, config as any);
+}
+
+function stringArrayRecord2UrlSearch(values: Record<string, string | string[]>) {
+  const newValues = new URLSearchParams();
+  for (const [k, v] of Object.entries(values)) {
+    if (Array.isArray(v)) {
+      v.forEach((i) => newValues.append(k, i));
+    } else {
+      newValues.set(k, v);
+    }
+  }
+  return newValues;
+}
+
+function urlSearch2stringArrayRecord(search: URLSearchParams) { 
+  const values: Record<string, string | string[]> = {};
+  for (const item of Array.from(search.keys())) {
+    const val = search.getAll(item);
+    if (val.length === 1) {
+      values[item] = val[0];
+    } else {
+      values[item] = val;
+    }
+  }
+  return values;
 }

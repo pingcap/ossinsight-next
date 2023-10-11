@@ -18,7 +18,23 @@ export const PERIOD_OPTIONS = [
   {
     key: 'past_3_years',
     title: 'Past 3 years',
-  }
+  },
+  {
+    key: 'past_7_days',
+    title: 'Past 7 days',
+  },
+  {
+    key: 'past_28_days',
+    title: 'Past 28 days',
+  },
+  {
+    key: 'past_90_days',
+    title: 'Past 90 days',
+  },
+  {
+    key: 'past_12_months',
+    title: 'Past 12 months',
+  },
 ];
 
 export type ZoneOptionType = { key: number; title: string };

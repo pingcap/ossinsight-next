@@ -35,9 +35,15 @@ importers:
 
   packages/ui:
     dependencies:
+      '@headlessui/react':
+        specifier: ^1.7.17
+        version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
       '@ossinsight/widgets-utils':
         specifier: workspace:^
         version: link:../widgets-utils
+      '@primer/octicons-react':
+        specifier: ^19.7.0
+        version: 19.7.0(react@18.2.0)
       '@radix-ui/react-avatar':
         specifier: ^1.0.3
         version: 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
@@ -56,12 +62,21 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.0.4
         version: 1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-toggle-group':
+        specifier: ^1.0.4
+        version: 1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-tooltip':
+        specifier: ^1.0.6
+        version: 1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
       react-transition-state:
         specifier: ^2.1.1
         version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
+      react-window:
+        specifier: ^1.8.9
+        version: 1.8.9(react-dom@18.2.0)(react@18.2.0)
       rehype-react:
         specifier: ^7.2.0
         version: 7.2.0(@types/react@18.2.15)
@@ -123,6 +138,9 @@ importers:
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+      '@types/react-window':
+        specifier: ^1.8.5
+        version: 1.8.5
       autoprefixer:
         specifier: 10.4.14
         version: 10.4.14(postcss@8.4.26)
@@ -171,6 +189,9 @@ importers:
       luxon:
         specifier: ^3.4.3
         version: 3.4.3
+      merge-refs:
+        specifier: ^1.2.1
+        version: 1.2.1
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
@@ -289,6 +310,9 @@ importers:
       '@ossinsight/widgets-utils':
         specifier: workspace:^
         version: link:../packages/widgets-utils
+      '@primer/octicons-react':
+        specifier: ^19.7.0
+        version: 19.7.0(react@18.2.0)
       '@types/node':
         specifier: 20.4.2
         version: 20.4.2
@@ -301,6 +325,9 @@ importers:
       autoprefixer:
         specifier: 10.4.14
         version: 10.4.14(postcss@8.4.26)
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
       eslint:
         specifier: 8.45.0
         version: 8.45.0
@@ -369,6 +396,85 @@ importers:
       eslint-plugin-ossinsight:
         specifier: workspace:^
         version: link:../packages/eslint-plugin
+
+  widgets/analyze-org-activity-action-ratio:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-org-activity-action-top-repos:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-org-activity-efficiency:
+    dependencies:
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-org-activity-map:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-activity-open-to-close:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-activity-open-to-first-response:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-commits-time-distribution:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
+  widgets/analyze-org-company:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-engagement-scatter:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-pull-requests-open-to-review:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/analyze-org-recent-pr-review-stats:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
+
+  widgets/analyze-org-recent-stats:
+    devDependencies:
+      '@ossinsight/widgets-types':
+        specifier: workspace:^
+        version: link:../../packages/widgets-types
 
   widgets/analyze-repo-activity-trends:
     devDependencies:
@@ -502,6 +608,15 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
+  widgets/basic-radar-chart:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
   widgets/collection-annually-ranking:
     devDependencies:
       '@ossinsight/widgets-parent':
@@ -573,6 +688,221 @@ importers:
         version: 3.3.2
       luxon:
         specifier: ^3.4.3
+        version: 3.4.3
+
+  widgets/compose-org-active-contributors:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-activity-active-ranking:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-activity-company:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-org-activity-growth:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-activity-map:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-org-activity-new-ranking:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-activity-open-to-close:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-org-activity-open-to-first-response:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-org-code-changes-top-repositories:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-commits-growth:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-engagement-scatter:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-org-overview-stars:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-overview-stats:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-participants-growth:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-participants-roles-ratio:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-productivity-ratio:
+    dependencies:
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
+        version: 3.4.3
+
+  widgets/compose-org-pull-requests-open-to-review:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+
+  widgets/compose-org-stars-top-repos:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:..
+      '@types/luxon':
+        specifier: ^3.3.1
+        version: 3.3.1
+      luxon:
+        specifier: ^3.3.0
         version: 3.4.3
 
   widgets/compose-recent-active-contributors:
@@ -2230,6 +2560,18 @@ packages:
     resolution: {integrity: sha512-zeqaQCfAp1eNxEN0jp/3dDW/MkGxApD1eGHyIQ6u0R5BwJMMssX5YNzAmmFBl22p6KZ7ySsHK3OzvIq49zMufg==}
     dev: false
 
+  /@headlessui/react@1.7.17(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-4am+tzvkqDSSgiwrsEpGWqgGo9dz8qU5M3znCkC4PgkpY4HcCZzEDEvozltGGGHIKl9jbXbZPSH5TWn4sWJdow==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+      react-dom: ^16 || ^17 || ^18
+    dependencies:
+      client-only: 0.0.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@humanwhocodes/config-array@0.11.11:
     resolution: {integrity: sha512-N2brEuAadi0CcdeMXUkhbZB84eskAc8MEX1By6qEchoVywSgXPIjou4rYsl0V3Hj0ZnuGycGCjdNgockbzeWNA==}
     engines: {node: '>=10.10.0'}
@@ -2680,6 +3022,15 @@ packages:
       source-map: 0.7.4
       webpack: 5.88.2(@swc/core@1.3.87)(esbuild@0.18.20)
     dev: true
+
+  /@primer/octicons-react@19.7.0(react@18.2.0):
+    resolution: {integrity: sha512-KzB7P+Ew3ud/ua61tQFkTvdS2aIfKUMsT/uHUCvIzfHTcB49xD1MIoQLAwoshiEH4M+aLLGFNCLfBC/xTIH8vw==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: '>=16.3'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -3241,7 +3592,6 @@ packages:
       '@types/react-dom': 18.2.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: true
 
   /@radix-ui/react-toggle@1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Pkqg3+Bc98ftZGsl60CLANXQBBQ4W3mTFS9EJvNxKMZ7magklKV69/id1mlAlOFDDfHvlCms0fx8fA4CMKDJHg==}
@@ -3264,7 +3614,6 @@ packages:
       '@types/react-dom': 18.2.7
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: true
 
   /@radix-ui/react-toolbar@1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-tBgmM/O7a07xbaEkYJWYTXkIdU/1pW4/KZORR43toC/4XWyBCURK0ei9kMUdp+gTPPKBgYLxXmRSH1EVcIDp8Q==}
@@ -3292,6 +3641,38 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
+
+  /@radix-ui/react-tooltip@1.0.6(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DmNFOiwEc2UDigsYj6clJENma58OelxD24O4IODoZ+3sQc3Zb+L8w1EP+y9laTuKCLAysPw4fD6/v0j4KNV8rg==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.15
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-context': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-dismissable-layer': 1.0.4(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-id': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-popper': 1.1.2(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-portal': 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-presence': 1.0.1(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-primitive': 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-use-controllable-state': 1.0.1(@types/react@18.2.15)(react@18.2.0)
+      '@radix-ui/react-visually-hidden': 1.0.3(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react': 18.2.15
+      '@types/react-dom': 18.2.7
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.2.15)(react@18.2.0):
     resolution: {integrity: sha512-D94LjX4Sp0xJFVaoQOd3OO9k7tpBYNOXdVhkltUbGv2Qb9OXdrg/CpsjlZv7ia14Sylv398LswWBVVu5nqKzAQ==}
@@ -5124,8 +5505,16 @@ packages:
     resolution: {integrity: sha512-CmRqkJfGIthwvW6vbNeY8wI3opKqnvX8+ec83PcK14Ee3RSla1ErAFeY/gVsh42Dm/uLCnD+pkQEDDkKuBK2bQ==}
     dev: true
 
+  /@types/lodash@4.14.195:
+    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
+    dev: true
+
   /@types/lodash@4.14.198:
     resolution: {integrity: sha512-trNJ/vtMZYMLhfN45uLq4ShQSw0/S7xCTLLVM+WM1rmFpba/VS42jVUgaO3w/NOLiWR/09lnYk0yMaA/atdIsg==}
+    dev: true
+
+  /@types/luxon@3.3.1:
+    resolution: {integrity: sha512-XOS5nBcgEeP2PpcqJHjCWhUCAzGfXIU8ILOSLpx2FhxqMW9KdxgCGXNOEKGVBfveKtIpztHzKK5vSRVLyW/NqA==}
     dev: true
 
   /@types/luxon@3.3.2:
@@ -5212,6 +5601,12 @@ packages:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
     dependencies:
       '@types/react': 18.2.15
+
+  /@types/react-window@1.8.5:
+    resolution: {integrity: sha512-V9q3CvhC9Jk9bWBOysPGaWy/Z0lxYcTXLtLipkt2cnRj1JOSFNF7wqGpkScSXMgBwC+fnVRg/7shwgddBG5ICw==}
+    dependencies:
+      '@types/react': 18.2.15
+    dev: true
 
   /@types/react@18.2.15:
     resolution: {integrity: sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==}
@@ -9433,6 +9828,10 @@ packages:
       fs-monkey: 1.0.4
     dev: true
 
+  /memoize-one@5.2.1:
+    resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
+    dev: false
+
   /memoizerific@1.11.3:
     resolution: {integrity: sha512-/EuHYwAPdLtXwAwSZkh/Gutery6pD2KYd44oQLhAvQp/50mpyduZh8Q7PYHXTCJ+wuXxt7oij2LXyIJOOYFPog==}
     dependencies:
@@ -9442,6 +9841,12 @@ packages:
   /merge-descriptors@1.0.1:
     resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
     dev: true
+
+  /merge-refs@1.2.1:
+    resolution: {integrity: sha512-pRPz39HQz2xzHdXAGvtJ9S8aEpNgpUjzb5yPC3ytozodmsHg+9nqgRs7/YOmn9fM/TLzntAC8AdGTidKxOq9TQ==}
+    dependencies:
+      '@types/react': 18.2.15
+    dev: false
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
@@ -10975,6 +11380,19 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-window@1.8.9(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+Eqx/fj1Aa5WnhRfj9dJg4VYATGwIUP2ItwItiJ6zboKWA6EX3lYDAXfGF2hyNqplEprhbtjbipiADEcwQ823Q==}
+    engines: {node: '>8.0.0'}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.22.15
+      memoize-one: 5.2.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false

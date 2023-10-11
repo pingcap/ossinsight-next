@@ -3,7 +3,7 @@ declare module '@ossinsight/widgets' {
 
   const visualizers: Record<string, () => Promise<import('./index').VisualizerModule<any, any, any, any>>>;
 
-  const datasourceFetchers: Record<string, (context: import('./index').WidgetBaseContext) => Promise<any>>;
+  const datasourceFetchers: Record<string, (context: import('./index').WidgetBaseContext, signal?: AbortSignal) => Promise<any>>;
 
   const parameterDefinitions: Record<string, () => Promise<import('./index').ParameterDefinitions>>;
 
