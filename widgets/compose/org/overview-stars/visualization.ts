@@ -23,7 +23,13 @@ type DataPoint = {
   past_period_day_total: number;
 };
 
-type Input = [DataPoint[]];
+type TotalDataPoint = {
+  current_period_total: number;
+  growth_percentage: number;
+  past_period_total: number;
+};
+
+type Input = [DataPoint[], TotalDataPoint[]];
 
 export default function (
   input: Input,
@@ -36,17 +42,16 @@ export default function (
   const HEADER_HEIGHT = 48;
   const HORIZONTAL_SPACING = 64;
 
-  const [data] = input;
+  const [data, total] = input;
 
-  const [currentStarsSum, pastStarsSum] = data.reduce(
-    ([current, past], { current_period_day_total, past_period_day_total }) => {
-      return [current + current_period_day_total, past + past_period_day_total];
-    },
-    [0, 0]
-  );
-
+  const  {current_period_total,
+    growth_percentage,
+    past_period_total } = total[0];
+  
+  const currentStarsSum = current_period_total;
+  const pastStarsSum = past_period_total;
   const diff = currentStarsSum - pastStarsSum;
-  const diffPercentage = ((Math.abs(diff) / pastStarsSum) * 100).toFixed(2);
+  const diffPercentage = (growth_percentage * 100).toFixed(2);
 
   const stars = transferData2Star(data);
 

@@ -23,7 +23,13 @@ type DataPoint = {
   past_period_day_total: number;
 };
 
-type Input = [DataPoint[]];
+type TotalDataPoint = {
+  current_period_total: number;
+  growth_percentage: number;
+  past_period_total: number;
+};
+
+type Input = [DataPoint[], TotalDataPoint[]];
 
 const parseTitle = (activity: string) => {
   switch (activity) {
@@ -39,7 +45,7 @@ const parseTitle = (activity: string) => {
 };
 
 export default function (
-  [data]: Input,
+  [data, total]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const WIDTH = ctx.width;
@@ -49,15 +55,15 @@ export default function (
   const HEADER_HEIGHT = 48;
   const HORIZONTAL_SPACING = 64;
 
-  const [currentSum, pastSum] = data.reduce(
-    ([current, past], { current_period_day_total, past_period_day_total }) => {
-      return [current + current_period_day_total, past + past_period_day_total];
-    },
-    [0, 0]
-  );
+  const { current_period_total, growth_percentage, past_period_total } =
+    total[0];
 
+  const currentSum = current_period_total;
+  const pastSum = past_period_total;
   const diff = currentSum - pastSum;
-  const diffPercentage = ((Math.abs(diff) / pastSum) * 100).toFixed(2);
+  const diffPercentage = (growth_percentage * 100).toFixed(
+    growth_percentage > 1 ? 0 : 2
+  );
 
   const stars = transferData2Star(data);
 
