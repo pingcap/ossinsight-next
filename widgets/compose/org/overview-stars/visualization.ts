@@ -44,14 +44,13 @@ export default function (
 
   const [data, total] = input;
 
-  const  {current_period_total,
-    growth_percentage,
-    past_period_total } = total[0];
+  const { current_period_total, past_period_total } =
+    total[0];
   
   const currentStarsSum = current_period_total;
   const pastStarsSum = past_period_total;
   const diff = currentStarsSum - pastStarsSum;
-  const diffPercentage = (growth_percentage * 100).toFixed(2);
+  const diffPercentage = ((diff / pastStarsSum) * 100).toFixed(2);
 
   const stars = transferData2Star(data);
 
@@ -84,7 +83,9 @@ export default function (
             },
             column: false,
           }).flex()
-        ).gap(SPACING).flex(0.3),
+        )
+          .gap(SPACING)
+          .flex(0.3),
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
@@ -113,11 +114,11 @@ const transferData2Star = (data: DataPoint[]) => {
       last_period_stars: d.past_period_day_total,
     };
   });
-}
+};
 
 export const type = 'compose';
 
 export const grid = {
   cols: 6,
   rows: 2,
-}
+};

@@ -45,7 +45,6 @@ const handleData = (
   data: DataPoint[],
   total: {
     current_period_total: number;
-    growth_percentage: number;
     past_period_total: number;
     diff: number;
     diffPercentage: string;
@@ -89,18 +88,17 @@ const handleTotal = (total: TotalDataPoint[] | undefined) => {
   if (!total) {
     return null;
   }
-  const { current_period_total, growth_percentage, past_period_total } =
+  const { current_period_total, past_period_total } =
     total?.[0] || {};
 
   const currentSum = current_period_total;
   const pastSum = past_period_total;
   const diff = currentSum - pastSum;
-  const diffPercentage = (growth_percentage * 100).toFixed(
-    growth_percentage > 1 ? 0 : 2
+  const diffPercentage = ((diff / pastSum) * 100).toFixed(
+    diff / pastSum > 1 ? 0 : 2
   );
   return {
     current_period_total,
-    growth_percentage,
     past_period_total,
     diff,
     diffPercentage,
