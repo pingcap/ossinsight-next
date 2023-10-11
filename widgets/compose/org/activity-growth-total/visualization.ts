@@ -24,8 +24,6 @@ type StarDataPoint = {
   past_period_day_total: number;
 };
 
-type ParticipantDataPoint = StarDataPoint;
-
 type CommitDataPoint = {
   idx: number;
   day: string;
@@ -33,73 +31,84 @@ type CommitDataPoint = {
   commits: number;
 };
 
-type PRReviewDataPoint = StarDataPoint;
+type DataPoint = StarDataPoint | CommitDataPoint;
 
-type DataPoint =
-  | StarDataPoint
-  | ParticipantDataPoint
-  | CommitDataPoint
-  | PRReviewDataPoint;
+type TotalDataPoint = {
+  current_period_total: number;
+  growth_percentage: number;
+  past_period_total: number;
+};
 
-type Input = [DataPoint[]];
+type Input = [DataPoint[], TotalDataPoint[]] | [DataPoint[], undefined];
 
-const handleData = (data: DataPoint[], activity: string) => {
+const handleData = (
+  data: DataPoint[],
+  total: {
+    current_period_total: number;
+    growth_percentage: number;
+    past_period_total: number;
+    diff: number;
+    diffPercentage: string;
+  },
+  activity: string
+) => {
   switch (activity) {
     case 'commits':
-      const [pushesSum, commitsSum] = (data as CommitDataPoint[]).reduce(
-        (acc, cur) => {
-          acc[0] += cur.pushes;
-          acc[1] += cur.commits;
-          return acc;
-        },
-        [0, 0]
-      );
-      const diff2 = (commitsSum / pushesSum) * 100;
       return {
         title: 'Code Submission Count Over Time',
         data: data.sort((a, b) => b.idx - a.idx),
-        label: commitsSum,
-        // value: `↑${diff2.toFixed(2)}%`,
-        value: ' ',
-        increase: true,
-      };
-    case 'reviews/review-prs':
-      return {
-        title: 'Pull Request Review Over Time',
-        data,
-        label: ' ',
-        value: ' ',
-        increase: true,
+        label: total.current_period_total,
+        value:
+          total.diff >= 0
+            ? `↑${total.diffPercentage}%`
+            : `↓${total.diffPercentage}%`,
+        increase: total.diff >= 0,
       };
     case 'stars':
     default:
-      const [currentSum, lastSum] = (data as StarDataPoint[]).reduce(
-        (acc, cur) => {
-          acc[0] += cur.current_period_day_total;
-          acc[1] += cur.past_period_day_total;
-          return acc;
-        },
-        [0, 0]
-      );
       let tmpTitle = 'Star earned over time';
       if (activity === 'participants') {
         tmpTitle = 'Participants Over Time';
       } else if (activity === 'pull-requests') {
         tmpTitle = 'Pull Requests Over Time';
       }
-      const diff = currentSum - lastSum;
       return {
         title: tmpTitle,
         data,
-        label: currentSum,
-        value: diff >= 0 ? `↑${diff}%` : `↓${diff}%`,
-        increase: diff >= 0,
+        label: total.current_period_total,
+        value:
+          total.diff >= 0
+            ? `↑${total.diffPercentage}%`
+            : `↓${total.diffPercentage}%`,
+        increase: total.diff >= 0,
       };
   }
 };
 
+const handleTotal = (total: TotalDataPoint[] | undefined) => {
+  if (!total) {
+    return null;
+  }
+  const { current_period_total, growth_percentage, past_period_total } =
+    total?.[0] || {};
+
+  const currentSum = current_period_total;
+  const pastSum = past_period_total;
+  const diff = currentSum - pastSum;
+  const diffPercentage = (growth_percentage * 100).toFixed(
+    growth_percentage > 1 ? 0 : 2
+  );
+  return {
+    current_period_total,
+    growth_percentage,
+    past_period_total,
+    diff,
+    diffPercentage,
+  };
+};
+
 export default function (
-  [data]: Input,
+  [data, total]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const WIDTH = ctx.width;
@@ -111,13 +120,15 @@ export default function (
 
   const { activity = 'stars' } = ctx.parameters || {};
 
+  const totalData = handleTotal(total);
+
   const {
     data: handledData,
     label,
     value,
     increase,
     title,
-  } = handleData(data, activity);
+  } = handleData(data, totalData, activity);
 
   return computeLayout(
     vertical(
@@ -167,6 +178,6 @@ export default function (
 export const type = 'compose';
 
 export const grid = {
-  cols: 12,
+  cols: 7,
   rows: 4,
-}
+};

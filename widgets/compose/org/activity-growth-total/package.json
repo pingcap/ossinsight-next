@@ -1,5 +1,5 @@
 {
-  "name": "@ossinsight/widget-compose-org-activity-growth",
+  "name": "@ossinsight/widget-compose-org-activity-growth-total",
   "version": "1.0.0",
   "description": "Activity trends for an organization",
   "type": "module",

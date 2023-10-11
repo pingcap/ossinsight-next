@@ -19,11 +19,11 @@ export default function CodeSubmissionContent () {
       className="pt-8 flex flex-col gap-4"
     >
       <ChartTemplate
-        name="@ossinsight/widget-compose-org-commits-growth"
-        className="w-full"
+        name='@ossinsight/widget-compose-org-activity-growth-total'
         searchParams={{
           activity: 'commits',
         }}
+        className="w-full"
         height={getWidgetSize().widgetWidth(4)}
       />
       <SplitTemplate>
