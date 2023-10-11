@@ -17,7 +17,7 @@ export default function StarGrowthContent() {
   return (
     <SectionTemplate
       title='Popularity'
-      description="Discover the popularity and reach of your repositories through stars, and understand the engagement and involvement of participants, enabling you to gauge the community's interest and identify potential collaboration opportunities."
+      description="Discover the popularity and reach of your repositories through stars, enabling you to gauge the community's interest and identify potential collaboration opportunities."
       level={2}
       className='pt-8'
     >

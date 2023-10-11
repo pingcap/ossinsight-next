@@ -116,6 +116,7 @@ export default function (
                   maxVal: item.additions + item.deletions,
                   color: ctx.theme.colors.green['400'],
                   backgroundColor: ctx.theme.colors.red['400'],
+                  labelColor: [ctx.theme.colors.green['400'], ctx.theme.colors.red['400']],
                 }).flex(0.4)
               )
             )

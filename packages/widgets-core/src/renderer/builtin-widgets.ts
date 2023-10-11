@@ -28,6 +28,7 @@ export interface BuiltinWidgetsMap {
     backgroundColor?: string;
     color?: string;
     valueFormatter?: (value: any) => string;
+    labelColor?: string[];
   };
 }
 

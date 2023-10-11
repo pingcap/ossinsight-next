@@ -15,6 +15,7 @@ export async function renderAvatarProgress(
     size = 20,
     backgroundColor = '#888',
     color = '#ffe895',
+    labelColor = [],
     valueFormatter = (v) => `${v}`,
   } = props;
 
@@ -27,10 +28,10 @@ export async function renderAvatarProgress(
   ctx.textAlign = 'start';
 
   ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = color || Label.color;
+  ctx.fillStyle = labelColor?.[0] || Label.color;
   label && ctx.fillText(label, left + 30 * dpr, top + 7 * dpr, width);
   ctx.textAlign = 'right';
-  ctx.fillStyle = backgroundColor || Label.color;
+  ctx.fillStyle = labelColor?.[1] || Label.color;
   value && ctx.fillText(valueFormatter(value), left + width, top + 7 * dpr, width);
 
   ctx.textAlign = 'start';
