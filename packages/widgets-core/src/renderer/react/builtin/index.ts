@@ -1,6 +1,7 @@
 import { createElement, FC, Fragment } from 'react';
 import { BuiltinWidgetsMap } from '../../builtin-widgets';
 import { AvatarLabel } from './AvatarLabel';
+import { AvatarProgress } from './AvatarProgress';
 import { CardHeading } from './CardHeading';
 import { BuiltinProps } from './common';
 import { Empty } from './Empty';
@@ -13,6 +14,7 @@ const map: { [K in keyof BuiltinWidgetsMap]: FC<BuiltinProps<K>> } = {
   'builtin:card-heading': CardHeading,
   'builtin:avatar-label': AvatarLabel,
   'builtin:label': Label,
+  'builtin:avatar-progress': AvatarProgress,
 };
 
 export function Builtin<K extends keyof BuiltinWidgetsMap> ({ name, ...props }: { name: K } & BuiltinProps<K>) {

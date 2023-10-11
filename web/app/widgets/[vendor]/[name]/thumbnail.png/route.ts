@@ -70,7 +70,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     height = visualizer.computeDynamicHeight!(data);
     dpr = 2;
   } else {
-    const resolved = resolveImageSizeConfig(config, size);
+    const resolved = resolveImageSizeConfig(config, size, visualizer.grid);
     width = visualizer.width ?? resolved.width;
     height = visualizer.height ?? resolved.height;
     dpr = resolved.dpr ?? 2;

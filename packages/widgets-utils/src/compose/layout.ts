@@ -196,7 +196,8 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
           layout.children[flexibleChild.index].size = flexibleChild.grow / sumGrow * restSize;
         }
       } else if (restSize <= 0 && flexibleChildren.length > 0) {
-        console.warn('children have no enough space.');
+        // FIXME: org page will always trigger this warn for initial render.
+        // console.warn('children have no enough space.');
         for (let flexibleChild of flexibleChildren) {
           layout.children[flexibleChild.index].size = 0;
         }

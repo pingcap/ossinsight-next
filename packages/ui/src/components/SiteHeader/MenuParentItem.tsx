@@ -34,7 +34,7 @@ export function MenuParentItem ({ item, onValueChange }: { item: MenuParentItemC
           <ChevronDownIcon className="SiteHeader-menu-trigger-indicator" width={12} />
         </RuiMenubar.Trigger>
         <RuiMenubar.Portal>
-          <RuiMenubar.Content className="SiteHeader-menu-content" sideOffset={22} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onCloseAutoFocus={preventDefault}>
+          <RuiMenubar.Content className="SiteHeader-menu-content z-10" sideOffset={22} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onCloseAutoFocus={preventDefault}>
             <RuiMenubar.Arrow className="SiteHeader-menu-content-arrow" />
             <ul>
               {item.items.map((subItem, index) => (

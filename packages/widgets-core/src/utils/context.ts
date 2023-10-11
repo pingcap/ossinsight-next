@@ -4,7 +4,7 @@ import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../parameters/resolver';
 import { darkColorPalette, lightColorPalette } from '../renderer/echarts-theme';
 
-export function createWidgetBaseContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P) {
+export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P) {
   return {
     runtime,
     parameters,
@@ -31,12 +31,12 @@ export function createLinkedDataContext (linkedData: LinkedData): LinkedDataCont
       return linkedData.collections[String(id)];
     },
     getOrg (id: number): any {
-      return {};
+      return linkedData.orgs[String(id)];
     },
   };
 }
 
-export function createWidgetContext<P extends Record<string, string>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData) {
+export function createWidgetContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P, linkedData: LinkedData) {
   return {
     ...createWidgetBaseContext(runtime, parameters),
     ...createLinkedDataContext(linkedData),

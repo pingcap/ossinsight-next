@@ -108,7 +108,7 @@ export function useWidgetTitle (widget: string) {
         getCollection () { return { id: 0, name: 'Collection', public: true }; },
         getRepo () { return { id: 0, fullName: 'Repository' }; },
         getUser () { return { id: 0, login: 'Developer' };},
-        getOrg () { return { id: 0, name: 'Organization' }; },
+        getOrg () { return { id: 0, login: 'Organization' }; },
         getTimeParams () { return { zone: 'TimeZone', period: 'Period' }; },
       });
 

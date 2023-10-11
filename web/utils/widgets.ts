@@ -1,6 +1,10 @@
+import { makeLinkedData } from '@/app/widgets/[vendor]/[name]/utils';
 import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
 import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
+import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
+import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
+import { createWidgetBaseContext } from '@ossinsight/widgets-core/src/utils/context';
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { ComposeVisualizationConfig, MetadataGenerator, VisualizerModule, WidgetBaseContext, WidgetMeta, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { computeLayout, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
@@ -21,7 +25,7 @@ export function widgetMetadataGenerator<P> (name: string): Promise<MetadataGener
   return cachedImport(metadataGenerators[name]);
 }
 
-export function widgetDatasourceFetcher (name: string): (context: WidgetBaseContext) => Promise<any> {
+export function widgetDatasourceFetcher (name: string): (context: WidgetBaseContext, signal?: AbortSignal) => Promise<any> {
   return datasourceFetchers[name];
 }
 
@@ -88,10 +92,8 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
   const HEADER_HEIGHT = 48;
   const PADDING = 24;
 
-  const realHeight = ctx.height + (isDynamicHeight ? HEADER_HEIGHT + PADDING : 0);
-
   return {
-    default () {
+    default (_, _ctx) {
       return computeLayout(
         vertical(
           widget('builtin:card-heading', undefined, {
@@ -103,11 +105,38 @@ export function createDefaultComposeLayout (name: string, data: any, { generateM
             ? widget('builtin:empty', undefined, {})
             : widget(name, data, ctx.parameters).padding([0, PADDING, PADDING]),
         ),
-        0, 0, ctx.width, realHeight,
+        0, 0, _ctx.width, _ctx.height,
       );
     },
     type: 'compose',
-    width: ctx.width,
-    height: realHeight,
+    width: 0,
+    height: 0,
+  };
+}
+
+export type WidgetData = Awaited<ReturnType<typeof fetchWidgetData>>;
+
+export async function fetchWidgetData (name: string, searchParams: Record<string, string | string[]>, propLinkedData?: LinkedData, signal?: AbortSignal) {
+  const fetcher = widgetDatasourceFetcher(name);
+
+  const [params, linkedData] = await Promise.all([
+    widgetParameterDefinitions(name),
+    makeLinkedData(name, searchParams, propLinkedData, signal),
+  ]);
+
+  const parameters = {
+    ...searchParams,
+    ...resolveExpressions(params),
+  };
+
+  const data = await fetcher(createWidgetBaseContext('server', {
+    ...searchParams,
+    ...resolveExpressions(params),
+  }), signal);
+
+  return {
+    parameters,
+    data,
+    linkedData,
   };
 }

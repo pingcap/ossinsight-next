@@ -1,6 +1,7 @@
 import { Canvas } from '@napi-rs/canvas';
 import { getTheme } from '../../../utils/theme';
 import { BuiltinProps } from './commons';
+import { formatNumber } from '@ossinsight/widgets-utils/src/utils';
 
 export function renderLabelValue (
   canvas: Canvas,
@@ -10,6 +11,9 @@ export function renderLabelValue (
     label,
     box: { dpr, left, top, width },
     value,
+    labelProps,
+    valueProps,
+    column = true,
   } = props;
 
   const { Label, Value } = getTheme(props.colorScheme);
@@ -20,17 +24,29 @@ export function renderLabelValue (
   ctx.textBaseline = 'top';
   ctx.textAlign = 'start';
 
-  ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = Label.color;
-  ctx.fillText(label, left, top, width);
+  ctx.font = `${labelProps?.style?.fontWeight || 'normal'} ${(Number(labelProps?.style?.fontSize) || 12) * dpr}px`;
+  ctx.fillStyle = labelProps?.style?.color || Label.color;
+  const labelStr = typeof label === 'number' ? formatNumber(label) : label;
+  ctx.fillText(labelStr, left, top, width);
 
-  const measured = ctx.measureText(label);
+  const measured = ctx.measureText(labelStr);
   const fontHeight =
     measured.fontBoundingBoxAscent + measured.fontBoundingBoxDescent;
 
-  ctx.font = `bold ${24 * dpr}px`;
-  ctx.fillStyle = Value.color;
-  value && ctx.fillText(String(value), left, top + fontHeight + 4 * dpr, width);
+  ctx.font = `${valueProps?.style?.fontWeight || 'bold'} ${(Number(valueProps?.style?.fontSize) || 24) * dpr}px`;
+  ctx.fillStyle = valueProps?.style?.color || Value.color;
+  const valMarginLeftAuto = valueProps?.style?.marginLeft === 'auto';
+  if (valMarginLeftAuto) {
+    ctx.textAlign = 'right';
+  }
+  const valueStr =
+    (typeof value === 'number' ? formatNumber(value) : value) || '';
+  if (column) {
+    value && ctx.fillText(valueStr, left, top + fontHeight + 4 * dpr, width);
+  } else {
+    value &&
+      ctx.fillText(valueStr, valMarginLeftAuto ? width : width / 2, top, width);
+  }
 
   ctx.restore();
 }

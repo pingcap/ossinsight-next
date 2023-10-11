@@ -20,6 +20,7 @@
     "echarts": "^5.4.3",
     "jsonpath": "^1.1.1",
     "luxon": "^3.4.3",
+    "merge-refs": "^1.2.1",
     "react-dom": "18.2.0",
     "url-template": "^3.1.0"
   },

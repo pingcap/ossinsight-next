@@ -1,0 +1,15 @@
+[
+  {
+    "type": "api",
+    "url": "https://api.ossinsight.io/q/orgs/{activity}/locations",
+    "parser": {
+      "type": "json",
+      "extract": "$.data[*]"
+    },
+    "params": {
+      "ownerId": "owner_id",
+      "period": "period"
+    },
+    "when": ["owner_id", "activity", "period"]
+  }
+]

@@ -24,9 +24,14 @@ export function upBound(num: number): number {
  * @param tw Target container width
  * @param th Target container height
  */
-export function scaleToFit (sw: number, sh: number, tw: number, th: number): { width: number, height: number } {
+export function scaleToFit(
+  sw: number,
+  sh: number,
+  tw: number,
+  th: number
+): { width: number; height: number } {
   let width = tw;
-  let height = tw * sh / sw;
+  let height = (tw * sh) / sw;
   if (height > th) {
     width *= th / height;
     height = th;
@@ -35,7 +40,7 @@ export function scaleToFit (sw: number, sh: number, tw: number, th: number): { w
   return { width, height };
 }
 
-export function isEmptyData (datasource: any): boolean {
+export function isEmptyData(datasource: any): boolean {
   if (datasource == null) {
     return true;
   }
@@ -47,7 +52,47 @@ export function isEmptyData (datasource: any): boolean {
       return true;
     }
     // if any sub data is not empty, the datasource is not empty.
-    return datasource.findIndex(sub => !isEmptyData(sub)) === -1;
+    return datasource.findIndex((sub) => !isEmptyData(sub)) === -1;
   }
   return false;
+}
+
+export function upperFirst(str: string): string {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
+export function formatNumber(num: number): string {
+  return num.toLocaleString();
+}
+
+export function mergeURLSearchParams(
+  searchParamsStr: string,
+  ...args: Record<string, any>[]
+): URLSearchParams {
+  const params = new URLSearchParams(searchParamsStr);
+  for (const arg of args) {
+    for (const [key, value] of Object.entries(arg)) {
+      if (value != null) {
+        params.set(key, value);
+      }
+    }
+  }
+  return params;
+}
+
+export function getWidgetSize(
+  colNum: number = 12,
+  colsWidth: number = 960,
+  gapWidth: number = 16
+) {
+  const stepWidth = colsWidth / colNum;
+  const fullWidth = colsWidth + gapWidth * (colNum - 1);
+  const widgetWidth = (col: number, gapOffsetNum: number = 0) => {
+    return col * stepWidth + gapWidth * (col - 1 + gapOffsetNum);
+  };
+  return {
+    stepWidth,
+    widgetWidth,
+    fullWidth,
+  };
 }

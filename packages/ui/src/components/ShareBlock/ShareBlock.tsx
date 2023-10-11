@@ -1,6 +1,5 @@
 'use client';
 
-import { ur } from '@faker-js/faker';
 import HTMLIcon from 'bootstrap-icons/icons/code-slash.svg';
 import ImageIcon from 'bootstrap-icons/icons/image.svg';
 import MarkdownIcon from 'bootstrap-icons/icons/markdown.svg';
@@ -75,8 +74,8 @@ export function markdownCode (colorScheme: string, title: string, url: string, t
   }
   return `<a href="${url}" target="_blank" style="display: block" align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="${thumbnailUrl}&color_scheme=dark" width="${width + 8}" height="auto">
-    <img alt=${JSON.stringify(title)} src="${thumbnailUrl}&color_scheme=light" width="${width + 8}" height="auto">
+    <source media="(prefers-color-scheme: dark)" srcset="${thumbnailUrl}&color_scheme=dark" width="${width + 1}" height="auto">
+    <img alt=${JSON.stringify(title)} src="${thumbnailUrl}&color_scheme=light" width="${width + 1}" height="auto">
   </picture>
 </a>`
 }

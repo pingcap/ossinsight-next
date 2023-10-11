@@ -15,7 +15,7 @@ export interface LinkedDataContext {
 
   getCollection (id: number): { id: number, name: string, public: boolean } | undefined;
 
-  getOrg (id: number): any;
+  getOrg (id: number): { id: number, login: string } | undefined;
 }
 
 export interface VisualizationContext {
@@ -99,6 +99,13 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
 
   width?: number;
   height?: number;
+
+  grid?: WidgetImageGridSize;
+}
+
+export type WidgetImageGridSize = {
+  cols: number | { min: number, max: number }
+  rows: number | { min: number, max: number }
 }
 
 declare const SYMBOL_FOR_TYPING: unique symbol;
@@ -107,6 +114,7 @@ export interface BaseParameterDefinition<T> {
   [SYMBOL_FOR_TYPING]?: T;
   type: string;
   title?: string;
+  array?: boolean;
   description?: string;
   required: boolean;
   default?: unknown;
@@ -114,10 +122,15 @@ export interface BaseParameterDefinition<T> {
 
 export interface RepoIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'repo-id';
+  orgParamName?: string;
 }
 
 export interface UserIdParameterDefinition extends BaseParameterDefinition<number> {
   type: 'user-id';
+}
+
+export interface OrgIdParameterDefinition extends BaseParameterDefinition<number> {
+  type: 'owner-id';
 }
 
 export interface CollectionIdParameterDefinition extends BaseParameterDefinition<number> {
@@ -153,6 +166,10 @@ export interface DateParameterDefinition extends BaseParameterDefinition<string>
   expression?: string;
 }
 
+export interface RepoIdsParameterDefinition extends BaseParameterDefinition<number[]> {
+  type: 'repo-ids';
+}
+
 export type ExtractParameterType<T extends BaseParameterDefinition<any>> = T extends BaseParameterDefinition<infer E> ? E : never;
 
 export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefinitionMap];
@@ -160,6 +177,7 @@ export type ParameterDefinition = ParameterDefinitionMap[keyof ParameterDefiniti
 export interface ParameterDefinitionMap {
   'repo-id': RepoIdParameterDefinition;
   'user-id': UserIdParameterDefinition;
+  'owner-id': OrgIdParameterDefinition;
   'collection-id': CollectionIdParameterDefinition;
   'time-zone': TimeZoneParameterDefinition;
   'time-period': TimePeriodParameterDefinition;
@@ -168,6 +186,7 @@ export interface ParameterDefinitionMap {
   'limit': LimitParameterDefinition;
   'day': DateParameterDefinition;
   'month': DateParameterDefinition;
+  'repo-ids': RepoIdsParameterDefinition;
 }
 
 export type ParameterDefinitions = Record<string, ParameterDefinition>;
