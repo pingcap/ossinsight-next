@@ -34,6 +34,9 @@ export function WidgetCreator ({ className }: { className?: string }) {
       case 'user':
         tag = 'Developer';
         break;
+      case 'org':
+        tag = 'Organization';
+        break;
     }
     return filteredWidgetsNames({ search: '', tag: tag });
   }, [tuple.type]);
