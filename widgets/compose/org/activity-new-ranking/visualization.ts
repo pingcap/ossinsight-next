@@ -100,7 +100,7 @@ const getLabel = (item: DataPoint) => {
 };
 
 export default function (
-  [inputData, totalData]: Input,
+  [inputData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const { activity = 'participants' } = ctx.parameters;
@@ -109,10 +109,6 @@ export default function (
     inputData,
     activity
   );
-
-  const total = totalData[0];
-  const { current_period_total, past_period_total, growth_percentage } = total;
-  const percentage = Math.abs(growth_percentage) * 100;
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -125,30 +121,6 @@ export default function (
         title,
         subtitle,
       }).fix(HEADER_HEIGHT),
-      // widget('builtin:label-value', undefined, {
-      //   label: current_period_total,
-      //   value:
-      //     growth_percentage >= 0
-      //       ? `↑${percentage.toFixed(2)}%`
-      //       : `↓${percentage.toFixed(2)}%`,
-      //   labelProps: {
-      //     style: {
-      //       fontSize: 24,
-      //       fontWeight: 'bold',
-      //     },
-      //   },
-      //   valueProps: {
-      //     style: {
-      //       fontSize: 12,
-      //       lineHeight: 2,
-      //       color:
-      //         growth_percentage >= 0
-      //           ? ctx.theme.colors.green['400']
-      //           : ctx.theme.colors.red['400'],
-      //     },
-      //   },
-      //   column: false,
-      // }).flex(0.2),
       horizontal(
         widget('builtin:label-value', undefined, {
           label,
@@ -159,8 +131,8 @@ export default function (
           value: '',
           labelProps: {
             marginLeft: 'auto',
-          }
-        }).flex(0.3),
+          },
+        }).flex(0.3)
       ).flex(0.1),
       nonEmptyDataWidget(data, () =>
         horizontal(
@@ -196,4 +168,4 @@ export const type = 'compose';
 export const grid = {
   cols: 3,
   rows: 4,
-}
+};

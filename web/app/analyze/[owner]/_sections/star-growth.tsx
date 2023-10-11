@@ -29,7 +29,7 @@ export default function StarGrowthContent() {
       >
         <MainSideGridTemplate>
           <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-growth'
+            name='@ossinsight/widget-compose-org-activity-growth-total'
             searchParams={{
               activity: 'stars',
             }}

@@ -8,7 +8,10 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -24,33 +27,60 @@ type DataPoint = {
   past_period_day_total: number;
 };
 
-type Input = [DataPoint[]];
+type TotalDataPoint = {
+  current_period_total: number;
+  growth_percentage: number;
+  past_period_total: number;
+};
 
-const handleData = (data: DataPoint[], activity: string) => {
-  const [currentSum, lastSum] = data.reduce(
-    (acc, cur) => {
-      acc[0] += cur.current_period_day_total;
-      acc[1] += cur.past_period_day_total;
-      return acc;
-    },
-    [0, 0]
-  );
+type Input = [DataPoint[], TotalDataPoint[]];
+
+const handleTotal = (total: TotalDataPoint[] | undefined) => {
+  if (!total) {
+    return null;
+  }
+  const { current_period_total, past_period_total } = total?.[0] || {};
+
+  const currentSum = current_period_total;
+  const pastSum = past_period_total;
+  const diff = currentSum - pastSum;
+  const diffPercentage = number2percent(diff / pastSum);
+  return {
+    current_period_total,
+    past_period_total,
+    diff,
+    diffPercentage,
+  };
+};
+
+const handleData = (
+  data: DataPoint[],
+  total: {
+    current_period_total: number;
+    past_period_total: number;
+    diff: number;
+    diffPercentage: string;
+  },
+  activity: string
+) => {
   let tmpTitle = 'Participants Over Time';
   if (activity === 'new') {
     tmpTitle = 'New participants Over Time';
   }
-  const diff = currentSum - lastSum;
   return {
     title: tmpTitle,
     data,
-    label: currentSum,
-    value: diff >= 0 ? `↑${diff}%` : `↓${diff}%`,
-    increase: diff >= 0,
+    label: total.current_period_total,
+    value:
+      total.diff >= 0
+        ? `↑${total.diffPercentage}`
+        : `↓${total.diffPercentage}`,
+    increase: total.diff >= 0,
   };
 };
 
 export default function (
-  [data]: Input,
+  [data, total]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const WIDTH = ctx.width;
@@ -62,13 +92,15 @@ export default function (
 
   const { activity = 'active' } = ctx.parameters || {};
 
+  const totalData = handleTotal(total);
+
   const {
     data: handledData,
     label,
     value,
     increase,
     title,
-  } = handleData(data, activity);
+  } = handleData(data, totalData, activity);
 
   return computeLayout(
     vertical(
@@ -120,4 +152,4 @@ export const type = 'compose';
 export const grid = {
   cols: 7,
   rows: 4,
-}
+};

@@ -10,7 +10,10 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -55,20 +58,6 @@ const handleInputData = (data: DataPoint[], activity: string) => {
           0
         ),
       };
-    case 'stars':
-      return {
-        data: (data as ActivityDataPoint[])
-          .sort((a, b) => b.activities - a.activities)
-          .slice(0, 5),
-        title: 'Top Repositories by Stars',
-        subtitle: ' ',
-        label: 'Repositories',
-        value: 'Star earned',
-        maxVal: (data as ActivityDataPoint[]).reduce(
-          (acc, cur) => acc + cur.activities,
-          0
-        ),
-      };
     case 'participants':
     default:
       return {
@@ -99,20 +88,36 @@ const getLabel = (item: DataPoint) => {
   return (item as ActivityDataPoint).repo_name.split('/').pop();
 };
 
+const handleTotal = (total: TotalDataPoint[] | undefined) => {
+  if (!total) {
+    return null;
+  }
+  const { current_period_total, past_period_total } = total?.[0] || {};
+
+  const currentSum = current_period_total;
+  const pastSum = past_period_total;
+  const diff = currentSum - pastSum;
+  const diffPercentage = number2percent(diff / pastSum);
+  return {
+    current_period_total,
+    past_period_total,
+    diff,
+    diffPercentage,
+  };
+};
+
 export default function (
   [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
   const { activity = 'activities' } = ctx.parameters;
 
+  // const total = handleTotal(totalData);
+
   const { title, subtitle, label, value, data, maxVal } = handleInputData(
     inputData,
     activity
   );
-
-  const total = totalData[0];
-  const { current_period_total, past_period_total, growth_percentage } = total;
-  const percentage = Math.abs(growth_percentage) * 100;
 
   const WIDTH = ctx.width;
   const HEIGHT = ctx.height;
@@ -179,4 +184,4 @@ export const type = 'compose';
 export const grid = {
   cols: 3,
   rows: 4,
-}
+};

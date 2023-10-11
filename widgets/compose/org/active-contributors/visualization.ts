@@ -9,7 +9,11 @@ import {
   vertical,
   widget,
 } from '@ossinsight/widgets-utils/src/compose';
-import { upperFirst, getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import {
+  upperFirst,
+  getWidgetSize,
+  number2percent,
+} from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: string;
@@ -49,6 +53,10 @@ export default function (
   const PADDING = 24;
   const HEADER_HEIGHT = 48;
 
+  const growth_percentage =
+    (totalData.current_period_total - totalData.past_period_total) /
+    totalData.past_period_total;
+
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
@@ -58,9 +66,9 @@ export default function (
       widget('builtin:label-value', undefined, {
         label: totalData?.current_period_total,
         value:
-          totalData?.growth_percentage >= 0
-            ? `↑${Math.abs(totalData?.growth_percentage * 100).toFixed(2)}%`
-            : `↓${Math.abs(totalData?.growth_percentage * 100).toFixed(2)}%`,
+          growth_percentage >= 0
+            ? `↑${number2percent(growth_percentage)}`
+            : `↓${number2percent(growth_percentage)}`,
         labelProps: {
           style: {
             fontSize: 24,
@@ -72,7 +80,7 @@ export default function (
             fontSize: 12,
             lineHeight: 2,
             color:
-              totalData?.growth_percentage >= 0
+              growth_percentage >= 0
                 ? ctx.theme.colors.green['400']
                 : ctx.theme.colors.red['400'],
           },
@@ -108,4 +116,4 @@ export const type = 'compose';
 export const grid = {
   cols: 3,
   rows: 2,
-}
+};
