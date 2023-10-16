@@ -402,11 +402,11 @@ export function HLGHOrgRepoSelector(props: {
     ownerId && init(ownerId);
   }, [ownerId]);
 
-  const TEMPORARY_HIDE_REPO_SELECTOR = false;
+  const TEMPORARY_HIDE_REPO_SELECTOR = true;
 
   return (
     <>
-      {TEMPORARY_HIDE_REPO_SELECTOR && repos && (
+      {!TEMPORARY_HIDE_REPO_SELECTOR && repos && (
         <HLGHOrgRepoSelectorTemplate
           disabled={!repos || disabled}
           repos={repos || []}
