@@ -1,3 +1,4 @@
+import { computeExpired } from '@/app/widgets/[vendor]/[name]/thumbnail.png/utils';
 import config from '@/site.config';
 import { apiEvent, autoParams, serverSendGaMeasurementEvent } from '@/utils/ga';
 import { resolveImageSizeConfig } from '@/utils/siteConfig';
@@ -56,7 +57,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     ...autoParams('widget_param_', parameters),
   }, request)]);
 
-  const data = await datasource(createWidgetBaseContext('server', parameters));
+  const ctx = createWidgetBaseContext('server', parameters);
+  const data = await datasource(ctx);
+  const expires = computeExpired(ctx)
+    // If no expires header exists in request context, set the cache to 3 minutes
+    ?? new Date(Date.now() + 1000 * 60 * 3);
 
   const colorScheme = request.nextUrl.searchParams.get('color_scheme') ?? 'dark';
 
@@ -121,9 +126,12 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   return new NextResponse(canvas.toBuffer('image/png'), {
     headers: {
       'Content-Type': 'image/png',
+      ...(expires && {
+        'Expires': expires.toUTCString(),
+        'Cache-Control': 'public',
+      }),
     },
   });
 }
 
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-cache';

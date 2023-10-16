@@ -27,6 +27,11 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
     throw new HttpRequestError(response, await response.json());
   }
 
+  if (!ctx.httpResponses) {
+    ctx.httpResponses = [];
+  }
+  ctx.httpResponses.push(response);
+
   const data = await response.json();
 
   return jp.query(data, config.parser.extract);

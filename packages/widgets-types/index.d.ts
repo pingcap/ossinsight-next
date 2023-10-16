@@ -6,6 +6,10 @@ export interface WidgetBaseContext<P extends Record<string, any> = Record<string
   parameters: P;
 
   getTimeParams (): { zone: string, period: string };
+
+  // For collect response info to calculate cache
+  // See: https://github.com/pingcap/ossinsight-next/issues/47
+  httpResponses?: Response[];
 }
 
 export interface LinkedDataContext {
