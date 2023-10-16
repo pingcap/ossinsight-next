@@ -21,6 +21,10 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
     if (innerSectionId) {
       targetSectionLink = `#${innerSectionId}`;
     }
+    // FIXME: temporary disable widget link if selected repos.
+    if (searchParamsStr.includes('repo_ids=')) {
+      targetWidgetLink = null;
+    }
     return [targetWidgetLink, targetSectionLink];
   }, [innerSectionId, name, searchParamsStr]);
 
