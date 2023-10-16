@@ -3,7 +3,7 @@ import { ColorSchemeContext } from '@ossinsight/ui/src/components/ColorScheme/co
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import WidgetVisualization from '@ossinsight/widgets-core/src/renderer/react';
 import { createVisualizationContext, createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
-import { CSSProperties, FC, forwardRef, ForwardRefExoticComponent, lazy, LazyExoticComponent, RefAttributes, useContext, useMemo } from 'react';
+import { CSSProperties, forwardRef, ForwardRefExoticComponent, lazy, LazyExoticComponent, RefAttributes, useContext, useMemo } from 'react';
 
 interface WidgetProps {
   className?: string;
@@ -70,6 +70,7 @@ async function createWidget (name: string) {
 
     return (
       <WidgetVisualization
+        noSuspense
         className={className}
         style={style}
         type={finalVisualizer.type}
