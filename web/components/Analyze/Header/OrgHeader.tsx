@@ -28,22 +28,8 @@ export default function OrgAnalyzePageHeader() {
   return (
     <>
       {/* -- header -- */}
-      <h1 className='font-semibold text-3xl	text-title inline-flex items-center cursor-default'>
-        <NextImage
-          src={`https://avatars.githubusercontent.com/u/${orgId}`}
-          alt={`${orgName} logo`}
-          className='inline mr-[10px]'
-          width={40}
-          height={40}
-        />
-        {orgName}
-        <span className='bg-[#3C3C47] text-[#62E487] text-xs font-medium border border-solid border-[#376845] ml-4 px-2.5 py-1.5 rounded-full inline-flex items-center gap-2'>
-          <OrganizationIcon size={8} /> Organization
-        </span>
-      </h1>
-      <p className='my-4'>
-        {bio}
-      </p>
+      <OrgTitleIconEle id={orgId} name={orgName} wrapper='h1' />
+      <p className='my-4'>{bio}</p>
 
       {/* -- status bar -- */}
       <div className='flex gap-6 flex-wrap flex-col md:flex-row md:items-end'>
@@ -58,10 +44,10 @@ export default function OrgAnalyzePageHeader() {
           loading={loading}
           count={data?.participants || 0}
           icon={<PeopleIcon />}
-          description='Individuals involved in repositories under this organization.'
+          description='Includes individuals involved in code contributions, code reviews, report issues, issue/pull request discussions within all public repositories of the organization.'
         />
         <LabelItemWithCount
-          label='Stars'
+          label='Stars earned'
           loading={loading}
           count={data?.stars || 0}
           icon={<StarIcon />}
@@ -82,11 +68,72 @@ export default function OrgAnalyzePageHeader() {
       </div>
 
       {/* -- divider -- */}
-      <hr className='my-1 h-[1px] border-t-0 bg-neutral-100 opacity-50' />
+      <hr id='title-divider' className='my-1 h-[1px] border-t-0 bg-neutral-100 opacity-50' />
 
       {/* -- action bar -- */}
       <OrgAnalyzePageHeaderAction />
     </>
+  );
+}
+
+const H1 = (props: any) => <h1 {...props} />;
+const Div = (props: any) => <div {...props} />;
+const getWrapper = (type: string) => {
+  switch (type) {
+    case 'div':
+      return Div;
+    case 'h1':
+      return H1;
+    default:
+      return Div;
+  }
+};
+
+export function OrgTitleIconEle(props: {
+  wrapperClassName?: string;
+  labelClassName?: string;
+  iconClassName?: string;
+  iconSize?: number;
+  wrapper?: 'div' | 'h1';
+  id: string | number;
+  name: string;
+}) {
+  const {
+    wrapperClassName,
+    labelClassName,
+    iconClassName,
+    wrapper = 'div',
+    iconSize = 40,
+    id,
+    name,
+  } = props;
+
+  const WrapperMemo = React.useMemo(() => getWrapper(wrapper), [wrapper]);
+
+  return (
+    <WrapperMemo
+      className={twMerge(
+        'font-semibold text-3xl	text-title inline-flex items-center cursor-default',
+        wrapperClassName
+      )}
+    >
+      <NextImage
+        src={`https://avatars.githubusercontent.com/u/${id}`}
+        alt={`${name} logo`}
+        className={twMerge('inline mr-[10px]', iconClassName)}
+        width={iconSize}
+        height={iconSize}
+      />
+      {name}
+      <span
+        className={twMerge(
+          'bg-[#3C3C47] text-[#62E487] text-xs font-medium border border-solid border-[#376845] ml-4 px-2.5 py-1.5 rounded-full inline-flex items-center gap-2',
+          labelClassName
+        )}
+      >
+        <OrganizationIcon size={8} /> Organization
+      </span>
+    </WrapperMemo>
   );
 }
 
@@ -116,6 +163,9 @@ const LabelItemWithCount = ({
               className: 'inline ml-1',
               width: 12,
               height: 12,
+            }}
+            contentProps={{
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
             }}
           >
             {description}

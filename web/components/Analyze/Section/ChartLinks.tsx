@@ -40,6 +40,9 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
             iconProps={{
               className: 'w-3 h-3',
             }}
+            contentProps={{
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
+            }}
           >
             See Details
           </Tooltip.InfoTooltip>
@@ -56,8 +59,11 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
             iconProps={{
               className: 'w-3 h-3',
             }}
+            contentProps={{
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
+            }}
           >
-            Embed
+            Embed to README.md
           </Tooltip.InfoTooltip>
         </NextLink>
       )}
