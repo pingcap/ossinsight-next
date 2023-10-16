@@ -35,11 +35,22 @@ export const getOrgOverview = (id: number, signal?: AbortSignal) => {
 };
 
 export const params2UrlSearch = (params: {
-  [x: string | number]: string | number;
+  [x: string | number]: string | number | Array<string | number>;
 }) => {
-  return Object.keys(params)
-    .map((key) => `${key}=${params[key]}`)
-    .join('&');
+  const usp = new URLSearchParams();
+  Object.keys(params).forEach(key => {
+    const val = params[key];
+    if (val == null) {
+      return;
+    }
+    if (val instanceof Array) {
+      val.forEach(item => usp.append(key, String(item)))
+    } else {
+      usp.set(key, String(val))
+    }
+  })
+
+  return usp.toString();
 };
 
 export type StarLocationDataType = {
@@ -54,7 +65,7 @@ export type ParticipantLocationDataType = {
 
 export const getOrgActivityLocations = (
   id: number,
-  params: { activity: 'stars' | 'participants'; period?: string; role?: string },
+  params: { activity: 'stars' | 'participants'; period?: string; role?: string, repoIds?: string[] },
   signal?: AbortSignal,
 ): Promise<StarLocationDataType[] | ParticipantLocationDataType[]> => {
   let path = PATH_GET_ORG_STARS_LOCATIONS;
@@ -85,6 +96,7 @@ export const getOrgActivityOrgs = (
     period?: string;
     activity: 'stars' | 'participants';
     role?: string;
+    repoIds?: string[];
   },
   signal?: AbortSignal,
 ): Promise<ParticipateOrgDataType[] | StarOrgDataType[]> => {
