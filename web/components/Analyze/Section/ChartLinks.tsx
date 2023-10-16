@@ -57,7 +57,7 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
               className: 'w-3 h-3',
             }}
           >
-            Embed
+            Embed to README.md
           </Tooltip.InfoTooltip>
         </NextLink>
       )}

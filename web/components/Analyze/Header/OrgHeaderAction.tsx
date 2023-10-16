@@ -8,6 +8,7 @@ import {
 } from '@ossinsight/ui/src/components/GHRepoSelector';
 import { Button } from '@ossinsight/ui/src/components/Button';
 import { CalendarIcon } from '@primer/octicons-react';
+import { twMerge } from 'tailwind-merge';
 
 import {
   AnalyzeOwnerContext,
@@ -16,6 +17,7 @@ import {
   HLSelect,
   SelectParamOption,
 } from '@ossinsight/ui/src/components/Selector/Select';
+import { OrgTitleIconEle } from '@/components/Analyze/Header/OrgHeader';
 
 const options = [
   { key: 'past_7_days', title: 'Past 7 days' },
@@ -85,34 +87,76 @@ export default function OrgAnalyzePageHeaderAction() {
     }
   };
 
+  React.useEffect(() => {
+    const scroll = function () {
+      const title = document.getElementById('action-bar-title');
+      const distanceY =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const breakpoint = 72 + 30;
+
+      if (distanceY >= breakpoint) {
+        title?.classList.remove('h-0', 'hidden');
+        title?.classList.add('h-8', 'block');
+      } else {
+        title?.classList.remove('h-8', 'block');
+        title?.classList.add('h-0', 'hidden');
+      }
+    };
+
+    scroll();
+    window.addEventListener('scroll', scroll);
+
+    return () => {
+      window.removeEventListener('scroll', scroll);
+    };
+  }, []);
+
   return (
     <>
       {/* -- action bar -- */}
-      <div className='sticky top-[var(--site-header-height)] flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end py-4 bg-[var(--background-color-body)] z-10'>
-        {currentPeriod && (
-          <HLSelect
-            options={options}
-            value={options.find((i) => i.key === currentPeriod) || options[1]}
-            onChange={handlePeriodChange}
-            startIcon={<CalendarIcon />}
+      <div className='sticky top-[var(--site-header-height)] flex-col py-4 bg-[var(--background-color-body)] z-10'>
+        {/* -- small title -- */}
+        <div
+          className={twMerge(
+            'transition-all ease-in-out duration-700',
+            'hidden h-0'
+          )}
+          id='action-bar-title'
+        >
+          <OrgTitleIconEle
+            id={orgId}
+            name={orgName}
+            wrapperClassName='text-xl'
+            iconSize={20}
           />
-        )}
-        <div className='relative'>
-          {orgId && (
-            <HLGHOrgRepoSelector
-              disabled={loadingRepoFromUrl}
-              ownerId={orgId}
-              defaultSelectedIds={currentRepoIds}
-              onComplete={(input) => {
-                const inputRepos = input.map((r) => ({
-                  id: r.id,
-                  fullName: r.fullName,
-                  defaultBranch: '',
-                }));
-                handleApplyRepoIdsChanges(inputRepos);
-              }}
+        </div>
+        {/* -- seletors -- */}
+        <div className='flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end'>
+          {currentPeriod && (
+            <HLSelect
+              options={options}
+              value={options.find((i) => i.key === currentPeriod) || options[1]}
+              onChange={handlePeriodChange}
+              startIcon={<CalendarIcon />}
             />
           )}
+          <div className='relative'>
+            {orgId && (
+              <HLGHOrgRepoSelector
+                disabled={loadingRepoFromUrl}
+                ownerId={orgId}
+                defaultSelectedIds={currentRepoIds}
+                onComplete={(input) => {
+                  const inputRepos = input.map((r) => ({
+                    id: r.id,
+                    fullName: r.fullName,
+                    defaultBranch: '',
+                  }));
+                  handleApplyRepoIdsChanges(inputRepos);
+                }}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>
