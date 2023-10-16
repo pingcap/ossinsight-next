@@ -1,3 +1,4 @@
+import { TriangleDownIcon } from '@primer/octicons-react';
 import * as RuiMenubar from '@radix-ui/react-menubar';
 import ChevronDownIcon from 'bootstrap-icons/icons/chevron-down.svg';
 import { useCallback, useEffect, useRef } from 'react';
@@ -31,7 +32,7 @@ export function MenuParentItem ({ item, onValueChange }: { item: MenuParentItemC
       <li>
         <RuiMenubar.Trigger className="SiteHeader-menu-trigger" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onMouseDown={preventDefault}>
           {renderBaseItem(item)}
-          <ChevronDownIcon className="SiteHeader-menu-trigger-indicator" width={12} />
+          <TriangleDownIcon className="SiteHeader-menu-trigger-indicator" size={22} />
         </RuiMenubar.Trigger>
         <RuiMenubar.Portal>
           <RuiMenubar.Content className="SiteHeader-menu-content z-10" sideOffset={22} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onCloseAutoFocus={preventDefault}>
