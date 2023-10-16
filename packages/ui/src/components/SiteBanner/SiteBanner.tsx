@@ -9,7 +9,7 @@ export interface SiteBannerProps {
 export function SiteBanner ({ banner: { content, closable, style } }: SiteBannerProps) {
   return (
     <div
-      className="Banner py-2 text-xs border-b-indigo-950 bg-indigo-700 text-subtitle flex items-center justify-center"
+      className="Banner py-[5px] bg-[#4C33B1] font-bold text-[13.6px] h-[30px] text-white flex items-center justify-center"
       style={style}
     >
       {renderMarkdown(content)}
