@@ -47,7 +47,7 @@ export default function (
 
   const [data, total] = input;
 
-  const { current_period_total, past_period_total } = total[0];
+  const { current_period_total, past_period_total } = total?.[0] ?? {};
 
   const currentStarsSum = current_period_total;
   const pastStarsSum = past_period_total;
