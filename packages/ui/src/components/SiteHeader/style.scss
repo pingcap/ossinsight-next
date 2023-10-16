@@ -2,21 +2,28 @@
 @import "../../styles/controls";
 
 @mixin menu-item-target {
-  @apply flex items-center gap-2 px-2 transition-colors outline-none overflow-hidden whitespace-nowrap;
+  @apply flex items-center gap-0.5 px-2 transition-colors outline-none overflow-hidden whitespace-nowrap;
 
   &:hover {
-    @apply text-title;
+    @apply text-primary;
   }
 
   &:focus {
-    @apply text-title;
+    @apply text-primary;
     @include control-shadow;
   }
 }
 
 .SiteHeader {
-  @apply flex items-center sticky top-0 w-full bg-toolbar px-4 py-2 gap-2 border-b text-subtitle text-sm overflow-x-auto z-10;
+  @apply flex items-center sticky top-0 w-full bg-toolbar px-4 py-2 gap-2 shadow overflow-x-auto z-10;
   height: var(--site-header-height);
+
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 400;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  text-decoration-style: solid;
+  color: rgb(245, 246, 247);
 
   &-menu {
     > ul {
