@@ -164,6 +164,9 @@ const LabelItemWithCount = ({
               width: 12,
               height: 12,
             }}
+            contentProps={{
+              className: 'text-[12px] leading-[16px] max-w-[300px]',
+            }}
           >
             {description}
           </Tooltip.InfoTooltip>

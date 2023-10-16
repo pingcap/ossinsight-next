@@ -120,7 +120,7 @@ export default function OrgAnalyzePageHeaderAction() {
         {/* -- small title -- */}
         <div
           className={twMerge(
-            'transition-all ease-in-out duration-700',
+            'transition-all ease-in-out duration-300',
             'invisible h-0 opacity-0'
           )}
           id='action-bar-title'
