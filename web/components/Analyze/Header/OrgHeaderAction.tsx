@@ -88,18 +88,20 @@ export default function OrgAnalyzePageHeaderAction() {
   };
 
   React.useEffect(() => {
+    const HEADER_HEIGHT = 60;
     const scroll = function () {
       const title = document.getElementById('action-bar-title');
+      const divider = document.getElementById('title-divider');
       const distanceY =
         window.pageYOffset || document.documentElement.scrollTop;
       const breakpoint = 72 + 30;
 
-      if (distanceY >= breakpoint) {
-        title?.classList.remove('h-0', 'hidden');
-        title?.classList.add('h-8', 'block');
+      if (divider && isElementScrolltoInvisible(divider, HEADER_HEIGHT)) {
+        title?.classList.remove('h-8', 'visible', 'opacity-100');
+        title?.classList.add('h-0', 'invisible', 'opacity-0');
       } else {
-        title?.classList.remove('h-8', 'block');
-        title?.classList.add('h-0', 'hidden');
+        title?.classList.remove('h-0', 'invisible', 'opacity-0');
+        title?.classList.add('h-8', 'visible', 'opacity-100');
       }
     };
 
@@ -114,12 +116,12 @@ export default function OrgAnalyzePageHeaderAction() {
   return (
     <>
       {/* -- action bar -- */}
-      <div className='sticky top-[var(--site-header-height)] flex-col py-4 bg-[var(--background-color-body)] z-10'>
+      <div className='sticky top-[var(--site-header-height)] flex flex-col gap-2 py-4 bg-[var(--background-color-body)] z-10'>
         {/* -- small title -- */}
         <div
           className={twMerge(
             'transition-all ease-in-out duration-700',
-            'hidden h-0'
+            'invisible h-0 opacity-0'
           )}
           id='action-bar-title'
         >
@@ -187,4 +189,15 @@ function stringArray2NumberArray(arr: (string | number)[]) {
     }
     return acc;
   }, []);
+}
+
+function isElementScrolltoInvisible(element: HTMLElement, topOffset?: number) {
+  const rect = element.getBoundingClientRect();
+  const windowHeight =
+    window.innerHeight || document.documentElement.clientHeight;
+  const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+
+  const isElementInViewport = rect.top >= 0 + (topOffset ?? 0);
+
+  return isElementInViewport;
 }

@@ -68,7 +68,7 @@ export default function OrgAnalyzePageHeader() {
       </div>
 
       {/* -- divider -- */}
-      <hr className='my-1 h-[1px] border-t-0 bg-neutral-100 opacity-50' />
+      <hr id='title-divider' className='my-1 h-[1px] border-t-0 bg-neutral-100 opacity-50' />
 
       {/* -- action bar -- */}
       <OrgAnalyzePageHeaderAction />
