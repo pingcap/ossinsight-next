@@ -41,7 +41,7 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
               className: 'w-3 h-3',
             }}
             contentProps={{
-              className: 'text-[12px] leading-[16px] max-w-[300px]',
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
             }}
           >
             See Details
@@ -60,7 +60,7 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
               className: 'w-3 h-3',
             }}
             contentProps={{
-              className: 'text-[12px] leading-[16px] max-w-[300px]',
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
             }}
           >
             Embed to README.md

@@ -165,7 +165,7 @@ const LabelItemWithCount = ({
               height: 12,
             }}
             contentProps={{
-              className: 'text-[12px] leading-[16px] max-w-[300px]',
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
             }}
           >
             {description}
