@@ -15,7 +15,7 @@
 }
 
 .SiteHeader {
-  @apply flex items-center sticky top-0 w-full bg-toolbar px-4 py-2 gap-2 border-b overflow-x-auto z-10;
+  @apply flex items-center sticky top-0 w-full bg-toolbar px-4 py-2 gap-2 shadow overflow-x-auto z-10;
   height: var(--site-header-height);
 
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
