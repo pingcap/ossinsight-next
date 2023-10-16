@@ -2,6 +2,21 @@
   "name": "@ossinsight/cli",
   "private": true,
   "scripts": {
-    "build": "echo hi"
+    "start": "node ./lib/index.js",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@ossinsight/data-api": "workspace:^",
+    "@tidbcloud/serverless": "^0.0.6",
+    "commander": "^11.0.0",
+    "glob": "^10.3.10",
+    "liquidjs": "^10.9.2",
+    "next": "^13.5.2",
+    "pino": "^8.15.7",
+    "pino-pretty": "^10.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.2"
   }
 }

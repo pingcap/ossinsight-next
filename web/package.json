@@ -6,15 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen:queries": "ts-node ./scripts/generate-queries.ts --config ./configs/queries"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@napi-rs/canvas": "^0.1.44",
     "@next/mdx": "13.5.2",
+    "@ossinsight/data-api": "workspace:^",
     "@ossinsight/widgets-core": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",
+    "@tidbcloud/serverless": "^0.0.6",
     "@primer/octicons-react": "^19.7.0",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
@@ -23,6 +26,7 @@
     "clsx": "^2.0.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.5.2",
+    "liquidjs": "^10.9.2",
     "next": "^13.5.2",
     "next-plugin-svgr": "^1.1.8",
     "postcss": "8.4.26",

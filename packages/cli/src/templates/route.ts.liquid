@@ -1,0 +1,21 @@
+import {DataService} from "@ossinsight/data-api";
+import { NextRequest, NextResponse } from 'next/server';
+
+export const config = {
+  runtime: 'edge',
+}
+
+export const templateSQL = `
+{{ templateSQL }}
+`
+
+export const endpointConfig = {{ endpointConfig }}
+
+const dataService = new DataService({
+  url: process.env.DATABASE_URL
+});
+
+export async function GET(req: NextRequest) {
+  const result = await dataService.handleQueryEndpoint(req, templateSQL, endpointConfig);
+  return NextResponse.json(result);
+}

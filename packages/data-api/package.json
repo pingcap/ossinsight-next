@@ -1,0 +1,26 @@
+{
+  "name": "@ossinsight/data-api",
+  "private": true,
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "start": "node ./lib/index.js",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "gen:d.ts": "json2ts ../../schemas/data-api/v1/EndpointConfig.schema.json ./src/types/EndpointConfig.schema.d.ts"
+  },
+  "dependencies": {
+    "@tidbcloud/serverless": "^0.0.6",
+    "json-schema-to-ts": "^2.9.2",
+    "json-schema-to-typescript": "^13.1.1",
+    "liquidjs": "^10.9.2",
+    "luxon": "^3.4.3",
+    "next": "^13.5.2",
+    "pino": "^8.15.7",
+    "pino-pretty": "^10.2.3"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.3.2",
+    "@types/node": "20.4.2"
+  }
+}
