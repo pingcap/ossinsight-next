@@ -4,20 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run gen:endpoints && next build",
     "start": "next start",
     "lint": "next lint",
-    "gen:queries": "ts-node ./scripts/generate-queries.ts --config ./configs/queries"
+    "gen:endpoints": "ossinsight endpoints generate --endpoints-dir ../configs/endpoints --functions-dir ./app/api/queries"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@napi-rs/canvas": "^0.1.44",
     "@next/mdx": "13.5.2",
+    "@ossinsight/cli": "workspace:^",
     "@ossinsight/data-api": "workspace:^",
     "@ossinsight/widgets-core": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",
-    "@tidbcloud/serverless": "^0.0.6",
     "@primer/octicons-react": "^19.7.0",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",

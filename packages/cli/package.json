@@ -1,12 +1,16 @@
 {
   "name": "@ossinsight/cli",
   "private": true,
+  "bin": {
+    "ossinsight": "./lib/cli.js"
+  },
   "scripts": {
-    "start": "node ./lib/index.js",
+    "start": "node ./lib/cli.js",
     "build": "tsc",
     "watch": "tsc -w"
   },
   "dependencies": {
+    "@ossinsight/cli": "workspace:^",
     "@ossinsight/data-api": "workspace:^",
     "@tidbcloud/serverless": "^0.0.6",
     "commander": "^11.0.0",

@@ -41,7 +41,7 @@ export function initEndpointsGenerateCommand(parentCommand: Command, logger: Log
       const functionBaseDir = path.isAbsolute(functionsDir) ? functionsDir : path.resolve(process.cwd(), functionsDir);
 
       // Load function template.
-      const template = fs.readFileSync(path.resolve(process.cwd(), './src/templates/route.ts.liquid'), 'utf-8');
+      const template = fs.readFileSync(path.resolve(__dirname, '../../../src/templates/route.ts.liquid'), 'utf-8');
 
       // Traverse the endpoint config directory.
       const endpointJSONFiles = await glob('**/params.json', {
