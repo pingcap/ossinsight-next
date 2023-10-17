@@ -508,6 +508,21 @@ importers:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:../../..
+      '@types/d3':
+        specifier: ^7.4.1
+        version: 7.4.1
+      '@types/d3-cloud':
+        specifier: ^1.2.6
+        version: 1.2.6
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      d3:
+        specifier: ^7.8.5
+        version: 7.8.5
+      d3-cloud:
+        specifier: ^1.2.7
+        version: 1.2.7
 
   widgets/analyze/repo/issue-open-to-first-responded:
     devDependencies:
