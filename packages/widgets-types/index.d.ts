@@ -5,6 +5,7 @@ export interface WidgetBaseContext<P extends Record<string, any> = Record<string
   runtime: 'server' | 'client';
   parameters: P;
 
+  createCanvas (): HTMLCanvasElement;
   getTimeParams (): { zone: string, period: string };
 }
 
@@ -62,6 +63,8 @@ export type WidgetComposeItem = {
 }
 
 export type ComposeVisualizationConfig = WidgetComposeItem[]
+
+export type CanvasVisualizationConfig = (canvas: HTMLCanvasElement) => (() => void) | void;
 
 export type VisualizeFunction<R, D, P> = (data: D, ctx: WidgetVisualizerContext<P>) => R
 
