@@ -101,7 +101,7 @@ export default function Widget({
         />
       </div>
       {showThemeSwitch && (
-        <div className='absolute right-4 top-8'>
+        <div className='absolute right-4 top-4 lg:right-40 lg:top-8'>
           <ColorSchemeSelector
             value={colorScheme}
             onValueChange={setColorScheme}
