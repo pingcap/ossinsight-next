@@ -368,12 +368,18 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@3.3.3)
+      '@types/luxon':
+        specifier: ^3.3.2
+        version: 3.3.2
       '@types/mdx':
         specifier: ^2.0.7
         version: 2.0.7
       bootstrap-icons:
         specifier: ^1.11.1
         version: 1.11.1
+      luxon:
+        specifier: ^3.4.3
+        version: 3.4.3
       sass:
         specifier: ^1.68.0
         version: 1.68.0
