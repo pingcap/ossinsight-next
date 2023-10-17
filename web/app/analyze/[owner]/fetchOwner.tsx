@@ -1,7 +1,8 @@
 import { getOwnerInfo } from '@/components/Analyze/utils';
 import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
-export const fetchOwnerInfo = async (
+export const fetchOwnerInfo = cache(async (
   orgName: string,
 ) => {
   try {
@@ -9,4 +10,4 @@ export const fetchOwnerInfo = async (
   } catch (error) {
     notFound();
   }
-};
+});
