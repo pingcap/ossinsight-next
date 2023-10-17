@@ -36,3 +36,4 @@ next-env.d.ts
 
 # Generated Query Edge Functions
 app/api/queries/**
+!app/api/queries/.keep
