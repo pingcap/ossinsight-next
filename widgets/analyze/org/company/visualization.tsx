@@ -40,9 +40,18 @@ export default async function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>,
 ) {
+  let width = ctx.width;
+  let height = ctx.height;
+  let viewBoxWidth = width;
+  let viewBoxHeight = height;
+
+  if (ctx.runtime === 'server') {
+    viewBoxWidth /= ctx.dpr;
+    viewBoxHeight /= ctx.dpr;
+  }
 
   const minFontSize = 14;
-  const maxFontSize = Math.min(ctx.height, ctx.width) / 4;
+  const maxFontSize = Math.min(viewBoxHeight, viewBoxWidth) / 4;
 
   const valueIndex = ctx.parameters?.activity || 'participants';
 
@@ -65,15 +74,7 @@ export default async function (
     word.size = (word.size - min) * (maxFontSize - minFontSize) / (max - min) + minFontSize;
     return word;
   });
-  let width = ctx.width;
-  let height = ctx.height;
-  let viewBoxWidth = width;
-  let viewBoxHeight = height;
 
-  if (ctx.runtime === 'server') {
-    viewBoxWidth /= ctx.dpr;
-    viewBoxHeight /= ctx.dpr;
-  }
 
   const words: cloud.Word[] = await new Promise<cloud.Word[]>(resolve => {
     const layout = cloud()
