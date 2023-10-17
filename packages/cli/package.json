@@ -10,9 +10,6 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@ossinsight/cli": "workspace:^",
-    "@ossinsight/data-api": "workspace:^",
-    "@tidbcloud/serverless": "^0.0.6",
     "commander": "^11.0.0",
     "glob": "^10.3.10",
     "liquidjs": "^10.9.2",
@@ -21,6 +18,7 @@
     "pino-pretty": "^10.2.3"
   },
   "devDependencies": {
+    "@ossinsight/data-api": "workspace:^",
     "@types/node": "20.4.2"
   }
 }

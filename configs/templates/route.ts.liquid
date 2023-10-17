@@ -3,17 +3,17 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge'
 
-export const templateSQL = `
+const TEMPLATE_SQL = `
 {{ templateSQL }}
 `
 
-export const endpointConfig = {{ endpointConfig }}
+const ENDPOINT_CONFIG = {{ endpointConfig }}
 
 const dataService = new DataService({
   url: process.env.DATABASE_URL
 });
 
 export async function GET(req: NextRequest) {
-  const result = await dataService.handleQueryEndpoint(req, templateSQL, endpointConfig);
+  const result = await dataService.handleQueryEndpoint(req, TEMPLATE_SQL, ENDPOINT_CONFIG);
   return NextResponse.json(result);
 }

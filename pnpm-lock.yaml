@@ -14,15 +14,6 @@ importers:
 
   packages/cli:
     dependencies:
-      '@ossinsight/cli':
-        specifier: workspace:^
-        version: 'link:'
-      '@ossinsight/data-api':
-        specifier: workspace:^
-        version: link:../data-api
-      '@tidbcloud/serverless':
-        specifier: ^0.0.6
-        version: 0.0.6
       commander:
         specifier: ^11.0.0
         version: 11.0.0
@@ -42,6 +33,9 @@ importers:
         specifier: ^10.2.3
         version: 10.2.3
     devDependencies:
+      '@ossinsight/data-api':
+        specifier: workspace:^
+        version: link:../data-api
       '@types/node':
         specifier: 20.4.2
         version: 20.4.2
@@ -370,9 +364,6 @@ importers:
       '@next/mdx':
         specifier: 13.5.2
         version: 13.5.2(@mdx-js/loader@2.3.0)(@mdx-js/react@2.3.0)
-      '@ossinsight/cli':
-        specifier: workspace:^
-        version: link:../packages/cli
       '@ossinsight/data-api':
         specifier: workspace:^
         version: link:../packages/data-api
@@ -431,6 +422,9 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
     devDependencies:
+      '@ossinsight/cli':
+        specifier: workspace:^
+        version: link:../packages/cli
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../packages/ui

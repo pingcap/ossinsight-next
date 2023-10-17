@@ -1,4 +1,4 @@
-import {EndpointConfig} from "@ossinsight/data-api/src/types/EndpointConfig.schema";
+import type {EndpointConfig} from "@ossinsight/data-api/src/types/EndpointConfig.schema";
 import {Command} from "commander";
 import * as fs from "fs";
 import {glob} from "glob";
@@ -25,7 +25,13 @@ export function initEndpointsGenerateCommand(parentCommand: Command, logger: Log
       (value) => value,
       path.resolve(process.cwd(), '../../web/app/api/queries')
     )
-    .action(async ({ endpointsDir, functionsDir  }) => {
+    .requiredOption<string>(
+      '-t, --template-file <string>',
+      'Specifies the template file of edge/serverless function.',
+      (value) => value,
+      path.resolve(process.cwd(), '../../configs/templates/route.ts.liquid')
+    )
+    .action(async ({ endpointsDir, functionsDir, templateFile  }) => {
       // Check if the endpoints directory exists.
       if (!fs.existsSync(endpointsDir)) {
         logger.error(`The endpoints config directory "${endpointsDir}" does not exist, please check the --endpoints-dir option.`);
@@ -40,8 +46,15 @@ export function initEndpointsGenerateCommand(parentCommand: Command, logger: Log
       }
       const functionBaseDir = path.isAbsolute(functionsDir) ? functionsDir : path.resolve(process.cwd(), functionsDir);
 
+      // Check if the template file exists.
+      if (!fs.existsSync(templateFile)) {
+        logger.error(`The template file (${templateFile}) of edge/serverless function, please check the --template-file option.`);
+        return;
+      }
+      const templateFilePath = path.isAbsolute(templateFile) ? templateFile : path.resolve(process.cwd(), templateFile);
+
       // Load function template.
-      const template = fs.readFileSync(path.resolve(__dirname, '../../../src/templates/route.ts.liquid'), 'utf-8');
+      const template = fs.readFileSync(templateFilePath, 'utf-8');
 
       // Traverse the endpoint config directory.
       const endpointJSONFiles = await glob('**/params.json', {
