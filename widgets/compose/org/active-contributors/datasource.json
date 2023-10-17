@@ -9,7 +9,8 @@
     "params": {
       "ownerId": "owner_id",
       "activity": "activity",
-      "period": "period"
+      "period": "period",
+      "repoIds": "repo_ids"
     },
     "when": ["owner_id", "activity", "period"]
   },
@@ -23,7 +24,8 @@
     "params": {
       "ownerId": "owner_id",
       "activity": "activity",
-      "period": "period"
+      "period": "period",
+      "repoIds": "repo_ids"
     },
     "when": ["owner_id", "activity", "period"]
   }

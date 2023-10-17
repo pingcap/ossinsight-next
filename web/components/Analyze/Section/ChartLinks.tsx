@@ -21,6 +21,10 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
     if (innerSectionId) {
       targetSectionLink = `#${innerSectionId}`;
     }
+    // FIXME: temporary disable widget link if selected repos.
+    if (searchParamsStr.includes('repo_ids=')) {
+      targetWidgetLink = null;
+    }
     return [targetWidgetLink, targetSectionLink];
   }, [innerSectionId, name, searchParamsStr]);
 
@@ -35,6 +39,9 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
             Icon={ArrowUpRightIcon}
             iconProps={{
               className: 'w-3 h-3',
+            }}
+            contentProps={{
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
             }}
           >
             See Details
@@ -52,8 +59,11 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
             iconProps={{
               className: 'w-3 h-3',
             }}
+            contentProps={{
+              className: 'text-[12px] leading-[16px] max-w-[400px]',
+            }}
           >
-            Embed
+            Embed to README.md
           </Tooltip.InfoTooltip>
         </NextLink>
       )}

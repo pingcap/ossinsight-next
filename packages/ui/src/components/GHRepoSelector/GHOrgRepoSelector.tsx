@@ -121,7 +121,8 @@ function SearchInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
 const allItem = { id: 0, name: 'All repositories' };
 
 const parseItemsLength = (sum: number, max = 99, maxLabel = '99+') => {
-  return sum > max ? maxLabel : sum.toFixed(0);
+  return sum.toFixed(0);
+  // return sum > max ? maxLabel : sum.toFixed(0);
 };
 
 type ItemType = {
@@ -293,11 +294,12 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                                 : 'font-normal'
                             }`}
                           >
-                            {allItem.name}
+                            {allItem.name}({repos.length})
                           </span>
                           <input
                             type='checkbox'
                             checked={selectedItems.length === 0}
+                            disabled={selectedItems.length === 0}
                             readOnly
                             className='absolute inset-y-0 left-0 flex items-center ml-3 mt-2.5 text-[var(--text-color-subtitle)] h-4 w-4 rounded border-gray-300 focus:ring-[var(--selector-border-color)] accent-[var(--selector-fill-color)]'
                           />

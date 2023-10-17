@@ -65,10 +65,10 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         return acc;
       }, {} as Record<'selfClosed' | 'othersClosed' | 'unClosed', IssueClosedDataPoint>);
       const issueCurrent =
-        selfClosed.current_period_percentage +
-        othersClosed.current_period_percentage;
+        selfClosed?.current_period_percentage +
+        othersClosed?.current_period_percentage;
       const issuePast =
-        selfClosed.past_period_percentage + othersClosed.past_period_percentage;
+        selfClosed?.past_period_percentage + othersClosed?.past_period_percentage;
       const issueDiff = (issueCurrent - issuePast) / issuePast;
       return {
         title: 'Issues Closed Ratio',
@@ -91,12 +91,12 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         },
         {} as Record<'reviewed' | 'unReviewed', ReviewedDataPoint>
       );
-      const reviewCurrent = reviewed.current_period_percentage;
-      const reviewPast = reviewed.past_period_percentage;
+      const reviewCurrent = reviewed?.current_period_percentage;
+      const reviewPast = reviewed?.past_period_percentage;
       const reviewDiff = (reviewCurrent - reviewPast) / reviewPast;
       return {
         title: 'PR Reviewed Ratio',
-        label: `${reviewCurrent.toFixed(0)}%`,
+        label: `${reviewCurrent?.toFixed(0)}%`,
         value: `${reviewDiff >= 0 ? '↑' : '↓'}${Math.abs(reviewDiff).toFixed(
           2
         )}%`,
@@ -119,10 +119,10 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         return acc;
       }, {} as Record<'selfMerged' | 'othersMerged' | 'unMerged', PRMergedDataPoint>);
       const prCurrent =
-        selfMerged.current_period_percentage +
-        othersMerged.current_period_percentage;
+        selfMerged?.current_period_percentage +
+        othersMerged?.current_period_percentage;
       const prPast =
-        selfMerged.past_period_percentage + othersMerged.past_period_percentage;
+        selfMerged?.past_period_percentage + othersMerged?.past_period_percentage;
       const prDiff = (prCurrent - prPast) / prPast;
       return {
         title: 'PRs Merged Ratio',

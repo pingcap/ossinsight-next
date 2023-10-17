@@ -59,7 +59,7 @@ export default function (
   const HEADER_HEIGHT = 48;
   const HORIZONTAL_SPACING = 64;
 
-  const { current_period_total, past_period_total } = total[0];
+  const { current_period_total, past_period_total } = total?.[0] ?? {};
 
   const currentSum = current_period_total;
   const pastSum = past_period_total;

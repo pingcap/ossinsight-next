@@ -15,7 +15,7 @@ export interface SiteHeaderProps extends SiteHeaderConfig {
 
 }
 
-const logoHeight = 32;
+const logoHeight = 44;
 
 export function SiteHeader ({ logo, items }: SiteHeaderConfig) {
   const [value, setValue] = useState<string>();

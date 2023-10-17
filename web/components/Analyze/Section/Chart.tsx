@@ -34,7 +34,6 @@ export default function ChartTemplate (props: ChartTemplateProps) {
 
   const { id: orgId } = React.useContext(AnalyzeOwnerContext);
   const searchParamsFromUrl = useSearchParams();
-  const pathname = usePathname();
 
   const periodMemo = React.useMemo(() => {
     return searchParamsFromUrl.get('period') || 'past_28_days';

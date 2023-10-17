@@ -4,10 +4,11 @@ import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../parameters/resolver';
 import { darkColorPalette, lightColorPalette } from '../renderer/echarts-theme';
 
-export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P) {
+export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P, createCanvas: () => HTMLCanvasElement = () => document.createElement('canvas')) {
   return {
     runtime,
     parameters,
+    createCanvas,
     getTimeParams (): any {
       const { DEFAULT_ZONE } = generateZoneOptions();
 

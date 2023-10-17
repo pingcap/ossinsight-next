@@ -5,8 +5,9 @@ import Loader from '@/components/Widget/loading';
 import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { Scale } from '@ossinsight/ui/src/components/transitions';
 import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
+import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 const Table = forwardRef(function Table (props: {
@@ -79,6 +80,7 @@ export function GeoRankTableContent (props: {
   maxRows?: number;
 }) {
   const { id, type, maxRows = 10, role } = props;
+  const repoIds = useRepoIds();
 
   const {
     result: data = [],
@@ -86,7 +88,7 @@ export function GeoRankTableContent (props: {
     ref,
   } = usePerformanceOptimizedNetworkRequest(
     getOrgActivityLocations,
-    id, { activity: type, ...(role && { role }) },
+    id, { activity: type, ...(role && { role }), repoIds },
   );
 
   const rowsMemo = React.useMemo(() => {
@@ -145,13 +147,14 @@ export function CompanyRankTableContent (props: {
   maxRows?: number;
 }) {
   const { id, maxRows = 10, type, role } = props;
+  const repoIds = useRepoIds();
   const {
     result: data = [],
     ref,
     loading,
   } = usePerformanceOptimizedNetworkRequest(
     getOrgActivityOrgs,
-    id, { activity: type, ...(role && { role }) });
+    id, { activity: type, ...(role && { role }), repoIds });
 
   const rowsMemo = React.useMemo(() => {
     return data
@@ -196,4 +199,10 @@ export function CompanyRankTable (props: {
       <CompanyRankTableContent id={id} type="stars" role={role} />
     </div>
   );
+}
+
+function useRepoIds () {
+  const usp = useSearchParams();
+
+  return usp.getAll('repoIds');
 }

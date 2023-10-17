@@ -5,7 +5,11 @@ import Svg from './react-svg';
 const ECharts = lazy(() => import('./echarts'));
 const Compose = lazy(() => import('./compose'));
 
-export default forwardRef(function WidgetVisualization ({ dynamicHeight, ...props }: WidgetReactVisualizationProps, ref: ForwardedRef<any>) {
+export interface WidgetVisualizationProxyProps extends WidgetReactVisualizationProps {
+  noSuspense?: boolean
+}
+
+export default forwardRef(function WidgetVisualization ({ dynamicHeight, noSuspense = false, ...props }: WidgetVisualizationProxyProps, ref: ForwardedRef<any>) {
   let el;
   switch (props.type) {
     case 'echarts':
@@ -29,9 +33,13 @@ export default forwardRef(function WidgetVisualization ({ dynamicHeight, ...prop
     );
   }
 
-  return (
-    <Suspense fallback={<div className="overflow-x-hidden overflow-y-auto h-full w-full" ref={ref} />}>
-      {el}
-    </Suspense>
-  );
+  if (!noSuspense) {
+    el = (
+      <Suspense fallback={<div className="overflow-x-hidden overflow-y-auto h-full w-full" ref={ref} />}>
+        {el}
+      </Suspense>
+    );
+  }
+
+  return el;
 });
