@@ -39,6 +39,7 @@ function transformCompanyData (
 export default async function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>,
+  signal?: AbortSignal
 ) {
   let width = ctx.width;
   let height = ctx.height;
@@ -76,7 +77,7 @@ export default async function (
   });
 
 
-  const words: cloud.Word[] = await new Promise<cloud.Word[]>(resolve => {
+  const words: cloud.Word[] = await new Promise<cloud.Word[]>((resolve, reject) => {
     const layout = cloud()
       .canvas(ctx.createCanvas)
       .size([ctx.width, ctx.height])
@@ -88,6 +89,12 @@ export default async function (
       .random(() => 0.5)
       .on('end', (word) => resolve(word));
     layout.start();
+    if (signal) {
+      signal.onabort = () => {
+        layout.stop();
+        reject(signal.reason);
+      }
+    }
   });
 
   return (

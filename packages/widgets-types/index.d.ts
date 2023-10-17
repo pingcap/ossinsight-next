@@ -66,7 +66,13 @@ export type ComposeVisualizationConfig = WidgetComposeItem[]
 
 export type CanvasVisualizationConfig = (canvas: HTMLCanvasElement) => (() => void) | void;
 
-export type VisualizeFunction<R, D, P> = (data: D, ctx: WidgetVisualizerContext<P>) => R
+
+export type VisualizeFunction<R, D, P> = (
+  data: D,
+  ctx: WidgetVisualizerContext<P>,
+  // only for async visualization functions
+  signal?: AbortSignal
+) => R
 
 export interface WidgetMeta {
   name: string;

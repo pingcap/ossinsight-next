@@ -1,7 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import clsx from 'clsx';
 import mergeRefs from 'merge-refs';
-import { cloneElement, forwardRef, ReactElement, useEffect, useMemo, useRef, useState } from 'react';
+import { cloneElement, forwardRef, ReactElement, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -52,25 +52,22 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
   if (visualizer.asyncComponent) {
     const [promiseEl, setPromiseEl] = useState<any>(null);
 
-    const memoEl = useMemo(() => {
-      return visualizer.default(data, {
+    useEffect(() => {
+      const controller = new AbortController();
+      (visualizer.default(data, {
         ...createVisualizationContext({ ...size, colorScheme }),
         ...createWidgetContext('client', parameters, linkedData),
-      }) as Promise<ReactElement>;
-    }, [data, size]);
-
-    useEffect(() => {
-      let aborted = false;
-
-      memoEl.then(res => {
-        if (!aborted) {
-          setPromiseEl(res);
-        }
-      });
+      }, controller.signal) as Promise<ReactElement>)
+        .then(res => {
+          if (!controller.signal.aborted) {
+            setPromiseEl(res);
+          }
+        })
+        .catch(() => { /* ignore for now */ });
       return () => {
-        aborted = true;
+        controller.abort('context change');
       };
-    }, [memoEl]);
+    }, [data, size]);
 
     if (!promiseEl) {
       return <svg className={className} style={style} ref={mergeRefs(containerRef, ref) as any} />;
