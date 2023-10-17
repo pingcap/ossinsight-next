@@ -46,9 +46,6 @@ export function ShareBlock ({
 
   return (
     <div>
-      <div className='flex items-center justify-center gap-4 fixed bottom-20 right-5 lg:bottom-auto lg:top-[200px] lg:right-10 z-10'>
-        <TwitterButton text={blockTitle} tags={keywords} url={url} />
-      </div>
       <Tabs className='mt-2'>
         <Tab value='Markdown' title='Markdown' icon={<MarkdownIcon />}>
           <CodeBlock
