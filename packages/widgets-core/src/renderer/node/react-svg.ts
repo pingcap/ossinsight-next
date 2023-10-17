@@ -1,4 +1,4 @@
-import { createCanvas, loadImage } from '@napi-rs/canvas';
+import { Canvas, createCanvas, loadImage } from '@napi-rs/canvas';
 import { WidgetNodeVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 import { scaleToFit } from '../../utils/vis';
@@ -9,9 +9,10 @@ export default async function renderSvg (props: WidgetNodeVisualizationProps) {
   width = visualizer.width ?? width;
   height = visualizer.height ?? height;
 
-  const option = visualizer.default(data, {
+  const option = await visualizer.default(data, {
     ...createVisualizationContext({ width: width * dpr, height: height * dpr, dpr, colorScheme }),
     ...createWidgetContext('server', parameters, linkedData),
+    createCanvas: () => new Canvas(1, 1) as any,
   });
 
   // @ts-ignore
