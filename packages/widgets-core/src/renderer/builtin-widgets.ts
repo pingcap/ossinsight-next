@@ -13,6 +13,7 @@ export interface BuiltinWidgetsMap {
     valueProps?: {
       style?: CSSProperties;
       className?: string;
+      tooltip?: string;
     };
     column?: boolean;
     tooltip?: string;
