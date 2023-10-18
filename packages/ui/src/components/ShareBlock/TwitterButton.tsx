@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { Button } from '../Button';
 
 export interface TwitterButtonProps {
   text: string;
@@ -33,7 +34,7 @@ export function TwitterButton ({ text, url, tags }: TwitterButtonProps) {
 }
 
 // refer to: https://help.twitter.com/en/using-x/add-x-share-button
-export function XButton({ text, url, tags, size = 24, label }: TwitterButtonProps & { size?: number, label?: string }) {
+export function XButton({ text, url, tags, size = 24, label, className }: TwitterButtonProps & { size?: number, label?: string, className?: string }) {
   const link = useMemo(() => {
     const usp = new URLSearchParams();
     usp.set('text', text);
@@ -47,26 +48,26 @@ export function XButton({ text, url, tags, size = 24, label }: TwitterButtonProp
   }, [text, url, JSON.stringify(tags)]);
 
   return (
-    <a
-      className={twMerge('block bg-[#f3f7fa] hover:bg-[#d3dce3] rounded-full p-2 cursor-pointer', label && 'px-2 py-1 flex gap-2 items-center')}
-      href={link}
-      target='_blank'
-    >
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        className={twMerge('text-[rgba(15,20,25,1.00)] fill-current', `w-[${size}px] h-[${size}px]`)}
-        style={{
-          width: `${size}px`,
-          height: `${size}px`,
-        }}
-        viewBox='0 0 1200 1227'
-        fill='none'
-      >
-        <path
-          d='M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z'
-        />
-      </svg>
-      {label && <span className='text-[#14171a]'>{label}</span>}
-    </a>
+    <>
+      <a href={link} target='_blank' className={twMerge('Button cursor-pointer bg-[var(--background-color-control)] hover:bg-[var(--background-color-popover)]', className)}>
+        <span className='bg-[#6E6D7D] rounded-full p-1'>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          className={twMerge(
+            'text-[rgba(15,20,25,1.00)] fill-current',
+            `w-[${size}px] h-[${size}px]`
+          )}
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+          }}
+          viewBox='0 0 1200 1227'
+          fill='none'
+        >
+          <path d='M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z' />
+        </svg></span>
+        {label && <span className='text-white'>{label}</span>}
+      </a>
+    </>
   );
 }

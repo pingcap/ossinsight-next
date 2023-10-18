@@ -8,7 +8,7 @@ const options = [
     key: 'auto',
     title: (
       <span className="flex gap-1 rounded px-2 py-0.5 items-center text-primary text-xs font-bold min-w-[6em]">
-        Auto
+        Auto Mode
       </span>
     ),
   },
@@ -17,7 +17,7 @@ const options = [
     title: (
       <span className="flex gap-1 rounded px-2 py-0.5 items-center bg-gray-950 text-white text-xs font-bold min-w-[6em]">
         <MoonIcon className='text-primary' width={12} height={12} />
-        Dark
+        Dark Mode
       </span>
     ),
   },
@@ -26,7 +26,7 @@ const options = [
     title: (
       <span className="flex gap-1 rounded px-2 py-0.5 items-center bg-primary text-gray-950 text-xs font-bold  min-w-[6em]">
         <SunIcon width={12} height={12} />
-        Light
+        Light Mode
       </span>
     ),
   },

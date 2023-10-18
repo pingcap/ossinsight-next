@@ -72,20 +72,21 @@ export default function Widget({
     <>
       <div className='p-4 flex gap-4'>
         {showThemeSwitch && (
-          <div className=''>
+          <div>
             <ColorSchemeSelector
               value={colorScheme}
               onValueChange={setColorScheme}
             />
           </div>
         )}
+        <Divider mode='vertical' />
         {shareInfo && (
           <XButton
             text={shareInfo.title}
             tags={shareInfo.keywords}
             url={shareInfo.url}
-            size={16}
-            label="Share"
+            size={12}
+            label='Twitter'
           />
         )}
       </div>
@@ -134,6 +135,19 @@ export default function Widget({
         )} */}
       </div>
     </>
+  );
+}
+
+function Divider(props: { mode?: 'horizontal' | 'vertical' }) {
+  const { mode = 'horizontal' } = props;
+  return (
+    <div
+      className={clsx(
+        'border-neutral-100',
+        mode === 'horizontal' ? 'border-t' : 'border-l',
+        'opacity-50'
+      )}
+    />
   );
 }
 
