@@ -74,6 +74,10 @@ export default async function (
   const max = Math.max(...data.map(d => d.size));
 
   data.forEach(word => {
+    if (max === min) {
+      word.size = (minFontSize + maxFontSize) / 4;
+      return word;
+    }
     word.size = (word.size - min) * (maxFontSize - minFontSize) / (max - min) + minFontSize;
     return word;
   });
