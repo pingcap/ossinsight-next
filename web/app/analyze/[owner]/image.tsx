@@ -28,7 +28,7 @@ export default async function Image ({ params }: { params: { owner: string } }) 
       Promise.all(['active', 'new'].map(dim =>
         fetch(`https://api.ossinsight.io/q/orgs/participants/${dim}/ranking?ownerId=${info.id}&activity=${dim}&period=past_28_days`)
           .then(res => res.json())
-          .then(data => data.data.slice(5)),
+          .then(data => data.data.slice(0, 5)),
       )),
     ]);
   //
