@@ -6,9 +6,20 @@ import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 
+type StandardSvgVisualizerModule = {
+  asyncComponent?: false
+} & VisualizerModule<'svg', ReactElement, any, any>;
+
+// Do not support hooks in async renderer
+type AsyncSvgVisualizerModule = {
+  asyncComponent: true
+} & VisualizerModule<'svg', Promise<ReactElement>, any, any>;
+
+type SvgVisualizerModule = AsyncSvgVisualizerModule | StandardSvgVisualizerModule;
+
 interface SvgComponentProps extends WidgetReactVisualizationProps {
   data: any;
-  visualizer: VisualizerModule<'svg', ReactElement, any, any>;
+  visualizer: SvgVisualizerModule;
   parameters: any;
   linkedData: LinkedData;
 }
@@ -36,10 +47,39 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
     };
   }, []);
 
-  const el = visualizer.default(data, {
-    ...createVisualizationContext({ ...size, colorScheme }),
-    ...createWidgetContext('client', parameters, linkedData),
-  });
+  let el: ReactElement;
+
+  if (visualizer.asyncComponent) {
+    const [promiseEl, setPromiseEl] = useState<any>(null);
+
+    useEffect(() => {
+      const controller = new AbortController();
+      (visualizer.default(data, {
+        ...createVisualizationContext({ ...size, colorScheme }),
+        ...createWidgetContext('client', parameters, linkedData),
+      }, controller.signal) as Promise<ReactElement>)
+        .then(res => {
+          if (!controller.signal.aborted) {
+            setPromiseEl(res);
+          }
+        })
+        .catch(() => { /* ignore for now */ });
+      return () => {
+        controller.abort('context change');
+      };
+    }, [data, size]);
+
+    if (!promiseEl) {
+      return <svg className={className} style={style} ref={mergeRefs(containerRef, ref) as any} />;
+    }
+
+    el = promiseEl;
+  } else {
+    el = visualizer.default(data, {
+      ...createVisualizationContext({ ...size, colorScheme }),
+      ...createWidgetContext('client', parameters, linkedData),
+    }) as any;
+  }
 
   return cloneElement(el, {
     className: clsx(el.props.className, className),
