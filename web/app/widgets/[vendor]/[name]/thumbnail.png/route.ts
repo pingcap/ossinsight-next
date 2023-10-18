@@ -126,4 +126,4 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 }
 
 export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-cache';
+// export const fetchCache = 'force-cache';

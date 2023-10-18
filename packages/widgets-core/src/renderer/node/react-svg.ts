@@ -17,7 +17,7 @@ export default async function renderSvg (props: WidgetNodeVisualizationProps) {
 
   // @ts-ignore
   const svg = await import('../../../node_modules/react-dom/server.node.js').then((module) => module.renderToString(option));
-  const image = await loadImage(`data:image/svg+xml;base64,${btoa(svg)}`);
+  const image = await loadImage(`data:image/svg+xml;utf8,${svg}`);
 
   width *= dpr;
   height *= dpr;

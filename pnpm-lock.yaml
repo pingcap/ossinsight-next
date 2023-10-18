@@ -368,12 +368,18 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@3.3.3)
+      '@types/luxon':
+        specifier: ^3.3.2
+        version: 3.3.2
       '@types/mdx':
         specifier: ^2.0.7
         version: 2.0.7
       bootstrap-icons:
         specifier: ^1.11.1
         version: 1.11.1
+      luxon:
+        specifier: ^3.4.3
+        version: 3.4.3
       sass:
         specifier: ^1.68.0
         version: 1.68.0
@@ -508,6 +514,21 @@ importers:
       '@ossinsight/widgets-parent':
         specifier: workspace:^
         version: link:../../..
+      '@types/d3':
+        specifier: ^7.4.1
+        version: 7.4.1
+      '@types/d3-cloud':
+        specifier: ^1.2.6
+        version: 1.2.6
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+      d3:
+        specifier: ^7.8.5
+        version: 7.8.5
+      d3-cloud:
+        specifier: ^1.2.7
+        version: 1.2.7
 
   widgets/analyze/repo/issue-open-to-first-responded:
     devDependencies:
