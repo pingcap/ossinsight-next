@@ -71,7 +71,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         selfClosed?.past_period_percentage + othersClosed?.past_period_percentage;
       const issueDiff = (issueCurrent - issuePast) / issuePast;
       return {
-        title: 'Issues Closed Ratio',
+        title: 'Issue Closed Ratio',
         label: `${issueCurrent.toFixed(0)}%`,
         value: `${issueDiff >= 0 ? '↑' : '↓'}${Math.abs(issueDiff).toFixed(
           2
@@ -125,7 +125,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         selfMerged?.past_period_percentage + othersMerged?.past_period_percentage;
       const prDiff = (prCurrent - prPast) / prPast;
       return {
-        title: 'PRs Merged Ratio',
+        title: 'PR Merged Ratio',
         label: `${prCurrent.toFixed(0)}%`,
         value: `${prDiff >= 0 ? '↑' : '↓'}${Math.abs(prDiff).toFixed(2)}%`,
         isIncrease: prDiff >= 0,

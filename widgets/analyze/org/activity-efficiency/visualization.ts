@@ -23,10 +23,18 @@ type PRDataPoint = {
   prs: number;
 };
 
+type TransformedPRDataPoint = Omit<PRDataPoint, 'action_type'> & {
+  action_type: 'closed' | 'open' | 'merged';
+};
+
 type IssueDataPoint = {
   action_type: 'closed' | 'opened';
   date: string;
   issues: number;
+};
+
+type TransformedIssueDataPoint = Omit<IssueDataPoint, 'action_type'> & {
+  action_type: 'closed' | 'open';
 };
 
 type DataPoint = PRDataPoint | IssueDataPoint;
@@ -36,7 +44,7 @@ type Input = [DataPoint[], DataPoint[] | undefined];
 const handleDataset = (data: DataPoint[], activity: string) => {
   const issueInitData = {
     closed: 0,
-    opened: 0,
+    open: 0,
   };
   const prInitData = {
     ...issueInitData,
@@ -47,13 +55,15 @@ const handleDataset = (data: DataPoint[], activity: string) => {
       const issueMergedData = (data as IssueDataPoint[]).reduce(
         (acc, cur) => {
           const { date, action_type, issues } = cur;
+          const transformedActionType =
+            action_type === 'opened' ? 'open' : action_type;
           if (acc.hasOwnProperty(date)) {
-            acc[date][action_type] = issues;
+            acc[date][transformedActionType] = issues;
           } else {
             acc[date] = {
               date,
               ...issueInitData,
-              [action_type]: issues,
+              [transformedActionType]: issues,
             };
           }
           return acc;
@@ -62,7 +72,7 @@ const handleDataset = (data: DataPoint[], activity: string) => {
           [key: string]: {
             date: string;
             closed?: number;
-            opened?: number;
+            open?: number;
             merged?: number;
           };
         }
@@ -73,13 +83,15 @@ const handleDataset = (data: DataPoint[], activity: string) => {
       const mergedData = (data as PRDataPoint[]).reduce(
         (acc, cur) => {
           const { date, action_type, prs } = cur;
+          const transformedActionType =
+            action_type === 'opened' ? 'open' : action_type;
           if (acc.hasOwnProperty(date)) {
-            acc[date][action_type] = prs;
+            acc[date][transformedActionType] = prs;
           } else {
             acc[date] = {
               date,
               ...prInitData,
-              [action_type]: prs,
+              [transformedActionType]: prs,
             };
           }
           return acc;
@@ -88,7 +100,7 @@ const handleDataset = (data: DataPoint[], activity: string) => {
           [key: string]: {
             date: string;
             closed?: number;
-            opened?: number;
+            open?: number;
             merged?: number;
           };
         }
@@ -100,7 +112,7 @@ const handleDataset = (data: DataPoint[], activity: string) => {
 const getSeries = (activity: string): any => {
   switch (activity) {
     case 'issues':
-      return ['closed', 'opened'].map((action_type, idx) => {
+      return ['closed', 'open'].map((action_type, idx) => {
         return {
           type: 'line',
           encode: {
@@ -114,7 +126,7 @@ const getSeries = (activity: string): any => {
       });
     case 'pull-requests':
     default:
-      return ['closed', 'opened', 'merged'].map((action_type, idx) => {
+      return ['closed', 'open', 'merged'].map((action_type, idx) => {
         return {
           type: 'line',
           encode: {
@@ -172,13 +184,19 @@ export default function (
       },
       formatter: (params) => {
         const { value = {} } = params[0];
-        const { date, closed, opened } = value;
+        const { date, closed, open, merged } = value;
         const parsedDate = DateTime.fromJSDate(new Date(date)).toFormat(
           'yyyy-MM-dd'
         );
+        if (activity === 'issues') {
+          return `<b>${parsedDate}</b>
+          <div>Closed: ${closed}</div>
+          <div>Open: ${open}</div>`;
+        }
         return `<b>${parsedDate}</b>
         <div>Closed: ${closed}</div>
-        <div>opened: ${opened}</div>`;
+        <div>Open: ${open}</div>
+        <div>Merged: ${merged}</div>`;
       },
     },
     legend: {
@@ -199,4 +217,4 @@ export const type = 'echarts';
 export const grid = {
   cols: 9,
   rows: 3,
-}
+};
