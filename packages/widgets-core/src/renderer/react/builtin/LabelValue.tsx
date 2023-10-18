@@ -37,7 +37,7 @@ export function LabelValue({
         className={labelProps.className}
       >
         {typeof label === 'number' ? formatNumber(label) : label || ''}
-        {tooltip && <LabelValueTooltip group>{tooltip}</LabelValueTooltip>}
+        {tooltip && <LabelValueTooltip>{tooltip}</LabelValueTooltip>}
       </span>
       <span
         style={{
@@ -82,19 +82,16 @@ export function LabelValue({
 
 const LabelValueTooltip = (props: {
   children: React.ReactNode;
-  group?: boolean;
   arrow?: 'center' | 'left' | 'right';
 }) => {
-  const { children, group, arrow='center' } = props;
+  const { children, arrow='center' } = props;
   return (
     <span
       className={clsx(
-        'invisible w-auto h-auto px-4 py-2 bg-[var(--background-color-popover)] text-[var(--text-color-content)] rounded absolute text-sm top-[150%] left-0',
+        'invisible group-hover:visible w-auto h-auto px-4 py-2 bg-[var(--background-color-popover)] text-[var(--text-color-content)] rounded absolute text-sm top-[100%] left-0',
         'max-w-fit whitespace-break-spaces',
         `after:content-[' '] after:absolute after:top-0 after:top-[-10px] after:border-transparent after:border-b-[var(--background-color-popover)] after:border-solid after:border-[5px]`,
         {
-          ['group-hover:visible']: group,
-          ['visible']: !group,
           ['after:left-1/2']: arrow === 'center',
           ['after:left-2']: arrow === 'left',
           ['after:right-2']: arrow === 'right',
