@@ -23,6 +23,8 @@ const calcMinMax = (data: DataPoint[]) => {
   let repoMax = -Infinity;
   let engagementsMin = Infinity;
   let engagementsMax = -Infinity;
+  let participantsMin = Infinity;
+  let participantsMax = -Infinity;
   for (const d of data) {
     if (d.repos < repoMin) {
       repoMin = d.repos;
@@ -36,9 +38,80 @@ const calcMinMax = (data: DataPoint[]) => {
     if (d.engagements > engagementsMax) {
       engagementsMax = d.engagements;
     }
+    if (d.participants < participantsMin) {
+      participantsMin = d.participants;
+    }
+    if (d.participants > participantsMax) {
+      participantsMax = d.participants;
+    }
   }
-  return [repoMin, repoMax, engagementsMin, engagementsMax];
+  return [
+    repoMin,
+    repoMax,
+    engagementsMin,
+    engagementsMax,
+    participantsMin,
+    participantsMax,
+  ];
 };
+
+const handleData = (
+  data: DataPoint[],
+  option?: {
+    xIntervals?: number;
+    yIntervals?: number;
+  }
+): DataPoint[] => {
+  const { xIntervals = 5, yIntervals = 5 } = option ?? {};
+  const [repoMin, repoMax, engagementsMin, engagementsMax] = calcMinMax(data);
+  const xInterval = Math.ceil((engagementsMax - engagementsMin) / xIntervals);
+  const yInterval = Math.ceil((repoMax - repoMin) / yIntervals);
+
+  const matrix = Array.from({ length: xIntervals }, () =>
+    Array.from({ length: yIntervals }, () => [])
+  );
+  for (const d of data) {
+    const xIdx = Math.floor((d.engagements - engagementsMin) / xInterval);
+    const yIdx = Math.floor((d.repos - repoMin) / yInterval);
+    matrix[xIdx][yIdx].push(d);
+  }
+
+  const result: DataPoint[] = [];
+  for (let i = 0; i < xIntervals; i++) {
+    for (let j = 0; j < yIntervals; j++) {
+      const d = matrix[i][j];
+      if (d.length) {
+        result.push({
+          repos: repoMin + (j + 1) * yInterval,
+          engagements: engagementsMin + (i + 1) * xInterval,
+          participants: d.reduce((acc, cur) => acc + cur.participants, 0),
+          participant_logins: d.map((d) => d.participant_logins).join(','),
+        });
+      }
+    }
+  }
+  return result;
+};
+
+const getIntervalMinMax = (option: {
+  min: number;
+  max: number;
+  intervals: number;
+  value: number;
+}) => {
+  const { min, max, intervals, value } = option;
+  const interval = (max - min) / intervals;
+  const idx = Math.floor((value - min) / interval);
+  return {
+    min: Math.floor(min + idx * interval),
+    max: Math.ceil(min + (idx + 1) * interval),
+  };
+};
+
+const MAX_SYMBOL_SIZE = 50;
+const MIN_SYMBOL_SIZE = 10;
+const X_INTERVALS = 5;
+const Y_INTERVALS = 5;
 
 export default function (
   input: Input,
@@ -50,24 +123,36 @@ export default function (
 
   const [data] = input;
 
-  const [repoMin, repoMax, engagementsMin, engagementsMax] = calcMinMax(data);
+  const [
+    repoMin,
+    repoMax,
+    engagementsMin,
+    engagementsMax,
+    participantsMin,
+    participantsMax,
+  ] = calcMinMax(data);
+  const handledData = handleData(data, {
+    xIntervals: X_INTERVALS,
+    yIntervals: Y_INTERVALS,
+  });
 
   return {
     dataset: [
       {
         id: 'main',
-        source: hideData ? [] : data,
+        source: hideData ? [] : handledData,
       },
     ],
     xAxis: {
       name: 'engagements',
       splitLine: { show: false },
-      max: engagementsMax,
+      max: Math.floor(engagementsMax * ((X_INTERVALS + 1) / X_INTERVALS)),
     },
     yAxis: {
       name: 'repos',
       splitLine: { show: false },
-      max: repoMax,
+      min: repoMin,
+      max: Math.floor(repoMax * ((Y_INTERVALS + 1) / Y_INTERVALS)),
     },
     grid: {
       left: 8,
@@ -82,23 +167,39 @@ export default function (
         x: 'engagements',
         y: 'repos',
       },
-      symbolSize: 30,
+      symbolSize: (value, params) => {
+        const { participants } = value;
+        const size =
+          Math.sqrt(participants / participantsMax) * MAX_SYMBOL_SIZE;
+        return size < MIN_SYMBOL_SIZE ? MIN_SYMBOL_SIZE : size;
+      },
       itemStyle: {
         color: '#4E9FFF',
       },
       id: 'main',
-      // symbol: (value, params) => {
-      //   return `image://https://github.com/${
-      //     value?.participant_logins?.split(',')[0]
-      //   }.png`;
-      // },
     },
     tooltip: {
       show: true,
       formatter: (params) => {
         const { data } = params;
-        return `<p>Involved in: <b>${data?.repos} repos</b></p>
-        <p>Contribution count: <b>${data?.engagements}</b></p>
+        const repoMinMax = getIntervalMinMax({
+          min: repoMin,
+          max: repoMax,
+          intervals: Y_INTERVALS,
+          value: data?.repos,
+        });
+        const engagementMinMax = getIntervalMinMax({
+          min: engagementsMin,
+          max: engagementsMax,
+          intervals: X_INTERVALS,
+          value: data?.engagements,
+        });
+        return `<p>Involved in: <b>${repoMinMax.min}~${
+          repoMinMax.max
+        } repos</b></p>
+        <p>Contribution count: <b>${engagementMinMax.min}~${
+          engagementMinMax.max
+        }</b></p>
         <p><hr style="margin-bottom: .5rem;" /></p>
         ${generateHtmlFromLogins(data?.participant_logins)}`;
       },
