@@ -47,13 +47,14 @@ export default function StarGrowthContent() {
             name='@ossinsight/widget-compose-org-activity-company'
             searchParams={{
               activity: 'stars',
-              role: 'participants'
+              role: 'stars'
             }}
             height={405}
           />
           <CompanyRankTable
             id={orgId}
             type='stars'
+            role='stars'
             className={`h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
         </MainSideGridTemplate>
@@ -63,12 +64,14 @@ export default function StarGrowthContent() {
             name='@ossinsight/widget-compose-org-activity-map'
             searchParams={{
               activity: 'stars',
-              role: 'participants'
+              role: 'stars'
             }}
             height={365}
           />
           <GeoRankTable
             id={orgId}
+            type='stars'
+            role='stars'
             className={`h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
           />
         </MainSideGridTemplate>

@@ -28,6 +28,10 @@ type IssueClosedDataPoint = {
   type: 'un-closed' | 'self-closed' | 'others-closed';
 };
 
+type TransformedIssueClosedDataPoint = Omit<IssueClosedDataPoint, 'type'> & {
+  type: 'open' | 'self-closed' | 'others-closed';
+}
+
 type ReviewedDataPoint = {
   type: 'reviewed' | 'un-reviewed';
   current_period_prs: number;
@@ -41,10 +45,21 @@ type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
 
 type Input = [DataPoint[], undefined];
 
+const transformIssueClosedData = (
+  data: IssueClosedDataPoint[]
+): TransformedIssueClosedDataPoint[] => {
+  return data.map((item) => {
+    return {
+      ...item,
+      type: item.type === 'un-closed' ? 'open' : item.type,
+    };
+  });
+};
+
 const handleData = (items: DataPoint[], activity: string) => {
   switch (activity) {
     case 'issues/closed':
-      return items.map((item, idx) => {
+      return transformIssueClosedData(items as IssueClosedDataPoint[]).map((item, idx) => {
         const issueClosedData = item as IssueClosedDataPoint;
         return {
           name: issueClosedData.type,
@@ -77,7 +92,7 @@ const handleData = (items: DataPoint[], activity: string) => {
 const calcSumFromData = (data: DataPoint[], activity: string) => {
   switch (activity) {
     case 'issues/closed':
-      return (data as IssueClosedDataPoint[]).reduce(
+      return transformIssueClosedData(data as IssueClosedDataPoint[]).reduce(
         (acc, cur) => {
           acc[0] += cur.current_period_issues;
           acc[1] += cur.past_period_issues;

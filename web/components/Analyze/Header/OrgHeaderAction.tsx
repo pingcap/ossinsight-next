@@ -34,7 +34,7 @@ export default function OrgAnalyzePageHeaderAction() {
   const [currentRepoIds, setCurrentRepoIds] = React.useState<number[]>(stringArray2NumberArray(searchParams.getAll('repoIds')) || []);
   const [currentPeriod, setCurrentPeriod] = React.useState<string>(searchParams.get('period') || options[1].key);
 
-  const { name: orgName, id: orgId } =
+  const { name: orgName, id: orgId, login } =
     React.useContext(AnalyzeOwnerContext);
   const router = useRouter();
   const pathname = usePathname();
@@ -130,6 +130,7 @@ export default function OrgAnalyzePageHeaderAction() {
             name={orgName}
             wrapperClassName='text-xl'
             iconSize={20}
+            login={login}
           />
         </div>
         {/* -- seletors -- */}

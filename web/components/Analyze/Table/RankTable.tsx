@@ -81,14 +81,14 @@ export function GeoRankTableContent (props: {
 }) {
   const { id, type, maxRows = 10, role } = props;
   const repoIds = useRepoIds();
-
+  const period = usePeriod();
   const {
     result: data = [],
     loading,
     ref,
   } = usePerformanceOptimizedNetworkRequest(
     getOrgActivityLocations,
-    id, { activity: type, ...(role && { role }), repoIds },
+    id, { activity: type, period, ...(role && { role }), repoIds },
   );
 
   const rowsMemo = React.useMemo(() => {
@@ -148,13 +148,14 @@ export function CompanyRankTableContent (props: {
 }) {
   const { id, maxRows = 10, type, role } = props;
   const repoIds = useRepoIds();
+  const period = usePeriod();
   const {
     result: data = [],
     ref,
     loading,
   } = usePerformanceOptimizedNetworkRequest(
     getOrgActivityOrgs,
-    id, { activity: type, ...(role && { role }), repoIds });
+    id, { activity: type, period, ...(role && { role }), repoIds });
 
   const rowsMemo = React.useMemo(() => {
     return data
@@ -196,7 +197,7 @@ export function CompanyRankTable (props: {
       <div className="px-1 text-base font-semibold leading-6 text-white mx-auto w-fit">
         Top companies
       </div>
-      <CompanyRankTableContent id={id} type="stars" role={role} />
+      <CompanyRankTableContent id={id} type={type} role={role} />
     </div>
   );
 }
@@ -205,4 +206,10 @@ function useRepoIds () {
   const usp = useSearchParams();
 
   return usp.getAll('repoIds');
+}
+
+function usePeriod() {
+  const usp = useSearchParams();
+
+  return usp.get('period') || 'past_28_days';
 }
