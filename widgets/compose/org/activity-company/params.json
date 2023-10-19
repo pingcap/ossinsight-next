@@ -30,5 +30,10 @@
       "commit_authors"
     ],
     "default": "pr_creators"
+  },
+  "repo_ids": {
+    "type": "repo-ids",
+    "title": "Repo",
+    "array": true
   }
 }
