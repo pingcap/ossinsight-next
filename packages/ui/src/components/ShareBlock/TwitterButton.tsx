@@ -50,7 +50,7 @@ export function XButton({ text, url, tags, size = 24, label, className }: Twitte
   return (
     <>
       <a href={link} target='_blank' className={twMerge('Button cursor-pointer bg-[var(--background-color-control)] hover:bg-[var(--background-color-popover)]', className)}>
-        <span className='bg-[#6E6D7D] rounded-full p-1'>
+        <span className='bg-white rounded-full p-1'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           className={twMerge(
