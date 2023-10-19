@@ -116,25 +116,51 @@ export async function resolveParameters (definitions: ParameterDefinitions, para
           const originParamList = Array.isArray(originParam)
             ? originParam
             : [originParam];
-          // TODO: fix this
-          return Promise.allSettled(
-            originParamList.map((param) => {
-              if (linkedData.repos[param]) return Promise.resolve();
-              if (linkedData.pending.repos[param]) return linkedData.pending.repos[param];
-              return linkedData.pending.repos[param] = fetch(`https://api.ossinsight.io/gh/repositories/${param}`, { signal })
-                .then(handleOApi)
-                .then((data) => {
-                  return linkedData.repos[param] = {
-                    id: param as number,
-                    fullName: data.full_name,
-                    defaultBranch: data.default_branch,
+          const filteredOriginParamList = originParamList.filter((param) => {
+            if (linkedData.repos[param]) return false;
+            if (linkedData.pending.repos[param]) return false;
+            return true;
+          });
+          if (filteredOriginParamList.length === 0) return Promise.resolve();
+          const originParamListStr = filteredOriginParamList.join(',');
+          if (linkedData.pending.repos[originParamListStr]) return linkedData.pending.repos[originParamListStr];
+          const urlSearchParams = new URLSearchParams();
+          filteredOriginParamList.forEach((param) => {
+            urlSearchParams.append('repoId', String(param));
+          });
+          return (linkedData.pending.repos[originParamListStr] = fetch(
+            `https://api.ossinsight.io/q/repos?${urlSearchParams.toString()}`,
+            { signal }
+          )
+            .then(handleOApi)
+            .then(
+              (
+                data: {
+                  repo_id: number;
+                  repo_name: string;
+                  owner_id: number;
+                  owner_login: string;
+                  owner_is_org: 0 | 1;
+                }[]
+              ) => {
+                data?.forEach((repo) => {
+                  linkedData.repos[repo.repo_id] = {
+                    id: repo.repo_id,
+                    fullName: repo.repo_name,
+                    defaultBranch: '',
                   };
-                })
-                .finally(() => {
-                  delete linkedData.pending.repos[param];
                 });
-            }),
-          );
+
+                return {
+                  id: -1,
+                  fullName: '',
+                  defaultBranch: '',
+                };
+              }
+            )
+            .finally(() => {
+              delete linkedData.pending.repos[originParamListStr];
+            }));
         }
         break;
     }
