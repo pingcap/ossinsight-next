@@ -88,6 +88,16 @@ const getLabel = (item: DataPoint) => {
   return (item as ActivityDataPoint).repo_name.split('/').pop();
 };
 
+const getHref = (item: DataPoint, activity?: string) => {
+  if (activity === 'participants') {
+    return `https://github.com/${(item as ParticipantDataPoint).login}`;
+  }
+  if (activity === 'repos') {
+    return `https://github.com/${(item as ActivityDataPoint).repo_name}`;
+  }
+  return undefined;
+}
+
 const handleTotal = (total: TotalDataPoint[] | undefined) => {
   if (!total) {
     return null;
@@ -120,7 +130,7 @@ export default function (
   [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  const { activity = 'activities' } = ctx.parameters;
+  const { activity = 'repos' } = ctx.parameters;
 
   // const total = handleTotal(totalData);
 
@@ -171,6 +181,7 @@ export default function (
                 size: 24,
                 value: item?.activities || item?.engagements,
                 maxVal,
+                href: getHref(item, activity),
               })
             )
           ).flex(0.9)
