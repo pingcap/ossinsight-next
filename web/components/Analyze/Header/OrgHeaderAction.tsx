@@ -54,8 +54,12 @@ export default function OrgAnalyzePageHeaderAction() {
     const urlPeriod = currentParams.get('period') || options[1].key;
     if (urlPeriod !== v.key) {
       currentParams.set('period', v.key);
-      typeof window !== 'undefined' &&
-        window.location.replace(pathname + '?' + currentParams.toString());
+      router.push(
+        pathname +
+          '?' +
+          currentParams.toString() +
+          ((typeof window !== 'undefined' && window.location.hash) || '')
+      );
     }
   };
 
@@ -82,8 +86,12 @@ export default function OrgAnalyzePageHeaderAction() {
       currentParams.delete('repoIds');
       selectedRepoIds.forEach((id) => currentParams.append('repoIds', `${id}`));
 
-      typeof window !== 'undefined' &&
-        window.location.replace(pathname + '?' + currentParams.toString());
+      router.push(
+        pathname +
+          '?' +
+          currentParams.toString() +
+          ((typeof window !== 'undefined' && window.location.hash) || '')
+      );
     }
   };
 
