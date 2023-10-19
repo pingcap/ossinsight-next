@@ -3,7 +3,6 @@
 import HTMLIcon from 'bootstrap-icons/icons/code-slash.svg';
 import ImageIcon from 'bootstrap-icons/icons/image.svg';
 import MarkdownIcon from 'bootstrap-icons/icons/markdown.svg';
-import SocialMediaIcon from 'bootstrap-icons/icons/send.svg';
 import { useMemo } from 'react';
 import { CodeBlock } from '../CodeBlock';
 import { useColorScheme } from '../ColorScheme';
@@ -47,20 +46,41 @@ export function ShareBlock ({
 
   return (
     <div>
-      <Tabs className="mt-2">
-        <Tab value="Social media" title="Social media" icon={<SocialMediaIcon />}>
-          <div className="flex items-center justify-center gap-4">
-            <TwitterButton text={blockTitle} tags={keywords} url={url} />
-          </div>
+      <Tabs className='mt-2'>
+        <Tab value='Markdown' title='Markdown' icon={<MarkdownIcon />}>
+          <CodeBlock
+            language={themedImage ? 'html' : 'markdown'}
+            code={markdownCode(
+              colorScheme,
+              blockTitle,
+              url,
+              thumbnailUrl,
+              imageWidth
+            )}
+            wrap
+            className='pt-8 lg:pt-0'
+            copyButtonProps={{
+              copyText: 'Copy and Paste it into README.md',
+              copiedText: 'Copy and Paste it into README.md',
+              className: 'lg:top-[-38px] lg:right-4 text-[var(--color-primary)] hover:text-[var(--color-primary-highlighted)] transition-colors'
+            }}
+          />
         </Tab>
-        <Tab value="Markdown" title="markdown" icon={<MarkdownIcon />}>
-          <CodeBlock language={themedImage ? 'html' : 'markdown'} code={markdownCode(colorScheme, blockTitle, url, thumbnailUrl, imageWidth)} />
+        <Tab value='HTML' title='HTML' icon={<HTMLIcon />}>
+          <CodeBlock
+            code={htmlCode(
+              colorScheme,
+              blockTitle,
+              url,
+              thumbnailUrl,
+              imageWidth
+            )}
+            language='html'
+            wrap
+          />
         </Tab>
-        <Tab value="HTML" title="HTML" icon={<HTMLIcon />}>
-          <CodeBlock code={htmlCode(colorScheme, blockTitle, url, thumbnailUrl, imageWidth)} language="html" />
-        </Tab>
-        <Tab value="image" title="Thumbnail" icon={<ImageIcon />}>
-          <CodeBlock code={`${thumbnailUrl}`} />
+        <Tab value='image' title='Thumbnail' icon={<ImageIcon />}>
+          <CodeBlock code={`${thumbnailUrl}`} wrap />
         </Tab>
       </Tabs>
     </div>
@@ -72,12 +92,16 @@ export function markdownCode (colorScheme: string, title: string, url: string, t
   if (colorScheme !== 'auto') {
     return `[![${title}](${thumbnailUrl})](${url})`;
   }
-  return `<a href="${url}" target="_blank" style="display: block" align="center">
+  return `<!-- Copy-paste in your Readme.md file -->
+
+<a href="${url}" target="_blank" style="display: block" align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="${thumbnailUrl}&color_scheme=dark" width="${width + 1}" height="auto">
     <img alt=${JSON.stringify(title)} src="${thumbnailUrl}&color_scheme=light" width="${width + 1}" height="auto">
   </picture>
-</a>`
+</a>
+
+<!-- Made with [OSS Insight](https://ossinsight.io/) -->`
 }
 
 export function htmlCode (colorScheme: string, title: string, url: string, thumbnailUrl: string, width: number) {

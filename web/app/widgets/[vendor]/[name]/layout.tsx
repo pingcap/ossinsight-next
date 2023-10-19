@@ -22,10 +22,10 @@ export default function Layout ({ parameters, info, share, children }: Params) {
           {parameters}
         </aside>
         <main className="lg:flex-[3] lg:max-h-page lg:flex lg:flex-col overflow-x-hidden order-1 lg:order-3">
-          <div className="lg:max-h-[calc(100vh-210px)] lg:min-h-[calc(100vh-210px)] p-2 overflow-hidden">
+          <div className="lg:h-[calc(100vh-360px)] lg:min-h-[460px] p-2 overflow-auto styled-scrollbar">
             {children}
           </div>
-          <div className="h-[150px] bg-toolbar border-t p-2">{share}</div>
+          <div className="min-h-[300px] bg-toolbar border-t p-2">{share}</div>
         </main>
       </div>
     </Providers>

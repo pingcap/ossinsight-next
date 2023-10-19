@@ -3,13 +3,16 @@ import { fetchWidgetData, widgetMeta, widgetMetadataGenerator } from '@/utils/wi
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps } from './utils';
+import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps, widgetSignature } from './utils';
+import { createShareInfo } from '@/components/Share/utils';
 
 export default async function page (props: WidgetPageProps) {
   const { name } = widgetPageParams(props.params);
   const { data, linkedData, parameters } = await fetchWidgetData(name, props.searchParams);
+  const shareInfo = await createShareInfo(name, linkedData, props.searchParams as any);
+
   return (
-    <Widget name={name} params={parameters} data={data} linkedData={linkedData} />
+    <Widget name={name} params={parameters} data={data} linkedData={linkedData} shareInfo={shareInfo} />
   );
 }
 

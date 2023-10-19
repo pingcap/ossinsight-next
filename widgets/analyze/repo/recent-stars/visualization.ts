@@ -87,8 +87,19 @@ export default function (
       }
     ),],
     tooltip: {
-      show: false,
+      show: true,
       trigger: 'axis',
+      position: function (pos, params, dom, rect, size) {
+        // tooltip will be fixed on the right if mouse hovering on the left,
+        // and on the left if hovering on the right.
+        var obj = { top: 0 };
+        obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
+        return obj;
+      },
+      formatter: (params) => {
+        const [a,b] = params;
+        return `${a?.seriesName}: ${a?.data?.current_period_day_stars}<br />${b?.seriesName}: ${b?.data?.last_period_day_stars}`;
+      },
       axisPointer: {
         type: 'line',
       },
