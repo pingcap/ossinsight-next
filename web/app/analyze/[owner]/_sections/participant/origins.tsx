@@ -87,6 +87,7 @@ function OrgActivityCompany (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <CompanyRankTable
+        key={role}
         id={orgId}
         type="participants"
         className={`h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
@@ -125,6 +126,7 @@ function OrgActivityMap (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <GeoRankTable
+        key={role}
         id={orgId}
         type="participants"
         role={role}

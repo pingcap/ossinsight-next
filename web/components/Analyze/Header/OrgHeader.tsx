@@ -8,6 +8,7 @@ import {
   PeopleIcon,
   OrganizationIcon,
 } from '@primer/octicons-react';
+import NextLink from 'next/link';
 
 import {
   AnalyzeOwnerContext,
@@ -20,7 +21,7 @@ import { useOrgOverview } from '@/components/Analyze/hooks';
 import OrgAnalyzePageHeaderAction from '@/components/Analyze/Header/OrgHeaderAction';
 
 export default function OrgAnalyzePageHeader() {
-  const { name: orgName, id: orgId, bio, public_repos } =
+  const { name: orgName, id: orgId, bio, public_repos, login } =
     React.useContext(AnalyzeOwnerContext);
 
   const { data, loading, error, ref } = useOrgOverview(orgId);
@@ -28,7 +29,7 @@ export default function OrgAnalyzePageHeader() {
   return (
     <>
       {/* -- header -- */}
-      <OrgTitleIconEle id={orgId} name={orgName} wrapper='h1' />
+      <OrgTitleIconEle id={orgId} name={orgName} wrapper='h1' login={login} />
       <p className='my-4'>{bio}</p>
 
       {/* -- status bar -- */}
@@ -97,6 +98,7 @@ export function OrgTitleIconEle(props: {
   wrapper?: 'div' | 'h1';
   id: string | number;
   name: string;
+  login: string;
 }) {
   const {
     wrapperClassName,
@@ -106,34 +108,37 @@ export function OrgTitleIconEle(props: {
     iconSize = 40,
     id,
     name,
+    login,
   } = props;
 
   const WrapperMemo = React.useMemo(() => getWrapper(wrapper), [wrapper]);
 
   return (
-    <WrapperMemo
-      className={twMerge(
-        'font-semibold text-3xl	text-title inline-flex items-center cursor-default',
-        wrapperClassName
-      )}
-    >
-      <NextImage
-        src={`https://avatars.githubusercontent.com/u/${id}`}
-        alt={`${name} logo`}
-        className={twMerge('inline mr-[10px]', iconClassName)}
-        width={iconSize}
-        height={iconSize}
-      />
-      {name}
-      <span
+    <NextLink target='_blank' href={`https://github.com/${login}`}>
+      <WrapperMemo
         className={twMerge(
-          'bg-[#3C3C47] text-[#62E487] text-xs font-medium border border-solid border-[#376845] ml-4 px-2.5 py-1.5 rounded-full inline-flex items-center gap-2',
-          labelClassName
+          'font-semibold text-3xl	text-title inline-flex items-center cursor-pointer',
+          wrapperClassName
         )}
       >
-        <OrganizationIcon size={8} /> Organization
-      </span>
-    </WrapperMemo>
+        <NextImage
+          src={`https://avatars.githubusercontent.com/u/${id}`}
+          alt={`${name} logo`}
+          className={twMerge('inline mr-[10px]', iconClassName)}
+          width={iconSize}
+          height={iconSize}
+        />
+        {name}
+        <span
+          className={twMerge(
+            'bg-[#3C3C47] text-[#62E487] text-xs font-medium border border-solid border-[#376845] ml-4 px-2.5 py-1.5 rounded-full inline-flex items-center gap-2',
+            labelClassName
+          )}
+        >
+          <OrganizationIcon size={8} /> Organization
+        </span>
+      </WrapperMemo>
+    </NextLink>
   );
 }
 

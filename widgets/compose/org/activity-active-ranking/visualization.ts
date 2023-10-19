@@ -106,6 +106,16 @@ const handleTotal = (total: TotalDataPoint[] | undefined) => {
   };
 };
 
+const getToolTipContent = (activity: string) => {
+  switch (activity) {
+    case 'repos':
+      return 'Total count of all repository activity events, including open/merge/close pull requests, and open/close issues, etc.';
+    case 'participants':
+    default:
+      return '';
+  }
+};
+
 export default function (
   [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -147,6 +157,7 @@ export default function (
             // color: ctx.theme.colors.green['400'],
             marginLeft: 'auto',
           },
+          tooltip: getToolTipContent(activity),
         },
         column: false,
       }).flex(0.1),
