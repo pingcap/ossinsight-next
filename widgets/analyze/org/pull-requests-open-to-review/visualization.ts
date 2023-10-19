@@ -102,6 +102,7 @@ export default function (
       axisLabel: {
         formatter: (value: string) => value.split('/')[1],
       },
+      triggerEvent: true,
     },
     tooltip: axisTooltip('cross', {
       renderMode: 'html',
@@ -141,5 +142,17 @@ export default function (
     ],
   };
 }
+
+export const eventHandlers = [
+  {
+    type: 'click',
+    option: 'yAxis.category',
+    handler: (params) => {
+      if (params?.value) {
+        window.open(`https://github.com/${params.value}`);
+      }
+    },
+  },
+];
 
 export const type = 'echarts';
