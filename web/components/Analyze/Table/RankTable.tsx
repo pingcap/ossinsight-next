@@ -13,6 +13,7 @@ import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
 import { ForwardedRef, forwardRef, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { Tooltip } from '@ossinsight/ui';
 
 const Table = forwardRef(function Table (props: {
   rows?: Array<Array<string | number>>;
@@ -142,7 +143,7 @@ export function GeoRankTable (props: {
       <div className='grow overflow-y-auto styled-scrollbar'>
         <GeoRankTableContent id={id} type={type} role={role} />
       </div>
-      <div>
+      <div className='w-full pt-2'>
         <CompletionRateContent
           id={id}
           type={type}
@@ -222,6 +223,46 @@ export function CompletionRateContent(props: {
     return (data?.[0]?.percentage).toFixed(2);
   }, [data]);
 
+  const tooltipContent = useMemo(() => {
+    if (type === 'stars') {
+      if (target === 'organizations') {
+        return [
+          `Completion Rate (%) = (Stargazers with Company Info / Total
+          Stargazers) * 100%`,
+          `*This analysis is derived from user-provided profile company
+          data and is intended for reference.`,
+        ];
+      }
+      if (target === 'locations') {
+        return [
+          `Completion Rate (%) = (Stargazers with Location Info / Total
+          Stargazers) * 100%`,
+          `*This analysis is derived from user-provided profile location
+          data and is intended for reference.`,
+        ];
+      }
+    }
+    if (type === 'participants') {
+      if (target === 'organizations') {
+        return [
+          `Completion Rate (%) = (Contributors with Company Info / Total
+          Contributors) * 100%`,
+          `*This analysis is derived from user-provided profile company
+          data and is intended for reference.`,
+        ];
+      }
+      if (target === 'locations') {
+        return [
+          `Completion Rate (%) = (Contributors with Location Info / Total
+          Contributors) * 100%`,
+          `*This analysis is derived from user-provided profile location
+          data and is intended for reference.`,
+        ];
+      }
+    }
+    return undefined;
+  }, [type, target]);
+
   return (
     <>
       {loading ? (
@@ -231,7 +272,31 @@ export function CompletionRateContent(props: {
           {/* <FilledRatio ref={ref} data={percentageMemo} /> */}
           <div ref={ref} className='text-[#7c7c7c] text-xs'>
             Company Info Completion:
-            <span className='text-[#aaa] font-bold'> {percentageMemo}%</span>
+            <span className='text-[#aaa] font-bold inline-flex gap-2'>
+              {' '}
+              {percentageMemo}%
+              {tooltipContent && (
+                <Tooltip.InfoTooltip
+                  iconProps={{
+                    className: 'w-3 h-3',
+                  }}
+                  contentProps={{
+                    className:
+                      'text-[12px] leading-[16px] max-w-[400px] bg-[var(--background-color-tooltip)] text-[var(--text-color-tooltip)]',
+                  }}
+                  arrowProps={{
+                    className: 'fill-[var(--background-color-tooltip)]',
+                  }}
+                >
+                  <p className='font-bold'>
+                    <span className='relative inline-flex rounded-full h-2 w-2 bg-[#56AEFF] mr-2' />
+                    {tooltipContent[0]}
+                  </p>
+                  <hr className='my-2' />
+                  <p className=''>{tooltipContent[1]}</p>
+                </Tooltip.InfoTooltip>
+              )}
+            </span>
           </div>
         </Scale>
       )}
@@ -265,7 +330,7 @@ export function CompanyRankTable(props: {
       <div className='grow overflow-y-auto styled-scrollbar'>
         <CompanyRankTableContent id={id} type={type} role={role} />
       </div>
-      <div>
+      <div className='w-full pt-2'>
         <CompletionRateContent
           id={id}
           type={type}
