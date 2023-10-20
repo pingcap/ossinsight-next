@@ -116,7 +116,6 @@ export default function (
         show: true,
         position: 'top',
         formatter: (params) => {
-          console.log(params);
           const labelData = params?.data as any;
           const firstLogin = labelData?.participant_logins?.split(',')[0];
           return `{a|${firstLogin}} ${
@@ -172,5 +171,19 @@ function generateHtmlFromLogins(loginStr: string, max = 4) {
     (logins.length > max ? moreHtml : '')
   );
 }
+
+export const eventHandlers = [
+  {
+    type: 'click',
+    option: 'series.scatter',
+    handler: (params) => {
+      const participantLogins = params?.value?.participant_logins;
+      if (participantLogins) {
+        const firstLogin = participantLogins.split(',')[0];
+        window?.open(`https://ossinsight.io/analyze/${firstLogin}`);
+      }
+    },
+  },
+];
 
 export const type = 'echarts';
