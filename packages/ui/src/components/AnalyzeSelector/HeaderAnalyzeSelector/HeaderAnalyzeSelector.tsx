@@ -488,7 +488,7 @@ function RepoSearch(props: {
   );
 
   React.useEffect(() => {
-    reload('recommend-repo-list-2-keyword');
+    reload('recommend-repo-list-1-keyword');
   }, []);
 
   if (error) {
