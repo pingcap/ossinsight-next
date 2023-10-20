@@ -144,14 +144,15 @@ export default function OrgAnalyzePageHeaderAction() {
         {/* -- seletors -- */}
         <div className='flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end'>
           {currentPeriod && (
+            <div className='relative z-10'>
             <HLSelect
               options={options}
               value={options.find((i) => i.key === currentPeriod) || options[1]}
               onChange={handlePeriodChange}
               startIcon={<CalendarIcon />}
-            />
+            /></div>
           )}
-          <div className='relative'>
+          <div className='relative z-9'>
             {orgId && (
               <HLGHOrgRepoSelector
                 disabled={loadingRepoFromUrl}

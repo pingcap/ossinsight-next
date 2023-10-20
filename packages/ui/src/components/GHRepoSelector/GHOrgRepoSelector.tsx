@@ -233,7 +233,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                 disabled={disabled}
                 className='relative w-full cursor-pointer rounded-lg bg-[var(--background-color-popover)] py-2 pl-3 pr-20 text-[var(--text-color-subtitle)] text-left shadow-md border border-[var(--selector-border-color)] focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
               >
-                <span className='block truncate w-80 overflow-hidden'>
+                <span className='block truncate w-auto lg:w-80 overflow-hidden'>
                   <RepoIcon className='mr-2' />
                   {selectedItems.length === 0 ? (
                     <>{allItem.name}</>
@@ -271,7 +271,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                   ref={setPopoverElement}
                   className='absolute left-1/2 z-10 mt-3 w-fit max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl'
                 >
-                  <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-[var(--background-color-popover)] w-[400px]'>
+                  <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-[var(--background-color-popover)] w-auto lg:w-[400px]'>
                     {/* -- search input -- */}
                     <SearchInput
                       autoFocus
