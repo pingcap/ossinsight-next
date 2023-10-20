@@ -95,7 +95,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       const reviewPast = reviewed?.past_period_percentage;
       const reviewDiff = (reviewCurrent - reviewPast) / reviewPast;
       return {
-        title: 'PR Reviewed Ratio',
+        title: 'Pull Request Reviewed Ratio',
         label: `${reviewCurrent?.toFixed(0)}%`,
         value: `${reviewDiff >= 0 ? '↑' : '↓'}${Math.abs(reviewDiff).toFixed(
           2
@@ -125,7 +125,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         selfMerged?.past_period_percentage + othersMerged?.past_period_percentage;
       const prDiff = (prCurrent - prPast) / prPast;
       return {
-        title: 'PR Merged Ratio',
+        title: 'Pull Request Merged Ratio',
         label: `${prCurrent.toFixed(0)}%`,
         value: `${prDiff >= 0 ? '↑' : '↓'}${Math.abs(prDiff).toFixed(2)}%`,
         isIncrease: prDiff >= 0,

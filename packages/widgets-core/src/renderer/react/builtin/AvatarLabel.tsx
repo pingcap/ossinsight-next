@@ -52,14 +52,27 @@ export function AvatarLabel({
   );
 }
 
-const Wrapper = (props: { children: React.ReactNode; href: string }) => {
-  const { children, href } = props;
+export const Wrapper = (
+  props: {
+    children: React.ReactNode;
+    href?: string;
+  } & React.HTMLAttributes<HTMLDivElement | HTMLAnchorElement>
+) => {
+  const { children, href, ...rest } = props;
 
   if (href) {
     return (
-      <a href={href} target='_blank'>
+      <a href={href} target='_blank' {...rest}>
         {children}
       </a>
+    );
+  }
+
+  if (rest) {
+    return (
+      <div {...rest}>
+        {children}
+      </div>
     );
   }
 

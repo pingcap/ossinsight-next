@@ -56,7 +56,7 @@ export default function (
       horizontal(
         item(
           '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-          'PR Merged Ratio',
+          'Pull Request Merged Ratio',
           { ...ctx.parameters, activity: 'pr-merged-ratio' },
           input
         ),
@@ -68,7 +68,7 @@ export default function (
         ),
         item(
           '@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics',
-          'PR Reviewed Ratio',
+          'Pull Request  Reviewed Ratio',
           { ...ctx.parameters, activity: 'pr-reviewed-ratio' },
           input
         )

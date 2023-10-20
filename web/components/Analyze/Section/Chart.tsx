@@ -65,6 +65,7 @@ export default function ChartTemplate (props: ChartTemplateProps) {
 
   return (
     <div
+      key={searchParamsStrMemo}
       className={twMerge('relative w-full h-full overflow-hidden', className)}
       style={{
         width: width ? `${width}px` : undefined,

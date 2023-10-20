@@ -39,11 +39,11 @@ const dimensions = [
   },
   {
     key: 'pr_creators',
-    name: 'PR Creators',
+    name: 'Pull Request Creators',
   },
   {
     key: 'pr_reviewers',
-    name: 'PR Reviewers',
+    name: 'Pull Request Reviewers',
   },
   {
     key: 'commit_authors',
