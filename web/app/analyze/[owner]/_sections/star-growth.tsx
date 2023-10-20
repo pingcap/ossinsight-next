@@ -10,9 +10,14 @@ import {
   GeoRankTable,
 } from '@/components/Analyze/Table/RankTable';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import { useSearchParams } from 'next/navigation';
 
 export default function StarGrowthContent() {
   const { id: orgId } = React.useContext(AnalyzeOwnerContext);
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString() || '';
+  const period = params.get('period')?.toString() || '';
 
   return (
     <SectionTemplate
@@ -52,6 +57,7 @@ export default function StarGrowthContent() {
             height={405}
           />
           <CompanyRankTable
+            key={orgId + repoIds + period}
             id={orgId}
             type='stars'
             role='stars'
@@ -69,6 +75,7 @@ export default function StarGrowthContent() {
             height={365}
           />
           <GeoRankTable
+            key={orgId + repoIds + period}
             id={orgId}
             type='stars'
             role='stars'

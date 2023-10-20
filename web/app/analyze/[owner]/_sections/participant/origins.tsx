@@ -7,6 +7,7 @@ import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
 import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
 import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
 import * as React from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function OriginsContent () {
   const { id: orgId } = React.useContext(AnalyzeOwnerContext);
@@ -63,6 +64,10 @@ function OrgActivityCompany (props: { orgId?: number }) {
 
   const [role, setRole] = React.useState<string>('pr_creators');
 
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString();
+  const period = params.get('period')?.toString();
+
   const handleChangeRole = React.useCallback((newValue?: string) => {
     newValue && setRole(newValue);
   }, []);
@@ -87,7 +92,7 @@ function OrgActivityCompany (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <CompanyRankTable
-        key={role}
+        key={role + repoIds + period}
         id={orgId}
         type="participants"
         className={`h-[405px]`}
@@ -101,6 +106,10 @@ function OrgActivityMap (props: { orgId?: number }) {
   const { orgId } = props;
 
   const [role, setRole] = React.useState<string>('pr_creators');
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString();
+  const period = params.get('period')?.toString();
 
   const handleChangeRole = React.useCallback((newValue?: string) => {
     newValue && setRole(newValue);
@@ -126,7 +135,7 @@ function OrgActivityMap (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <GeoRankTable
-        key={role}
+        key={role + repoIds + period}
         id={orgId}
         type="participants"
         role={role}
