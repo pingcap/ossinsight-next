@@ -55,7 +55,7 @@ export default function StarGrowthContent() {
             id={orgId}
             type='stars'
             role='stars'
-            className={`h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`h-[405px]`}
           />
         </MainSideGridTemplate>
 
@@ -72,7 +72,7 @@ export default function StarGrowthContent() {
             id={orgId}
             type='stars'
             role='stars'
-            className={`h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`h-[365px]`}
           />
         </MainSideGridTemplate>
       </SectionTemplate>
