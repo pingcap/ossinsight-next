@@ -90,7 +90,7 @@ function OrgActivityCompany (props: { orgId?: number }) {
         key={role}
         id={orgId}
         type="participants"
-        className={`h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`h-[405px]`}
         role={role}
       />
     </MainSideGridTemplate>
@@ -130,7 +130,7 @@ function OrgActivityMap (props: { orgId?: number }) {
         id={orgId}
         type="participants"
         role={role}
-        className={`h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`h-[365px]`}
       />
     </MainSideGridTemplate>
   );

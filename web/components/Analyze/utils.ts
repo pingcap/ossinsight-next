@@ -9,6 +9,7 @@ const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/q/orgs/participants/locations`;
 const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
 const PATH_GET_USERS = `/gh/users/`;
 const PATH_GET_REPO_BY_ID = `/gh/repositories/`;
+const PATH_GET_FILLED_RATIO = `/q/orgs/{activity}/{target}/filled-ratio`;
 
 export interface OwnerInfo {
   type: 'User' | 'Organization' | 'Bot';
@@ -115,6 +116,28 @@ export const getOrgActivityOrgs = (
 export const getUserInfo = (login: string | number) => {
   return fetch(`${API_SERVER}${PATH_GET_USERS}${login}`)
     .then(handleOApi);
+};
+
+export const getCompletionRate = (
+  id: number,
+  params?: {
+    period?: string;
+    activity: 'stars' | 'participants';
+    target: 'organizations' | 'locations';
+    role?: string;
+    repoIds?: string[];
+  },
+  signal?: AbortSignal
+): Promise<{ percentage: number }[]> => {
+  const allParams = { ...params, ownerId: id };
+  const paramsStr = params2UrlSearch(allParams);
+  let path = PATH_GET_FILLED_RATIO;
+  path = path.replace('{activity}', params?.activity || 'stars');
+  path = path.replace('{target}', params?.target || 'organizations');
+
+  return fetch(`${API_SERVER}${path}?${paramsStr}`, { signal }).then(
+    handleOApi
+  );
 };
 
 // // ! TODO remove this, use getRepoInfoByOwnerId instead

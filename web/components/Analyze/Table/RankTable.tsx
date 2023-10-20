@@ -1,6 +1,10 @@
 'use client';
 
-import { getOrgActivityLocations, getOrgActivityOrgs } from '@/components/Analyze/utils';
+import {
+  getOrgActivityLocations,
+  getOrgActivityOrgs,
+  getCompletionRate,
+} from '@/components/Analyze/utils';
 import Loader from '@/components/Widget/loading';
 import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { Scale } from '@ossinsight/ui/src/components/transitions';
@@ -131,11 +135,21 @@ export function GeoRankTable (props: {
   }
 
   return (
-    <div className={twMerge('px-1 items-center justify-around', className)}>
-      <div className="px-1 text-base font-semibold leading-6 text-white mx-auto w-fit">
+    <div className={twMerge('px-1 items-center justify-around flex flex-col', className)}>
+      <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top locations
       </div>
-      <GeoRankTableContent id={id} type={type} role={role} />
+      <div className='grow overflow-y-auto styled-scrollbar'>
+        <GeoRankTableContent id={id} type={type} role={role} />
+      </div>
+      <div>
+        <CompletionRateContent
+          id={id}
+          type={type}
+          role={role}
+          target='locations'
+        />
+      </div>
     </div>
   );
 }
@@ -180,7 +194,53 @@ export function CompanyRankTableContent (props: {
   );
 }
 
-export function CompanyRankTable (props: {
+export function CompletionRateContent(props: {
+  id: number;
+  type: 'stars' | 'participants';
+  target: 'organizations' | 'locations';
+  role?: string;
+}) {
+  const { id, type, target, role } = props;
+  const repoIds = useRepoIds();
+  const period = usePeriod();
+  const {
+    result: data = [],
+    ref,
+    loading,
+  } = usePerformanceOptimizedNetworkRequest(getCompletionRate, id, {
+    activity: type,
+    period,
+    ...(role && { role }),
+    target,
+    repoIds,
+  });
+
+  const percentageMemo = useMemo(() => {
+    if (!data?.[0]?.percentage) {
+      return undefined;
+    }
+    return (data?.[0]?.percentage).toFixed(2);
+  }, [data]);
+
+  return (
+    <>
+      {loading ? (
+        <div ref={ref} />
+      ) : (
+        <Scale>
+          {/* <FilledRatio ref={ref} data={percentageMemo} /> */}
+          <div ref={ref} className='text-[#7c7c7c] text-xs'>
+            Company Info Completion:
+            <span className='text-[#aaa] font-bold'> {percentageMemo}%</span>
+          </div>
+        </Scale>
+      )}
+    </>
+  );
+}
+
+
+export function CompanyRankTable(props: {
   id?: number;
   type?: 'stars' | 'participants';
   role?: string;
@@ -193,11 +253,26 @@ export function CompanyRankTable (props: {
   }
 
   return (
-    <div className={twMerge('px-1 items-center justify-around', className)}>
-      <div className="px-1 text-base font-semibold leading-6 text-white mx-auto w-fit">
+    <div
+      className={twMerge(
+        'px-1 items-center justify-around flex flex-col',
+        className
+      )}
+    >
+      <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top companies
       </div>
-      <CompanyRankTableContent id={id} type={type} role={role} />
+      <div className='grow overflow-y-auto styled-scrollbar'>
+        <CompanyRankTableContent id={id} type={type} role={role} />
+      </div>
+      <div>
+        <CompletionRateContent
+          id={id}
+          type={type}
+          role={role}
+          target='organizations'
+        />
+      </div>
     </div>
   );
 }
