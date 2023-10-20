@@ -243,11 +243,15 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                   <span className='bg-[var(--selector-fill-color)] text-white text-xs font-medium px-2 py-1 mr-2 rounded-full inline-flex items-center gap-2'>
-                    {parseItemsLength(
+                    {/* TODO - fix repos.length mismatch public repos sum */}
+                    {/* {parseItemsLength(
                       selectedItems.length === 0
                         ? repos.length
                         : selectedItems.length
-                    )}
+                    )} */}
+                    {selectedItems.length === 0
+                      ? `All`
+                      : parseItemsLength(selectedItems.length)}
                   </span>
                   <ChevronDownIcon
                     className={`h-5 w-5 text-gray-400 transition ease-in duration-100 ${
@@ -294,7 +298,9 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                                 : 'font-normal'
                             }`}
                           >
-                            {allItem.name}({repos.length})
+                            {/* TODO - fix repos.length mismatch public repos sum */}
+                            {/* {allItem.name}({repos.length}) */}
+                            {allItem.name}
                           </span>
                           <input
                             type='checkbox'
