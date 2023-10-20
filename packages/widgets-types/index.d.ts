@@ -110,6 +110,13 @@ export interface VisualizerModule<Type extends string, VisualizationResult, Data
   height?: number;
 
   grid?: WidgetImageGridSize;
+
+  // TODO: refine type
+  eventHandlers?: Array<{
+    type: string;
+    query?: any;
+    handler: (params: any) => void;
+  }>;
 }
 
 export type WidgetImageGridSize = {

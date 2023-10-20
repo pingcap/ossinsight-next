@@ -88,9 +88,9 @@ const LabelValueTooltip = (props: {
   return (
     <span
       className={clsx(
-        'invisible group-hover:visible w-auto h-auto px-4 py-2 bg-[var(--background-color-popover)] text-[var(--text-color-content)] rounded absolute text-sm top-[100%] left-0',
+        'invisible group-hover:visible w-auto h-auto px-4 py-2 bg-[var(--background-color-tooltip)] text-[var(--text-color-tooltip)] rounded absolute text-sm top-[100%] left-0',
         'max-w-fit whitespace-break-spaces',
-        `after:content-[' '] after:absolute after:top-0 after:top-[-10px] after:border-transparent after:border-b-[var(--background-color-popover)] after:border-solid after:border-[5px]`,
+        `after:content-[' '] after:absolute after:top-0 after:top-[-10px] after:border-transparent after:border-b-[var(--background-color-tooltip)] after:border-solid after:border-[5px]`,
         {
           ['after:left-1/2']: arrow === 'center',
           ['after:left-2']: arrow === 'left',

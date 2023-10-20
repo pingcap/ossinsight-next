@@ -42,7 +42,7 @@ function RoleInput ({
     'commit_authors',
   ].map((r) => ({
     key: r,
-    title: upperFirst(r.split('_').join(' ')),
+    title: r.startsWith('pr_') ? `Pull Request ${upperFirst(r.replace('pr_', '').split('_').join(' '))}` : upperFirst(r.split('_').join(' ')),
   }));
 
   const { select: roleSelect, value: role } = useSimpleSelect(

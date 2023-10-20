@@ -8,7 +8,7 @@ const generateMetadata: MetadataGenerator<{
 }> = ({ parameters: { owner_id }, getOrg }) => {
   const main = getOrg(parseInt(owner_id));
   return {
-    title: `Pull Request Review Over Time`,
+    title: `Number(or Count) of Pull Request Review Over Time`,
   };
 };
 
