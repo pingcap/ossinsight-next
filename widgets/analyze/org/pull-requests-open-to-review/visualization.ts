@@ -149,7 +149,7 @@ export const eventHandlers = [
     option: 'yAxis.category',
     handler: (params) => {
       if (params?.value) {
-        window.open(`https://github.com/${params.value}`);
+        window.open(`https://ossinsight.io/analyze/${params.value}`);
       }
     },
   },
