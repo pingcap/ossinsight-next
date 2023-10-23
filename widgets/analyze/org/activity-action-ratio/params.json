@@ -8,7 +8,7 @@
   "activity": {
     "type": "activity-type",
     "title": "Activity type",
-    "enums": ["pull-requests/merged", "issues/closed", "reviews/reviewed"],
+    "enums": ["pull-requests/merged", "pull-requests/self-merged", "issues/closed", "reviews/reviewed"],
     "default": "pull-requests/merged"
   },
   "period": {

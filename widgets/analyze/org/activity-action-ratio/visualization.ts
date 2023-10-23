@@ -16,7 +16,16 @@ type PRMergedDataPoint = {
   past_period_percentage: number;
   past_period_prs: number;
   percentage_change: number;
-  type: 'others-merged' | 'un-merged' | 'self-merged';
+  type: 'merged' | 'open' | 'closed';
+};
+
+type PRSelfMergedDataPoint = {
+  current_period_percentage: number;
+  current_period_prs: number;
+  past_period_percentage: number;
+  past_period_prs: number;
+  percentage_change: number;
+  type: 'self-merged' | 'others';
 };
 
 type IssueClosedDataPoint = {
@@ -41,7 +50,7 @@ type ReviewedDataPoint = {
   percentage_change: number;
 };
 
-type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
+type DataPoint = PRMergedDataPoint | PRSelfMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
 
 type Input = [DataPoint[], undefined];
 
@@ -144,14 +153,18 @@ export default function (
       },
       formatter: (params) => {
         const { name, value } = params;
-        if (activity === 'pull-requests/merged' && name === 'self-merged') {
+        if (activity === 'pull-requests/self-merged' && name === 'self-merged') {
           return `<b>${name}</b>
             <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>
             <br />
-            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and merged by the original PR author</div>
+            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and those merged by the original PR author.</div>
           `;
         }
         if (activity === 'pull-requests/merged') {
+          return `<b>${name}</b>
+            <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
+        }
+        if (activity === 'pull-requests/self-merged') {
           return `<b>${name}</b>
             <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
         }
