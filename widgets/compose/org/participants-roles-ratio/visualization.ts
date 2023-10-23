@@ -35,7 +35,7 @@ const dimensions = [
   },
   {
     key: 'pr_commenters',
-    name: 'PR Commenters',
+    name: 'Pull Request Commenters',
   },
   {
     key: 'pr_creators',
