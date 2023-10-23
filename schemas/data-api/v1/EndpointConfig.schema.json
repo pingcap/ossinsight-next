@@ -47,13 +47,11 @@
         },
         "type": {
           "description": "Define the parameter type.",
-          "type": "string",
-          "enum": ["array", "string", "number", "boolean", "integer"]
+          "$ref": "#/definitions/ParameterType"
         },
         "itemType": {
           "description": "Define the array item type.",
-          "type": "string",
-          "enum": ["string", "number", "boolean", "integer"]
+          "$ref": "#/definitions/ParameterItemType"
         },
         "maxArrayLength": {
             "description": "Define the max array length.",
@@ -97,6 +95,16 @@
       "required": [
         "name"
       ]
+    },
+    "ParameterType": {
+      "type": "string",
+      "enum": ["array", "string", "number", "boolean", "integer"],
+      "tsEnumNames": ["ARRAY", "STRING", "NUMBER", "BOOLEAN", "INTEGER"]
+    },
+    "ParameterItemType": {
+      "type": "string",
+      "enum": ["string", "number", "boolean", "integer"],
+      "tsEnumNames": ["STRING", "NUMBER", "BOOLEAN", "INTEGER"]
     }
   }
 }

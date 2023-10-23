@@ -36,14 +36,8 @@ export interface Params {
    * Param description for documentation. If undefined, value in param-descriptions.json would be taken as default
    */
   description?: string;
-  /**
-   * Define the parameter type.
-   */
-  type?: "array" | "string" | "number" | "boolean" | "integer";
-  /**
-   * Define the array item type.
-   */
-  itemType?: "string" | "number" | "boolean" | "integer";
+  type?: Type;
+  itemType?: ItemType;
   /**
    * Define the max array length.
    */
@@ -60,4 +54,24 @@ export interface Params {
    * Regular expression for validating parameter value.
    */
   pattern?: string;
+}
+
+/**
+ * Define the parameter type.
+ */
+export const enum Type {
+  ARRAY = "array",
+  STRING = "string",
+  NUMBER = "number",
+  BOOLEAN = "boolean",
+  INTEGER = "integer"
+}
+/**
+ * Define the array item type.
+ */
+export const enum ItemType {
+  STRING = "string",
+  NUMBER = "number",
+  BOOLEAN = "boolean",
+  INTEGER = "integer"
 }
