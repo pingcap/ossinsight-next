@@ -47,23 +47,7 @@ export default function StarGrowthContent() {
           />
         </MainSideGridTemplate>
 
-        <MainSideGridTemplate>
-          <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-company'
-            searchParams={{
-              activity: 'stars',
-              role: 'stars'
-            }}
-            height={405}
-          />
-          <CompanyRankTable
-            key={orgId + repoIds + period}
-            id={orgId}
-            type='stars'
-            role='stars'
-            className={`h-[405px]`}
-          />
-        </MainSideGridTemplate>
+        <OrgActivityCompany orgId={orgId} />
 
         <MainSideGridTemplate>
           <ChartTemplate
@@ -84,5 +68,45 @@ export default function StarGrowthContent() {
         </MainSideGridTemplate>
       </SectionTemplate>
     </SectionTemplate>
+  );
+}
+
+function OrgActivityCompany(props: { orgId?: number }) {
+  const { orgId } = props;
+
+  const [excludeSeenBefore, setExcludeSeenBefore] =
+    React.useState<boolean>(false);
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString();
+  const period = params.get('period')?.toString();
+
+  const handleChangeExcludeSeenBefore = React.useCallback(
+    (newValue?: boolean) => {
+      setExcludeSeenBefore(!!newValue);
+    },
+    []
+  );
+
+  return (
+    <MainSideGridTemplate>
+      <ChartTemplate
+        name='@ossinsight/widget-compose-org-activity-company'
+        searchParams={{
+          activity: 'stars',
+          role: 'stars',
+        }}
+        height={405}
+      />
+      <CompanyRankTable
+        key={'stars' + repoIds + period + (excludeSeenBefore ? 'new' : 'all')}
+        id={orgId}
+        type='stars'
+        role='stars'
+        className={`h-[405px]`}
+        excludeSeenBefore={excludeSeenBefore}
+        handleExcludeSeenBefore={handleChangeExcludeSeenBefore}
+      />
+    </MainSideGridTemplate>
   );
 }
