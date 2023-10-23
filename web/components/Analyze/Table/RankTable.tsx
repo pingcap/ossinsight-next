@@ -83,8 +83,9 @@ export function GeoRankTableContent (props: {
   type: 'stars' | 'participants';
   role?: string;
   maxRows?: number;
+  excludeSeenBefore?: boolean;
 }) {
-  const { id, type, maxRows = 10, role } = props;
+  const { id, type, maxRows = 10, role, excludeSeenBefore = false } = props;
   const repoIds = useRepoIds();
   const period = usePeriod();
   const {
@@ -93,7 +94,7 @@ export function GeoRankTableContent (props: {
     ref,
   } = usePerformanceOptimizedNetworkRequest(
     getOrgActivityLocations,
-    id, { activity: type, period, ...(role && { role }), repoIds },
+    id, { activity: type, period, ...(role && { role }), repoIds, excludeSeenBefore },
   );
 
   const rowsMemo = React.useMemo(() => {
@@ -123,25 +124,52 @@ export function GeoRankTableContent (props: {
   );
 }
 
-export function GeoRankTable (props: {
+export function GeoRankTable(props: {
   id?: number;
   type?: 'stars' | 'participants';
   role?: string;
   className?: string;
+  excludeSeenBefore?: boolean;
+  handleExcludeSeenBefore?: (excludeSeenBefore?: boolean) => void;
 }) {
-  const { id, type = 'stars', className, role } = props;
+  const {
+    id,
+    type = 'stars',
+    className,
+    role,
+    excludeSeenBefore = false,
+    handleExcludeSeenBefore,
+  } = props;
 
   if (!id) {
     return null;
   }
 
   return (
-    <div className={twMerge('px-1 items-center justify-around flex flex-col', className)}>
+    <div
+      className={twMerge(
+        'px-1 items-center justify-around flex flex-col',
+        className
+      )}
+    >
       <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top locations
       </div>
+      {handleExcludeSeenBefore && (
+        <RankTableCheckbox
+          id={`location-rank-table-${type}`}
+          checked={excludeSeenBefore}
+          onChange={handleExcludeSeenBefore}
+          label='New companies only'
+        />
+      )}
       <div className='grow overflow-y-auto styled-scrollbar'>
-        <GeoRankTableContent id={id} type={type} role={role} />
+        <GeoRankTableContent
+          id={id}
+          type={type}
+          role={role}
+          excludeSeenBefore={excludeSeenBefore}
+        />
       </div>
       <div className='w-full pt-2'>
         <CompletionRateContent
@@ -160,8 +188,9 @@ export function CompanyRankTableContent (props: {
   type: 'stars' | 'participants';
   role?: string;
   maxRows?: number;
+  excludeSeenBefore?: boolean;
 }) {
-  const { id, maxRows = 10, type, role } = props;
+  const { id, maxRows = 10, type, role, excludeSeenBefore = false } = props;
   const repoIds = useRepoIds();
   const period = usePeriod();
   const {
@@ -170,7 +199,7 @@ export function CompanyRankTableContent (props: {
     loading,
   } = usePerformanceOptimizedNetworkRequest(
     getOrgActivityOrgs,
-    id, { activity: type, period, ...(role && { role }), repoIds });
+    id, { activity: type, period, ...(role && { role }), repoIds, excludeSeenBefore });
 
   const rowsMemo = React.useMemo(() => {
     return data
@@ -319,8 +348,17 @@ export function CompanyRankTable(props: {
   type?: 'stars' | 'participants';
   role?: string;
   className?: string;
+  excludeSeenBefore?: boolean;
+  handleExcludeSeenBefore?: (excludeSeenBefore?: boolean) => void;
 }) {
-  const { id, type = 'stars', className, role } = props;
+  const {
+    id,
+    type = 'stars',
+    className,
+    role,
+    excludeSeenBefore = false,
+    handleExcludeSeenBefore,
+  } = props;
 
   if (!id) {
     return null;
@@ -336,8 +374,21 @@ export function CompanyRankTable(props: {
       <div className='px-1 text-base font-semibold leading-6 text-white mx-auto w-fit'>
         Top companies
       </div>
+      {handleExcludeSeenBefore && (
+        <RankTableCheckbox
+          id={`company-rank-table-${type}`}
+          checked={excludeSeenBefore}
+          onChange={handleExcludeSeenBefore}
+          label='New companies only'
+        />
+      )}
       <div className='grow overflow-y-auto styled-scrollbar'>
-        <CompanyRankTableContent id={id} type={type} role={role} />
+        <CompanyRankTableContent
+          id={id}
+          type={type}
+          role={role}
+          excludeSeenBefore={excludeSeenBefore}
+        />
       </div>
       <div className='w-full pt-2'>
         <CompletionRateContent
@@ -346,6 +397,61 @@ export function CompanyRankTable(props: {
           role={role}
           target='organizations'
         />
+      </div>
+    </div>
+  );
+}
+
+function RankTableCheckbox(props: {
+  id?: string;
+  checked: boolean;
+  onChange?: (checked?: boolean) => void;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+  className?: string;
+}) {
+  const { id, checked, onChange, label, description, disabled, className } =
+    props;
+
+  return (
+    <div className='relative flex items-start'>
+      <div className='w-full flex gap-2'>
+        <input
+          className='peer relative appearance-none shrink-0 w-4 h-4 mt-1'
+          type='checkbox'
+          disabled={disabled}
+          id={id}
+          aria-describedby={`${id}-description`}
+          checked={checked}
+          onClick={() => {
+            onChange && onChange(!checked);
+          }}
+        />
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='24'
+          height='24'
+          viewBox='0 0 11 11'
+          fill='none'
+          className='absolute w-4 h-4 pointer-events-none stroke-none fill-none peer-checked:!fill-[var(--color-primary)] peer-checked:!stroke-[var(--color-primary)] mt-1'
+        >
+          <rect
+            x='0.5'
+            y='0.5'
+            width='10'
+            height='10'
+            rx='1.5'
+            fill='#434247'
+            stroke='var(--color-primary)'
+          />
+          <path d='M9.77778 0H1.22222C0.898069 0 0.587192 0.128769 0.357981 0.357981C0.128769 0.587192 0 0.898069 0 1.22222V9.77778C0 10.1019 0.128769 10.4128 0.357981 10.642C0.587192 10.8712 0.898069 11 1.22222 11H9.77778C10.1019 11 10.4128 10.8712 10.642 10.642C10.8712 10.4128 11 10.1019 11 9.77778V1.22222C11 0.898069 10.8712 0.587192 10.642 0.357981C10.4128 0.128769 10.1019 0 9.77778 0ZM9.77778 1.22222V9.77778H1.22222V1.22222H9.77778ZM4.27778 8.55556L1.83333 6.11111L2.695 5.24333L4.27778 6.82611L8.305 2.79889L9.16667 3.66667' />
+        </svg>
+        <label htmlFor={id}>{label}</label>
+        <span id={`${id}-description`} className='sr-only'>
+          <span className='sr-only'>{label}</span>
+          {description}
+        </span>
       </div>
     </div>
   );

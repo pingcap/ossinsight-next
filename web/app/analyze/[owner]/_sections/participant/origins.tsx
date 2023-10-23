@@ -63,6 +63,7 @@ function OrgActivityCompany (props: { orgId?: number }) {
   const { orgId } = props;
 
   const [role, setRole] = React.useState<string>('pr_creators');
+  const [excludeSeenBefore, setExcludeSeenBefore] = React.useState<boolean>(false);
 
   const params = useSearchParams();
   const repoIds = params.get('repoIds')?.toString();
@@ -70,6 +71,9 @@ function OrgActivityCompany (props: { orgId?: number }) {
 
   const handleChangeRole = React.useCallback((newValue?: string) => {
     newValue && setRole(newValue);
+  }, []);
+  const handleChangeExcludeSeenBefore = React.useCallback((newValue?: boolean) => {
+    setExcludeSeenBefore(!!newValue)
   }, []);
 
   return (
@@ -92,11 +96,13 @@ function OrgActivityCompany (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <CompanyRankTable
-        key={role + repoIds + period}
+        key={role + repoIds + period + (excludeSeenBefore ? 'new' : 'all')}
         id={orgId}
         type="participants"
         className={`h-[405px]`}
         role={role}
+        excludeSeenBefore={excludeSeenBefore}
+        handleExcludeSeenBefore={handleChangeExcludeSeenBefore}
       />
     </MainSideGridTemplate>
   );
