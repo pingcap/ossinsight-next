@@ -118,7 +118,7 @@ export default function (
                   const renderItem = item.pop();
                   return widget('builtin:avatar-label', undefined, {
                     label: '',
-                    size: 20,
+                    imgSize: 20,
                     imgSrc: renderItem?.participant_logins
                       ? `https://github.com/${
                           renderItem.participant_logins.split(',')[0]

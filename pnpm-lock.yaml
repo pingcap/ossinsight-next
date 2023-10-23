@@ -14,6 +14,19 @@ importers:
 
   packages/cli: {}
 
+  packages/compose:
+    dependencies:
+      '@ossinsight/widgets-core':
+        specifier: workspace:^
+        version: link:../widgets-core
+      '@ossinsight/widgets-utils':
+        specifier: workspace:^
+        version: link:../widgets-utils
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/eslint-plugin:
     dependencies:
       '@stoplight/json':
@@ -389,6 +402,9 @@ importers:
 
   widgets:
     dependencies:
+      '@ossinsight/compose':
+        specifier: workspace:^
+        version: link:../packages/compose
       '@ossinsight/widgets-types':
         specifier: workspace:^
         version: link:../packages/widgets-types

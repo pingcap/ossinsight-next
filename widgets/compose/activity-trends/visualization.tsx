@@ -1,3 +1,8 @@
+/** @jsxRuntime classic */
+/** @jsx Compose */
+
+import Compose from '@ossinsight/compose';
+
 import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { autoSize, computeLayout, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
@@ -21,18 +26,15 @@ export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params
   const PADDING = autoSize(ctx, 24);
   const HEADER_HEIGHT = autoSize(ctx, 48);
 
+  const layout = (
+    <flex direction='vertical' padding={[0, PADDING, PADDING / 2, PADDING]}>
+      <builtin-card-heading title='Repository Activity Trends' subtitle={`Date: ${subtitle}`} size={HEADER_HEIGHT} />
+      <widget widget='@ossinsight/widget-analyze-repo-activity-trends' ifEmpty='indicator' data={input} parameters={ctx.parameters} padding={[0, 8]} />
+    </flex>
+  )
+
   return computeLayout(
-    vertical(
-      widget('builtin:card-heading', undefined,
-        {
-          title: 'Repository Activity Trends',
-          subtitle: `Date: ${subtitle}`,
-        },
-      ).fix(HEADER_HEIGHT),
-      nonEmptyDataWidget(input, () =>
-        widget('@ossinsight/widget-analyze-repo-activity-trends', input, ctx.parameters)
-          .padding([0, -autoSize(ctx, 8)])),
-    ).padding([0, PADDING, PADDING / 2, PADDING]),
+    layout,
     0,
     0,
     WIDTH,

@@ -1,3 +1,7 @@
+/** @jsxRuntime classic */
+/** @jsx Compose */
+
+import Compose from '@ossinsight/compose';
 import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { autoSize, computeLayout, grid, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
 import { DateTime } from 'luxon';
@@ -59,26 +63,19 @@ export default function (
   const PADDING = autoSize(ctx, 24);
   const HEADER_HEIGHT = autoSize(ctx, 48);
 
+  const layout = (
+    <flex direction="vertical" padding={[0, PADDING, PADDING / 2, PADDING]}>
+      <builtin-card-heading title="Contributors" subtitle=" " size={HEADER_HEIGHT} />
+      <grid rows={rows} cols={cols} gap={4} data={contributors} ifEmpty="indicator">
+        {...contributors.map(item => (
+          <builtin-avatar-label label="" imgSize={size} imgSrc={item.actor_login ? `https://github.com/${item.actor_login}.png` : ''} />
+        ))}
+      </grid>
+    </flex>
+  )
+
   return computeLayout(
-    vertical(
-      widget('builtin:card-heading', undefined, {
-        title: 'Contributors',
-        subtitle: ' ',
-      }).fix(HEADER_HEIGHT),
-      nonEmptyDataWidget(contributors, () => grid(
-        rows,
-        cols,
-        ...contributors.map((item) =>
-          widget('builtin:avatar-label', undefined, {
-            label: '',
-            size: size,
-            imgSrc: item.actor_login
-              ? `https://github.com/${item.actor_login}.png`
-              : '',
-          }),
-        ),
-      ).gap(autoSize(ctx, 4))),
-    ).padding([0, PADDING, PADDING / 2, PADDING]),
+    layout,
     0,
     0,
     WIDTH,

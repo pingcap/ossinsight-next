@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Analyze all different types of events triggered by activity on GitHub within a repository over the last 28 days.",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Reposiory"

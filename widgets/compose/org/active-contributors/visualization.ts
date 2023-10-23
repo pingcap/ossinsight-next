@@ -94,7 +94,7 @@ export default function (
           ...contributors.map((item) =>
             widget('builtin:avatar-label', undefined, {
               label: '',
-              size: size,
+              imgSize: size,
               imgSrc: item.login ? `https://github.com/${item.login}.png` : '',
               href: item.login
                 ? `https://ossinsight.io/analyze/${item.login}`

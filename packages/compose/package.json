@@ -1,0 +1,17 @@
+{
+  "name": "@ossinsight/compose",
+  "version": "1.0.0",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "@ossinsight/widgets-core": "workspace:^",
+    "@ossinsight/widgets-utils": "workspace:^"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}
