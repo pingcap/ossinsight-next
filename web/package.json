@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "pnpm run gen:endpoints && next dev",
-    "build": "pnpm run gen:endpoints && next build",
+    "build": "pnpm run sync:endpoints && pnpm run gen:endpoints && next build",
     "start": "next start",
     "lint": "next lint",
+    "sync:endpoints": "./scripts/download-endpoints-configs.sh",
     "gen:endpoints": "ossinsight endpoints generate --template-file ../configs/templates/route.ts.liquid --endpoints-dir ../configs/endpoints --functions-dir ./app/api/queries"
   },
   "dependencies": {
