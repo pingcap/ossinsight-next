@@ -41,7 +41,7 @@ type Input = [DataPoint[], TotalDataPoint[]];
 
 const getHref = (item: DataPoint, activity?: string) => {
   if (activity === 'participants') {
-    return `https://github.com/${(item as ParticipantDataPoint).login}`;
+    return `https://ossinsight.io/analyze/${(item as ParticipantDataPoint).login}`;
   }
   return undefined;
 }

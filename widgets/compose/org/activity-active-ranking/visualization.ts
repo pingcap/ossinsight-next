@@ -90,10 +90,10 @@ const getLabel = (item: DataPoint) => {
 
 const getHref = (item: DataPoint, activity?: string) => {
   if (activity === 'participants') {
-    return `https://github.com/${(item as ParticipantDataPoint).login}`;
+    return `https://ossinsight.io/analyze/${(item as ParticipantDataPoint).login}`;
   }
   if (activity === 'repos') {
-    return `https://github.com/${(item as ActivityDataPoint).repo_name}`;
+    return `https://ossinsight.io/analyze/${(item as ActivityDataPoint).repo_name}`;
   }
   return undefined;
 }
