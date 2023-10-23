@@ -102,7 +102,7 @@ export default function (
                 size: 24,
                 value: item?.stars,
                 maxVal,
-                href: `https://github.com/${item.repo_name}`,
+                href: `https://ossinsight.io/analyze/${item.repo_name}`,
               })
             )
           ).flex(1)

@@ -223,6 +223,16 @@ export function CompletionRateContent(props: {
     return (data?.[0]?.percentage).toFixed(2);
   }, [data]);
 
+  const labelMemo = useMemo(() => {
+    if (target === 'locations') {
+      return 'Location';
+    }
+    if (target === 'organizations') {
+      return 'Company';
+    }
+    return undefined;
+  }, [target]);
+
   const tooltipContent = useMemo(() => {
     if (type === 'stars') {
       if (target === 'organizations') {
@@ -271,9 +281,8 @@ export function CompletionRateContent(props: {
         <Scale>
           {/* <FilledRatio ref={ref} data={percentageMemo} /> */}
           <div ref={ref} className='text-[#7c7c7c] text-xs'>
-            Company Info Completion:
-            <span className='text-[#aaa] font-bold inline-flex gap-2'>
-              {' '}
+              {labelMemo} Info Completion:
+            <span className='text-[#aaa] font-bold inline-flex gap-2 pl-1'>
               {percentageMemo}%
               {tooltipContent && (
                 <Tooltip.InfoTooltip

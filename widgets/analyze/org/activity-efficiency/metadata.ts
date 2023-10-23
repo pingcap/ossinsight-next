@@ -10,7 +10,7 @@ const generateMetadata: MetadataGenerator<{
 }> = ({ parameters: { owner_id, activity }, getOrg }) => {
   const main = getOrg(parseInt(owner_id));
   return {
-    title: `${upperFirst(activity.split('-').join(' '))} over time`,
+    title: `Count of ${upperFirst(activity.split('-').join(' '))} Over Time`,
   };
 };
 

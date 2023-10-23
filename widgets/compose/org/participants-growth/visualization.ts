@@ -65,7 +65,7 @@ const handleData = (
 ) => {
   let tmpTitle = 'Participants Over Time';
   if (activity === 'new') {
-    tmpTitle = 'New participants Over Time';
+    tmpTitle = 'New Participants Over Time';
   }
   return {
     title: tmpTitle,
