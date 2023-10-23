@@ -220,7 +220,7 @@ export function CompletionRateContent(props: {
     if (!data?.[0]?.percentage) {
       return undefined;
     }
-    return (data?.[0]?.percentage).toFixed(2);
+    return (data?.[0]?.percentage * 100).toFixed(2);
   }, [data]);
 
   const tooltipContent = useMemo(() => {

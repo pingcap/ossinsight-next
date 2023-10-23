@@ -9,7 +9,7 @@ const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/q/orgs/participants/locations`;
 const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
 const PATH_GET_USERS = `/gh/users/`;
 const PATH_GET_REPO_BY_ID = `/gh/repositories/`;
-const PATH_GET_FILLED_RATIO = `/q/orgs/{activity}/{target}/filled-ratio`;
+const PATH_GET_FILLED_RATIO = `/q/orgs/{activity}/{target}/completion-rate`;
 
 export interface OwnerInfo {
   type: 'User' | 'Organization' | 'Bot';
