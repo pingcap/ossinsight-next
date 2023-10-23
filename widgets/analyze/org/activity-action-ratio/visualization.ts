@@ -86,6 +86,16 @@ const handleData = (items: DataPoint[], activity: string) => {
         };
       });
     case 'pull-requests/merged':
+      return items.map((item, idx) => {
+        const prMergedData = item as PRMergedDataPoint;
+        return {
+          name: prMergedData.type,
+          value: prMergedData.current_period_prs,
+          itemStyle: {
+            color: prStyleRecord[prMergedData.type],
+          },
+        };
+      });
     default:
       return items.map((item, idx) => {
         const prMergedData = item as PRMergedDataPoint;
@@ -230,5 +240,11 @@ const styleMap = [
     },
   },
 ];
+
+const prStyleRecord = {
+  merged: '#5D5BCC',
+  open: '#2EC734',
+  closed: '#E96373',
+}
 
 export const type = 'echarts';
