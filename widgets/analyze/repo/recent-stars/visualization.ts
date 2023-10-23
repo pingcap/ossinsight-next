@@ -98,13 +98,13 @@ export default function (
       formatter: (params) => {
         const [a, b] = params;
         const unit = ctx.parameters?.options?.unit || 'Star(s)';
-        return `<p>
-        <div class="text-xs">${a?.data?.current_period_day}</div>
-        <div class="text-md">${a?.data?.current_period_day_stars} ${unit}</div>
+        return `<p class="text-white">
+        <div class="text-xs text-white"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #E2635B; margin-right: 5px;"></span>${a?.data?.current_period_day}</div>
+        <div class="text-md text-white">${a?.data?.current_period_day_stars} ${unit}</div>
         </p>
-        <!-- <p class="text-xs text=[#8A8A8A]">vs</p> -->
+        <hr class="my-1" />
         <p class="text=[#8A8A8A]">
-        <div class="text-xs">${b?.data?.last_period_day}</div>
+        <div class="text-xs"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #D3B8B6; margin-right: 5px;"></span>${b?.data?.last_period_day}</div>
         <div class="text-md">${b?.data?.last_period_day_stars} ${unit}</div>
         </p>`;
       },
