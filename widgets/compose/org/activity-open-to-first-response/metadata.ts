@@ -20,7 +20,7 @@ const getTitle = (activity: string) => {
     case 'pull-requests':
       return 'Which Repository Achieves the Shortest Pull Request Completion Time?';
     default:
-      return 'Top repos of open to close time';
+      return 'Top Repos of Open to Close Time';
   }
 };
 

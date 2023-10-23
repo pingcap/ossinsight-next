@@ -41,12 +41,12 @@ const fmtHours = (hours: number) =>
 
 const getTitle = (activity: string) => {
   switch (activity) {
-    case 'issue':
+    case 'issues':
       return 'Which Repository Exhibit Exceptional Efficiency in Addressing Issues?';
     case 'pull-requests':
       return 'Which Repository Achieves the Shortest Pull Request Completion Time?';
     default:
-      return 'Top repos of open to close time';
+      return 'Top Repos of Open to Close Time';
   }
 };
 
