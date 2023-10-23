@@ -59,7 +59,7 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Star earned',
+        title: 'Star Earned',
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       horizontal(

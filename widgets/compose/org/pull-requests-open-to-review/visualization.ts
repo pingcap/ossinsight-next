@@ -57,7 +57,7 @@ export default function (
     vertical(
       widget('builtin:card-heading', undefined, {
         title:
-          'Ranking of repos with most proactive Pull Request Review responses of an organization',
+          'Which Repository Shows the Most Proactive Pull Request Review Responses?',
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       vertical(

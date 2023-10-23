@@ -65,11 +65,11 @@ const handleData = (
       };
     case 'stars':
     default:
-      let tmpTitle = 'Star earned over time';
+      let tmpTitle = 'Count of Star Earned Over Time';
       if (activity === 'participants') {
-        tmpTitle = 'Participants Over Time';
+        tmpTitle = 'Count of Participants Over Time';
       } else if (activity === 'pull-requests') {
-        tmpTitle = 'Pull Requests Over Time';
+        tmpTitle = 'Count of Pull Request Over Time';
       }
       return {
         title: tmpTitle,

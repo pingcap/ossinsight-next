@@ -43,7 +43,7 @@ const getTitle = (activity: string) => {
     case 'pull-requests':
       return 'Which Repository Exhibits the Quickest Response to Pull Requests?';
     default:
-      return 'Top repos of open to close time';
+      return 'Top Repos of Open to Close Time';
   }
 };
 
