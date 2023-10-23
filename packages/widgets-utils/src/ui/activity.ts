@@ -96,6 +96,10 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
     title: 'Pull Requests - Merged',
   },
   {
+    key: 'pull-requests/self-merged',
+    title: 'Pull Requests - Self-Merged',
+  },
+  {
     key: 'issues/closed',
     title: 'Issues - Closed',
   },
