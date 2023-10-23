@@ -91,7 +91,7 @@ export default function (
       position: function (pos, params, dom, rect, size) {
         // tooltip will be fixed on the right if mouse hovering on the left,
         // and on the left if hovering on the right.
-        var obj = { top: -10 };
+        var obj = { top: -20 };
         obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 5;
         return obj;
       },
@@ -104,8 +104,8 @@ export default function (
         </p>
         <hr class="my-1" />
         <p class="text=[#8A8A8A]">
-        <div class="text-xs"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #D3B8B6; margin-right: 5px;"></span>${b?.data?.last_period_day}</div>
-        <div class="text-md">${b?.data?.last_period_day_stars} ${unit}</div>
+        <div class="text-xs text=[#8A8A8A]"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: #D3B8B6; margin-right: 5px;"></span>${b?.data?.last_period_day}</div>
+        <div class="text-md text=[#8A8A8A]">${b?.data?.last_period_day_stars} ${unit}</div>
         </p>`;
       },
       axisPointer: {
