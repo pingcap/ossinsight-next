@@ -157,7 +157,7 @@ export default function (
           return `<b>${name}</b>
             <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>
             <br />
-            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and merged by the original PR author</div>
+            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and those merged by the original PR author.</div>
           `;
         }
         if (activity === 'pull-requests/merged') {
