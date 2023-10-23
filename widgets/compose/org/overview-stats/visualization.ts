@@ -99,7 +99,10 @@ export default function (
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
-          ctx.parameters
+          {
+            ...ctx.parameters, options: {
+            unit: parseTitle(ctx.parameters?.activity),
+          } }
         )
       )
     ).padding([0, PADDING, PADDING]),
