@@ -2,7 +2,7 @@ import { BuiltinWidgetsMap } from '@ossinsight/widgets-core/src/renderer/builtin
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { FlexBaseLayout, GridLayout, Layout, WidgetLayout } from '@ossinsight/widgets-utils/src/compose';
 
-function Compose<K extends keyof Compose.JSX.IntrinsicElements> (key: K, props: any, ...children: any): Layout {
+function Compose(component: any, props: any, ...children: any): Layout {
   const { padding = 0, gap = 0, size = undefined, grow = undefined, data, ifEmpty, ...restProps } = props;
   if (ifEmpty) {
     if (isEmptyData(data)) {
@@ -19,6 +19,16 @@ function Compose<K extends keyof Compose.JSX.IntrinsicElements> (key: K, props: 
       }
     }
   }
+
+  // flatten children to a single array and remove falsy values.
+  children = children.filter(Boolean).flatMap(child => child);
+
+  if (typeof component === 'function') {
+    console.log(children)
+    return component({ ...props, children });
+  }
+
+  const key = component;
 
   if (key.startsWith('builtin-')) {
     return {
@@ -41,39 +51,41 @@ function Compose<K extends keyof Compose.JSX.IntrinsicElements> (key: K, props: 
       gap,
       size,
       grow,
-      children: children.filter(Boolean),
+      children,
     } as Layout;
   }
 }
 
 namespace Compose {
+  export type ComposeNodes = Layout | undefined | null | false | ComposeNodes[];
+
   export namespace JSX {
-    type Nodes = Layout | Layout[] | undefined | null | false;
-    type LayoutChildrenAttributes = { children: Nodes };
-    type LayoutAttributes<L extends Layout> = Omit<L, 'layout' | 'children'> & IntrinsicAttributes;
+    type LayoutChildrenAttributes = { children: ComposeNodes };
+    type CommonAttributes  = Pick<Layout, 'gap' | 'size' | 'padding' | 'grow'>;
+    type LayoutAttributes<L extends Layout> = Omit<L, 'layout' | 'children'>;
 
     export type Element = Layout;
 
-    export type IntrinsicAttributes = Pick<Layout, 'gap' | 'size' | 'padding' | 'grow'> & { data?: any, ifEmpty?: 'hide' | 'indicator' };
+    export type IntrinsicAttributes = { data?: any, ifEmpty?: 'hide' | 'indicator' };
 
     export interface ElementChildrenAttribute {
       children: {};
     }
 
     export interface IntrinsicElements extends BuiltinWidgets {
-      flex: LayoutAttributes<FlexBaseLayout> & LayoutChildrenAttributes;
-      grid: LayoutAttributes<GridLayout> & LayoutChildrenAttributes;
-      widget: LayoutAttributes<WidgetLayout>
+      flex: LayoutAttributes<FlexBaseLayout> & LayoutChildrenAttributes & IntrinsicAttributes;
+      grid: LayoutAttributes<GridLayout> & LayoutChildrenAttributes & IntrinsicAttributes;
+      widget: LayoutAttributes<WidgetLayout> & IntrinsicAttributes
     }
 
     // MARK: React does not support namespace
     export interface BuiltinWidgets {
-      'builtin-empty': BuiltinWidgetsMap['builtin:empty'] & IntrinsicAttributes;
-      'builtin-label': BuiltinWidgetsMap['builtin:label'] & IntrinsicAttributes;
-      'builtin-label-value': BuiltinWidgetsMap['builtin:label-value'] & IntrinsicAttributes;
-      'builtin-avatar-label': BuiltinWidgetsMap['builtin:avatar-label'] & IntrinsicAttributes;
-      'builtin-avatar-progress': BuiltinWidgetsMap['builtin:avatar-progress'] & IntrinsicAttributes;
-      'builtin-card-heading': BuiltinWidgetsMap['builtin:card-heading'] & IntrinsicAttributes;
+      'builtin-empty': BuiltinWidgetsMap['builtin:empty'] & CommonAttributes;
+      'builtin-label': BuiltinWidgetsMap['builtin:label'] & CommonAttributes;
+      'builtin-label-value': BuiltinWidgetsMap['builtin:label-value'] & CommonAttributes;
+      'builtin-avatar-label': BuiltinWidgetsMap['builtin:avatar-label'] & CommonAttributes;
+      'builtin-avatar-progress': BuiltinWidgetsMap['builtin:avatar-progress'] & CommonAttributes;
+      'builtin-card-heading': BuiltinWidgetsMap['builtin:card-heading'] & CommonAttributes;
     }
   }
 }
