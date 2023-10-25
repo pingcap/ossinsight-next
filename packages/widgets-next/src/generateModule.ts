@@ -66,7 +66,7 @@ const metadataGenerators = {}
 const helpers = `import { computeLayout } from '@ossinsight/widgets-utils/src/compose';
 
 function makeVisualizer(path, visualizerModulePromise) {
-  const isJsx = /.[tj]sx/.test(path);
+  const isJsx = /\.[tj]sx$/.test(path);
   return visualizerModulePromise.then(visualizer => {
     if (visualizer.type !== 'compose' || !isJsx) {
       return visualizer;

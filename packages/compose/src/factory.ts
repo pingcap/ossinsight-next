@@ -24,7 +24,6 @@ function Compose(component: any, props: any, ...children: any): Layout {
   children = children.filter(Boolean).flatMap(child => child);
 
   if (typeof component === 'function') {
-    console.log(children)
     return component({ ...props, children });
   }
 
