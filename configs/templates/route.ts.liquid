@@ -15,5 +15,12 @@ const dataService = new DataService({
 
 export async function GET(req: NextRequest) {
   const result = await dataService.handleQueryEndpoint(req, TEMPLATE_SQL, ENDPOINT_CONFIG);
-  return NextResponse.json(result);
+  return new Response(JSON.stringify(result), {
+    status: 200,
+    headers: {
+      'Cache-Control': 'max-age=10',
+      'CDN-Cache-Control': 'max-age=60',
+      'Vercel-CDN-Cache-Control': 'max-age=3600',
+    },
+  });
 }
