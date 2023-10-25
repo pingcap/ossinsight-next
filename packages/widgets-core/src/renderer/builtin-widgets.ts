@@ -30,6 +30,7 @@ export interface BuiltinWidgetsMap {
     color?: string;
     valueFormatter?: (value: any) => string;
     labelColor?: string[];
+    href?: string;
   };
 }
 

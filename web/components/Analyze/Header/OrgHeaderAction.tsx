@@ -54,8 +54,12 @@ export default function OrgAnalyzePageHeaderAction() {
     const urlPeriod = currentParams.get('period') || options[1].key;
     if (urlPeriod !== v.key) {
       currentParams.set('period', v.key);
-      typeof window !== 'undefined' &&
-        window.location.replace(pathname + '?' + currentParams.toString());
+      router.push(
+        pathname +
+          '?' +
+          currentParams.toString() +
+          ((typeof window !== 'undefined' && window.location.hash) || '')
+      );
     }
   };
 
@@ -82,8 +86,12 @@ export default function OrgAnalyzePageHeaderAction() {
       currentParams.delete('repoIds');
       selectedRepoIds.forEach((id) => currentParams.append('repoIds', `${id}`));
 
-      typeof window !== 'undefined' &&
-        window.location.replace(pathname + '?' + currentParams.toString());
+      router.push(
+        pathname +
+          '?' +
+          currentParams.toString() +
+          ((typeof window !== 'undefined' && window.location.hash) || '')
+      );
     }
   };
 
@@ -136,14 +144,15 @@ export default function OrgAnalyzePageHeaderAction() {
         {/* -- seletors -- */}
         <div className='flex gap-x-6 gap-y-2 flex-wrap flex-col md:flex-row md:items-end'>
           {currentPeriod && (
+            <div className='relative z-10'>
             <HLSelect
               options={options}
               value={options.find((i) => i.key === currentPeriod) || options[1]}
               onChange={handlePeriodChange}
               startIcon={<CalendarIcon />}
-            />
+            /></div>
           )}
-          <div className='relative'>
+          <div className='relative z-9'>
             {orgId && (
               <HLGHOrgRepoSelector
                 disabled={loadingRepoFromUrl}

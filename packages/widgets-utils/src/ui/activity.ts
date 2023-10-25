@@ -2,15 +2,15 @@ export type ActivityTypeOption = { key: string; title: string };
 export const PARTICIPANTS_ROLES_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'pr_creators',
-    title: 'PR Creators',
+    title: 'Pull Request Creators',
   },
   {
     key: 'pr_reviewers',
-    title: 'PR Reviewers',
+    title: 'Pull Request Reviewers',
   },
   {
     key: 'pr_commenters',
-    title: 'PR Commenters',
+    title: 'Pull Request Commenters',
   },
   {
     key: 'issue_creators',
@@ -57,11 +57,11 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   },
   {
     key: 'pr-merged-ratio',
-    title: 'PR Merged Ratio',
+    title: 'Pull Request Merged Ratio',
   },
   {
     key: 'pr-reviewed-ratio',
-    title: 'PR Reviewed Ratio',
+    title: 'Pull Request Reviewed Ratio',
   },
   {
     key: 'activities',
@@ -94,6 +94,10 @@ export const ACTIVITY_TYPE_OPTIONS: ActivityTypeOption[] = [
   {
     key: 'pull-requests/merged',
     title: 'Pull Requests - Merged',
+  },
+  {
+    key: 'pull-requests/self-merged',
+    title: 'Pull Requests - Self-Merged',
   },
   {
     key: 'issues/closed',

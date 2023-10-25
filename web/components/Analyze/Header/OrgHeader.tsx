@@ -170,7 +170,10 @@ const LabelItemWithCount = ({
               height: 12,
             }}
             contentProps={{
-              className: 'text-[12px] leading-[16px] max-w-[400px]',
+              className: 'text-[12px] leading-[16px] max-w-[400px] bg-[var(--background-color-tooltip)] text-[var(--text-color-tooltip)]',
+            }}
+            arrowProps={{
+              className: 'fill-[var(--background-color-tooltip)]',
             }}
           >
             {description}

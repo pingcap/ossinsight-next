@@ -35,14 +35,14 @@ type TotalDataPoint = {
 
 type Input = [DataPoint[], TotalDataPoint[]];
 
-const parseTitle = (activity: string) => {
+const parseTitle = (activity: string, isTooltip?: boolean) => {
   switch (activity) {
     case 'issues':
-      return 'Issues';
+      return isTooltip ? 'Issue(s)' : 'Issues';
     case 'pull-requests':
-      return 'Pull Requests';
+      return isTooltip ? 'Pull Request(s)' : 'Pull Requests';
     case 'reviews':
-      return 'Code Reviews';
+      return isTooltip ? 'Review(s)' : 'Reviews';
     default:
       return upperFirst(activity);
   }
@@ -99,7 +99,10 @@ export default function (
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
-          ctx.parameters
+          {
+            ...ctx.parameters, options: {
+            unit: parseTitle(ctx.parameters?.activity, true),
+          } }
         )
       )
     ).padding([0, PADDING, PADDING]),

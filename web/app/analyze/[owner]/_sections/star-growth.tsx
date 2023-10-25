@@ -10,9 +10,14 @@ import {
   GeoRankTable,
 } from '@/components/Analyze/Table/RankTable';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
+import { useSearchParams } from 'next/navigation';
 
 export default function StarGrowthContent() {
   const { id: orgId } = React.useContext(AnalyzeOwnerContext);
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString() || '';
+  const period = params.get('period')?.toString() || '';
 
   return (
     <SectionTemplate
@@ -42,22 +47,7 @@ export default function StarGrowthContent() {
           />
         </MainSideGridTemplate>
 
-        <MainSideGridTemplate>
-          <ChartTemplate
-            name='@ossinsight/widget-compose-org-activity-company'
-            searchParams={{
-              activity: 'stars',
-              role: 'stars'
-            }}
-            height={405}
-          />
-          <CompanyRankTable
-            id={orgId}
-            type='stars'
-            role='stars'
-            className={`h-[405px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
-          />
-        </MainSideGridTemplate>
+        <OrgActivityCompany orgId={orgId} />
 
         <MainSideGridTemplate>
           <ChartTemplate
@@ -69,13 +59,55 @@ export default function StarGrowthContent() {
             height={365}
           />
           <GeoRankTable
+            key={orgId + repoIds + period}
             id={orgId}
             type='stars'
             role='stars'
-            className={`h-[365px] overflow-x-hidden overflow-y-auto styled-scrollbar`}
+            className={`h-[365px]`}
           />
         </MainSideGridTemplate>
       </SectionTemplate>
     </SectionTemplate>
+  );
+}
+
+function OrgActivityCompany(props: { orgId?: number }) {
+  const { orgId } = props;
+
+  const [excludeSeenBefore, setExcludeSeenBefore] =
+    React.useState<boolean>(false);
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString();
+  const period = params.get('period')?.toString();
+
+  const handleChangeExcludeSeenBefore = React.useCallback(
+    (newValue?: boolean) => {
+      setExcludeSeenBefore(!!newValue);
+    },
+    []
+  );
+
+  return (
+    <MainSideGridTemplate>
+      <ChartTemplate
+        name='@ossinsight/widget-compose-org-activity-company'
+        searchParams={{
+          activity: 'stars',
+          role: 'stars',
+          excludeSeenBefore: excludeSeenBefore ? 'true' : 'false',
+        }}
+        height={405}
+      />
+      <CompanyRankTable
+        key={'stars' + repoIds + period + (excludeSeenBefore ? 'new' : 'all')}
+        id={orgId}
+        type='stars'
+        role='stars'
+        className={`h-[405px]`}
+        excludeSeenBefore={excludeSeenBefore}
+        handleExcludeSeenBefore={handleChangeExcludeSeenBefore}
+      />
+    </MainSideGridTemplate>
   );
 }

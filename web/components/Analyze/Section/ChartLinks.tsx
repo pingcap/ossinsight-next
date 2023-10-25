@@ -41,7 +41,10 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
               className: 'w-3 h-3',
             }}
             contentProps={{
-              className: 'text-[12px] leading-[16px] max-w-[400px]',
+              className: 'text-[12px] leading-[16px] max-w-[400px] bg-[var(--background-color-tooltip)] text-[var(--text-color-tooltip)]',
+            }}
+            arrowProps={{
+              className: 'fill-[var(--background-color-tooltip)]',
             }}
           >
             See Details
@@ -60,7 +63,10 @@ export function ChartLinks ({ name, innerSectionId, searchParamsStr }: ChartLink
               className: 'w-3 h-3',
             }}
             contentProps={{
-              className: 'text-[12px] leading-[16px] max-w-[400px]',
+              className: 'text-[12px] leading-[16px] max-w-[400px] bg-[var(--background-color-tooltip)] text-[var(--text-color-tooltip)]',
+            }}
+            arrowProps={{
+              className: 'fill-[var(--background-color-tooltip)]',
             }}
           >
             Embed to README.md

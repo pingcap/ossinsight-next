@@ -10,7 +10,8 @@
       "ownerId": "owner_id",
       "period": "period",
       "role": "role",
-      "repoIds": "repo_ids"
+      "repoIds": "repo_ids",
+      "excludeSeenBefore": "excludeSeenBefore"
     },
     "when": ["owner_id", "activity", "period", "role"]
   }
