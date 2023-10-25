@@ -95,6 +95,7 @@ function OrgActivityCompany(props: { orgId?: number }) {
         searchParams={{
           activity: 'stars',
           role: 'stars',
+          excludeSeenBefore: excludeSeenBefore ? 'true' : 'false',
         }}
         height={405}
       />
