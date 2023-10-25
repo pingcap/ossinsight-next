@@ -62,7 +62,7 @@ export type WidgetComposeItem = {
   height: number
 }
 
-export type ComposeVisualizationConfig = WidgetComposeItem[]
+export type ComposeVisualizationConfig = WidgetComposeItem[];
 
 export type CanvasVisualizationConfig = (canvas: HTMLCanvasElement) => (() => void) | void;
 

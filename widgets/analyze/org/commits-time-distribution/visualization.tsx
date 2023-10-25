@@ -1,3 +1,4 @@
+import React from 'react';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { scaleToFit } from '@ossinsight/widgets-utils/src/utils';
 import { autoSize } from '@ossinsight/widgets-utils/src/compose/size';

@@ -1,5 +1,8 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+/** @jsxRuntime classic */
+/** @jsx Compose */
+
+import Compose, { Card } from '@ossinsight/compose';
+import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -14,37 +17,30 @@ type DataPoint = {
   repo_name: string
 }
 
-export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params>): ComposeVisualizationConfig {
+export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params>): Compose.JSX.Element {
   const end = DateTime.now().startOf('day');
   const start = end.minus({ day: 27 }).startOf('day');
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
-
-  const WIDTH = ctx.width;
-  const HEIGHT = ctx.height;
-  const SPACING = autoSize(ctx, 16);
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
 
   const maxRepos = 5;
 
   const data = computeData(input, maxRepos);
 
-  return computeLayout(
-    vertical(
-      widget('builtin:card-heading', undefined, { title: 'Last 28 Days Stats', subtitle: `Date: ${subtitle}` })
-        .fix(HEADER_HEIGHT),
-      nonEmptyDataWidget(data, () => widget('@ossinsight/basic-bubbles-chart', data, {
-        start,
-        end,
-        axis_field: 'event_period',
-        value_field: 'cnt',
-        label_field: 'repo_name',
-      })),
-    ).padding([0, PADDING, PADDING / 2, PADDING]).gap(SPACING),
-    0,
-    0,
-    WIDTH,
-    HEIGHT,
+  return (
+    <Card title="Last 28 Days Stats" subtitle={`Date: ${subtitle}`}>
+      <widget
+        widget="@ossinsight/basic-bubbles-chart"
+        data={data}
+        ifEmpty="indicator"
+        parameters={{
+          start,
+          end,
+          axis_field: 'event_period',
+          value_field: 'cnt',
+          label_field: 'repo_name',
+        }}
+      />
+    </Card>
   );
 }
 

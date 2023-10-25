@@ -1,5 +1,8 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, grid, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+/** @jsxRuntime classic */
+/** @jsx Compose */
+
+import Compose, { Card } from '@ossinsight/compose';
+import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -44,7 +47,7 @@ const calcGridCfg = (limit: number) => {
 export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>,
-): ComposeVisualizationConfig {
+): Compose.JSX.Element {
   const today = new Date();
   const prior30 = new Date(new Date().setDate(today.getDate() - 30));
   const end = DateTime.fromISO(today.toISOString());
@@ -54,35 +57,14 @@ export default function (
   const limit = ctx.parameters.limit || '30';
   const { rows, cols, size } = calcGridCfg(Number(limit));
 
-  const WIDTH = ctx.width;
-  const HEIGHT = ctx.height;
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
-
-  return computeLayout(
-    vertical(
-      widget('builtin:card-heading', undefined, {
-        title: 'Contributors',
-        subtitle: ' ',
-      }).fix(HEADER_HEIGHT),
-      nonEmptyDataWidget(contributors, () => grid(
-        rows,
-        cols,
-        ...contributors.map((item) =>
-          widget('builtin:avatar-label', undefined, {
-            label: '',
-            size: size,
-            imgSrc: item.actor_login
-              ? `https://github.com/${item.actor_login}.png`
-              : '',
-          }),
-        ),
-      ).gap(autoSize(ctx, 4))),
-    ).padding([0, PADDING, PADDING / 2, PADDING]),
-    0,
-    0,
-    WIDTH,
-    HEIGHT,
+  return (
+    <Card title="Contributors" subtitle=" ">
+      <grid rows={rows} cols={cols} gap={4} data={contributors} ifEmpty="indicator">
+        {...contributors.map(item => (
+          <builtin-avatar-label label="" imgSize={size} imgSrc={item.actor_login ? `https://github.com/${item.actor_login}.png` : ''} />
+        ))}
+      </grid>
+    </Card>
   );
 }
 

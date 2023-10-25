@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Show all the contributors of the repo.",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Repository",

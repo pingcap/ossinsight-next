@@ -12,7 +12,7 @@ export async function renderAvatarLabel (
     label = '',
     box: { dpr, left, top, width },
     imgSrc,
-    size = 20,
+    imgSize = 20,
   } = props;
 
   const { Label, Avatar } = getTheme(props.colorScheme);
@@ -46,22 +46,22 @@ export async function renderAvatarLabel (
     });
     let circlePath = new Path2D();
     circlePath.arc(
-      left + (size / 2) * dpr,
-      top + (size / 2 + 2) * dpr,
-      (size / 2) * dpr,
+      left + (imgSize / 2) * dpr,
+      top + (imgSize / 2 + 2) * dpr,
+      (imgSize / 2) * dpr,
       0,
       2 * Math.PI,
     );
     ctx.clip(circlePath);
-    ctx.drawImage(avatar, left, top + 2 * dpr, size * dpr, size * dpr);
+    ctx.drawImage(avatar, left, top + 2 * dpr, imgSize * dpr, imgSize * dpr);
   } catch {
     ctx.fillStyle = Avatar.fallbackColor;
     ctx.lineWidth = dpr;
     ctx.beginPath();
     ctx.arc(
-      left + (size / 2) * dpr,
-      top + (size / 2 + 2) * dpr,
-      (size / 2) * dpr,
+      left + (imgSize / 2) * dpr,
+      top + (imgSize / 2 + 2) * dpr,
+      (imgSize / 2) * dpr,
       0,
       2 * Math.PI,
     );

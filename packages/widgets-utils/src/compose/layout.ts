@@ -67,6 +67,9 @@ export interface WidgetLayout extends BaseLayout {
 
 export type Layout = VerticalLayout | HorizontalLayout | GridLayout | WidgetLayout;
 
+/**
+ * @deprecated Use @ossinsight/compose
+ */
 export class LayoutBuilder<L extends BaseLayout> {
   layout: L;
 
@@ -98,6 +101,9 @@ export class LayoutBuilder<L extends BaseLayout> {
 
 }
 
+/**
+ * @deprecated Use @ossinsight/compose
+ */
 export function vertical (...children: Array<Layout | LayoutBuilder<any>>): LayoutBuilder<VerticalLayout> {
   return new LayoutBuilder({
     layout: 'flex',
@@ -110,6 +116,9 @@ export function vertical (...children: Array<Layout | LayoutBuilder<any>>): Layo
   });
 }
 
+/**
+ * @deprecated Use @ossinsight/compose
+ */
 export function horizontal (...children: Array<Layout | LayoutBuilder<any>>): LayoutBuilder<HorizontalLayout> {
   return new LayoutBuilder({
     layout: 'flex',
@@ -122,6 +131,9 @@ export function horizontal (...children: Array<Layout | LayoutBuilder<any>>): La
   });
 }
 
+/**
+ * @deprecated Use @ossinsight/compose
+ */
 export function grid (rows: number, cols: number, ...children: Array<Layout | LayoutBuilder<any>>): LayoutBuilder<GridLayout> {
   return new LayoutBuilder({
     layout: 'grid',
@@ -135,6 +147,9 @@ export function grid (rows: number, cols: number, ...children: Array<Layout | La
   });
 }
 
+/**
+ * @deprecated Use @ossinsight/compose
+ */
 export function widget (name: string, data: any, parameters: Record<string, any>) {
   return new LayoutBuilder({
     layout: 'widget',
@@ -149,6 +164,9 @@ export function widget (name: string, data: any, parameters: Record<string, any>
   });
 }
 
+/**
+ * @deprecated Use @ossinsight/compose
+ */
 export function nonEmptyDataWidget (data: any, builder: () => LayoutBuilder<any> | Layout) {
   if (isEmptyData(data)) {
     return widget('builtin:empty', undefined, {});

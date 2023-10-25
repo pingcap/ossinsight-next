@@ -6,7 +6,7 @@ export function AvatarLabel({
   style,
   label = '',
   imgSrc = '',
-  size = 20,
+  imgSize = 20,
   colorScheme,
   href = '',
 }: BuiltinProps<'builtin:avatar-label'>) {
@@ -25,8 +25,8 @@ export function AvatarLabel({
             `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
           )}
           style={{
-            height: `${size}px`,
-            width: `${size}px`,
+            height: `${imgSize}px`,
+            width: `${imgSize}px`,
           }}
         >
           {imgSrc && (
