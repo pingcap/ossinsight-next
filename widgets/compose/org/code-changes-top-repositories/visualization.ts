@@ -98,7 +98,8 @@ export default function (
                   imgSrc: `https://github.com/${
                     item.repo_name.split('/')[0]
                   }.png`,
-                  size: 24,
+                  imgSize: 24,
+                  href: `https://ossinsight.io/analyze/${item.repo_name}`,
                 }).flex(0.3),
                 widget('builtin:label', undefined, {
                   label: item.changes,

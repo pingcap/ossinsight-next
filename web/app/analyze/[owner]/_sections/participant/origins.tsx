@@ -7,6 +7,7 @@ import { AnalyzeOwnerContext } from '@/components/Context/Analyze/AnalyzeOwner';
 import { useSimpleSelect } from '@ossinsight/ui/src/components/Selector/Select';
 import { upperFirst } from '@ossinsight/widgets-utils/src/utils';
 import * as React from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function OriginsContent () {
   const { id: orgId } = React.useContext(AnalyzeOwnerContext);
@@ -42,7 +43,7 @@ function RoleInput ({
     'commit_authors',
   ].map((r) => ({
     key: r,
-    title: upperFirst(r.split('_').join(' ')),
+    title: r.startsWith('pr_') ? `Pull Request ${upperFirst(r.replace('pr_', '').split('_').join(' '))}` : upperFirst(r.split('_').join(' ')),
   }));
 
   const { select: roleSelect, value: role } = useSimpleSelect(
@@ -62,9 +63,17 @@ function OrgActivityCompany (props: { orgId?: number }) {
   const { orgId } = props;
 
   const [role, setRole] = React.useState<string>('pr_creators');
+  const [excludeSeenBefore, setExcludeSeenBefore] = React.useState<boolean>(false);
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString();
+  const period = params.get('period')?.toString();
 
   const handleChangeRole = React.useCallback((newValue?: string) => {
     newValue && setRole(newValue);
+  }, []);
+  const handleChangeExcludeSeenBefore = React.useCallback((newValue?: boolean) => {
+    setExcludeSeenBefore(!!newValue)
   }, []);
 
   return (
@@ -75,6 +84,7 @@ function OrgActivityCompany (props: { orgId?: number }) {
         searchParams={{
           activity: 'participants',
           role,
+          excludeSeenBefore: excludeSeenBefore ? 'true' : 'false',
         }}
         height={405}
       >
@@ -87,10 +97,13 @@ function OrgActivityCompany (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <CompanyRankTable
+        key={role + repoIds + period + (excludeSeenBefore ? 'new' : 'all')}
         id={orgId}
         type="participants"
-        className={`h-[405px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`h-[405px]`}
         role={role}
+        excludeSeenBefore={excludeSeenBefore}
+        handleExcludeSeenBefore={handleChangeExcludeSeenBefore}
       />
     </MainSideGridTemplate>
   );
@@ -100,6 +113,10 @@ function OrgActivityMap (props: { orgId?: number }) {
   const { orgId } = props;
 
   const [role, setRole] = React.useState<string>('pr_creators');
+
+  const params = useSearchParams();
+  const repoIds = params.get('repoIds')?.toString();
+  const period = params.get('period')?.toString();
 
   const handleChangeRole = React.useCallback((newValue?: string) => {
     newValue && setRole(newValue);
@@ -125,10 +142,11 @@ function OrgActivityMap (props: { orgId?: number }) {
         </div>
       </ChartTemplate>
       <GeoRankTable
+        key={role + repoIds + period}
         id={orgId}
         type="participants"
         role={role}
-        className={`h-[365px] overflow-x-hidden overflow-auto styled-scrollbar`}
+        className={`h-[365px]`}
       />
     </MainSideGridTemplate>
   );

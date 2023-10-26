@@ -41,8 +41,10 @@
     "@ossinsight/widgets-next": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/luxon": "^3.3.2",
     "@types/mdx": "^2.0.7",
     "bootstrap-icons": "^1.11.1",
+    "luxon": "^3.4.3",
     "sass": "^1.68.0",
     "tailwind-merge": "^1.14.0"
   }

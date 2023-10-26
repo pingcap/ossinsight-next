@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Analyze a developer's recent focus by identifying actively engaged repositories in the last 28 days.",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Developer"

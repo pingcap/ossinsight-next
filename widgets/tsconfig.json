@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "module": "ESNext",
-    "jsx": "react-jsx"
+    "jsx": "react"
   },
   "include": ["**/*/visualization.ts", "**/*/metadata.ts", "**/*/visualization.tsx"]
 }

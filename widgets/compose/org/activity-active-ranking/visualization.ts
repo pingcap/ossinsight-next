@@ -88,6 +88,16 @@ const getLabel = (item: DataPoint) => {
   return (item as ActivityDataPoint).repo_name.split('/').pop();
 };
 
+const getHref = (item: DataPoint, activity?: string) => {
+  if (activity === 'participants') {
+    return `https://ossinsight.io/analyze/${(item as ParticipantDataPoint).login}`;
+  }
+  if (activity === 'repos') {
+    return `https://ossinsight.io/analyze/${(item as ActivityDataPoint).repo_name}`;
+  }
+  return undefined;
+}
+
 const handleTotal = (total: TotalDataPoint[] | undefined) => {
   if (!total) {
     return null;
@@ -106,11 +116,21 @@ const handleTotal = (total: TotalDataPoint[] | undefined) => {
   };
 };
 
+const getToolTipContent = (activity: string) => {
+  switch (activity) {
+    case 'repos':
+      return 'Total count of all repository activity events, including open/merge/close pull requests, and open/close issues, etc.';
+    case 'participants':
+    default:
+      return '';
+  }
+};
+
 export default function (
   [inputData, totalData]: Input,
   ctx: WidgetVisualizerContext<Params>
 ): ComposeVisualizationConfig {
-  const { activity = 'activities' } = ctx.parameters;
+  const { activity = 'repos' } = ctx.parameters;
 
   // const total = handleTotal(totalData);
 
@@ -147,6 +167,7 @@ export default function (
             // color: ctx.theme.colors.green['400'],
             marginLeft: 'auto',
           },
+          tooltip: getToolTipContent(activity),
         },
         column: false,
       }).flex(0.1),
@@ -160,6 +181,7 @@ export default function (
                 size: 24,
                 value: item?.activities || item?.engagements,
                 maxVal,
+                href: getHref(item, activity),
               })
             )
           ).flex(0.9)

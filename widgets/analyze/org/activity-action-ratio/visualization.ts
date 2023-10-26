@@ -16,7 +16,16 @@ type PRMergedDataPoint = {
   past_period_percentage: number;
   past_period_prs: number;
   percentage_change: number;
-  type: 'others-merged' | 'un-merged' | 'self-merged';
+  type: 'merged' | 'open' | 'closed';
+};
+
+type PRSelfMergedDataPoint = {
+  current_period_percentage: number;
+  current_period_prs: number;
+  past_period_percentage: number;
+  past_period_prs: number;
+  percentage_change: number;
+  type: 'self-merged' | 'others';
 };
 
 type IssueClosedDataPoint = {
@@ -28,6 +37,10 @@ type IssueClosedDataPoint = {
   type: 'un-closed' | 'self-closed' | 'others-closed';
 };
 
+type TransformedIssueClosedDataPoint = Omit<IssueClosedDataPoint, 'type'> & {
+  type: 'open' | 'self-closed' | 'others-closed';
+}
+
 type ReviewedDataPoint = {
   type: 'reviewed' | 'un-reviewed';
   current_period_prs: number;
@@ -37,14 +50,25 @@ type ReviewedDataPoint = {
   percentage_change: number;
 };
 
-type DataPoint = PRMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
+type DataPoint = PRMergedDataPoint | PRSelfMergedDataPoint | IssueClosedDataPoint | ReviewedDataPoint;
 
 type Input = [DataPoint[], undefined];
+
+const transformIssueClosedData = (
+  data: IssueClosedDataPoint[]
+): TransformedIssueClosedDataPoint[] => {
+  return data.map((item) => {
+    return {
+      ...item,
+      type: item.type === 'un-closed' ? 'open' : item.type,
+    };
+  });
+};
 
 const handleData = (items: DataPoint[], activity: string) => {
   switch (activity) {
     case 'issues/closed':
-      return items.map((item, idx) => {
+      return transformIssueClosedData(items as IssueClosedDataPoint[]).map((item, idx) => {
         const issueClosedData = item as IssueClosedDataPoint;
         return {
           name: issueClosedData.type,
@@ -62,6 +86,16 @@ const handleData = (items: DataPoint[], activity: string) => {
         };
       });
     case 'pull-requests/merged':
+      return items.map((item, idx) => {
+        const prMergedData = item as PRMergedDataPoint;
+        return {
+          name: prMergedData.type,
+          value: prMergedData.current_period_prs,
+          itemStyle: {
+            color: prStyleRecord[prMergedData.type],
+          },
+        };
+      });
     default:
       return items.map((item, idx) => {
         const prMergedData = item as PRMergedDataPoint;
@@ -77,7 +111,7 @@ const handleData = (items: DataPoint[], activity: string) => {
 const calcSumFromData = (data: DataPoint[], activity: string) => {
   switch (activity) {
     case 'issues/closed':
-      return (data as IssueClosedDataPoint[]).reduce(
+      return transformIssueClosedData(data as IssueClosedDataPoint[]).reduce(
         (acc, cur) => {
           acc[0] += cur.current_period_issues;
           acc[1] += cur.past_period_issues;
@@ -129,14 +163,18 @@ export default function (
       },
       formatter: (params) => {
         const { name, value } = params;
-        if (activity === 'pull-requests/merged' && name === 'self-merged') {
+        if (activity === 'pull-requests/self-merged' && name === 'self-merged') {
           return `<b>${name}</b>
             <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>
             <br />
-            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and merged by the original PR author</div>
+            <div style="color:grey;font-size: smaller;white-space: break-spaces;line-height:1;">* PR merged without reviews and those merged by the original PR author.</div>
           `;
         }
         if (activity === 'pull-requests/merged') {
+          return `<b>${name}</b>
+            <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
+        }
+        if (activity === 'pull-requests/self-merged') {
           return `<b>${name}</b>
             <div>${value} PRs(${((value / sum[0]) * 100).toFixed(0)}%)</div>`;
         }
@@ -202,5 +240,11 @@ const styleMap = [
     },
   },
 ];
+
+const prStyleRecord = {
+  merged: '#5D5BCC',
+  open: '#2EC734',
+  closed: '#E96373',
+}
 
 export const type = 'echarts';

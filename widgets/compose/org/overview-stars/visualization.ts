@@ -59,7 +59,7 @@ export default function (
   return computeLayout(
     vertical(
       widget('builtin:card-heading', undefined, {
-        title: 'Star earned',
+        title: 'Star Earned',
         subtitle: ' ',
       }).fix(HEADER_HEIGHT),
       horizontal(
@@ -91,7 +91,7 @@ export default function (
         widget(
           '@ossinsight/widget-analyze-repo-recent-stars',
           [stars],
-          ctx.parameters
+          { ...ctx.parameters, options: { unit: 'Star(s)' } }
         ).flex(0.3)
       )
     )

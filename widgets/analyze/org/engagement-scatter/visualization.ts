@@ -40,6 +40,23 @@ const calcMinMax = (data: DataPoint[]) => {
   return [repoMin, repoMax, engagementsMin, engagementsMax];
 };
 
+const getMostEnaged = (data: DataPoint[]) => {
+  const limit = 5;
+  const getMostEnagedwithLimit = (data: DataPoint[], limit: number) => {
+    const sorted = data.sort((a, b) => b.engagements - a.engagements);
+    return sorted.slice(0, limit);
+  };
+  const getMostRepoedwithLimit = (data: DataPoint[], limit: number) => {
+    const sorted = data.sort((a, b) => b.repos - a.repos);
+    return sorted.slice(0, limit);
+  };
+  const mostEnaged = getMostEnagedwithLimit(data, limit);
+  const mostRepoed = getMostRepoedwithLimit(data, limit);
+  const mergedUnique = [...new Set([...mostEnaged, ...mostRepoed])];
+
+  return mergedUnique;
+};
+
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -50,13 +67,16 @@ export default function (
 
   const [data] = input;
 
-  const [repoMin, repoMax, engagementsMin, engagementsMax] = calcMinMax(data);
+  const filteredData = getMostEnaged(data);
+
+  const [repoMin, repoMax, engagementsMin, engagementsMax] =
+    calcMinMax(filteredData);
 
   return {
     dataset: [
       {
         id: 'main',
-        source: hideData ? [] : data,
+        source: hideData ? [] : filteredData,
       },
     ],
     xAxis: {
@@ -87,20 +107,45 @@ export default function (
         color: '#4E9FFF',
       },
       id: 'main',
-      // symbol: (value, params) => {
-      //   return `image://https://github.com/${
-      //     value?.participant_logins?.split(',')[0]
-      //   }.png`;
-      // },
+      symbol: (value, params) => {
+        return `image://https://github.com/${
+          value?.participant_logins?.split(',')[0]
+        }.png`;
+      },
+      label: {
+        show: true,
+        position: 'top',
+        formatter: (params) => {
+          const labelData = params?.data as any;
+          const firstLogin = labelData?.participant_logins?.split(',')[0];
+          return `{a|${firstLogin}} ${
+            labelData?.participant_logins?.split(',')?.length > 1
+              ? `{x|+${labelData?.participant_logins?.split(',')?.length - 1}}`
+              : ''
+          }`;
+        },
+        rich: {
+          a: {
+            lineHeight: 10,
+          },
+          x: {
+            backgroundColor: '#AAAAAA',
+            color: '#000',
+            padding: 2,
+            fontSize: 8,
+            borderRadius: 4,
+          },
+        },
+      },
     },
     tooltip: {
       show: true,
       formatter: (params) => {
         const { data } = params;
-        return `<p>Involved in: <b>${data?.repos} repos</b></p>
-        <p>Contribution count: <b>${data?.engagements}</b></p>
-        <p><hr style="margin-bottom: .5rem;" /></p>
-        ${generateHtmlFromLogins(data?.participant_logins)}`;
+        return `<div class="text-white">${generateHtmlFromLogins(data?.participant_logins)}
+        <p><hr style="margin-bottom:.5rem;margin-top:.5rem"/></p>
+        <p>Involved in: <b>${data?.repos} repos</b></p>
+        <p>Contribution count: <b>${data?.engagements}</b></p></div>`;
       },
     },
     legend: {
@@ -116,11 +161,29 @@ function generateHtmlFromLogins(loginStr: string, max = 4) {
     .slice(0, max)
     .map(
       (login) =>
-        `<img alt="${login}" src="https://github.com/${login}.png" style="width:1rem;height:1rem;" />`
+        `<li style="display:inline-flex;gap:4px;"><img alt="${login}" src="https://github.com/${login}.png" style="width:1rem;height:1rem;" /><span>${login}</span></li>`
     )
     .join('');
-  const moreHtml = logins.length > max ? `+${logins.length - max}` : '';
-  return `<p style="display:inline-flex; gap:0.25rem;">${innerHtml}${moreHtml}</p>`;
+  // const moreHtml = logins.length > max ? `<p>+${logins.length - max}</p>` : '';
+  const moreHtml = '<p style="color:#7c7c7c;">more...</p>';
+  return (
+    `<ul style="display:flex;gap:0.25rem;flex-direction:column;">${innerHtml}</ul>` +
+    (logins.length > max ? moreHtml : '')
+  );
 }
+
+export const eventHandlers = [
+  {
+    type: 'click',
+    option: 'series.scatter',
+    handler: (params) => {
+      const participantLogins = params?.value?.participant_logins;
+      if (participantLogins) {
+        const firstLogin = participantLogins.split(',')[0];
+        window?.open(`https://ossinsight.io/analyze/${firstLogin}`);
+      }
+    },
+  },
+];
 
 export const type = 'echarts';

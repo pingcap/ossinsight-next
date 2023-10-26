@@ -63,7 +63,15 @@ function EChartsComponent ({ className, style, data, visualizer, parameters, lin
       ...createVisualizationContext({ width, height, dpr: devicePixelRatio, colorScheme }),
       ...createWidgetContext('client', parameters, linkedData),
     });
+    const eventHandlers = visualizer?.eventHandlers || [];
     echartsRef.current!.setOption(option);
+    eventHandlers.forEach((eventHandler) => {
+      echartsRef.current!.on(
+        eventHandler.type,
+        eventHandler.query,
+        eventHandler.handler
+      );
+    });
   }, [data, visualizer, parameters, colorScheme, isAvailableSize(size)]);
 
   return (

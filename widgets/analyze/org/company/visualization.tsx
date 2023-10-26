@@ -1,3 +1,4 @@
+import React from 'react';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 
 import cloud from 'd3-cloud';
@@ -30,7 +31,7 @@ function transformCompanyData (
     return [];
   }
   return data.flatMap((item, index) => ({
-    text: item.organization_name,
+    text: esc(item.organization_name),
     size: item[valueIndex],
     color: undefined,
   }));
@@ -72,6 +73,10 @@ export default async function (
   const max = Math.max(...data.map(d => d.size));
 
   data.forEach(word => {
+    if (max === min) {
+      word.size = (minFontSize + maxFontSize) / 4;
+      return word;
+    }
     word.size = (word.size - min) * (maxFontSize - minFontSize) / (max - min) + minFontSize;
     return word;
   });
@@ -84,7 +89,7 @@ export default async function (
       .words(data)
       .padding(2)
       .rotate(0)
-      .font('sans-aria')
+      .font('Heiti TC')
       .fontSize(function (d) { return d.size; })
       .random(() => 0.5)
       .on('end', (word) => resolve(word));
@@ -105,7 +110,7 @@ export default async function (
             key={i}
             fill={'#dd6b66'}
             fontSize={`${word.size}px`}
-            fontFamily="sans-aria"
+            fontFamily="Heiti TC"
             textAnchor="middle"
             transform={`translate(${[word.x, word.y]})rotate(${word.rotate})`}
           >
@@ -115,6 +120,25 @@ export default async function (
       </g>
     </svg>
   );
+}
+
+const visible = [0x09, 0x20]
+
+function esc (text: string): string {
+  let res = '';
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code <= 32 || code === 255) {
+      if (visible.includes(code)) {
+        res += text.charAt(i)
+      }
+    } else {
+      res += text.charAt(i);
+    }
+  }
+
+  res += '';
+  return res;
 }
 
 export const type = 'react-svg';

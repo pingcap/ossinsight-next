@@ -39,6 +39,13 @@ type DataPoint = ParticipantDataPoint | ActivityDataPoint;
 
 type Input = [DataPoint[], TotalDataPoint[]];
 
+const getHref = (item: DataPoint, activity?: string) => {
+  if (activity === 'participants') {
+    return `https://ossinsight.io/analyze/${(item as ParticipantDataPoint).login}`;
+  }
+  return undefined;
+}
+
 const handleInputData = (data: DataPoint[], activity: string) => {
   switch (activity) {
     case 'repos':
@@ -144,6 +151,7 @@ export default function (
                 size: 24,
                 value: item?.activities || item?.engagements,
                 maxVal,
+                href: getHref(item, activity),
               })
             )
           ).flex(0.9)

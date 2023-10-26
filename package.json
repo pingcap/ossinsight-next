@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "pnpm run build:toolchain",
     "dev": "pnpm run --filter @ossinsight/web dev",
-    "build:toolchain": "pnpm run --sequential --filter @ossinsight/cli --filter @ossinsight/data-api --filter @ossinsight/eslint-plugin --filter @ossinsight/widgets-next build",
+    "build:toolchain": "pnpm run --sequential --filter @ossinsight/cli --filter @ossinsight/data-api --filter @ossinsight/eslint-plugin --filter @ossinsight/compose --filter @ossinsight/widgets-next build",
     "lint": "pnpm run -r lint"
   },
   "keywords": [],

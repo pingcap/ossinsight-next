@@ -37,7 +37,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       return [
         data.slice(0, 5).map((d) => ({
           ...d,
-          x: d.repo_name.split('/')[1],
+          x: d.repo_name,
         })),
         [
           {
@@ -72,7 +72,7 @@ const handleInputData = (data: DataPoint[], activity: string) => {
       return [
         data.slice(0, 5).map((d) => ({
           ...d,
-          x: d.repo_name.split('/')[1],
+          x: d.repo_name,
         })),
         [
           {
@@ -138,6 +138,12 @@ export default function (
         show: false,
         alignWithLabel: true,
       },
+      axisLabel: {
+        formatter: (value: string) => {
+          return value.split('/')[1];
+        },
+      },
+      triggerEvent: true,
     },
     yAxis: [
       {
@@ -164,6 +170,19 @@ export default function (
     series: series as any,
   };
 }
+
+export const eventHandlers = [
+  {
+    type: 'click',
+    option: 'xAxis.category',
+    handler: (params) => {
+      console.log(params)
+      if (params?.value) {
+        window.open(`https://ossinsight.io/analyze/${params.value}`);
+      }
+    },
+  },
+];
 
 export const type = 'echarts';
 

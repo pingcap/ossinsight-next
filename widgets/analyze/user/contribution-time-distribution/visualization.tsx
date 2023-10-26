@@ -1,7 +1,7 @@
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { autoSize } from '@ossinsight/widgets-utils/src/compose/size';
 import { scaleToFit } from '@ossinsight/widgets-utils/src/utils';
-import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
+import React, { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
 
 type Params = {
   user_id: number

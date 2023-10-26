@@ -17,5 +17,10 @@
     "title": "Zone",
     "required": true,
     "default": 0
+  },
+  "repo_ids": {
+    "type": "repo-ids",
+    "title": "Repo",
+    "array": true
   }
 }

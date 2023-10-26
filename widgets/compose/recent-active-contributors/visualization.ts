@@ -71,7 +71,7 @@ export default function (
         ...contributors.map((item) =>
           widget('builtin:avatar-label', undefined, {
             label: '',
-            size: size,
+            imgSize: size,
             imgSrc: item.actor_login
               ? `https://github.com/${item.actor_login}.png`
               : '',

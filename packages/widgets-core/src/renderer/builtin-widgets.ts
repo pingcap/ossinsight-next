@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 
 export interface BuiltinWidgetsMap {
-  'builtin:avatar-label': { label?: string; imgSrc: string; size?: number, href?: string };
+  'builtin:avatar-label': { label?: string; imgSrc: string; imgSize?: number, href?: string };
   'builtin:card-heading': { title: string; subtitle?: string };
   'builtin:label-value': {
     label: string | number;
@@ -13,6 +13,7 @@ export interface BuiltinWidgetsMap {
     valueProps?: {
       style?: CSSProperties;
       className?: string;
+      tooltip?: string;
     };
     column?: boolean;
     tooltip?: string;
@@ -29,6 +30,7 @@ export interface BuiltinWidgetsMap {
     color?: string;
     valueFormatter?: (value: any) => string;
     labelColor?: string[];
+    href?: string;
   };
 }
 

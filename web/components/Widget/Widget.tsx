@@ -18,6 +18,8 @@ import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 import { CSSProperties, use } from 'react';
 import clsx from 'clsx';
 import WidgetVisualization from '../../../packages/widgets-core/src/renderer/react';
+import type { ShareOptions } from '@ossinsight/ui/src/components/ShareBlock';
+import { XButton } from '@ossinsight/ui/src/components/ShareBlock/TwitterButton';
 
 export interface WidgetProps {
   className?: string;
@@ -29,6 +31,7 @@ export interface WidgetProps {
   showShadow?: boolean;
   showThemeSwitch?: boolean;
   dense?: boolean;
+  shareInfo?: ShareOptions;
 }
 
 export default function Widget({
@@ -41,6 +44,7 @@ export default function Widget({
   showShadow = true,
   showThemeSwitch = true,
   dense = false,
+  shareInfo,
 }: WidgetProps) {
   let visualizer = use(widgetVisualizer(name));
   const generateMetadata = use(widgetMetadataGenerator(name));
@@ -65,50 +69,85 @@ export default function Widget({
   }
 
   return (
-    <div
-      className={clsx('relative w-full h-full overflow-auto', {
-        ['flex items-center justify-center']: !dynamicHeight,
-        'bg-white': colorScheme === 'light',
-        'bg-body': colorScheme !== 'light',
-        'p-4': !dense,
-      })}
-    >
-      <div
-        className={clsx('rounded-xl max-w-full overflow-hidden', {
-          ['shadow-2xl']: showShadow,
-        })}
-        style={{
-          width,
-          aspectRatio: `${width} / ${height}`,
-          margin: !!dynamicHeight ? '0 auto' : undefined,
-        }}
-      >
-        <WidgetVisualization
-          className={
-            dynamicHeight ? `Widget-dynamicHeight ${className}` : className
-          }
-          dynamicHeight={dynamicHeight}
-          style={{
-            ...style,
-            aspectRatio: `${width} / ${height}`,
-          }}
-          type={visualizer.type}
-          visualizer={visualizer}
-          data={data}
-          parameters={params}
-          linkedData={linkedData}
-          colorScheme={colorScheme}
-        />
+    <>
+      <div className='p-4 flex gap-4'>
+        {showThemeSwitch && (
+          <div>
+            <ColorSchemeSelector
+              value={colorScheme}
+              onValueChange={setColorScheme}
+            />
+          </div>
+        )}
+        <Divider mode='vertical' />
+        {shareInfo && (
+          <XButton
+            text={shareInfo.title}
+            tags={shareInfo.keywords}
+            url={shareInfo.url}
+            size={12}
+            label='Twitter'
+          />
+        )}
       </div>
-      {showThemeSwitch && (
-        <div className='absolute right-4 top-8'>
-          <ColorSchemeSelector
-            value={colorScheme}
-            onValueChange={setColorScheme}
+      <div
+        className={clsx('relative w-full h-[calc(100%-62px)]', {
+          ['flex items-center justify-center']: !dynamicHeight,
+          'bg-white': colorScheme === 'light',
+          'bg-body': colorScheme !== 'light',
+          'p-4': !dense,
+        })}
+      >
+        <div
+          className={clsx('rounded-xl max-w-full overflow-hidden', {
+            ['shadow-2xl']: showShadow,
+          })}
+          style={{
+            width,
+            aspectRatio: `${width} / ${height}`,
+            margin: !!dynamicHeight ? '0 auto' : undefined,
+          }}
+        >
+          <WidgetVisualization
+            className={
+              dynamicHeight ? `Widget-dynamicHeight ${className}` : className
+            }
+            dynamicHeight={dynamicHeight}
+            style={{
+              ...style,
+              aspectRatio: `${width} / ${height}`,
+            }}
+            type={visualizer.type}
+            visualizer={visualizer}
+            data={data}
+            parameters={params}
+            linkedData={linkedData}
+            colorScheme={colorScheme}
           />
         </div>
+        {/* {showThemeSwitch && (
+          <div className='absolute right-4 top-4 lg:right-40 lg:top-8'>
+            <ColorSchemeSelector
+              value={colorScheme}
+              onValueChange={setColorScheme}
+            />
+          </div>
+        )} */}
+      </div>
+    </>
+  );
+}
+
+function Divider(props: { mode?: 'horizontal' | 'vertical' }) {
+  const { mode = 'horizontal' } = props;
+  return (
+    <div
+      className={clsx(
+        'border-neutral-100',
+        mode === 'horizontal' ? 'border-t' : 'border-l',
+        'opacity-50'
       )}
-    </div>
+    />
   );
 }
 
