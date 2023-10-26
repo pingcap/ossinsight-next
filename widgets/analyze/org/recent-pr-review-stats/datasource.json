@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/reviews/review-prs/trends",
+    "url": "/api/queries/orgs/reviews/review-prs/trends",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

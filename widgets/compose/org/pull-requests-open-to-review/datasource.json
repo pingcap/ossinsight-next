@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/reviews/open-to-first-review-duration/top-repos",
+    "url": "/api/queries/orgs/reviews/open-to-first-review-duration/top-repos",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
@@ -15,7 +15,7 @@
   },
   {
     "type": "api",
-    "url": "/queries/orgs/reviews/open-to-first-review-duration/medium",
+    "url": "/api/queries/orgs/reviews/open-to-first-review-duration/medium",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

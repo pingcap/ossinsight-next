@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/stars/top-repos",
+    "url": "/api/queries/orgs/stars/top-repos",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
@@ -15,7 +15,7 @@
   },
   {
     "type": "api",
-    "url": "/queries/orgs/stars/total",
+    "url": "/api/queries/orgs/stars/total",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

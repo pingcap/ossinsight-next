@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/{activity}/organizations",
+    "url": "/api/queries/orgs/{activity}/organizations",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

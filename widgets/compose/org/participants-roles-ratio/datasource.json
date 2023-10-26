@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/participants/roles",
+    "url": "/api/queries/orgs/participants/roles",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

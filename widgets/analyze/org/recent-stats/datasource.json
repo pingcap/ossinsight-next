@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/{activity}/trends",
+    "url": "/api/queries/orgs/{activity}/trends",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

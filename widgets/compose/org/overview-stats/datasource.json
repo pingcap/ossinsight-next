@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/{activity}/trends",
+    "url": "/api/queries/orgs/{activity}/trends",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
@@ -15,7 +15,7 @@
   },
   {
     "type": "api",
-    "url": "/queries/orgs/{activity}/total",
+    "url": "/api/queries/orgs/{activity}/total",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

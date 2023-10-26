@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/{activity}/top-repos",
+    "url": "/api/queries/orgs/{activity}/top-repos",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

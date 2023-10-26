@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "/queries/orgs/{activity}-ratio",
+    "url": "/api/queries/orgs/{activity}-ratio",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
