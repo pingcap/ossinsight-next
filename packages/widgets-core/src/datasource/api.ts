@@ -18,8 +18,11 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
   }
 
   const template = parseTemplate(config.url);
-  const url = new URL(template.expand(ctx.parameters));
-  setUrlParams(url, config.params ?? {}, ctx.parameters);
+  // support for relative url, e.g. /api/queries/...
+  const path = template.expand(ctx.parameters);
+  const urlSearchParams = new URLSearchParams();
+  setUrlParams(urlSearchParams, config.params ?? {}, ctx.parameters);
+  const url = `${path}?${urlSearchParams.toString()}`;
 
   const response = await fetch(url, { signal });
 
@@ -46,17 +49,17 @@ function allExists (required: string[] | undefined, params: Record<string, strin
   return true;
 }
 
-function setUrlParams(url: URL, urlParams: Record<string, string>, parameters: Record<string, string | string[]>) {
+function setUrlParams(urlSearchParams: URLSearchParams, urlParams: Record<string, string>, parameters: Record<string, string | string[]>) {
   for (let [name, paramName] of Object.entries(urlParams)) {
     if (paramName in parameters) {
       const value = parameters[paramName];
       if (Array.isArray(value)) {
         value.forEach((value) => {
-          url.searchParams.append(name, value);
+          urlSearchParams.append(name, value);
         });
         continue;
       }
-      value && url.searchParams.set(name, value);
+      value && urlSearchParams.set(name, value);
     }
   }
 }
