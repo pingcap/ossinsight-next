@@ -11,6 +11,8 @@ import {
 
 export type EndpointResult = Record<any, any>;
 
+const BIG_NUMBER_TYPES = ['BIGINT', 'DECIMAL'];
+
 export class DataService {
   private readonly tidb: Connection;
   private readonly templateEngine: Liquid;
@@ -42,7 +44,7 @@ export class DataService {
       types: result.types,
       data: result.rows.map((row: Record<string, any>) => {
         return Object.fromEntries(Object.entries(row).map(([key, value]) => {
-          if (result.types[key] === "DECIMAL") {
+          if (BIG_NUMBER_TYPES.includes(result.types[key])) {
             return [key, Number(value)];
           }
           return [key, value];
