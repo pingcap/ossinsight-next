@@ -4,7 +4,7 @@ import Loading from '@/components/Widget/loading';
 import { usePerformanceOptimizedNetworkRequest } from '@/utils/usePerformanceOptimizedNetworkRequest';
 import { fetchWidgetData } from '@/utils/widgets';
 import { Scale } from '@ossinsight/ui/src/components/transitions';
-import { CSSProperties, Suspense, useContext } from 'react';
+import { CSSProperties, Suspense, useContext, useMemo } from 'react';
 
 export function EmbeddedWidget ({
   className, style, name, params,

@@ -107,6 +107,7 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
             return undefined;
           }
           const el = createElement(render, {
+            key: i,
             dynamicHeight: undefined,
             className: undefined,
             style: props,

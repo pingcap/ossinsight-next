@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 type AsyncFunctionWithSignal<Args extends any[], Result> = (...args: [...Args, signal?: AbortSignal | undefined]) => Promise<Result>
 
+// MARK: Will not auto reload after args changed.
 export function usePerformanceOptimizedNetworkRequest<Args extends any[], Result> (
   fn: AsyncFunctionWithSignal<Args, Result>,
   ...args: Args
@@ -33,7 +34,7 @@ export function usePerformanceOptimizedNetworkRequest<Args extends any[], Result
     return () => {
       startedReloadAtRef.current = 0;
     };
-  }, [JSON.stringify(args)]);
+  }, []);
 
   useEffect(() => {
     if (shouldStartLoad) {
@@ -52,6 +53,7 @@ export function usePerformanceOptimizedNetworkRequest<Args extends any[], Result
 
   return {
     result,
+    shouldStartLoad,
     loading,
     error,
     ref,
