@@ -71,6 +71,7 @@ export default async function (
   const data = generateData();
   const min = Math.min(...data.map(d => d.size));
   const max = Math.max(...data.map(d => d.size));
+  console.log(minFontSize, viewBoxHeight);
 
   data.forEach(word => {
     if (max === min) {
