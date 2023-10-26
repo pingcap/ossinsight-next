@@ -40,6 +40,19 @@ importers:
         specifier: 20.4.2
         version: 20.4.2
 
+  packages/compose:
+    dependencies:
+      '@ossinsight/widgets-core':
+        specifier: workspace:^
+        version: link:../widgets-core
+      '@ossinsight/widgets-utils':
+        specifier: workspace:^
+        version: link:../widgets-utils
+    devDependencies:
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+
   packages/data-api:
     dependencies:
       '@tidbcloud/serverless':
@@ -73,19 +86,6 @@ importers:
       '@types/node':
         specifier: 20.4.2
         version: 20.4.2
-
-  packages/compose:
-    dependencies:
-      '@ossinsight/widgets-core':
-        specifier: workspace:^
-        version: link:../widgets-core
-      '@ossinsight/widgets-utils':
-        specifier: workspace:^
-        version: link:../widgets-utils
-    devDependencies:
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
 
   packages/eslint-plugin:
     dependencies:
@@ -294,6 +294,9 @@ importers:
       '@types/luxon':
         specifier: ^3.3.2
         version: 3.3.2
+      '@types/node':
+        specifier: 20.4.2
+        version: 20.4.2
       '@types/react':
         specifier: 18.2.15
         version: 18.2.15

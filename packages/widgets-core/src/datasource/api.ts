@@ -18,12 +18,11 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
   }
 
   const template = parseTemplate(config.url);
-  // support for relative url, e.g. /api/queries/...
-  const path = template.expand(ctx.parameters);
-  const urlSearchParams = new URLSearchParams();
-  setUrlParams(urlSearchParams, config.params ?? {}, ctx.parameters);
-  const url = `${path}?${urlSearchParams.toString()}`;
-
+  // TODO: replaceAll is a workaround, e.g. /api/queries/orgs/issues%2Fclosed-ratio => /api/queries/orgs/issues/closed-ratio
+  const urlexpanded = template.expand(ctx.parameters).replaceAll(`%2F`, `/`);
+  const url = new URL(urlexpanded, getBaseUrl());
+  setUrlParams(url, config.params ?? {}, ctx.parameters);
+  
   const response = await fetch(url, { signal });
 
   if (!response.ok) {
@@ -49,17 +48,37 @@ function allExists (required: string[] | undefined, params: Record<string, strin
   return true;
 }
 
-function setUrlParams(urlSearchParams: URLSearchParams, urlParams: Record<string, string>, parameters: Record<string, string | string[]>) {
+function setUrlParams(url: URL, urlParams: Record<string, string>, parameters: Record<string, string | string[]>) {
   for (let [name, paramName] of Object.entries(urlParams)) {
     if (paramName in parameters) {
       const value = parameters[paramName];
       if (Array.isArray(value)) {
         value.forEach((value) => {
-          urlSearchParams.append(name, value);
+          url.searchParams.append(name, value);
         });
         continue;
       }
-      value && urlSearchParams.set(name, value);
+      value && url.searchParams.set(name, value);
     }
+  }
+}
+
+function getBaseUrl() {
+  const env =
+    process.env.NEXT_PUBLIC_VERCEL_ENV ||
+    process.env.VERCEL_ENV ||
+    process.env.NODE_ENV;
+  const url =
+    process.env.NEXT_PUBLIC_VERCEL_URL ||
+    process.env.VERCEL_URL ||
+    `http://localhost:${process.env.PORT || 3000}`;
+  switch (env) {
+    case 'production':
+      return `https://next.ossinsight.io`;
+    case 'preview':
+      return process.env.NEXT_PUBLIC_VERCEL_URL || process.env.VERCEL_URL;
+    case 'development':
+    default:
+      return url;
   }
 }
