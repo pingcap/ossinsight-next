@@ -20,6 +20,12 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
   const template = parseTemplate(config.url);
   // TODO: replaceAll is a workaround, e.g. /api/queries/orgs/issues%2Fclosed-ratio => /api/queries/orgs/issues/closed-ratio
   const urlexpanded = template.expand(ctx.parameters).replaceAll(`%2F`, `/`);
+  console.log(`[debug] getBaseUrl === ${getBaseUrl()}`);
+  console.log(`[debug] NEXT_PUBLIC_VERCEL_ENV === ${process?.env?.NEXT_PUBLIC_VERCEL_ENV}`);
+  console.log(`[debug] VERCEL_ENV === ${process?.env?.VERCEL_ENV}`);
+  console.log(`[debug] NODE_ENV === ${process?.env?.NODE_ENV}`);
+  console.log(`[debug] NEXT_PUBLIC_VERCEL_URL === ${process?.env?.NEXT_PUBLIC_VERCEL_URL}`);
+  console.log(`[debug] VERCEL_URL === ${process?.env?.VERCEL_URL}`);
   const url = new URL(urlexpanded, getBaseUrl());
   setUrlParams(url, config.params ?? {}, ctx.parameters);
   
