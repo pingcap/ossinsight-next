@@ -424,6 +424,7 @@ function RankTableCheckbox(props: {
           id={id}
           aria-describedby={`${id}-description`}
           checked={checked}
+          readOnly
           onClick={() => {
             onChange && onChange(!checked);
           }}
