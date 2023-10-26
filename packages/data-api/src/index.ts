@@ -40,7 +40,14 @@ export class DataService {
       params: queryParams,
       sql: result.statement,
       types: result.types,
-      data: result.rows,
+      data: result.rows.map((row: Record<string, any>) => {
+        return Object.fromEntries(Object.entries(row).map(([key, value]) => {
+          if (result.types[key] === "DECIMAL") {
+            return [key, Number(value)];
+          }
+          return [key, value];
+        }));
+      }),
       requestedAt: start.toISO(),
       finishedAt: end.toISO(),
       spent: duration,
