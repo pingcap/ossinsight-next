@@ -1,6 +1,5 @@
-import {DataService} from "@ossinsight/data-api";
+import {DataService, APIError} from "@ossinsight/data-api";
 import { NextRequest, NextResponse } from 'next/server';
-import {APIError} from "../../packages/data-api/src";
 
 export const runtime = 'edge'
 
@@ -18,7 +17,7 @@ export async function GET(req: NextRequest) {
   let result;
   try {
     result = await dataService.handleQueryEndpoint(req, TEMPLATE_SQL, ENDPOINT_CONFIG);
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
     if (err instanceof APIError) {
       return new Response(JSON.stringify({ message: err.message }), {
