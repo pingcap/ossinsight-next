@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/{activity}/active/ranking",
+    "url": "/queries/orgs/{activity}/active/ranking",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
@@ -15,7 +15,7 @@
   },
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/{activity}/active/total",
+    "url": "/queries/orgs/{activity}/active/total",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

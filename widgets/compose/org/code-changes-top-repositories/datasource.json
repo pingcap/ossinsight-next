@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/commits/code-changes/top-repos",
+    "url": "/queries/orgs/commits/code-changes/top-repos",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
