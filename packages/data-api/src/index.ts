@@ -87,20 +87,20 @@ export class DataService {
         } else if (typeof value === 'boolean') {
           processedValue = value;
         } else {
-          throw new Error(`The parameter <${param.name}> is not a boolean.`);
+          throw new APIError(`The parameter <${param.name}> is not a boolean.`);
         }
         break;
       case ParameterItemType.NUMBER:
         const num = Number(value);
         if (value === null || Number.isNaN(num)) {
-          throw new Error(`The parameter <${param.name}> is not a number.`);
+          throw new APIError(`The parameter <${param.name}> is not a number.`);
         }
         processedValue = num;
         break;
       case ParameterItemType.INTEGER:
         const int = Number(value);
         if (value === null || Number.isNaN(int) || !Number.isInteger(int)) {
-          throw new Error(`The parameter <${param.name}> is not an integer.`);
+          throw new APIError(`The parameter <${param.name}> is not an integer.`);
         }
         processedValue = int;
         break;
@@ -108,19 +108,25 @@ export class DataService {
         if (param.pattern) {
           const regex = new RegExp(param.pattern);
           if (!regex.test(value)) {
-            throw new Error(`The parameter <${param.name}> does not match the pattern "${param.pattern}".`);
+            throw new APIError(`The parameter <${param.name}> does not match the pattern "${param.pattern}".`);
           }
         }
         break;
       default:
-        throw new Error(`The parameter <${param.name}> has an unknown type.`);
+        throw new APIError(`The parameter <${param.name}> has an unknown type.`);
     }
 
     if (Array.isArray(param.enums) && !param.enums.includes(processedValue)) {
-      throw new Error(`The parameter <${param.name}> is not in the enums.`);
+      throw new APIError(`The parameter <${param.name}> is not in the enums.`);
     }
 
     return processedValue;
   }
 
+}
+
+export class APIError extends Error {
+  constructor(message: string, public statusCode: number = 400) {
+    super(message);
+  }
 }
