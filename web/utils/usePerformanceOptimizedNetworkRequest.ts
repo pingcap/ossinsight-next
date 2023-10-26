@@ -53,7 +53,6 @@ export function usePerformanceOptimizedNetworkRequest<Args extends any[], Result
 
   return {
     result,
-    shouldStartLoad,
     loading,
     error,
     ref,
