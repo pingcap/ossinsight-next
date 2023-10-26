@@ -1,7 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import clsx from 'clsx';
 import mergeRefs from 'merge-refs';
-import { cloneElement, forwardRef, ReactElement, useEffect, useRef, useState } from 'react';
+import { cloneElement, ForwardedRef, forwardRef, ReactElement, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -24,7 +24,7 @@ interface SvgComponentProps extends WidgetReactVisualizationProps {
   linkedData: LinkedData;
 }
 
-export default forwardRef(function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme }: SvgComponentProps, ref) {
+export default forwardRef(function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme }: SvgComponentProps, ref: ForwardedRef<HTMLDivElement>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: 0,
@@ -53,12 +53,14 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
     const [promiseEl, setPromiseEl] = useState<any>(null);
 
     useEffect(() => {
+      console.log(containerRef.current, size);
       const controller = new AbortController();
       (visualizer.default(data, {
         ...createVisualizationContext({ ...size, colorScheme }),
         ...createWidgetContext('client', parameters, linkedData),
       }, controller.signal) as Promise<ReactElement>)
         .then(res => {
+          console.log(res);
           if (!controller.signal.aborted) {
             setPromiseEl(res);
           }
@@ -70,7 +72,11 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
     }, [data, size]);
 
     if (!promiseEl) {
-      return <svg className={className} style={style} ref={mergeRefs(containerRef, ref) as any} />;
+      return (
+        <div className={className} style={style} ref={mergeRefs(containerRef, ref) as any}>
+          <svg className='w-full h-full' />
+        </div>
+      );
     }
 
     el = promiseEl;
@@ -81,12 +87,11 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
     }) as any;
   }
 
-  return cloneElement(el, {
-    className: clsx(el.props.className, className),
-    style: {
-      ...el.props.style,
-      ...style,
-    },
-    ref: mergeRefs(containerRef, ref),
-  });
+  return (
+    <div className={className} style={style} ref={mergeRefs(containerRef, ref)}>
+      {cloneElement(el, {
+        className: clsx(el.props.className, 'w-full h-full'),
+      })}
+    </div>
+  );
 });
