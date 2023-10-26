@@ -39,6 +39,7 @@ export class DataService {
     return {
       params: queryParams,
       sql: result.statement,
+      types: result.types,
       data: result.rows,
       requestedAt: start.toISO(),
       finishedAt: end.toISO(),
