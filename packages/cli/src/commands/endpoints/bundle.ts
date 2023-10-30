@@ -76,6 +76,8 @@ export function initEndpointsBundleCommand(parentCommand: Command, logger: Logge
         });
       }
 
+      queries.sort((a, b) => a.name.localeCompare(b.name));
+
       // Generate function code.
       const entryCode = await renderer.parseAndRender(functionTemplate, {
         queries,
