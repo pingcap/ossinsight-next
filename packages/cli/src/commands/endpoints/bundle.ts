@@ -13,7 +13,7 @@ export function initEndpointsBundleCommand(parentCommand: Command, logger: Logge
     .command('bundle')
     .description('Bundle the endpoints\' config into one file.')
     .requiredOption<string>(
-      '-c, --endpoints-dir <string>',
+      '-e, --endpoints-dir <string>',
       'Specifies the directory to load the endpoint configs.',
       (value) => value,
       path.resolve(process.cwd(), '../../web/configs/endpoints')
