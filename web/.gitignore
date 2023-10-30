@@ -35,8 +35,8 @@ yarn-error.log*
 next-env.d.ts
 
 # Endpoint configs.
-app/configs/endpoints/**/*
-!app/configs/endpoints/.keep
+configs/endpoints/**/*
+!configs/endpoints/.keep
 
 # Generated entry code of endpoints.
 app/api/queries/\[...query\]/endpoints.ts
