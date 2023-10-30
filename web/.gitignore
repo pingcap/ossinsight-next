@@ -34,6 +34,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Generated Query Edge Functions
-app/api/queries/**
-!app/api/queries/.keep
+# Generated entry code of endpoints.
+app/api/queries/\[...query\]/endpoints.ts

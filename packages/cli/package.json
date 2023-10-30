@@ -18,7 +18,6 @@
     "pino-pretty": "^10.2.3"
   },
   "devDependencies": {
-    "@ossinsight/data-api": "workspace:^",
     "@types/node": "20.4.2"
   }
 }

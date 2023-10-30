@@ -19,6 +19,10 @@ const nextConfig = {
     serverComponentsExternalPackages: ['@napi-rs/canvas'],
   },
   webpack: config => {
+    config.module.rules.push({
+        test: /\.sql$/,
+        use: 'raw-loader',
+    })
     config.externals.push('@napi-rs/canvas')
     return config;
   },
