@@ -10,7 +10,8 @@
     "allowSyntheticDefaultImports": true,
     "types": [
       "@ossinsight/widgets-types/modules",
-      "react/canary"
+      "react/canary",
+      "node"
     ]
   },
   "include": ["src"],

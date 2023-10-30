@@ -1,7 +1,7 @@
 [
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/stars/trends",
+    "url": "/api/queries/orgs/stars/trends",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"
@@ -15,7 +15,7 @@
   },
   {
     "type": "api",
-    "url": "https://api.ossinsight.io/q/orgs/stars/total",
+    "url": "/api/queries/orgs/stars/total",
     "parser": {
       "type": "json",
       "extract": "$.data[*]"

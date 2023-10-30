@@ -33,3 +33,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Endpoint configs.
+configs/endpoints/**/*
+!configs/endpoints/.keep
+
+# Generated entry code of endpoints.
+app/api/queries/\[...query\]/endpoints.ts

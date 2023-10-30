@@ -1,6 +1,6 @@
 {
   "type": "api",
-  "url": "https://api.ossinsight.io/q/orgs/commits/time-distribution",
+  "url": "/api/queries/orgs/commits/time-distribution",
   "parser": {
     "type": "json",
     "extract": "$.data[*]"
