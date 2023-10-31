@@ -28,10 +28,12 @@ function useFilteredData (input: Input, type: string, runtime: 'server' | 'clien
 
 export default function (input: Input, ctx: WidgetVisualizerContext<Params>) {
   const data = useFilteredData(input, 'all', ctx.runtime);
+  // TODO
+  // ! TOFIX user here is undefined
   const user = ctx.getUser(ctx.parameters.user_id);
 
   return (
-    <TimeDistribution width={ctx.width} height={ctx.height} dpr={ctx.dpr} runtime={ctx.runtime} size={18} gap={4} data={data} offset={0} title={`@${user.login}'s Contribution time distribution (UTC +0)`} colorScheme={ctx.theme.colorScheme} />
+    <TimeDistribution width={ctx.width} height={ctx.height} dpr={ctx.dpr} runtime={ctx.runtime} size={18} gap={4} data={data} offset={0} title={`@${user?.login}'s Contribution time distribution (UTC +0)`} colorScheme={ctx.theme.colorScheme} />
   );
 }
 
