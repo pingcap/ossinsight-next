@@ -49,15 +49,15 @@ export function AvatarLabel({
 }
 
 const CustomIcon = (props: { src: string; alt: string; svgProps?: any }) => {
-  const { src, alt, svgProps } = props;
+  const { src, alt, svgProps = {} } = props;
 
   if (src.startsWith('gh-')) {
-    const El = getGHSvg(src as any);
+    const El = getGHSvg(src as any) as any;
     return <El {...svgProps} />;
   }
 
   if (src.startsWith('filled-')) {
-    const El = getFilledSvg(src as any);
+    const El = getFilledSvg(src) as any;
     return <El {...svgProps} />;
   }
 

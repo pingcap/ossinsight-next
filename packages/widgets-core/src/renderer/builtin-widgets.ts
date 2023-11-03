@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 
 export interface BuiltinWidgetsMap {
-  'builtin:avatar-label': { label?: string; imgSrc: string; imgSize?: number, href?: string, imgProps?: any };
+  'builtin:avatar-label': { label?: string; imgSrc: string; imgSize?: number, href?: string, imgProps?: any, labelColor?: string };
   'builtin:card-heading': { title: string; subtitle?: string };
   'builtin:label-value': {
     label: string | number;

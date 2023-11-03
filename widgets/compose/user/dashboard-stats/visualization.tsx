@@ -166,6 +166,15 @@ export default function (
                 return <builtin-label label={`123,456`} />;
               }
               if (item.type === 'label-value') {
+                if (ctx.runtime === 'server') {
+                  return (
+                    <flex direction='horizontal'>
+                      <builtin-label labelColor="#6CA963" label={`+123,456`} />
+                      <builtin-label label={`/`} grow={0.3} />
+                      <builtin-label labelColor="#D45D52" label={`-123,456`} />
+                    </flex>
+                  )
+                }
                 return (
                   <builtin-label-value
                     column={false}

@@ -10,6 +10,7 @@ export async function renderAvatarLabel(
 ) {
   const {
     label = '',
+    labelColor = '',
     box: { dpr, left, top, width },
     imgSrc,
     imgSize = 20,
@@ -25,9 +26,9 @@ export async function renderAvatarLabel(
   ctx.textAlign = 'start';
 
   ctx.font = `normal ${12 * dpr}px`;
-  ctx.fillStyle = Label.color;
+  ctx.fillStyle = labelColor || Label.color;
   const labelStr = typeof label === 'number' ? formatNumber(label) : label;
-  label && ctx.fillText(labelStr, left + 30 * dpr, top + 7 * dpr, width);
+  label && ctx.fillText(labelStr, left + (imgSrc ? 30 * dpr : 0), top + 7 * dpr, width);
 
   try {
     let avatar: null | Image;

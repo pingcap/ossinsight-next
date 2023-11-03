@@ -22,7 +22,7 @@ export function renderProgressBar(
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     const { color, percentage } = item;
-    ctx.fillStyle = color;
+    ctx.fillStyle = color || '#888';
     const currentWidth = Math.abs(width) * percentage;
     ctx.fillRect(left + lastWidth, top + 20 * dpr, currentWidth, 6 * dpr);
     lastWidth += currentWidth;
