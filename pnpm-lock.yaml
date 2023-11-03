@@ -1013,6 +1013,15 @@ importers:
         specifier: ^3.4.3
         version: 3.4.3
 
+  widgets/compose/user/dashboard-stats:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:../../..
+      '@types/react':
+        specifier: 18.2.15
+        version: 18.2.15
+
 packages:
 
   /@aashutoshrathi/word-wrap@1.2.6:

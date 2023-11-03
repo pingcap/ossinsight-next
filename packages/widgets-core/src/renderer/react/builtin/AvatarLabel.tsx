@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { BuiltinProps, useTheme } from './common';
+import { getGHSvg, getFilledSvg } from './GHSvg';
 
 export function AvatarLabel({
   className,
@@ -7,6 +8,7 @@ export function AvatarLabel({
   label = '',
   imgSrc = '',
   imgSize = 20,
+  imgProps = {},
   colorScheme,
   href = '',
 }: BuiltinProps<'builtin:avatar-label'>) {
@@ -22,20 +24,14 @@ export function AvatarLabel({
       <Wrapper href={href}>
         <div
           className={clsx(
-            `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
+            `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`
           )}
           style={{
             height: `${imgSize}px`,
             width: `${imgSize}px`,
           }}
         >
-          {imgSrc && (
-            <img
-              className='h-full w-full rounded-[inherit] object-cover'
-              src={imgSrc}
-              alt={label}
-            />
-          )}
+          {imgSrc && <CustomIcon src={imgSrc} alt={label} svgProps={imgProps} />}
         </div>
         <span
           style={{
@@ -51,6 +47,28 @@ export function AvatarLabel({
     </div>
   );
 }
+
+const CustomIcon = (props: { src: string; alt: string; svgProps?: any }) => {
+  const { src, alt, svgProps } = props;
+
+  if (src.startsWith('gh-')) {
+    const El = getGHSvg(src as any);
+    return <El {...svgProps} />;
+  }
+
+  if (src.startsWith('filled-')) {
+    const El = getFilledSvg(src as any);
+    return <El {...svgProps} />;
+  }
+
+  return (
+    <img
+      className='h-full w-full rounded-[inherit] object-cover'
+      src={src}
+      alt={alt}
+    />
+  );
+};
 
 export const Wrapper = (
   props: {
@@ -69,11 +87,7 @@ export const Wrapper = (
   }
 
   if (rest) {
-    return (
-      <div {...rest}>
-        {children}
-      </div>
-    );
+    return <div {...rest}>{children}</div>;
   }
 
   return <>{children}</>;

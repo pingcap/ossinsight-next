@@ -85,6 +85,7 @@ namespace Compose {
       'builtin-avatar-label': BuiltinWidgetsMap['builtin:avatar-label'] & CommonAttributes;
       'builtin-avatar-progress': BuiltinWidgetsMap['builtin:avatar-progress'] & CommonAttributes;
       'builtin-card-heading': BuiltinWidgetsMap['builtin:card-heading'] & CommonAttributes;
+      'builtin-progress-bar': BuiltinWidgetsMap['builtin:progress-bar'] & CommonAttributes;
     }
   }
 }

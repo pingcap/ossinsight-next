@@ -12,12 +12,14 @@ export function LabelValue({
   valueProps = {},
   column = true,
   tooltip = '',
+  spliter,
+  spliterProps = {},
 }: BuiltinProps<'builtin:label-value'>) {
   const { Label, Value } = useTheme(colorScheme);
 
   return (
     <div
-      className={clsx(className, 'group flex items-start gap-1', {
+      className={clsx(className, 'group flex items-center gap-1', {
         'flex-col': column,
       })}
       style={{ zIndex: 1, ...style }}
@@ -39,6 +41,23 @@ export function LabelValue({
         {typeof label === 'number' ? formatNumber(label) : label || ''}
         {tooltip && <LabelValueTooltip>{tooltip}</LabelValueTooltip>}
       </span>
+      {spliter && (
+        <span
+          style={{
+            fontSize: 12,
+            lineHeight: 1,
+            color: Label.color,
+            overflow: 'visible',
+            whiteSpace: 'nowrap',
+            position: 'relative',
+            display: 'inline-flex',
+            alignItems: 'center',
+            ...spliterProps.style,
+          }}
+        >
+          {spliter}
+        </span>
+      )}
       <span
         style={{
           fontSize: 24,
