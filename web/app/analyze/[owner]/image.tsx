@@ -21,12 +21,12 @@ export default async function Image ({ params }: { params: { owner: string } }) 
   ] =
     await Promise.all([
       Promise.all(['stars', 'pull-requests', 'issues', 'reviews'].map(dim =>
-        fetch(`https://api.ossinsight.io/q/orgs/${dim}/total?ownerId=${info.id}&period=past_28_days`)
+        fetch(`/queries/orgs/${dim}/total?ownerId=${info.id}&period=past_28_days`)
           .then(res => res.json())
           .then(data => data.data[0]?.current_period_total ?? 0),
       )),
       Promise.all(['active', 'new'].map(dim =>
-        fetch(`https://api.ossinsight.io/q/orgs/participants/${dim}/ranking?ownerId=${info.id}&activity=${dim}&period=past_28_days`)
+        fetch(`/queries/orgs/participants/${dim}/ranking?ownerId=${info.id}&activity=${dim}&period=past_28_days`)
           .then(res => res.json())
           .then(data => data.data.slice(0, 5)),
       )),
