@@ -235,6 +235,14 @@ export default function (
                         }}
                       />
                     ))}
+                    {
+                      langs.length < 4 && new Array(4 - langs.length).fill(0).map(() => (
+                        <builtin-avatar-label
+                          label={''}
+                          imgSrc=''
+                        />
+                      ))
+                    }
                   </flex>
                 ))}
             </flex>
