@@ -143,12 +143,12 @@ export default function (
       top: 0,
       left: 0,
       icon: 'circle',
-
       itemWidth: 8,
       itemHeight: 8,
       textStyle: {
         fontSize: 12,
       },
+      type: 'scroll',
     },
   };
 }

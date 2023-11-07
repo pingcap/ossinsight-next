@@ -4,12 +4,5 @@
     "title": "Analyzing User",
     "required": true,
     "default": 12960671
-  },
-  "period": {
-    "type": "time-period",
-    "title": "Period",
-    "required": true,
-    "enums": ["past_1_year", "past_3_years", "all_times"],
-    "default": "all_times"
   }
 }

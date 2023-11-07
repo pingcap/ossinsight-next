@@ -8,10 +8,27 @@ type Params = {
   user_id: string;
 };
 
-// todo: update it
+type ContributionType =
+  | 'issues'
+  | 'issue_comments'
+  | 'pull_requests'
+  | 'reviews'
+  | 'review_comments'
+  | 'pushes';
+
+export const contributionTypes: ContributionType[] = [
+  'issues',
+  'pull_requests',
+  'reviews',
+  'pushes',
+  'review_comments',
+  'issue_comments',
+];
+
 type DataPoint = {
-  actor_login: string;
-  events: number;
+  contribution_type: ContributionType;
+  event_month: string;
+  cnt: number;
 };
 
 type Input = [DataPoint[]];
@@ -196,20 +213,22 @@ const languangeColors = [
   '#c22d40',
 ];
 
-const handleLangs = (langs: typeof mockLanguages, maxLangs = 7) => { 
+const handleLangs = (langs: typeof mockLanguages, maxLangs = 7) => {
   const sortedLangs = langs.sort((a, b) => b.percent - a.percent);
   if (sortedLangs.length <= maxLangs) return sortedLangs;
   const top7Langs = sortedLangs.slice(0, maxLangs);
   const otherLangs = sortedLangs.slice(maxLangs);
-  const otherLangsPercent = otherLangs.reduce((acc, cur) => acc + cur.percent, 0);
+  const otherLangsPercent = otherLangs.reduce(
+    (acc, cur) => acc + cur.percent,
+    0
+  );
   return [...top7Langs, { name: 'Others', percent: otherLangsPercent }];
-}
+};
 
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): Compose.JSX.Element {
-
   const handledLangs = handleLangs(mock12Langs);
 
   return (
@@ -232,11 +251,11 @@ export default function (
                 if (ctx.runtime === 'server') {
                   return (
                     <flex direction='horizontal'>
-                      <builtin-label labelColor="#6CA963" label={`+123,456`} />
+                      <builtin-label labelColor='#6CA963' label={`+123,456`} />
                       <builtin-label label={`/`} grow={0.3} />
-                      <builtin-label labelColor="#D45D52" label={`-123,456`} />
+                      <builtin-label labelColor='#D45D52' label={`-123,456`} />
                     </flex>
-                  )
+                  );
                 }
                 return (
                   <builtin-label-value
@@ -291,28 +310,33 @@ export default function (
                         imgSrc='filled-circle'
                         imgProps={{
                           style: {
-                            fill: languangeColors[idx1*4 + idx2],
+                            fill: languangeColors[idx1 * 4 + idx2],
                             height: 12,
                             width: 12,
                           },
                         }}
                       />
                     ))}
-                    {
-                      langs.length < 4 && new Array(4 - langs.length).fill(0).map(() => (
-                        <builtin-avatar-label
-                          label={''}
-                          imgSrc=''
-                        />
-                      ))
-                    }
+                    {langs.length < 4 &&
+                      new Array(4 - langs.length)
+                        .fill(0)
+                        .map(() => (
+                          <builtin-avatar-label label={''} imgSrc='' />
+                        ))}
                   </flex>
                 ))}
             </flex>
           </flex>
         </flex>
         <flex direction='vertical' gap={4}>
-          <builtin-label label={'chart'} />
+          {/* <builtin-label label={'chart'} /> */}
+          <widget
+            widget='@ossinsight/widget-analyze-user-contribution-trends'
+            ifEmpty='indicator'
+            data={input}
+            parameters={ctx.parameters}
+            padding={[0, 8]}
+          />
         </flex>
       </grid>
     </Card>
