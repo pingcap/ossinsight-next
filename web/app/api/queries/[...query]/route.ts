@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'edge';
 
 // Configure to us-west-2 region, make edge functions close to the database.
-export const regions = ['pdx1'];
+export const preferredRegion = ['pdx1'];
 
 const dataService = new DataService({
   url: process.env.DATABASE_URL
