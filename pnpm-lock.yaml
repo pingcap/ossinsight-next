@@ -689,6 +689,12 @@ importers:
         specifier: 18.2.15
         version: 18.2.15
 
+  widgets/analyze/user/contribution-trends:
+    devDependencies:
+      '@ossinsight/widgets-parent':
+        specifier: workspace:^
+        version: link:../../..
+
   widgets/basic/bubbles-chart:
     devDependencies:
       '@ossinsight/widgets-parent':
