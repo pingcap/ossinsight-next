@@ -59,6 +59,10 @@ const generateDataset = (data: DataPoint[]) => {
   }));
 };
 
+const getMaxValue = (data: DataPoint[]) => {
+  return Math.max(...data.map((d) => d.cnt));
+}
+
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
@@ -93,6 +97,7 @@ export default function (
     },
     yAxis: {
       type: 'value',
+      max: getMaxValue(input[0] || []),
       splitNumber: 2,
       axisLine: {
         show: false,
