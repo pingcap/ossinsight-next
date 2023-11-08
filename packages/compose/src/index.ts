@@ -1,2 +1,2 @@
-export { default } from './factory';
 export * from './components';
+export * from './jsx-runtime';

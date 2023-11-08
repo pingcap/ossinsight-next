@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { BuiltinProps, useTheme } from './common';
 
-export function AvatarLabel({
+export function AvatarLabel ({
   className,
   style,
   label = '',
@@ -13,42 +13,41 @@ export function AvatarLabel({
   const { Label } = useTheme(colorScheme);
 
   return (
-    <div
+    <Wrapper
       className={clsx(className, 'flex flex-row items-center', {
         ['gap-1']: !!label,
       })}
       style={style}
+      href={href}
     >
-      <Wrapper href={href}>
-        <div
-          className={clsx(
-            `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
-          )}
-          style={{
-            height: `${imgSize}px`,
-            width: `${imgSize}px`,
-          }}
-        >
-          {imgSrc && (
-            <img
-              className='h-full w-full rounded-[inherit] object-cover'
-              src={imgSrc}
-              alt={label}
-            />
-          )}
-        </div>
-        <span
-          style={{
-            fontSize: 12,
-            lineHeight: 1,
-            fontWeight: 'bold',
-            color: Label.color,
-          }}
-        >
-          {label}
-        </span>
-      </Wrapper>
-    </div>
+      <div
+        className={clsx(
+          `bg-blackA3 inline-flex select-none items-center justify-center overflow-hidden rounded-full align-middle`,
+        )}
+        style={{
+          height: `${imgSize}px`,
+          width: `${imgSize}px`,
+        }}
+      >
+        {imgSrc && (
+          <img
+            className="h-full w-full rounded-[inherit] object-cover"
+            src={imgSrc}
+            alt={label}
+          />
+        )}
+      </div>
+      <span
+        style={{
+          fontSize: 12,
+          lineHeight: 1,
+          fontWeight: 'bold',
+          color: Label.color,
+        }}
+      >
+        {label}
+      </span>
+    </Wrapper>
   );
 }
 
@@ -56,13 +55,13 @@ export const Wrapper = (
   props: {
     children: React.ReactNode;
     href?: string;
-  } & React.HTMLAttributes<HTMLDivElement | HTMLAnchorElement>
+  } & React.HTMLAttributes<HTMLDivElement | HTMLAnchorElement>,
 ) => {
   const { children, href, ...rest } = props;
 
   if (href) {
     return (
-      <a href={href} target='_blank' {...rest}>
+      <a href={href} target="_blank" {...rest}>
         {children}
       </a>
     );

@@ -1,5 +1,7 @@
-import type { ComposeVisualizationConfig, WidgetVisualizerContext } from '@ossinsight/widgets-types';
-import { autoSize, computeLayout, grid, nonEmptyDataWidget, vertical, widget } from '@ossinsight/widgets-utils/src/compose';
+/** @jsxImportSource @ossinsight/compose */
+
+import { Card, JSX } from '@ossinsight/compose';
+import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
 type Params = {
@@ -44,7 +46,7 @@ const calcGridCfg = (limit: number) => {
 export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>,
-): ComposeVisualizationConfig {
+): JSX.Element {
   const today = new Date();
   const prior30 = new Date(new Date().setDate(today.getDate() - 30));
   const end = DateTime.fromISO(today.toISOString());
@@ -54,35 +56,20 @@ export default function (
   const limit = ctx.parameters.limit || '30';
   const { rows, cols, size } = calcGridCfg(Number(limit));
 
-  const WIDTH = ctx.width;
-  const HEIGHT = ctx.height;
-  const PADDING = autoSize(ctx, 24);
-  const HEADER_HEIGHT = autoSize(ctx, 48);
-
-  return computeLayout(
-    vertical(
-      widget('builtin:card-heading', undefined, {
-        title: 'Active Contributors',
-        subtitle: `Date: ${subtitle}`,
-      }).fix(HEADER_HEIGHT),
-      nonEmptyDataWidget(contributors, () => grid(
-        rows,
-        cols,
-        ...contributors.map((item) =>
-          widget('builtin:avatar-label', undefined, {
-            label: '',
-            imgSize: size,
-            imgSrc: item.actor_login
+  return (
+    <Card title="Active Contributors" subtitle={`Date: ${subtitle}`}>
+      <grid cols={cols} rows={rows} gap={4} ifEmpty="indicator" data={contributors}>
+        {contributors.map(item => (
+          <builtin-avatar-label
+            label=""
+            imgSize={size}
+            imgSrc={item.actor_login
               ? `https://github.com/${item.actor_login}.png`
-              : '',
-          }),
-        ),
-      ).gap(autoSize(ctx, 4))),
-    ).padding([0, PADDING, PADDING / 2, PADDING]),
-    0,
-    0,
-    WIDTH,
-    HEIGHT,
+              : ''}
+          />
+        ))}
+      </grid>
+    </Card>
   );
 }
 

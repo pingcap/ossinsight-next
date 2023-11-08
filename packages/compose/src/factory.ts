@@ -2,7 +2,7 @@ import { BuiltinWidgetsMap } from '@ossinsight/widgets-core/src/renderer/builtin
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { FlexBaseLayout, GridLayout, Layout, WidgetLayout } from '@ossinsight/widgets-utils/src/compose';
 
-function Compose(component: any, props: any, ...children: any): Layout {
+function Compose (component: any, props: any, ...children: any): Layout {
   const { padding = 0, gap = 0, size = undefined, grow = undefined, data, ifEmpty, ...restProps } = props;
   if (ifEmpty) {
     if (isEmptyData(data)) {
@@ -59,9 +59,9 @@ namespace Compose {
   export type ComposeNodes = Layout | undefined | null | false | ComposeNodes[];
 
   export namespace JSX {
-    type LayoutChildrenAttributes = { children: ComposeNodes };
-    type CommonAttributes  = Pick<Layout, 'gap' | 'size' | 'padding' | 'grow'>;
-    type LayoutAttributes<L extends Layout> = Omit<L, 'layout' | 'children'>;
+    type LayoutChildrenAttributes = { children?: ComposeNodes };
+    type CommonAttributes = Pick<Layout, 'gap' | 'size' | 'padding' | 'grow'>;
+    export type LayoutAttributes<L extends Layout> = Omit<L, 'layout' | 'children'>;
 
     export type Element = Layout;
 
@@ -86,6 +86,18 @@ namespace Compose {
       'builtin-avatar-progress': BuiltinWidgetsMap['builtin:avatar-progress'] & CommonAttributes;
       'builtin-card-heading': BuiltinWidgetsMap['builtin:card-heading'] & CommonAttributes;
     }
+  }
+}
+
+type BuiltinWidgetDefinitions = {
+  [K in keyof BuiltinWidgetsMap]: {
+    isPrivate: true,
+    params: BuiltinWidgetsMap[K]
+  }
+}
+
+declare module '@ossinsight/internal/widgets' {
+  interface WidgetsDefinitions extends BuiltinWidgetDefinitions {
   }
 }
 

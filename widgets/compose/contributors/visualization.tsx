@@ -1,7 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx Compose */
+/** @jsxImportSource @ossinsight/compose */
 
-import Compose, { Card } from '@ossinsight/compose';
+import { JSX, Card } from '@ossinsight/compose';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
@@ -47,7 +46,7 @@ const calcGridCfg = (limit: number) => {
 export default function (
   [contributors]: Input,
   ctx: WidgetVisualizerContext<Params>,
-): Compose.JSX.Element {
+): JSX.Element {
   const today = new Date();
   const prior30 = new Date(new Date().setDate(today.getDate() - 30));
   const end = DateTime.fromISO(today.toISOString());

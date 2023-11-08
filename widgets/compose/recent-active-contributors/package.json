@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Identify the most active contributors in a repository over the past 28 days. Recognize and engage with individuals who have made significant contributions during this period.",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Repository",

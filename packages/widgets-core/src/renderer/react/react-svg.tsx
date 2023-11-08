@@ -53,14 +53,12 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
     const [promiseEl, setPromiseEl] = useState<any>(null);
 
     useEffect(() => {
-      console.log(containerRef.current, size);
       const controller = new AbortController();
       (visualizer.default(data, {
         ...createVisualizationContext({ ...size, colorScheme }),
         ...createWidgetContext('client', parameters, linkedData),
       }, controller.signal) as Promise<ReactElement>)
         .then(res => {
-          console.log(res);
           if (!controller.signal.aborted) {
             setPromiseEl(res);
           }

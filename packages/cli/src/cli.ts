@@ -1,15 +1,19 @@
-import {Command} from "commander"
-import { logger } from './logger'
-import {initEndpointsBundleCommand} from "./commands/endpoints/bundle"
+import { Command } from 'commander';
+import { initEndpointsBundleCommand } from './commands/endpoints/bundle';
+import { initWidgetsGenTypesCommand } from './commands/widgets/gen-types';
+import { logger } from './logger';
 
-async function main() {
-  const program = new Command()
+async function main () {
+  const program = new Command();
   program.name('OSSInsight CLI')
     .description('OSSInsight CLI')
     .version('0.0.1');
 
-  const endpointsCommand = program.command('endpoints')
-  initEndpointsBundleCommand(endpointsCommand, logger)
+  const endpointsCommand = program.command('endpoints');
+  initEndpointsBundleCommand(endpointsCommand, logger);
+
+  const widgetsCommand = program.command('widgets');
+  initWidgetsGenTypesCommand(widgetsCommand, logger);
 
   program.parse();
 }

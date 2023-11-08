@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Identify the top contributors with their contribution counts in a repository over the last 28 days. ",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Repository",

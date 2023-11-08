@@ -1,7 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx Compose */
-
-import Compose, { Card } from '@ossinsight/compose';
+/** @jsxImportSource @ossinsight/compose */
+import { Card, JSX, Widget } from '@ossinsight/compose';
 
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
@@ -15,15 +13,15 @@ type DataPoint = {
   event_month: string;
 }
 
-export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params>): Compose.JSX.Element {
+export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params>): JSX.Element {
   const end = DateTime.now().startOf('month');
   const start = end.minus({ year: 2 }).startOf('month');
   const subtitle = `${start.toFormat('yyyy-MM')} - ${end.toFormat('yyyy-MM')}`;
 
   return (
     <Card title="Repository Activity Trends" subtitle={`Date: ${subtitle}`}>
-      <widget
-        widget="@ossinsight/widget-analyze-repo-activity-trends"
+      <Widget
+        name="@ossinsight/widget-analyze-repo-activity-trends"
         ifEmpty="indicator"
         data={input}
         parameters={ctx.parameters}
