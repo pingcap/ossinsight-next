@@ -13,7 +13,7 @@ const dataService = new DataService({
 
 export async function GET(req: NextRequest) {
   // Remove prefix.
-  const queryName = req.nextUrl.pathname.replaceAll('/api/queries/', '');
+  const queryName = req.nextUrl.pathname.replaceAll('/api/queries-without-cache/', '');
   const endpoint = endpoints[queryName];
   if (!endpoint) {
     return new Response(JSON.stringify({ message: 'Endpoint not found.' }), {
