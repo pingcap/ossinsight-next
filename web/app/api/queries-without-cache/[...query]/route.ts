@@ -36,12 +36,5 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  return NextResponse.json(result, {
-    status: 200,
-    headers: {
-      'Cache-Control': 'max-age=60',
-      'CDN-Cache-Control': 'max-age=300',
-      'Vercel-CDN-Cache-Control': 'max-age=3600',
-    },
-  });
+  return NextResponse.json(result);
 }
