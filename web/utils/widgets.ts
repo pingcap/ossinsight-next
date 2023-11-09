@@ -1,7 +1,7 @@
 import { makeLinkedData } from '@/app/widgets/[vendor]/[name]/utils';
 import { cachedImport } from '@/utils/cache';
 import { WidgetsFilterConfig } from '@ossinsight/ui/src/components/WidgetsFilter';
-import widgets, { datasourceFetchers, metadataGenerators, parameterDefinitions, visualizers } from '@ossinsight/widgets';
+import widgets from '@ossinsight/widgets';
 import { resolveExpressions } from '@ossinsight/widgets-core/src/parameters/resolveExpressions';
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import { createWidgetBaseContext } from '@ossinsight/widgets-core/src/utils/context';
@@ -14,7 +14,7 @@ export function isWidget (name: string) {
 }
 
 export function widgetMeta (name: string): WidgetMeta {
-  return widgets[name];
+  return widgets[name].meta;
 }
 
 export function widgetNames (): string[] {
@@ -22,24 +22,24 @@ export function widgetNames (): string[] {
 }
 
 export function widgetMetadataGenerator<P> (name: string): Promise<MetadataGenerator<P>> {
-  return cachedImport(metadataGenerators[name]);
+  return cachedImport(widgets[name].metadataGenerator);
 }
 
 export function widgetDatasourceFetcher (name: string): (context: WidgetBaseContext, signal?: AbortSignal) => Promise<any> {
-  return datasourceFetchers[name];
+  return widgets[name].datasourceFetcher;
 }
 
 export function widgetVisualizer<Type extends string, VisualizationResult, Data, Params, VisualizerInstance = any> (name: string): Promise<VisualizerModule<any, any, any, any>> {
-  return cachedImport(visualizers[name]);
+  return cachedImport(widgets[name].visualizer);
 }
 
 export function widgetParameterDefinitions (name: string) {
-  return cachedImport(parameterDefinitions[name]);
+  return cachedImport(widgets[name].parameterDefinition);
 }
 
 export function filteredWidgetsNames ({ search, tag = '🔥Popular' }: WidgetsFilterConfig) {
   return Object.entries(widgets)
-    .filter(([name, meta]) => {
+    .filter(([name, { meta }]) => {
       if (meta.private) {
         return false;
       }
@@ -71,7 +71,7 @@ export function filteredWidgetsNames ({ search, tag = '🔥Popular' }: WidgetsFi
 
 export function nonPopularWidgetsNames () {
   return Object.entries(widgets)
-    .filter(([, meta]) => {
+    .filter(([, { meta }]) => {
       if (meta.private) {
         return false;
       }

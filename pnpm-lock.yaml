@@ -273,19 +273,6 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/widgets-next:
-    dependencies:
-      webpack-virtual-modules:
-        specifier: ^0.5.0
-        version: 0.5.0
-    devDependencies:
-      '@types/glob':
-        specifier: ^8.1.0
-        version: 8.1.0
-      next:
-        specifier: ^13.5.2
-        version: 13.5.2(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
-
   packages/widgets-types:
     dependencies:
       echarts:
@@ -407,9 +394,6 @@ importers:
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../packages/ui
-      '@ossinsight/widgets-next':
-        specifier: workspace:^
-        version: link:../packages/widgets-next
       '@ossinsight/widgets-types':
         specifier: workspace:^
         version: link:../packages/widgets-types
@@ -5937,13 +5921,6 @@ packages:
 
   /@types/glob@7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
-    dependencies:
-      '@types/minimatch': 5.1.2
-      '@types/node': 20.4.2
-    dev: true
-
-  /@types/glob@8.1.0:
-    resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 20.4.2
@@ -14131,6 +14108,7 @@ packages:
 
   /webpack-virtual-modules@0.5.0:
     resolution: {integrity: sha512-kyDivFZ7ZM0BVOUteVbDFhlRt7Ah/CSPwJdi8hBpkK7QLumUqdLtVfm/PX/hkcnrvr0i77fO5+TjZ94Pe+C9iw==}
+    dev: true
 
   /webpack@5.89.0:
     resolution: {integrity: sha512-qyfIC10pOr70V+jkmud8tMfajraGCZMBWJtrmuBymQKCrLTRejBI8STDp1MCyZu/QTdZSeacCQYpYNQVOzX5kw==}

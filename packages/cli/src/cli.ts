@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import { initEndpointsBundleCommand } from './commands/endpoints/bundle';
+import { initWidgetsGenModulesCommand } from './commands/widgets/gen-modules';
 import { initWidgetsGenTypesCommand } from './commands/widgets/gen-types';
 import { logger } from './logger';
 
@@ -14,6 +15,7 @@ async function main () {
 
   const widgetsCommand = program.command('widgets');
   initWidgetsGenTypesCommand(widgetsCommand, logger);
+  initWidgetsGenModulesCommand(widgetsCommand, logger);
 
   program.parse();
 }

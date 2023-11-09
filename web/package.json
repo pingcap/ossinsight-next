@@ -39,7 +39,6 @@
   "devDependencies": {
     "@ossinsight/cli": "workspace:^",
     "@ossinsight/ui": "workspace:^",
-    "@ossinsight/widgets-next": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@tailwindcss/typography": "^0.5.10",
     "@types/luxon": "^3.3.2",

@@ -1,4 +1,3 @@
-import {withWidgets} from "@ossinsight/widgets-next";
 import createMDX from "@next/mdx";
 import withSvgr from "next-plugin-svgr";
 
@@ -58,4 +57,4 @@ const withMDX = createMDX({
   }
 });
 
-export default withWidgets(withSvgr(withMDX(nextConfig)));
+export default withSvgr(withMDX(nextConfig));
