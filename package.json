@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "pnpm run cli:gen-essentials && pnpm run build:toolchain",
     "dev": "pnpm run --filter @ossinsight/web dev",
-    "cli:gen-essentials": "pnpm run --filter @ossinsight/cli build && pnpm run --filter @ossinsight/cli start widgets gen-types",
+    "cli:gen-essentials": "pnpm run --filter @ossinsight/cli build && pnpm run --filter @ossinsight/cli start widgets gen-types && pnpm run --filter @ossinsight/cli start widgets gen-modules",
     "build:toolchain": "pnpm run --sequential --filter @ossinsight/eslint-plugin --filter @ossinsight/compose",
     "lint": "pnpm run -r lint"
   },
