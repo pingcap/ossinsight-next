@@ -4,13 +4,16 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
+// Configure to us-west-2 region, make edge functions close to the database.
+export const preferredRegion = 'pdx1';
+
 const dataService = new DataService({
   url: process.env.DATABASE_URL
 });
 
 export async function GET(req: NextRequest) {
   // Remove prefix.
-  const queryName = req.nextUrl.pathname.replaceAll('/api/queries/', '');
+  const queryName = req.nextUrl.pathname.replaceAll('/api/queries-without-cache-regional/', '');
   const endpoint = endpoints[queryName];
   if (!endpoint) {
     return new Response(JSON.stringify({ message: 'Endpoint not found.' }), {
@@ -33,12 +36,5 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  return new Response(JSON.stringify(result), {
-    status: 200,
-    headers: {
-      'Cache-Control': 'max-age=60',
-      'CDN-Cache-Control': 'max-age=300',
-      'Vercel-CDN-Cache-Control': 'max-age=3600',
-    },
-  });
+  return NextResponse.json(result);
 }
