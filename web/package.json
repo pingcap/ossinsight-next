@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm run gen:endpoints && next dev",
-    "build": "pnpm run sync:endpoints && pnpm run gen:endpoints && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "sync:endpoints": "./scripts/download-endpoints-configs.sh",
-    "gen:d.ts": "json2ts ../schemas/data-api/v1/EndpointConfig.schema.json ./types/EndpointConfig.schema.d.ts",
-    "gen:endpoints": "ossinsight endpoints bundle --endpoints-dir ./configs/endpoints --template-file ./configs/templates/endpoints.ts.liquid --output-path ./app/api/queries/[...query]/endpoints.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.3.0",
@@ -38,14 +35,13 @@
   },
   "devDependencies": {
     "@ossinsight/cli": "workspace:^",
+    "@ossinsight/endpoints-core": "workspace:^",
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@tailwindcss/typography": "^0.5.10",
     "@types/luxon": "^3.3.2",
     "@types/mdx": "^2.0.7",
     "bootstrap-icons": "^1.11.1",
-    "json-schema-to-ts": "^2.9.2",
-    "json-schema-to-typescript": "^13.1.1",
     "luxon": "^3.4.3",
     "raw-loader": "^4.0.2",
     "sass": "^1.68.0",

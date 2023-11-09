@@ -1,26 +1,39 @@
-import {APIError, DataService} from "@/app/api/queries/[...query]/data-service";
-import {endpoints} from "@/app/api/queries/[...query]/endpoints";
-import { NextRequest, NextResponse } from 'next/server';
+import { APIError } from '@ossinsight/endpoints-core';
+import loadEndpoint, { hasEndpoint } from '@ossinsight/endpoints';
+import { executeEndpoint } from '@ossinsight/endpoints-core';
+import { NextRequest } from 'next/server';
 
-export const runtime = 'edge'
+export const runtime = 'edge';
 
-const dataService = new DataService({
-  url: process.env.DATABASE_URL
-});
-
-export async function GET(req: NextRequest) {
+export async function GET (req: NextRequest) {
   // Remove prefix.
   const queryName = req.nextUrl.pathname.replaceAll('/api/queries/', '');
-  const endpoint = endpoints[queryName];
-  if (!endpoint) {
+
+  if (!hasEndpoint(queryName)) {
     return new Response(JSON.stringify({ message: 'Endpoint not found.' }), {
       status: 404,
     });
   }
 
+  const endpoint = await loadEndpoint(queryName);
+
+  const params: any = {};
+  for (let [name, value] of req.nextUrl.searchParams.entries()) {
+    const prev = params[name];
+    if (prev != null) {
+      if (prev instanceof Array) {
+        prev.push(value);
+      } else {
+        params[name] = [prev, value];
+      }
+    } else {
+      params[name] = value;
+    }
+  }
+
   let result;
   try {
-    result = await dataService.handleQueryEndpoint(req, endpoint.templateSQL, endpoint.config);
+    result = await executeEndpoint(queryName, endpoint.config, endpoint.sql, params, req.geo);
   } catch (err: any) {
     if (err instanceof APIError) {
       return new Response(JSON.stringify({ message: err.message }), {
@@ -28,7 +41,7 @@ export async function GET(req: NextRequest) {
       });
     } else {
       console.error(err);
-      return new Response(JSON.stringify({ message: "Internal Server Error" }), {
+      return new Response(JSON.stringify({ message: 'Internal Server Error' }), {
         status: 500,
       });
     }

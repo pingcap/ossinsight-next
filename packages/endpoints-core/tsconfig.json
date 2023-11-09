@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "lib": ["ESNext", "DOM"],
+    "strict": true
+  },
+  "include": ["src", "module.d.ts"],
+  "exclude": ["node_modules"]
+}

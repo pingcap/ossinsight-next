@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ENDPOINT_BASEDIR="./configs/endpoints/"
+ENDPOINT_BASEDIR="./endpoints/"
 
 # Download endpoints config from pingcap/ossinsight repo.
 rm -rf ./ossinsight-main.zip
