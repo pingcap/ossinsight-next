@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  return new Response(JSON.stringify(result), {
+  return NextResponse.json(result, {
     status: 200,
     headers: {
       'Cache-Control': 'max-age=60',

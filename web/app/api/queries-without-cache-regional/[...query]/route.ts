@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-// Configure to us-west-2 region, make edge functions close to the database.
+// Set preferred Region to make the edge function execute on nodes in the same region of the database.
 export const preferredRegion = 'pdx1';
 
 const dataService = new DataService({
