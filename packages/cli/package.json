@@ -2,10 +2,10 @@
   "name": "@ossinsight/cli",
   "private": true,
   "bin": {
-    "ossinsight": "./lib/cli.js"
+    "ossinsight": "./index.js"
   },
   "scripts": {
-    "start": "node ./lib/cli.js",
+    "start": "node ./index.js",
     "build": "tsc",
     "watch": "tsc -w"
   },
