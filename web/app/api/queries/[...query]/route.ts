@@ -1,6 +1,5 @@
-import { APIError } from '@ossinsight/endpoints-core';
 import loadEndpoint, { hasEndpoint } from '@ossinsight/endpoints';
-import { executeEndpoint } from '@ossinsight/endpoints-core';
+import { APIError, executeEndpoint } from '@ossinsight/endpoints-core';
 import { NextRequest } from 'next/server';
 
 export const runtime = 'edge';

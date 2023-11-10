@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
+    "@ossinsight/endpoints-core": "workspace:^",
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",
@@ -11,6 +12,8 @@
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "liquidjs": "^10.9.2",
+    "next": "^13.5.2",
     "react": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "^5.2.2"

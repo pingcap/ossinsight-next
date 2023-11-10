@@ -7,6 +7,8 @@ export interface WidgetBaseContext<P extends Record<string, any> = Record<string
   runtime: 'server' | 'client';
   parameters: P;
 
+  geo?: any;
+
   createCanvas (): HTMLCanvasElement;
   getTimeParams (): { zone: string, period: string };
 }

@@ -129,6 +129,7 @@ export async function fetchWidgetData (name: string, searchParams: Record<string
     ...resolveExpressions(params),
   };
 
+  // TODO: this should use 'client'
   const data = await fetcher(createWidgetBaseContext('server', {
     ...searchParams,
     ...resolveExpressions(params),

@@ -264,6 +264,9 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
     devDependencies:
+      '@ossinsight/endpoints-core':
+        specifier: workspace:^
+        version: link:../endpoints-core
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../ui
@@ -288,6 +291,12 @@ importers:
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+      liquidjs:
+        specifier: ^10.9.2
+        version: 10.9.2
+      next:
+        specifier: ^13.5.2
+        version: 13.5.2(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
       tailwindcss:
         specifier: 3.3.3
         version: 3.3.3
@@ -7276,7 +7285,6 @@ packages:
   /commander@10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
-    dev: false
 
   /commander@11.0.0:
     resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
@@ -10415,7 +10423,6 @@ packages:
     hasBin: true
     dependencies:
       commander: 10.0.1
-    dev: false
 
   /loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}

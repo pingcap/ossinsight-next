@@ -1,7 +1,7 @@
 import { EndpointConfig } from '../config';
-import { prepareQueryContext } from './utils';
+import { APIError, prepareQueryContext } from './utils';
 
-export default async function executeEndpoint (name: string, config: EndpointConfig, sql: string, params: Record<string, any>) {
+export default async function executeEndpoint (name: string, config: EndpointConfig, sql: string, params: Record<string, any>, signal?: AbortSignal) {
   const context = prepareQueryContext(config, params);
   const usp = new URLSearchParams();
 
@@ -15,6 +15,17 @@ export default async function executeEndpoint (name: string, config: EndpointCon
     }
   });
 
-  const response = await fetch(`/api/query/${name}?${usp.toString()}`);
-  return await response.json();
+  const response = await fetch(`/api/queries/${name}?${usp.toString()}`, {
+    signal,
+  });
+
+  if (response.redirected) {
+    throw new Error('Redirected?')
+  }
+
+  if (response.ok) {
+    return await response.json();
+  } else {
+    throw new APIError('failed to execute endpoint', response.status)
+  }
 }

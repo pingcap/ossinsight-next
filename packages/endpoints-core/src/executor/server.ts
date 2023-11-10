@@ -10,8 +10,7 @@ const tidb = connect({
 
 const templateEngine = new Liquid();
 
-export default async function executeEndpoint (name: string, config: EndpointConfig, sqlTemplate: string, params: Record<string, any>, geo?: any) {
-  console.log('new executor')
+export default async function executeEndpoint (name: string, config: EndpointConfig, sqlTemplate: string, params: Record<string, any>, geo?: any, signal?: AbortSignal) {
   const queryParams = prepareQueryContext(config, params);
   const sql = await templateEngine.parseAndRender(sqlTemplate, queryParams);
 
@@ -19,6 +18,7 @@ export default async function executeEndpoint (name: string, config: EndpointCon
   const result = await tidb.execute(sql, null, {
     fullResult: true,
   }) as FullResult;
+  signal?.throwIfAborted();
   const end = DateTime.now();
   const duration = end.diff(start).as('seconds');
 

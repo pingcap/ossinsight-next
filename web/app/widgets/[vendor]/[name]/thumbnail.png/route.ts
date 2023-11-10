@@ -47,6 +47,8 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   const paramDef = await widgetParameterDefinitions(name);
   const linkedData = await resolveParameters(paramDef, parameters);
 
+  const baseCtx = createWidgetBaseContext('server', parameters);
+
   serverSendGaMeasurementEvent([apiEvent('visit_thumbnail_png', {
     widget_name: name,
     title: generateMetadata({

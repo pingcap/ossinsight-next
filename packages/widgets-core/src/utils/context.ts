@@ -1,10 +1,10 @@
-import { LinkedDataContext, VisualizationContext } from '@ossinsight/widgets-types';
+import { LinkedDataContext, VisualizationContext, WidgetBaseContext } from '@ossinsight/widgets-types';
 import { generateZoneOptions, PERIOD_OPTIONS } from '@ossinsight/widgets-utils/src/ui';
 import * as colors from 'tailwindcss/colors';
 import { LinkedData } from '../parameters/resolver';
 import { darkColorPalette, lightColorPalette } from '../renderer/echarts-theme';
 
-export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P, createCanvas: () => HTMLCanvasElement = () => document.createElement('canvas')) {
+export function createWidgetBaseContext<P extends Record<string, string | string[]>> (runtime: 'client' | 'server', parameters: P, createCanvas: () => HTMLCanvasElement = () => document.createElement('canvas')): WidgetBaseContext {
   return {
     runtime,
     parameters,
