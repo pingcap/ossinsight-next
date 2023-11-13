@@ -16,7 +16,7 @@ export function initEndpointsGenModulesCommand(parentCommand: Command, logger: L
       '-e, --endpoints-dir <string>',
       'Specifies the directory to load the endpoint configs.',
       (value) => value,
-      path.resolve(process.cwd(), '../../endpoints')
+      path.resolve(process.cwd(), '../data-service/endpoints')
     )
     .requiredOption<string>(
       '-o, --output-path <string>',
@@ -37,9 +37,6 @@ export function initEndpointsGenModulesCommand(parentCommand: Command, logger: L
 
       // Check if the functions directory exists.
 
-      if (fs.existsSync(outputPath)) {
-        fs.rmSync(outputPath, { recursive: true, force: true });
-      }
       fs.mkdirSync(outputPath, { recursive: true });
 
 
@@ -54,20 +51,11 @@ export function initEndpointsGenModulesCommand(parentCommand: Command, logger: L
 
       const queries: Record<string, any>[] = [];
       for (const endpointJSONFile of endpointJSONFiles) {
-        // Read endpoint config.
-        const configPath = path.resolve(endpointBaseDir, endpointJSONFile);
-        const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-
         // Read endpoint SQL.
         const endpointDir = path.dirname(endpointJSONFile);
-        const sqlPath = path.resolve(endpointBaseDir, endpointDir, 'template.sql');
-        const sql = fs.readFileSync(sqlPath, 'utf-8');
 
         const dir = path.join(outputPath, endpointDir)
-        const res = await renderer.render(endpointTemplate, {
-          sql,
-          config,
-        });
+        const res = await renderer.render(endpointTemplate);
 
         fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(path.join(dir, 'index.js'), res);

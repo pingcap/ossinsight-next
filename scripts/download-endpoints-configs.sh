@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ENDPOINT_BASEDIR="./endpoints/"
+ENDPOINT_BASEDIR="./packages/data-service/endpoints/"
 
 if test -d ${ENDPOINT_BASEDIR} && test ! $CI; then
   echo endpoints exists
