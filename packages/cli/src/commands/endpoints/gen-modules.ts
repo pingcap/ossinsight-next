@@ -22,7 +22,7 @@ export function initEndpointsGenModulesCommand(parentCommand: Command, logger: L
       '-o, --output-path <string>',
       'Specifies the output path to save the entry code.',
       (value) => value,
-      path.resolve(process.cwd(), '../../web/node_modules/@ossinsight/endpoints')
+      path.resolve(process.cwd(), '../../web/node_modules/@ossinsight/data-service/endpoints')
     )
     .action(async ({ endpointsDir, outputPath }) => {
       const endpointTemplateFile = path.resolve(process.cwd(), 'templates/endpoint.js.liquid');
