@@ -30,8 +30,8 @@
       "@ossinsight/widgets": [
         "./node_modules/@ossinsight/widgets/index.js"
       ],
-      "@ossinsight/endpoints": [
-        "./node_modules/@ossinsight/endpoints/index.js"
+      "@ossinsight/data-service/endpoints": [
+        "./node_modules/@ossinsight/data-service/endpoints/index.js"
       ]
     }
   },

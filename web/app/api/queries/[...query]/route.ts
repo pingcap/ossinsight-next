@@ -1,4 +1,4 @@
-import loadEndpoint, { hasEndpoint } from '@ossinsight/endpoints';
+import loadEndpoint, { hasEndpoint } from '@ossinsight/data-service/endpoints';
 import { APIError, executeEndpoint } from '@ossinsight/data-service';
 import { NextRequest } from 'next/server';
 

@@ -1,4 +1,4 @@
-import loadEndpoint from '@ossinsight/endpoints';
+import loadEndpoint from '@ossinsight/data-service/endpoints';
 import { executeEndpoint } from '@ossinsight/data-service';
 import { WidgetBaseContext } from '@ossinsight/widgets-types';
 import { Liquid } from 'liquidjs';

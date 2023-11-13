@@ -1,4 +1,4 @@
-declare module '@ossinsight/endpoints' {
+declare module '@ossinsight/data-service/endpoints' {
   type Endpoint = { config: import('./src/config').EndpointConfig, sql: string };
 
   export default function loadEndpoint (name: string): Promise<Endpoint>
