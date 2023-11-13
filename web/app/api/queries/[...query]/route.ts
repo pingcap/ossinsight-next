@@ -2,11 +2,14 @@ import loadEndpoint, { hasEndpoint } from '@ossinsight/endpoints';
 import { APIError, executeEndpoint } from '@ossinsight/endpoints-core';
 import { NextRequest } from 'next/server';
 
+interface Params {
+  query: string | string[];
+}
+
 export const runtime = 'edge';
 
-export async function GET (req: NextRequest) {
-  // Remove prefix.
-  const queryName = req.nextUrl.pathname.replaceAll('/api/queries/', '');
+export async function GET (req: NextRequest, reqCtx: { params: Params }) {
+  const queryName = getQueryName(reqCtx.params);
 
   if (!hasEndpoint(queryName)) {
     return new Response(JSON.stringify({ message: 'Endpoint not found.' }), {
@@ -54,4 +57,12 @@ export async function GET (req: NextRequest) {
       'Vercel-CDN-Cache-Control': 'max-age=3600',
     },
   });
+}
+
+function getQueryName ({ query }: Params) {
+  if (typeof query === 'string') {
+    return decodeURIComponent(query);
+  } else {
+    return query.map(decodeURIComponent).join('/');
+  }
 }
