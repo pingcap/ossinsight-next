@@ -61,6 +61,7 @@ export function initWidgetsGenModulesCommand (parentCommand: Command, logger: Lo
         manifest,
       });
 
+      fs.mkdirSync(path.dirname(outFile), { recursive: true })
       fs.writeFileSync(outFile, code);
     });
 }
