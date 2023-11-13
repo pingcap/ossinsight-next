@@ -1,5 +1,5 @@
 /** @jsxImportSource @ossinsight/compose */
-import { Card, JSX } from '@ossinsight/compose';
+import { Card, JSX, builtin } from '@ossinsight/compose';
 
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
@@ -33,7 +33,7 @@ export default function (
   function Item ({ label, data, params }: { label: string, params: Params, data: any }) {
     return (
       <flex direction="vertical" gap={SPACING}>
-        <builtin-label label={label} grow={0.1} />
+        <builtin.Label label={label} grow={0.1} />
         <widget widget="@ossinsight/widget-analyze-repo-recent-collaborative-productivity-metrics" data={[data]} parameters={params} grow={0.9} />
       </flex>
     );

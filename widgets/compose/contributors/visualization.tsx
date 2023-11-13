@@ -1,6 +1,6 @@
 /** @jsxImportSource @ossinsight/compose */
 
-import { JSX, Card } from '@ossinsight/compose';
+import { JSX, Card, builtin } from '@ossinsight/compose';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
@@ -60,7 +60,7 @@ export default function (
     <Card title="Contributors" subtitle=" ">
       <grid rows={rows} cols={cols} gap={4} data={contributors} ifEmpty="indicator">
         {...contributors.map(item => (
-          <builtin-avatar-label label="" imgSize={size} imgSrc={item.actor_login ? `https://github.com/${item.actor_login}.png` : ''} />
+          <builtin.AvatarLabel label="" imgSize={size} imgSrc={item.actor_login ? `https://github.com/${item.actor_login}.png` : ''} />
         ))}
       </grid>
     </Card>

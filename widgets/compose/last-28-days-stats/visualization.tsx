@@ -1,5 +1,5 @@
 /** @jsxImportSource @ossinsight/compose */
-import { Card, JSX, Widget, WidgetProps } from '@ossinsight/compose';
+import { Card, JSX, Widget, WidgetProps, builtin } from '@ossinsight/compose';
 
 import { WidgetsDefinitions } from '@ossinsight/internal/widgets';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
@@ -22,7 +22,7 @@ export default function ([[issues], [prs], [contributors], [stars]]: Input, ctx:
   function Item<K extends keyof WidgetsDefinitions> ({ label, valueKey, data, ...props }: { label: string, valueKey: string } & Omit<WidgetProps<K>, 'parameters'>) {
     return (
       <flex direction="horizontal" gap={SPACING}>
-        <builtin-label-value label={label} value={data[0][valueKey]} grow={0.3} />
+        <builtin.LabelValue label={label} value={data[0][valueKey]} grow={0.3} />
         <Widget name={props.name} parameters={ctx.parameters} data={[data]} grow={0.7} />
       </flex>
     );

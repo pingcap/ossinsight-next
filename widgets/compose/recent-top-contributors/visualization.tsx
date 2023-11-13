@@ -1,6 +1,6 @@
 /** @jsxImportSource @ossinsight/compose */
 
-import { Card, JSX, Widget } from '@ossinsight/compose';
+import { builtin, Card, JSX, Widget } from '@ossinsight/compose';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
@@ -33,7 +33,7 @@ export default function (
       <flex direction="horizontal" ifEmpty="indicator" data={sortedContributors}>
         <flex direction="vertical" grow={0.7}>
           {sortedContributors.map(contributor => (
-            <builtin-avatar-label label={contributor.actor_login} imgSrc={`https://github.com/${contributor.actor_login}.png`} />
+            <builtin.AvatarLabel label={contributor.actor_login} imgSrc={`https://github.com/${contributor.actor_login}.png`} />
           ))}
         </flex>
         <Widget name={'@ossinsight/widget-analyze-repo-recent-top-contributors'} parameters={ctx.parameters} data={[sortedContributors]} />

@@ -1,4 +1,8 @@
-import type { CSSProperties } from 'react';
+type MockCSSProperties = {
+  color?: string
+  fontSize?: number | string
+  fontWeight?: number | string
+}
 
 export interface BuiltinWidgetsMap {
   'builtin:avatar-label': { label?: string; imgSrc: string; imgSize?: number, href?: string };
@@ -7,11 +11,11 @@ export interface BuiltinWidgetsMap {
     label: string | number;
     value?: string | number;
     labelProps?: {
-      style?: CSSProperties;
+      style?: MockCSSProperties;
       className?: string;
     };
     valueProps?: {
-      style?: CSSProperties;
+      style?: MockCSSProperties;
       className?: string;
       tooltip?: string;
     };

@@ -3,6 +3,7 @@
 import { WidgetsDefinitions } from '@ossinsight/internal/widgets';
 import { Spacing, WidgetLayout } from '@ossinsight/widgets-utils/src/compose';
 import Compose from './factory';
+import { CardHeading } from './builtin'
 
 export const CARD_COMMON_PADDING = 24;
 export const CARD_COMMON_HEADING_HEIGHT = 48;
@@ -28,7 +29,7 @@ export function Card ({
 }: CardProps) {
   return (
     <flex direction="vertical" padding={padding} gap={gap}>
-      <builtin-card-heading title={title} subtitle={subtitle} size={headerHeight} />
+      <CardHeading title={title} subtitle={subtitle} size={headerHeight} />
       {children}
     </flex>
   );

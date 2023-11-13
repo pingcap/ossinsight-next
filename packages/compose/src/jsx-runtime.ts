@@ -1,8 +1,8 @@
 import { Layout } from '@ossinsight/widgets-utils/src/compose';
 import Compose from './factory';
 import JSX = Compose.JSX;
+import FC = Compose.FC;
 
-type FC<P> = (props: P) => Layout;
 
 function jsx<K extends keyof Compose.JSX.IntrinsicElements> (component: K, props: Compose.JSX.IntrinsicElements[K]): Layout
 function jsx<C extends FC<any>> (component: C, props: Parameters<C>[0]): ReturnType<C>;

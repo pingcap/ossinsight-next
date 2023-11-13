@@ -29,38 +29,25 @@ function Compose (component: any, props: any, ...children: any): Layout {
 
   const key = component;
 
-  if (key.startsWith('builtin-')) {
-    return {
-      layout: 'widget',
-      widget: key.replace(/^builtin-/, 'builtin:'),
-      parameters: restProps,
-      data,
-      children: [],
-      padding,
-      gap,
-      size,
-      grow,
-    };
-  } else {
-    return {
-      layout: key,
-      ...restProps,
-      data: key === 'widget' ? data : undefined,
-      padding,
-      gap,
-      size,
-      grow,
-      children,
-    } as Layout;
-  }
+  return {
+    layout: key,
+    ...restProps,
+    data: key === 'widget' ? data : undefined,
+    padding,
+    gap,
+    size,
+    grow,
+    children,
+  } as Layout;
 }
 
 namespace Compose {
   export type ComposeNodes = Layout | undefined | null | false | ComposeNodes[];
+  export type FC<P> = (props: P) => Layout;
 
   export namespace JSX {
     type LayoutChildrenAttributes = { children?: ComposeNodes };
-    type CommonAttributes = Pick<Layout, 'gap' | 'size' | 'padding' | 'grow'>;
+    export type CommonAttributes = Pick<Layout, 'gap' | 'size' | 'padding' | 'grow'>;
     export type LayoutAttributes<L extends Layout> = Omit<L, 'layout' | 'children'>;
 
     export type Element = Layout;
@@ -68,23 +55,13 @@ namespace Compose {
     export type IntrinsicAttributes = { data?: any, ifEmpty?: 'hide' | 'indicator' };
 
     export interface ElementChildrenAttribute {
-      children: {};
+      children: ComposeNodes;
     }
 
-    export interface IntrinsicElements extends BuiltinWidgets {
+    export interface IntrinsicElements {
       flex: LayoutAttributes<FlexBaseLayout> & LayoutChildrenAttributes & IntrinsicAttributes;
       grid: LayoutAttributes<GridLayout> & LayoutChildrenAttributes & IntrinsicAttributes;
-      widget: LayoutAttributes<WidgetLayout> & IntrinsicAttributes
-    }
-
-    // MARK: React does not support namespace
-    export interface BuiltinWidgets {
-      'builtin-empty': BuiltinWidgetsMap['builtin:empty'] & CommonAttributes;
-      'builtin-label': BuiltinWidgetsMap['builtin:label'] & CommonAttributes;
-      'builtin-label-value': BuiltinWidgetsMap['builtin:label-value'] & CommonAttributes;
-      'builtin-avatar-label': BuiltinWidgetsMap['builtin:avatar-label'] & CommonAttributes;
-      'builtin-avatar-progress': BuiltinWidgetsMap['builtin:avatar-progress'] & CommonAttributes;
-      'builtin-card-heading': BuiltinWidgetsMap['builtin:card-heading'] & CommonAttributes;
+      widget: LayoutAttributes<WidgetLayout> & IntrinsicAttributes;
     }
   }
 }
