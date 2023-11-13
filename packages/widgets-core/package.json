@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "devDependencies": {
-    "@ossinsight/endpoints-core": "workspace:^",
+    "@ossinsight/data-service": "workspace:^",
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@ossinsight/widgets-utils": "workspace:^",

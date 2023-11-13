@@ -50,7 +50,7 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
-  packages/endpoints-core:
+  packages/data-service:
     dependencies:
       '@tidbcloud/serverless':
         specifier: ^0.0.6
@@ -264,9 +264,9 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
     devDependencies:
-      '@ossinsight/endpoints-core':
+      '@ossinsight/data-service':
         specifier: workspace:^
-        version: link:../endpoints-core
+        version: link:../data-service
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../ui
@@ -422,9 +422,9 @@ importers:
       '@ossinsight/cli':
         specifier: workspace:^
         version: link:../packages/cli
-      '@ossinsight/endpoints-core':
+      '@ossinsight/data-service':
         specifier: workspace:^
-        version: link:../packages/endpoints-core
+        version: link:../packages/data-service
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../packages/ui

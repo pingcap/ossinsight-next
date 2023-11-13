@@ -1,5 +1,5 @@
 import loadEndpoint, { hasEndpoint } from '@ossinsight/endpoints';
-import { APIError, executeEndpoint } from '@ossinsight/endpoints-core';
+import { APIError, executeEndpoint } from '@ossinsight/data-service';
 import { NextRequest } from 'next/server';
 
 interface Params {

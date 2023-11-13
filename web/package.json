@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@ossinsight/cli": "workspace:^",
-    "@ossinsight/endpoints-core": "workspace:^",
+    "@ossinsight/data-service": "workspace:^",
     "@ossinsight/ui": "workspace:^",
     "@ossinsight/widgets-types": "workspace:^",
     "@tailwindcss/typography": "^0.5.10",
