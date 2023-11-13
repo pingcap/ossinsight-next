@@ -2,6 +2,7 @@ type MockCSSProperties = {
   color?: string
   fontSize?: number | string
   fontWeight?: number | string
+  marginLeft?: string | number
 }
 
 export interface BuiltinWidgetsMap {
