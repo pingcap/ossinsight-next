@@ -31,162 +31,29 @@ type DataPoint = {
   cnt: number;
 };
 
-type Input = [DataPoint[]];
+type PersonalOverviewDataPoint = {
+  code_additions: number;
+  code_deletions: number;
+  code_reviews: number;
+  contribute_repos: number;
+  issues: number;
+  pull_requests: number;
+  repos: number;
+  star_earned: number;
+  star_repos: number;
+  user_id: number;
+};
 
-const mockItems = [
-  {
-    icon: 'gh-star',
-    label: 'Starred Repos',
-    type: 'avatar-label',
-  },
-  {
-    type: 'text',
-    label: `123,456`,
-  },
-  ,
-  {
-    icon: 'gh-star',
-    label: 'Starred Earned',
-    type: 'avatar-label',
-  },
-  {
-    type: 'text',
-    label: `123,456`,
-  },
-  ,
-  {
-    icon: 'gh-repo',
-    label: 'Contributed to',
-    type: 'avatar-label',
-  },
-  {
-    type: 'text',
-    label: `123,456`,
-  },
-  ,
-  {
-    icon: 'gh-pr',
-    label: 'Pull Requests',
-    type: 'avatar-label',
-  },
-  {
-    type: 'text',
-    label: `123,456`,
-  },
-  ,
-  {
-    icon: 'gh-pr',
-    label: 'PR Code Changes',
-    type: 'avatar-label',
-  },
-  {
-    type: 'label-value',
-    label: `+123,456`,
-    value: `-123,456`,
-  },
-  ,
-  {
-    icon: 'gh-issue',
-    label: 'Issues',
-    type: 'avatar-label',
-  },
-  {
-    type: 'text',
-    label: `123,456`,
-  },
-  ,
-  {
-    icon: 'gh-code-review',
-    label: 'Code Reviews',
-    type: 'avatar-label',
-  },
-  {
-    type: 'text',
-    label: `123,456`,
-  },
-  ,
-];
+type PersonalLanguagesDataPoint = {
+  language: string;
+  prs: number;
+  percentage: number;
+};
 
-const mockLanguages = [
-  {
-    name: 'JavaScript',
-    percent: 0.3,
-  },
-  {
-    name: 'TypeScript',
-    percent: 0.2,
-  },
-  {
-    name: 'Python',
-    percent: 0.2,
-  },
-  {
-    name: 'Go',
-    percent: 0.1,
-  },
-  {
-    name: 'C++',
-    percent: 0.1,
-  },
-  {
-    name: 'Java',
-    percent: 0.05,
-  },
-  {
-    name: 'Rust',
-    percent: 0.05,
-  },
-];
-
-const mock12Langs = [
-  {
-    name: 'JavaScript',
-    percent: 0.3,
-  },
-  {
-    name: 'TypeScript',
-    percent: 0.2,
-  },
-  {
-    name: 'Python',
-    percent: 0.2,
-  },
-  {
-    name: 'Go',
-    percent: 0.1,
-  },
-  {
-    name: 'C++',
-    percent: 0.1,
-  },
-  {
-    name: 'Java',
-    percent: 0.05,
-  },
-  {
-    name: 'Rust',
-    percent: 0.05,
-  },
-  {
-    name: 'Ruby',
-    percent: 0.05,
-  },
-  {
-    name: 'PHP',
-    percent: 0.05,
-  },
-  {
-    name: 'C#',
-    percent: 0.05,
-  },
-  {
-    name: 'C',
-    percent: 0.05,
-  },
-  {
-    name: 'Shell',
-    percent: 0.05,
-  },
+type Input = [
+  DataPoint[],
+  PersonalOverviewDataPoint[],
+  PersonalLanguagesDataPoint[]
 ];
 
 const languangeColors = [
@@ -213,47 +80,139 @@ const languangeColors = [
   '#c22d40',
 ];
 
-const handleLangs = (langs: typeof mockLanguages, maxLangs = 7) => {
-  const sortedLangs = langs.sort((a, b) => b.percent - a.percent);
+const handleLangs = (langs: PersonalLanguagesDataPoint[], maxLangs = 7) => {
+  const sortedLangs = langs.sort((a, b) => b.percentage - a.percentage);
   if (sortedLangs.length <= maxLangs) return sortedLangs;
   const top7Langs = sortedLangs.slice(0, maxLangs);
   const otherLangs = sortedLangs.slice(maxLangs);
   const otherLangsPercent = otherLangs.reduce(
-    (acc, cur) => acc + cur.percent,
+    (acc, cur) => acc + cur.percentage,
     0
   );
-  return [...top7Langs, { name: 'Others', percent: otherLangsPercent }];
+  return [
+    ...top7Langs,
+    { language: 'Others', percentage: otherLangsPercent, prs: 0 },
+  ];
+};
+
+const handleOverview = (overview: PersonalOverviewDataPoint) => {
+  const {
+    star_repos,
+    star_earned,
+    contribute_repos,
+    repos,
+    pull_requests,
+    issues,
+    code_reviews,
+    code_additions,
+    code_deletions,
+  } = overview;
+  return [
+    {
+      icon: 'gh-star',
+      label: 'Starred Repos',
+      type: 'avatar-label',
+    },
+    {
+      type: 'text',
+      label: `${star_repos}`,
+    },
+    ,
+    {
+      icon: 'gh-star',
+      label: 'Starred Earned',
+      type: 'avatar-label',
+    },
+    {
+      type: 'text',
+      label: `${star_earned}`,
+    },
+    ,
+    {
+      icon: 'gh-repo',
+      label: 'Contributed to',
+      type: 'avatar-label',
+    },
+    {
+      type: 'text',
+      label: `${contribute_repos}`,
+    },
+    ,
+    {
+      icon: 'gh-pr',
+      label: 'Pull Requests',
+      type: 'avatar-label',
+    },
+    {
+      type: 'text',
+      label: `${pull_requests}`,
+    },
+    ,
+    {
+      icon: 'gh-pr',
+      label: 'PR Code Changes',
+      type: 'avatar-label',
+    },
+    {
+      type: 'label-value',
+      label: `+${code_additions}`,
+      value: `-${code_deletions}`,
+    },
+    ,
+    {
+      icon: 'gh-issue',
+      label: 'Issues',
+      type: 'avatar-label',
+    },
+    {
+      type: 'text',
+      label: `${issues}`,
+    },
+    ,
+    {
+      icon: 'gh-code-review',
+      label: 'Code Reviews',
+      type: 'avatar-label',
+    },
+    {
+      type: 'text',
+      label: `${code_reviews}`,
+    },
+  ];
 };
 
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
 ): Compose.JSX.Element {
-  const handledLangs = handleLangs(mock12Langs);
+  const overview = input[1][0];
+  const langs = input[2];
+  const handledLangs = handleLangs(langs);
+  const handledOverview = handleOverview(overview);
 
   return (
     <Card title={`vitalovevitamin's GitHub Dashboard`} subtitle=' '>
-      <grid rows={1} cols={2} gap={4} data={mockItems} ifEmpty='indicator'>
+      <grid rows={1} cols={2} gap={4} data={handledOverview} ifEmpty='indicator'>
         <flex direction='vertical' gap={4}>
           <grid
             grow={0.7}
             rows={7}
             cols={2}
             gap={4}
-            data={mockItems}
+            data={handledOverview}
             ifEmpty='indicator'
           >
-            {...mockItems.map((item) => {
+            {...handledOverview.map((item) => {
               if (item.type === 'text') {
-                return <builtin-label label={`123,456`} />;
+                return <builtin-label label={item.label} />;
               }
               if (item.type === 'label-value') {
                 if (ctx.runtime === 'server') {
                   return (
                     <flex direction='horizontal'>
-                      <builtin-label labelColor='#6CA963' label={`+123,456`} />
+                      <builtin-label labelColor='#6CA963' label={item.label} />
                       <builtin-label label={`/`} grow={0.3} />
-                      <builtin-label labelColor='#D45D52' label={`-123,456`} />
+                      <builtin-label labelColor='#D45D52' label={item.value} />
                     </flex>
                   );
                 }
@@ -288,8 +247,8 @@ export default function (
             {/* <builtin-label label={'bar'} /> */}
             <builtin-progress-bar
               items={handledLangs.map((lang, idx) => ({
-                label: lang.name,
-                percentage: lang.percent,
+                label: lang.language,
+                percentage: lang.percentage,
                 color: languangeColors[idx],
               }))}
             />
@@ -306,7 +265,7 @@ export default function (
                   <flex direction='horizontal' gap={2}>
                     {langs.map((lang, idx2) => (
                       <builtin-avatar-label
-                        label={lang.name}
+                        label={lang.language}
                         imgSrc='filled-circle'
                         imgProps={{
                           style: {
@@ -333,7 +292,7 @@ export default function (
           <widget
             widget='@ossinsight/widget-analyze-user-contribution-trends'
             ifEmpty='indicator'
-            data={input}
+            data={[input[0]]}
             parameters={ctx.parameters}
             padding={[0, 8]}
           />
