@@ -27,6 +27,7 @@ export interface BuiltinWidgetsMap {
       style?: MockCSSProperties;
       className?: string;
     };
+    center?: boolean;
   };
   'builtin:label': { label: string | number, labelProps?: { style?: MockCSSProperties, className?: string } };
   'builtin:empty': {};

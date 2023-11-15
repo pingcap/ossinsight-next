@@ -14,6 +14,7 @@ export function LabelValue({
   tooltip = '',
   spliter,
   spliterProps = {},
+  center = false,
 }: BuiltinProps<'builtin:label-value'>) {
   const { Label, Value } = useTheme(colorScheme);
 
@@ -21,6 +22,7 @@ export function LabelValue({
     <div
       className={clsx(className, 'group flex items-center gap-1', {
         'flex-col': column,
+        'justify-center': center,
       })}
       style={{ zIndex: 1, ...style }}
     >

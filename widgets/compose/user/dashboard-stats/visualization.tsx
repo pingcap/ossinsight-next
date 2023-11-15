@@ -225,13 +225,14 @@ export default function (
                     labelProps={{
                       style: {
                         color: 'green',
-                        // lineHeight: 1,
+                        lineHeight: 1,
                       },
                     }}
                     valueProps={{
                       style: { color: 'red', fontSize: 12 },
                     }}
                     spliter='/'
+                    center
                   />
                 );
               }
