@@ -1,7 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx Compose */
+/** @jsxImportSource @ossinsight/compose */
 
-import Compose, { Card } from '@ossinsight/compose';
+import { builtin, Card, JSX, Widget } from '@ossinsight/compose';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 
 type Params = {
@@ -184,7 +183,7 @@ const handleOverview = (overview: PersonalOverviewDataPoint) => {
 export default function (
   input: Input,
   ctx: WidgetVisualizerContext<Params>
-): Compose.JSX.Element {
+): JSX.Element {
   const overview = input[1][0];
   const langs = input[2];
   const handledLangs = handleLangs(langs);
@@ -204,27 +203,27 @@ export default function (
           >
             {...handledOverview.map((item) => {
               if (item.type === 'text') {
-                return <builtin-label label={item.label} />;
+                return <builtin.Label label={item.label} />;
               }
               if (item.type === 'label-value') {
                 if (ctx.runtime === 'server') {
                   return (
                     <flex direction='horizontal'>
-                      <builtin-label labelColor='#6CA963' label={item.label} />
-                      <builtin-label label={`/`} grow={0.3} />
-                      <builtin-label labelColor='#D45D52' label={item.value} />
+                      <builtin.Label  labelColor='#6CA963' label={item.label} />
+                      <builtin.Label  label={`/`} grow={0.3} />
+                      <builtin.Label  labelColor='#D45D52' label={item.value} />
                     </flex>
                   );
                 }
                 return (
-                  <builtin-label-value
+                  <builtin.LabelValue
                     column={false}
                     label={item.label}
                     value={item.value}
                     labelProps={{
                       style: {
                         color: 'green',
-                        lineHeight: 1,
+                        // lineHeight: 1,
                       },
                     }}
                     valueProps={{
@@ -235,7 +234,7 @@ export default function (
                 );
               }
               return (
-                <builtin-avatar-label
+                <builtin.AvatarLabel
                   label={item.label}
                   imgSize={20}
                   imgSrc={item.icon}
@@ -244,8 +243,7 @@ export default function (
             })}
           </grid>
           <flex direction='vertical' grow={0.3}>
-            {/* <builtin-label label={'bar'} /> */}
-            <builtin-progress-bar
+            <builtin.ProgressBar
               items={handledLangs.map((lang, idx) => ({
                 label: lang.language,
                 percentage: lang.percentage,
@@ -264,7 +262,7 @@ export default function (
                 .map((langs, idx1) => (
                   <flex direction='horizontal' gap={2}>
                     {langs.map((lang, idx2) => (
-                      <builtin-avatar-label
+                      <builtin.AvatarLabel
                         label={lang.language}
                         imgSrc='filled-circle'
                         imgProps={{
@@ -280,7 +278,7 @@ export default function (
                       new Array(4 - langs.length)
                         .fill(0)
                         .map(() => (
-                          <builtin-avatar-label label={''} imgSrc='' />
+                          <builtin.AvatarLabel label={''} imgSrc='' />
                         ))}
                   </flex>
                 ))}

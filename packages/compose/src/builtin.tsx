@@ -19,3 +19,4 @@ export const AvatarLabel = createBuiltinWidget('builtin:avatar-label');
 export const AvatarProgress = createBuiltinWidget('builtin:avatar-progress');
 export const Empty = createBuiltinWidget('builtin:empty');
 export const CardHeading = createBuiltinWidget('builtin:card-heading');
+export const ProgressBar = createBuiltinWidget('builtin:progress-bar');

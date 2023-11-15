@@ -24,11 +24,11 @@ export interface BuiltinWidgetsMap {
     tooltip?: string;
     spliter?: string;
     spliterProps?: {
-      style?: CSSProperties;
+      style?: MockCSSProperties;
       className?: string;
     };
   };
-  'builtin:label': { label: string | number, labelProps?: { style?: CSSProperties, className?: string } };
+  'builtin:label': { label: string | number, labelProps?: { style?: MockCSSProperties, className?: string } };
   'builtin:empty': {};
   'builtin:avatar-progress': {
     label?: string;
