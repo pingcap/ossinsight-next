@@ -188,9 +188,11 @@ export default function (
   const langs = input[2];
   const handledLangs = handleLangs(langs);
   const handledOverview = handleOverview(overview);
+  const { user_id } = ctx.parameters;
+  const user = ctx.getUser(Number(user_id));
 
   return (
-    <Card title={`vitalovevitamin's GitHub Dashboard`} subtitle=' '>
+    <Card title={`${user?.login || user_id}'s GitHub Dashboard`} subtitle=' '>
       <grid rows={1} cols={2} gap={4} data={handledOverview} ifEmpty='indicator'>
         <flex direction='vertical' gap={4}>
           <grid
@@ -209,9 +211,9 @@ export default function (
                 if (ctx.runtime === 'server') {
                   return (
                     <flex direction='horizontal'>
-                      <builtin.Label  labelColor='#6CA963' label={item.label} />
-                      <builtin.Label  label={`/`} grow={0.3} />
-                      <builtin.Label  labelColor='#D45D52' label={item.value} />
+                      <builtin.Label labelColor='#6CA963' label={item.label} />
+                      <builtin.Label label={`/`} grow={0.3} />
+                      <builtin.Label labelColor='#D45D52' label={item.value} />
                     </flex>
                   );
                 }
