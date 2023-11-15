@@ -1,7 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx Compose */
+/** @jsxImportSource @ossinsight/compose */
 
-import Compose, { Card } from '@ossinsight/compose';
+import { Card, JSX, Widget } from '@ossinsight/compose';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { DateTime } from 'luxon';
 
@@ -17,7 +16,7 @@ type DataPoint = {
   repo_name: string
 }
 
-export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params>): Compose.JSX.Element {
+export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params>): JSX.Element {
   const end = DateTime.now().startOf('day');
   const start = end.minus({ day: 27 }).startOf('day');
   const subtitle = `${start.toFormat('MM-dd')} - ${end.toFormat('MM-dd')}`;
@@ -28,8 +27,8 @@ export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params
 
   return (
     <Card title="Last 28 Days Stats" subtitle={`Date: ${subtitle}`}>
-      <widget
-        widget="@ossinsight/basic-bubbles-chart"
+      <Widget
+        name="@ossinsight/basic-bubbles-chart"
         data={data}
         ifEmpty="indicator"
         parameters={{

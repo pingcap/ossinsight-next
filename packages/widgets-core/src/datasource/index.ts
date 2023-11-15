@@ -11,6 +11,8 @@ export default async function executeDatasource (config: any, ctx: WidgetBaseCon
         return import('./api').then(module => module.default(config, ctx, signal));
       case 'ref':
         return import('./ref').then(module => module.default(config, ctx, signal));
+      case 'endpoint':
+        return import('./endpoint').then(module => module.default(config, ctx, signal));
     }
   } catch (e) {
     console.error(e)

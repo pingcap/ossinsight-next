@@ -1,11 +1,7 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/{activity}/new/ranking",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/{{ activity }}/new/ranking",
     "params": {
       "ownerId": "owner_id",
       "period": "period",
@@ -14,12 +10,8 @@
     "when": ["owner_id", "activity", "period"]
   },
   {
-    "type": "api",
-    "url": "/api/queries/orgs/{activity}/new/total",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/{{ activity }}/new/total",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

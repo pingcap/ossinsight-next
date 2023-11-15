@@ -1,11 +1,7 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/reviews/review-prs/trends",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/reviews/review-prs/trends",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

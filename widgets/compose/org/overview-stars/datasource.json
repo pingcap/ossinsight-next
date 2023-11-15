@@ -1,25 +1,20 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/stars/trends",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/stars/trends",
     "params": {
       "ownerId": "owner_id",
       "period": "period",
       "repoIds": "repo_ids"
     },
-    "when": ["owner_id", "period"]
+    "when": [
+      "owner_id",
+      "period"
+    ]
   },
   {
-    "type": "api",
-    "url": "/api/queries/orgs/stars/total",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/stars/total",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

@@ -87,10 +87,6 @@ Utils for widgets. Auto installed for all widgets.
 
 Type definitions for widgets. Auto installed for all widgets.
 
-### `@ossinsight/widgets-next`
-
-Next plugin to automatically transform widgets into ESM Modules.
-
 ### *[Planned]* `@ossinsight/widgets-eslint-plugin`
 
 ESLint plugin for validate widget folders.

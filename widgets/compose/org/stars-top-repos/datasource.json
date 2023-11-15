@@ -1,11 +1,7 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/stars/top-repos",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/stars/top-repos",
     "params": {
       "ownerId": "owner_id",
       "period": "period",
@@ -14,12 +10,8 @@
     "when": ["owner_id", "period"]
   },
   {
-    "type": "api",
-    "url": "/api/queries/orgs/stars/total",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/stars/total",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

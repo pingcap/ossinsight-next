@@ -35,6 +35,19 @@
             "type": "object",
             "properties": {
               "type": {
+                "const": "endpoint"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/EndpointDatasource"
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "properties": {
+              "type": {
                 "const": "ref"
               }
             }
@@ -49,7 +62,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "description": "Datasource type, only api supported now.",
+          "description": "Datasource type, 'api'",
           "type": "string",
           "enum": ["api"]
         },
@@ -79,6 +92,39 @@
         }
       },
       "required": ["type", "url", "parser", "params"],
+      "additionalProperties": false
+    },
+    "EndpointDatasource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Datasource type, 'endpoint'.",
+          "type": "string",
+          "enum": ["endpoint"]
+        },
+        "name": {
+          "description": "The endpoint name, support liquidjs template syntax",
+          "type": "string"
+        },
+        "params": {
+          "description": "Dynamic parameters mapping. Keys are url search params names and values are referencing dynamic parameter name",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {}
+        },
+        "when": {
+          "type": "array",
+          "description": "Decide when to execute the http request. All items should be provided by dynamic parameters (not url search params).",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "default": []
+        }
+      },
+      "required": ["type", "name", "params"],
       "additionalProperties": false
     },
     "RefDatasource": {

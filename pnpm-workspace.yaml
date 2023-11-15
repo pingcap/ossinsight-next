@@ -2,4 +2,5 @@ packages:
   - web
   - packages/*
   - widgets/**/*
+  - endpoints
   - widgets

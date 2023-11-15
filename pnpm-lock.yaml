@@ -50,6 +50,28 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  packages/data-service:
+    dependencies:
+      '@tidbcloud/serverless':
+        specifier: ^0.0.6
+        version: 0.0.6
+      liquidjs:
+        specifier: ^10.9.2
+        version: 10.9.2
+      luxon:
+        specifier: ^3.4.3
+        version: 3.4.3
+    devDependencies:
+      '@types/luxon':
+        specifier: ^3.3.4
+        version: 3.3.4
+      '@types/node':
+        specifier: 20.4.2
+        version: 20.4.2
+      json-schema-to-typescript:
+        specifier: ^13.1.1
+        version: 13.1.1
+
   packages/eslint-plugin:
     dependencies:
       '@stoplight/json':
@@ -242,6 +264,9 @@ importers:
         specifier: 18.2.0
         version: 18.2.0
     devDependencies:
+      '@ossinsight/data-service':
+        specifier: workspace:^
+        version: link:../data-service
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../ui
@@ -266,25 +291,18 @@ importers:
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
+      liquidjs:
+        specifier: ^10.9.2
+        version: 10.9.2
+      next:
+        specifier: ^13.5.2
+        version: 13.5.2(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
       tailwindcss:
         specifier: 3.3.3
         version: 3.3.3
       typescript:
         specifier: ^5.2.2
         version: 5.2.2
-
-  packages/widgets-next:
-    dependencies:
-      webpack-virtual-modules:
-        specifier: ^0.5.0
-        version: 0.5.0
-    devDependencies:
-      '@types/glob':
-        specifier: ^8.1.0
-        version: 8.1.0
-      next:
-        specifier: ^13.5.2
-        version: 13.5.2(@babel/core@7.23.2)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
 
   packages/widgets-types:
     dependencies:
@@ -404,12 +422,12 @@ importers:
       '@ossinsight/cli':
         specifier: workspace:^
         version: link:../packages/cli
+      '@ossinsight/data-service':
+        specifier: workspace:^
+        version: link:../packages/data-service
       '@ossinsight/ui':
         specifier: workspace:^
         version: link:../packages/ui
-      '@ossinsight/widgets-next':
-        specifier: workspace:^
-        version: link:../packages/widgets-next
       '@ossinsight/widgets-types':
         specifier: workspace:^
         version: link:../packages/widgets-types
@@ -425,12 +443,6 @@ importers:
       bootstrap-icons:
         specifier: ^1.11.1
         version: 1.11.1
-      json-schema-to-ts:
-        specifier: ^2.9.2
-        version: 2.9.2
-      json-schema-to-typescript:
-        specifier: ^13.1.1
-        version: 13.1.1
       luxon:
         specifier: ^3.4.3
         version: 3.4.3
@@ -5957,13 +5969,6 @@ packages:
       '@types/node': 20.4.2
     dev: true
 
-  /@types/glob@8.1.0:
-    resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
-    dependencies:
-      '@types/minimatch': 5.1.2
-      '@types/node': 20.4.2
-    dev: true
-
   /@types/graceful-fs@4.1.7:
     resolution: {integrity: sha512-MhzcwU8aUygZroVwL2jeYk6JisJrPl/oov/gsgGCue9mkgl9wjGbzReYQClxiUgFDnib9FuHqTndccKeZKxTRw==}
     dependencies:
@@ -6021,6 +6026,10 @@ packages:
 
   /@types/luxon@3.3.2:
     resolution: {integrity: sha512-l5cpE57br4BIjK+9BSkFBOsWtwv6J9bJpC7gdXIzZyI0vuKvNTk0wZZrkQxMGsUAuGW9+WMNWF2IJMD7br2yeQ==}
+    dev: true
+
+  /@types/luxon@3.3.4:
+    resolution: {integrity: sha512-H9OXxv4EzJwE75aTPKpiGXJq+y4LFxjpsdgKwSmr503P5DkWc3AG7VAFYrFNVvqemT5DfgZJV9itYhqBHSGujA==}
     dev: true
 
   /@types/mdast@3.0.13:
@@ -7291,7 +7300,6 @@ packages:
   /commander@10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
-    dev: false
 
   /commander@11.0.0:
     resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
@@ -10240,15 +10248,6 @@ packages:
   /json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
-  /json-schema-to-ts@2.9.2:
-    resolution: {integrity: sha512-h9WqLkTVpBbiaPb5OmeUpz/FBLS/kvIJw4oRCPiEisIu2WjMh+aai0QIY2LoOhRFx5r92taGLcerIrzxKBAP6g==}
-    engines: {node: '>=16'}
-    dependencies:
-      '@babel/runtime': 7.23.2
-      '@types/json-schema': 7.0.13
-      ts-algebra: 1.2.2
-    dev: true
-
   /json-schema-to-typescript@13.1.1:
     resolution: {integrity: sha512-F3CYhtA7F3yPbb8vF7sFchk/2dnr1/yTKf8RcvoNpjnh67ZS/ZMH1ElLt5KHAtf2/bymiejLQQszszPWEeTdSw==}
     engines: {node: '>=12.0.0'}
@@ -10439,7 +10438,6 @@ packages:
     hasBin: true
     dependencies:
       commander: 10.0.1
-    dev: false
 
   /loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
@@ -13591,10 +13589,6 @@ packages:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}
     dev: false
 
-  /ts-algebra@1.2.2:
-    resolution: {integrity: sha512-kloPhf1hq3JbCPOTYoOWDKxebWjNb2o/LKnNfkWhxVVisFFmMJPPdJeGoGmM+iRLyoXAR61e08Pb+vUXINg8aA==}
-    dev: true
-
   /ts-api-utils@1.0.3(typescript@5.2.2):
     resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
     engines: {node: '>=16.13.0'}
@@ -14146,6 +14140,7 @@ packages:
 
   /webpack-virtual-modules@0.5.0:
     resolution: {integrity: sha512-kyDivFZ7ZM0BVOUteVbDFhlRt7Ah/CSPwJdi8hBpkK7QLumUqdLtVfm/PX/hkcnrvr0i77fO5+TjZ94Pe+C9iw==}
+    dev: true
 
   /webpack@5.89.0:
     resolution: {integrity: sha512-qyfIC10pOr70V+jkmud8tMfajraGCZMBWJtrmuBymQKCrLTRejBI8STDp1MCyZu/QTdZSeacCQYpYNQVOzX5kw==}

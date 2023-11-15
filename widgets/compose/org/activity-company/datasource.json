@@ -1,11 +1,7 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/{activity}/organizations",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/{{ activity }}/organizations",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

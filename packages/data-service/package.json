@@ -1,0 +1,20 @@
+{
+  "name": "@ossinsight/data-service",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "scripts": {
+    "gen:d.ts": "json2ts ../../schemas/data-api/v1/EndpointConfig.schema.json ./src/config.d.ts"
+  },
+  "dependencies": {
+    "@tidbcloud/serverless": "^0.0.6",
+    "liquidjs": "^10.9.2",
+    "luxon": "^3.4.3"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.3.4",
+    "@types/node": "20.4.2",
+    "json-schema-to-typescript": "^13.1.1"
+  }
+}

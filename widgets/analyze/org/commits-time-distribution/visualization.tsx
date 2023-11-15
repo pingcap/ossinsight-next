@@ -1,9 +1,7 @@
-import React from 'react';
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 import { scaleToFit } from '@ossinsight/widgets-utils/src/utils';
 import { autoSize } from '@ossinsight/widgets-utils/src/compose/size';
 import { CSSProperties, ForwardedRef, forwardRef, useMemo } from 'react';
-import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
 type Params = {
   owner_id: number;
@@ -17,9 +15,13 @@ type DataPoint = {
   pushes: number;
 };
 
+type TransformedDataPoint = DataPoint & {
+  cnt: number
+}
+
 type Input = DataPoint[];
 
-function useFilteredData(input: Input, runtime: 'server' | 'client'): Input {
+function useFilteredData(input: Input, runtime: 'server' | 'client'): TransformedDataPoint[] {
   if (runtime === 'client') {
     return useMemo(() => {
       return transformData(input);
@@ -69,7 +71,7 @@ interface TimeDistributionProps {
   size: number;
   gap: number;
   offset: number;
-  data: Array<DataPoint>;
+  data: Array<TransformedDataPoint>;
   className?: string;
   style?: CSSProperties;
   width: number;
@@ -159,7 +161,7 @@ const TimeDistribution = forwardRef(
               />
             ))
           )}
-          {data.map(({ dayofweek: day, cnt, hour: time, type }) => (
+          {data.map(({ dayofweek: day, cnt, hour: time }) => (
             <rect
               key={`${time}-${day}`}
               x={((24 + time + offset) % 24) * (size + gap)}
