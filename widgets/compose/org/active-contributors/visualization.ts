@@ -41,7 +41,7 @@ export default function (
   const [contributors, total] = input;
   const sum = contributors.length;
 
-  const totalData = total?.[0] ?? {};
+  const totalData: Partial<TotalDataPoint> = total?.[0] ?? {};
 
   const { rows, cols, size } = {
     rows: 1,

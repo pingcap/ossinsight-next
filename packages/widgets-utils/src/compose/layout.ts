@@ -1,5 +1,7 @@
 import type { WidgetComposeItem } from '../../../widgets-types';
 import { isEmptyData } from '../utils';
+import type { WidgetsDefinitions } from '@ossinsight/internal/widgets'
+
 
 export type Spacing =
   [top: number, right: number, bottom: number, left: number]
@@ -261,7 +263,7 @@ export function computeLayout (input: Layout | LayoutBuilder<any>, left: number,
       return items;
     }
     default:
-      console.warn(`unknown layout type ${layout}`);
+      console.warn(`unknown layout type`, layout);
       return [];
   }
 }

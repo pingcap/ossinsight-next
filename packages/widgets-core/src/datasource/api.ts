@@ -3,6 +3,7 @@ import jp from 'jsonpath/jsonpath.js';
 import { parseTemplate } from 'url-template';
 import { ParserConfig } from '../types';
 import { HttpRequestError } from '../utils/errors';
+import { allExists, setUrlParams } from './utils';
 
 export interface ApiDatasourceConfig {
   type: 'api';
@@ -39,35 +40,6 @@ export default async function executeApiDatasource (config: ApiDatasourceConfig,
   const data = await response.json();
 
   return jp.query(data, config.parser.extract);
-}
-
-function allExists (required: string[] | undefined, params: Record<string, string>): boolean {
-  if (!required) {
-    return true;
-  }
-
-  for (let key of required) {
-    if (!(key in params)) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function setUrlParams(urlSearchParams: URLSearchParams, urlParams: Record<string, string>, parameters: Record<string, string | string[]>) {
-  for (let [name, paramName] of Object.entries(urlParams)) {
-    if (paramName in parameters) {
-      const value = parameters[paramName];
-      if (Array.isArray(value)) {
-        value.forEach((value) => {
-          urlSearchParams.append(name, value);
-        });
-        continue;
-      }
-      value && urlSearchParams.set(name, value);
-    }
-  }
 }
 
 function getBaseUrl() {

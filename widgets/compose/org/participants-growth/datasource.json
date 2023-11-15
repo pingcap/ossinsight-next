@@ -1,11 +1,7 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/participants/{activity}/trends",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/participants/{{ activity }}/trends",
     "params": {
       "ownerId": "owner_id",
       "period": "period",
@@ -14,12 +10,8 @@
     "when": ["owner_id", "activity", "period"]
   },
   {
-    "type": "api",
-    "url": "/api/queries/orgs/participants/{activity}/total",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/participants/{{ activity }}/total",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

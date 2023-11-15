@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { WidgetVisualizerContext } from '@ossinsight/widgets-types';
 // import { compare } from '@ossinsight/widgets-utils/src/visualizer/analyze';
 import cloud from 'd3-cloud';

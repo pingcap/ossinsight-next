@@ -1,11 +1,7 @@
 [
   {
-    "type": "api",
-    "url": "/api/queries/orgs/{activity}-ratio",
-    "parser": {
-      "type": "json",
-      "extract": "$.data[*]"
-    },
+    "type": "endpoint",
+    "name": "orgs/{{ activity }}-ratio",
     "params": {
       "ownerId": "owner_id",
       "period": "period",

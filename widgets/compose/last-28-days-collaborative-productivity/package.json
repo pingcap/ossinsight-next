@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Analyze the collaborative efficiency of a repository, including pull request merge rate, review rate, and issue closed rate, over the last 28 days.",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Repository"

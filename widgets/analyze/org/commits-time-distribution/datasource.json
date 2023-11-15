@@ -1,10 +1,6 @@
 {
-  "type": "api",
-  "url": "/api/queries/orgs/commits/time-distribution",
-  "parser": {
-    "type": "json",
-    "extract": "$.data[*]"
-  },
+  "type": "endpoint",
+  "name": "orgs/commits/time-distribution",
   "params": {
     "ownerId": "owner_id",
     "period": "period",

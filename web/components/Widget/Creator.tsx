@@ -7,9 +7,6 @@ import { QuickSelector } from '@/components/Widget/QuickSelector';
 import { filteredWidgetsNames } from '@/utils/widgets';
 import { AnalyzeSelector, AnalyzeTuple } from '@ossinsight/ui/src/components/AnalyzeSelector';
 
-import '@ossinsight/widget-compose-recent-active-contributors/metadata';
-import '@ossinsight/widget-compose-recent-active-contributors/params.json';
-
 import CheckCircleFillIcon from 'bootstrap-icons/icons/check-circle-fill.svg';
 import { useEffect, useMemo, useRef, useState } from 'react';
 

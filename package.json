@@ -4,9 +4,11 @@
   "private": true,
   "description": "Next version of ossinsight.io",
   "scripts": {
-    "postinstall": "pnpm run build:toolchain",
+    "postinstall": "pnpm run sync:endpoints && pnpm run cli:gen-essentials && pnpm run build:toolchain",
     "dev": "pnpm run --filter @ossinsight/web dev",
-    "build:toolchain": "pnpm run --sequential --filter @ossinsight/cli --filter @ossinsight/eslint-plugin --filter @ossinsight/compose --filter @ossinsight/widgets-next build",
+    "cli:gen-essentials": "pnpm run --filter @ossinsight/cli build && pnpm run --filter @ossinsight/cli start widgets gen-types && pnpm run --filter @ossinsight/cli start widgets gen-modules && pnpm run --filter @ossinsight/cli start endpoints gen-modules",
+    "build:toolchain": "pnpm run --sequential --filter eslint-plugin-ossinsight --filter @ossinsight/compose build",
+    "sync:endpoints": "./scripts/download-endpoints-configs.sh",
     "lint": "pnpm run -r lint"
   },
   "keywords": [],

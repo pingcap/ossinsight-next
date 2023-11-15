@@ -1,9 +1,13 @@
 import type { EChartsOption } from 'echarts';
 import type * as colors from 'tailwindcss/colors';
+import './widgets-definitions';
+import './widgets';
 
 export interface WidgetBaseContext<P extends Record<string, any> = Record<string, any>> {
   runtime: 'server' | 'client';
   parameters: P;
+
+  geo?: any;
 
   createCanvas (): HTMLCanvasElement;
   getTimeParams (): { zone: string, period: string };

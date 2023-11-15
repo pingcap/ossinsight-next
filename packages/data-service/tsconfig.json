@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "lib": ["ESNext", "DOM"],
+    "strict": true,
+    "types": ["src/types.d.ts"]
+  },
+  "include": ["src", "modules.d.ts"],
+  "exclude": ["node_modules"]
+}

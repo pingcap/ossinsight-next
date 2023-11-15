@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Analyze the overall repository performance in the last 28 days with stars, active contributors, pull requests, and issues.",
   "type": "module",
-  "main": "visualization.ts",
+  "main": "visualization.tsx",
   "keywords": [
     "🔥Popular",
     "Repository"
