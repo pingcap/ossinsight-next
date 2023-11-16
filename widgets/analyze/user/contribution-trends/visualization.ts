@@ -61,7 +61,7 @@ const generateDataset = (data: DataPoint[]) => {
 
 const getMaxValue = (data: DataPoint[]) => {
   return Math.max(...data.map((d) => d.cnt));
-}
+};
 
 export default function (
   input: Input,
@@ -130,11 +130,11 @@ export default function (
       color: chartColors[idx % chartColors.length],
       symbolSize: 0,
       lineStyle: {
-        width:1,
+        width: 1,
       },
       areaStyle: {
         opacity: 0.15,
-      }
+      },
     })),
     tooltip: {
       show: true,
@@ -153,7 +153,7 @@ export default function (
       textStyle: {
         fontSize: 12,
       },
-      type: 'scroll',
+      type: ctx.runtime === 'server' ? 'plain' : 'scroll',
     },
   };
 }
