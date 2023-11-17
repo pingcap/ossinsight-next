@@ -6,7 +6,7 @@ type MockCSSProperties = {
 }
 
 export interface BuiltinWidgetsMap {
-  'builtin:avatar-label': { label?: string; imgSrc: string; imgSize?: number, href?: string };
+  'builtin:avatar-label': { label?: string; imgSrc: string; imgSize?: number, href?: string, imgProps?: any, labelColor?: string };
   'builtin:card-heading': { title: string; subtitle?: string };
   'builtin:label-value': {
     label: string | number;
@@ -22,8 +22,14 @@ export interface BuiltinWidgetsMap {
     };
     column?: boolean;
     tooltip?: string;
+    spliter?: string;
+    spliterProps?: {
+      style?: MockCSSProperties;
+      className?: string;
+    };
+    center?: boolean;
   };
-  'builtin:label': { label: string | number };
+  'builtin:label': { label: string | number, labelProps?: { style?: MockCSSProperties, className?: string } };
   'builtin:empty': {};
   'builtin:avatar-progress': {
     label?: string;
@@ -36,6 +42,13 @@ export interface BuiltinWidgetsMap {
     valueFormatter?: (value: any) => string;
     labelColor?: string[];
     href?: string;
+  };
+  'builtin:progress-bar': {
+    items: Array<{
+      label: string;
+      percentage: number;
+      color?: string;
+    }>;
   };
 }
 

@@ -5,6 +5,7 @@ import { renderCardHeading } from './cardHeading';
 import { renderEmpty } from './empty';
 import { renderLabelValue } from './labelValue';
 import { renderAvatarProgress } from './avatarProgress';
+import { renderProgressBar } from './progressBar';
 import { BuiltinProps, transformBox } from './commons';
 
 export async function renderBuiltin (canvas: Canvas, name: string, props: BuiltinProps<any>): Promise<void>
@@ -28,6 +29,9 @@ export async function renderBuiltin (canvas: Canvas, name: string, props: Builti
       break;
     case 'builtin:avatar-progress':
       await renderAvatarProgress(canvas, props as BuiltinProps<'builtin:avatar-progress'>);
+      break;
+    case 'builtin:progress-bar':
+      renderProgressBar(canvas, props as BuiltinProps<'builtin:progress-bar'>);
       break;
     default:
       break;
