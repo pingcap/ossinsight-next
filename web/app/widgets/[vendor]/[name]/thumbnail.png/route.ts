@@ -1,3 +1,4 @@
+import { filterWidgetUrlParameters } from '@/app/widgets/[vendor]/[name]/utils';
 import config from '@/site.config';
 import { apiEvent, autoParams, serverSendGaMeasurementEvent } from '@/utils/ga';
 import { resolveImageSizeConfig } from '@/utils/siteConfig';
@@ -10,13 +11,6 @@ import renderCompose from '@ossinsight/widgets-core/src/renderer/node/compose';
 import { createLinkedDataContext, createVisualizationContext, createWidgetBaseContext, createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
-
-const EXCLUDED_PARAMETERS = [
-  'image_size',
-  'color_scheme',
-  // Comparing feature is disabled temporary.
-  'vs_repo_id',
-];
 
 export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
   if (vendor !== 'official') {
@@ -36,7 +30,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   const parameters: any = {};
   request.nextUrl.searchParams.forEach((value, key) => {
-    if (EXCLUDED_PARAMETERS.includes(key)) {
+    if (!filterWidgetUrlParameters(name, key)) {
       return;
     }
     parameters[key] = value;
