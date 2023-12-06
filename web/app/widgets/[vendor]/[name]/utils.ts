@@ -29,7 +29,7 @@ export const makeLinkedData = cache((name: string, searchParams: Record<string, 
   return widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams, defaultLinkedData, signal));
 });
 
-export function stringArrayRecord2UrlSearch(values: Record<string, string | string[]>) {
+export function stringArrayRecord2UrlSearch (values: Record<string, string | string[]>) {
   const newValues = new URLSearchParams();
   for (const [k, v] of Object.entries(values)) {
     if (Array.isArray(v)) {
@@ -39,4 +39,26 @@ export function stringArrayRecord2UrlSearch(values: Record<string, string | stri
     }
   }
   return newValues;
+}
+
+const allowVsWidgets: string[] = [
+  'analyze-repo-stars-history',
+].map(name => `@ossinsight/widget-${name}`);
+const disallowParams = [
+  'image_size',
+  'color_scheme',
+];
+
+export function filterWidgetUrlParameters (name: string, paramName: string) {
+  if (paramName === 'vs_repo_id') {
+    return allowVsWidgets.includes(name);
+  }
+  return !disallowParams.includes(paramName);
+}
+
+export function getExcludeWidgetParameters (name: string) {
+  if (allowVsWidgets.includes(name)) {
+    return []
+  }
+  return ['vs_repo_id']
 }

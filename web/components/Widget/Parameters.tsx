@@ -10,7 +10,7 @@ import { ParameterDefinition } from '@ossinsight/widgets-types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { use, useId, useMemo, useState } from 'react';
 
-export function WidgetParameters ({ widgetName, linkedData }: { widgetName: string, linkedData: LinkedData }) {
+export function WidgetParameters ({ widgetName, linkedData, excludeParameters }: { widgetName: string, linkedData: LinkedData, excludeParameters: string[] }) {
   const { push } = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -51,7 +51,7 @@ export function WidgetParameters ({ widgetName, linkedData }: { widgetName: stri
   return (
     <ParametersContext.Provider value={{ linkedData }}>
       <div className="flex flex-col items-start gap-4 mt-4">
-        {Object.entries(parameters).filter(([key]) => key !== 'vs_repo_id').map(([key, config]) => {
+        {Object.entries(parameters).filter(([key]) => !excludeParameters.includes(key)).map(([key, config]) => {
           const pId = `${key}-${id}`;
           const rawValue = values[key];
           const value = parseValue(rawValue, config);
