@@ -6,6 +6,7 @@ import { BuiltinProps } from './common';
 export function Empty ({
   className,
   style,
+  title = 'Oooops! It\'s a Blank Canvas.',
   colorScheme,
 }: BuiltinProps<'builtin:empty'>) {
   const svgString = useMemo(() => sad(24, 'currentColor'), []);
@@ -20,7 +21,7 @@ export function Empty ({
       style={style}
     >
       <span className="flex items-center justify-center" dangerouslySetInnerHTML={{ __html: svgString }} />
-      <span>Oooops! It's a Blank Canvas.</span>
+      <span>{title}</span>
     </div>
   );
 }

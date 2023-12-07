@@ -28,6 +28,6 @@ export async function renderEmpty (
   ctx.textAlign = 'center';
   ctx.font = `normal ${14 * dpr}px`;
   ctx.fillStyle = Label.color;
-  ctx.fillText('Oooops! It\'s a Blank Canvas.', (width / 2), top + 64 * dpr, width);
+  ctx.fillText(props.title ?? 'Oooops! It\'s a Blank Canvas.', (width / 2), top + 64 * dpr, width);
   ctx.restore();
 }

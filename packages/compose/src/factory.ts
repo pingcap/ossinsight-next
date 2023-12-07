@@ -6,16 +6,29 @@ function Compose (component: any, props: any, ...children: any): Layout {
   const { padding = 0, gap = 0, size = undefined, grow = undefined, data, ifEmpty, ...restProps } = props;
   if (ifEmpty) {
     if (isEmptyData(data)) {
-      if (ifEmpty === 'indicator') {
-        return {
-          layout: 'widget',
-          widget: 'builtin:empty',
-          data: {},
-          parameters: undefined,
-          children: [],
-        };
-      } else {
-        return null;
+      switch (ifEmpty) {
+        case 'indicator': {
+          return {
+            layout: 'widget',
+            widget: 'builtin:empty',
+            data: {},
+            parameters: undefined,
+            children: [],
+          };
+        }
+        case 'hide': {
+          return null;
+        }
+        default:
+          return {
+            layout: 'widget',
+            widget: 'builtin:empty',
+            data: {},
+            parameters: {
+              title: ifEmpty,
+            },
+            children: [],
+          };
       }
     }
   }
@@ -52,7 +65,7 @@ namespace Compose {
 
     export type Element = Layout;
 
-    export type IntrinsicAttributes = { data?: any, ifEmpty?: 'hide' | 'indicator' };
+    export type IntrinsicAttributes = { data?: any, ifEmpty?: 'hide' | 'indicator' | string };
 
     export interface ElementChildrenAttribute {
       children: ComposeNodes;

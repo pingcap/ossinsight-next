@@ -30,7 +30,9 @@ export interface BuiltinWidgetsMap {
     center?: boolean;
   };
   'builtin:label': { label: string | number, labelProps?: { style?: MockCSSProperties, className?: string } };
-  'builtin:empty': {};
+  'builtin:empty': {
+    title?: string;
+  };
   'builtin:avatar-progress': {
     label?: string;
     imgSrc?: string;
