@@ -30,7 +30,7 @@ export default function (input: DataPoint[], ctx: WidgetVisualizerContext<Params
       <Widget
         name="@ossinsight/basic-bubbles-chart"
         data={data}
-        ifEmpty="indicator"
+        ifEmpty="No public activities in the recent period."
         parameters={{
           start,
           end,
