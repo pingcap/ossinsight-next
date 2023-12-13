@@ -1,6 +1,5 @@
 import { Liquid } from 'liquidjs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import template from './openapi.yml.liquid';
 
 export type TemplateParameter = {
   name: string
@@ -32,7 +31,6 @@ liquid.registerFilter('quote', value => {
 });
 
 export async function compile (scope: { widgets: TemplateScope[] }): Promise<string> {
-  const tmplPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'openapi.yml.liquid');
-  const tmpl = await liquid.parseFile(tmplPath);
+  const tmpl = await liquid.parse(template);
   return await liquid.render(tmpl, scope);
 }
