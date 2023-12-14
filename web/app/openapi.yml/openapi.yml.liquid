@@ -27,7 +27,8 @@ paths:
           required: {{ parameter.required }}
           description: {{ parameter.description | quote }}
           schema:
-            type: {{ parameter.type }}
+            {{- parameter.schema | yaml: 6 }}
+          {{- parameter.extra | yaml: 5 }}
         {%- endfor %}
       responses:
         200:
@@ -73,3 +74,17 @@ components:
       description: Bad request - parameters missing or invalid.
     not_found:
       description: Resource not found.
+
+  examples:
+    tidb:
+      description: "The id of GitHub Repository pingcap/tidb is `41986369`"
+      value: 41986369
+    tikv:
+      description: "The id of GitHub Repository pingcap/tikv is `48833910`"
+      value: 48833910
+    pingcap:
+      description: "The id of GitHub Organization @pingcap is `11855343`"
+      value: 11855343
+    torvalds:
+      description: "The id of GitHub User @pingcap is `11855343`"
+      value: 1024025

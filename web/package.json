@@ -45,6 +45,7 @@
     "luxon": "^3.4.3",
     "raw-loader": "^4.0.2",
     "sass": "^1.68.0",
-    "tailwind-merge": "^1.14.0"
+    "tailwind-merge": "^1.14.0",
+    "yaml": "^2.3.4"
   }
 }

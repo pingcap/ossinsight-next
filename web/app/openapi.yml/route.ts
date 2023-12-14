@@ -41,31 +41,69 @@ export async function GET (req: NextRequest) {
         // TODO: generate more detailed schema for special parameters
         const parameters = Object.entries(parameterDefinitions)
           .filter(([param]) => filterWidgetUrlParameters(widgetName, param))
+          .filter(([, def]) => !('expression' in def))
           .map(([name, def]) => {
-            let type: TemplateParameter['type'];
+            let schema: any;
+            let extra: any;
+
             switch (def.type) {
               case 'repo-id':
+              case 'repo-ids':
               case 'user-id':
               case 'collection-id':
               case 'owner-id':
               case 'limit':
               case 'time-zone':
-                type = 'number';
+                schema = { type: 'number' };
                 break;
               case 'month':
               case 'day':
-                type = 'string';
+                schema = { type: 'string' };
                 break;
               default:
-                type = 'string';
+                schema = { type: 'string' };
+                break;
+            }
+
+            if (def.array) {
+              schema = { type: 'array', items: { oneOf: [schema] } };
+            }
+
+            if ('enums' in def) {
+              schema.enum = def.enums;
+            }
+
+            switch (def.type) {
+              case 'repo-id':
+                extra = {
+                  examples: {
+                    'pingcap/tidb': { $ref: '#/components/examples/tidb' },
+                    'tikv/tikv': { $ref: '#/components/examples/tikv' },
+                  },
+                };
+                break;
+              case 'user-id':
+                extra = {
+                  examples: {
+                    'torvalds': { $ref: '#/components/examples/torvalds' },
+                  },
+                };
+                break;
+              case 'owner-id':
+                extra = {
+                  examples: {
+                    'pingcap': { $ref: '#/components/examples/pingcap' },
+                  },
+                };
                 break;
             }
 
             return {
               name,
-              type,
+              schema,
+              extra,
               in: 'query',
-              description: [def.title, def.description].filter(Boolean).join(' - '),
+              description: [def.description, def.title].filter(Boolean).join(' - '),
               required: def.required ? 'true' : 'false',
             } satisfies TemplateParameter;
           });
