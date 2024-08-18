@@ -17,8 +17,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     notFound();
   }
 
-  const { description, keywords } = widgetMeta(name)
-  console.log(description, keywords)
+  const { description, keywords } = widgetMeta(name);
 
   const generateMetadata = await widgetMetadataGenerator(name);
 
@@ -29,7 +28,6 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     }
     parameters[key] = value;
   });
-
 
   const paramDef = await widgetParameterDefinitions(name);
   Object.assign(parameters, resolveExpressions(paramDef));
