@@ -119,7 +119,7 @@ const handleOverview = (overview: PersonalOverviewDataPoint) => {
     ,
     {
       icon: 'gh-star',
-      label: 'Starred Earned',
+      label: 'Stars Earned',
       type: 'avatar-label',
     },
     {
