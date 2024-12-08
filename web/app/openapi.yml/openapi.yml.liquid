@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: OSSInsight widgets api document
+  version: 1.0.0
+  description: TODO
+
+servers:
+  - url: https://next.ossinsight.io
+
+tags:
+  - name: widgets
+    description: All public widgets
+
+paths:
+  {%- for widget in widgets %}
+  /widgets/official/{{ widget.normalized_name }}/manifest.json:
+    get:
+      tags:
+        - widgets
+      operationId: {{ widget.manifest.id | quote }}
+      summary: {{ widget.manifest.summary | quote }}
+      description: {{ widget.manifest.description | quote }}
+      parameters:
+        {%- for parameter in widget.parameters %}
+        - name: {{ parameter.name | quote }}
+          in: {{ parameter.in }}
+          required: {{ parameter.required }}
+          description: {{ parameter.description | quote }}
+          schema:
+            {{- parameter.schema | yaml: 6 }}
+          {{- parameter.extra | yaml: 5 }}
+        {%- endfor %}
+      responses:
+        200:
+          description: 'Successful response for manifest request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetManifest'
+        400:
+          $ref: '#/components/responses/bad_request'
+        404:
+          $ref: '#/components/responses/not_found'
+  {%- endfor%}
+
+components:
+  schemas:
+    WidgetManifest:
+      type: object
+      description: Manifest for the analyze
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the thumbnail image.
+        pageUrl:
+          type: string
+          format: uri
+          description: URL of the analysis page.
+        title:
+          type: string
+          description: Title of the analysis.
+        description:
+          type: string
+          description: Description of the analysis.
+        keywords:
+          type: array
+          items:
+            type: string
+          description: Keywords related to the analysis.
+
+  responses:
+    bad_request:
+      description: Bad request - parameters missing or invalid.
+    not_found:
+      description: Resource not found.
+
+  examples:
+    tidb:
+      description: "The id of GitHub Repository pingcap/tidb is `41986369`"
+      value: 41986369
+    tikv:
+      description: "The id of GitHub Repository pingcap/tikv is `48833910`"
+      value: 48833910
+    pingcap:
+      description: "The id of GitHub Organization @pingcap is `11855343`"
+      value: 11855343
+    torvalds:
+      description: "The id of GitHub User @pingcap is `11855343`"
+      value: 1024025
