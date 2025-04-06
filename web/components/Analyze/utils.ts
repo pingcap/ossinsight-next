@@ -2,14 +2,14 @@ import { handleOApi } from '@ossinsight/widgets-core/src/utils/oapi';
 
 const API_SERVER = 'https://api.ossinsight.io';
 const PATH_GET_ORG_INFO = `/q/get-user-by-login`;
-const PATH_GET_ORG_OVERVIEW = `/q/orgs/overview`;
-const PATH_GET_ORG_STARS_LOCATIONS = `/q/orgs/stars/locations`;
-const PATH_GET_ORG_STARS_ORGS = `/q/orgs/stars/organizations`;
-const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/q/orgs/participants/locations`;
-const PATH_GET_ORG_PARTICIPANT_ORGS = `/q/orgs/participants/organizations`;
+const PATH_GET_ORG_OVERVIEW = `/queries/orgs/overview`;
+const PATH_GET_ORG_STARS_LOCATIONS = `/queries/orgs/stars/locations`;
+const PATH_GET_ORG_STARS_ORGS = `/queries/orgs/stars/organizations`;
+const PATH_GET_ORG_PARTICIPANT_LOCATIONS = `/queries/orgs/participants/locations`;
+const PATH_GET_ORG_PARTICIPANT_ORGS = `/queries/orgs/participants/organizations`;
 const PATH_GET_USERS = `/gh/users/`;
 const PATH_GET_REPO_BY_ID = `/gh/repositories/`;
-const PATH_GET_FILLED_RATIO = `/q/orgs/{activity}/{target}/completion-rate`;
+const PATH_GET_FILLED_RATIO = `/queries/orgs/{activity}/{target}/completion-rate`;
 
 export interface OwnerInfo {
   type: 'User' | 'Organization' | 'Bot';
@@ -31,7 +31,7 @@ export const getOrgInfo = (login: string) => {
 };
 
 export const getOrgOverview = (id: number, signal?: AbortSignal) => {
-  return fetch(`${API_SERVER}${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`, { signal })
+  return fetch(`${PATH_GET_ORG_OVERVIEW}?ownerId=${id}`, { signal })
     .then(handleOApi);
 };
 
@@ -77,7 +77,7 @@ export const getOrgActivityLocations = (
 
   const paramsStr = params2UrlSearch({ ...params, ownerId: id });
 
-  return fetch(`${API_SERVER}${path}?${paramsStr}`, { signal })
+  return fetch(`${path}?${paramsStr}`, { signal })
     .then(handleOApi);
 };
 
@@ -109,7 +109,7 @@ export const getOrgActivityOrgs = (
     path = PATH_GET_ORG_PARTICIPANT_ORGS;
   }
 
-  return fetch(`${API_SERVER}${path}?${paramsStr}`, { signal })
+  return fetch(`${path}?${paramsStr}`, { signal })
     .then(handleOApi);
 };
 
@@ -135,7 +135,7 @@ export const getCompletionRate = (
   path = path.replace('{activity}', params?.activity || 'stars');
   path = path.replace('{target}', params?.target || 'organizations');
 
-  return fetch(`${API_SERVER}${path}?${paramsStr}`, { signal }).then(
+  return fetch(`${path}?${paramsStr}`, { signal }).then(
     handleOApi
   );
 };
