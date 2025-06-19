@@ -46,7 +46,7 @@ export function useWidgetShareInfo (fullName: string | undefined, tuple: Analyze
       }
 
       await resolveParameters(parameters, params, linkedData);
-      setShareInfo(await createShareInfo(fullName, linkedData, params));
+      setShareInfo(await createShareInfo(fullName, linkedData, Promise.resolve(params)));
       setParams(params);
       setWaiting(false);
     });

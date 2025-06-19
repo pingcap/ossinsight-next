@@ -1,6 +1,8 @@
+@use "sass:color" as color;
+
 $color-primary: rgb(255, 232, 149);
-$color-primary-darkened: fade-out($color-primary, 0.4);
-$color-primary-highlighted: lighten($color-primary, 5%);
+$color-primary-darkened: color.scale($color-primary, $alpha: -40%);
+$color-primary-highlighted: color.adjust($color-primary, $lightness: 5%);
 $color-primary-reverse: rgb(31, 30, 40);
 $color-disabled: #615F6F;
 

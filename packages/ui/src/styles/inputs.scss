@@ -1,4 +1,4 @@
-@import "controls";
+@use "controls" as *;
 
 @layer components {
   .TextInput {

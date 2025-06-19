@@ -1,5 +1,6 @@
 import loadEndpoint, { hasEndpoint } from '@ossinsight/data-service/endpoints';
 import { APIError, executeEndpoint } from '@ossinsight/data-service';
+import { geolocation } from '@vercel/functions';
 import { NextRequest } from 'next/server';
 
 interface Params {
@@ -8,8 +9,8 @@ interface Params {
 
 export const runtime = 'edge';
 
-export async function GET (req: NextRequest, reqCtx: { params: Params }) {
-  const queryName = getQueryName(reqCtx.params);
+export async function GET (req: NextRequest, reqCtx: { params: Promise<Params> }) {
+  const queryName = getQueryName(await reqCtx.params);
 
   if (!hasEndpoint(queryName)) {
     return new Response(JSON.stringify({ message: 'Endpoint not found.' }), {
@@ -35,7 +36,7 @@ export async function GET (req: NextRequest, reqCtx: { params: Params }) {
 
   let result;
   try {
-    result = await executeEndpoint(queryName, endpoint.config, endpoint.sql, params, req.geo);
+    result = await executeEndpoint(queryName, endpoint.config, endpoint.sql, params, geolocation(req));
   } catch (err: any) {
     if (err instanceof APIError) {
       return new Response(JSON.stringify({ message: err.message }), {

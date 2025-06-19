@@ -9,6 +9,6 @@
   "author": "OSSInsight",
   "devDependencies": {
     "@ossinsight/widgets-parent": "workspace:^",
-    "@types/react": "18.2.15"
+    "@types/react": "19.1.0"
   }
 }

@@ -13,9 +13,10 @@ const nextConfig = {
     ]
   },
   pageExtensions: ['ts', 'tsx', 'mdx'],
+  serverExternalPackages: ['@napi-rs/canvas'],
   experimental: {
     externalDir: true,
-    serverComponentsExternalPackages: ['@napi-rs/canvas'],
+    urlImports: ['https://esm.sh'],
   },
   webpack: config => {
     config.module.rules.push({

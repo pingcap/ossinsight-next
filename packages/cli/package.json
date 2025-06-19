@@ -13,11 +13,11 @@
     "commander": "^11.0.0",
     "glob": "^10.3.10",
     "liquidjs": "^10.9.2",
-    "next": "^13.5.2",
+    "next": "^15.3.4",
     "pino": "^8.15.7",
     "pino-pretty": "^10.2.3"
   },
   "devDependencies": {
-    "@types/node": "20.4.2"
+    "@types/node": "22.15.32"
   }
 }

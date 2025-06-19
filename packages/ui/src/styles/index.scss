@@ -1,5 +1,5 @@
-@import "inputs";
-@import "theme";
+@use "inputs" as *;
+@use "theme" as *;
 
 :root {
   --color-primary: #{$color-primary};

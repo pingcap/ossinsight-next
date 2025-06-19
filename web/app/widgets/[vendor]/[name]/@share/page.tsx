@@ -1,15 +1,15 @@
 import { Share } from '@/components/Share';
 import { widgetParameterDefinitions } from '@/utils/widgets';
 import { resolveParameters } from '@ossinsight/widgets-core/src/parameters/resolver';
-import { headers } from 'next/headers';
 import { Suspense } from 'react';
 import type { WidgetPageProps } from '../utils';
 import { widgetPageParams, widgetSignature } from '../utils';
 
 export default async function ShareSection (props: WidgetPageProps) {
-  const { name } = widgetPageParams(props.params);
-  const signature = widgetSignature(props);
-  const linkedData = widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, props.searchParams));
+  const searchParams = await props.searchParams;
+  const { name } = await widgetPageParams(props.params);
+  const signature = await widgetSignature(props);
+  const linkedData = widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams));
 
   return (
     <Suspense key={signature} fallback="loading...">

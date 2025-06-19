@@ -6,7 +6,8 @@ import { createLinkedDataContext, createWidgetBaseContext } from '@ossinsight/wi
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
+export async function GET (request: NextRequest, { params }: { params: Promise<{ vendor: string, name: string }> }) {
+  const { vendor, name: paramName } = await params;
   if (vendor !== 'official') {
     notFound();
   }
@@ -17,8 +18,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     notFound();
   }
 
-  const { description, keywords } = widgetMeta(name)
-  console.log(description, keywords)
+  const { description, keywords } = widgetMeta(name);
 
   const generateMetadata = await widgetMetadataGenerator(name);
 
@@ -29,7 +29,6 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     }
     parameters[key] = value;
   });
-
 
   const paramDef = await widgetParameterDefinitions(name);
   Object.assign(parameters, resolveExpressions(paramDef));

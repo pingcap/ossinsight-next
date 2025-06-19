@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "eslint-plugin-ossinsight": "workspace:^",
-    "eslint": "8.45.0"
+    "eslint": "^9.29.0"
   }
 }

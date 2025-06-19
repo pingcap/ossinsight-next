@@ -44,6 +44,8 @@ const plugin: ESLint.Plugin = {
                 return [];
               case 'ref':
                 return validateRefDatasource(result, datasource, i);
+              default:
+                return [];
             }
           }
         }

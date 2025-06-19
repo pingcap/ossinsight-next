@@ -8,7 +8,7 @@ export function validateDatasourceSchema (result: JsonParserResult<any>): Linter
   const res = datasourceSchema(result.data);
 
   if (!res) {
-    return transformJsonSchemaErrorObject('ossinsight/datasource-schema', result, datasourceSchema.errors);
+    return transformJsonSchemaErrorObject('ossinsight/datasource-schema', result, datasourceSchema.errors ?? []);
   }
 
   return [];

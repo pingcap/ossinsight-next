@@ -2,6 +2,7 @@ import { Canvas, createCanvas, loadImage } from '@napi-rs/canvas';
 import { WidgetNodeVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
 import { scaleToFit } from '../../utils/vis';
+import { renderToStaticMarkup } from 'next/dist/compiled/react-dom/server.node.js'
 
 export default async function renderSvg (props: WidgetNodeVisualizationProps) {
   const { data, visualizer, dpr, parameters, linkedData, colorScheme } = props;
@@ -16,7 +17,7 @@ export default async function renderSvg (props: WidgetNodeVisualizationProps) {
   });
 
   // @ts-ignore
-  const svg = await import('../../../node_modules/react-dom/server.node.js').then((module) => module.renderToString(option));
+  const svg = renderToStaticMarkup(option);
   const image = await loadImage(`data:image/svg+xml;utf8,${svg}`);
 
   width *= dpr;

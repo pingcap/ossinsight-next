@@ -29,7 +29,7 @@ export function Card ({
 }: CardProps) {
   return (
     <flex direction="vertical" padding={padding} gap={gap}>
-      <CardHeading title={title} subtitle={subtitle} size={headerHeight} />
+      <CardHeading title={title ?? ''} subtitle={subtitle} size={headerHeight} />
       {children}
     </flex>
   );

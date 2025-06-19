@@ -1,5 +1,5 @@
-import * as RuiMenubar from '@radix-ui/react-menubar';
 import Link from 'next/link';
+import { Menubar as RuiMenubar } from 'radix-ui';
 import { MenuItemBaseConfig, MenuItemConfig } from '../../types/ui-config';
 import { SiteConfigIcon } from '../SiteConfigIcon';
 

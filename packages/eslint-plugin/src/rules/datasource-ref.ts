@@ -20,7 +20,7 @@ export function validateRefDatasource (result: JsonParserResult<any>, datasource
     return [{
       ruleId: 'ossinsight/datasource-ref',
       ...transformJsonRange(location),
-      message: e.message,
+      message: (((e as Error)?.message ?? 'Unknown Error') || String(e)),
       severity: 2,
     }];
   }

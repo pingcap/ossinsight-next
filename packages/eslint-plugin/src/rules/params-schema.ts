@@ -8,7 +8,7 @@ export function validateParamsSchema (result: JsonParserResult<any>): Linter.Lin
   const res = paramsSchema(result.data);
 
   if (!res) {
-    return transformJsonSchemaErrorObject('ossinsight/params-schema', result, paramsSchema.errors);
+    return transformJsonSchemaErrorObject('ossinsight/params-schema', result, paramsSchema.errors ?? []);
   }
 
   return [];

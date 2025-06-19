@@ -1,6 +1,5 @@
 import { TriangleDownIcon } from '@primer/octicons-react';
-import * as RuiMenubar from '@radix-ui/react-menubar';
-import ChevronDownIcon from 'bootstrap-icons/icons/chevron-down.svg';
+import { Menubar as RuiMenubar } from 'radix-ui';
 import { useCallback, useEffect, useRef } from 'react';
 import { MenuParentItemConfig } from '../../types/ui-config';
 import { preventDefault } from '../../utils/event';
@@ -14,7 +13,7 @@ export function MenuParentItem ({ item, onValueChange }: { item: MenuParentItemC
     };
   }, []);
 
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+  const timeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const handleMouseEnter = useCallback(() => {
     clearTimeout(timeout.current);

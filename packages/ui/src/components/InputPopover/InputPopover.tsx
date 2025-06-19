@@ -1,5 +1,5 @@
-import * as RuiPopover from '@radix-ui/react-popover';
 import clsx from 'clsx';
+import { Popover as RuiPopover } from 'radix-ui';
 import { ReactElement, ReactNode } from 'react';
 import { preventDefault } from '../../utils/event';
 
@@ -9,7 +9,7 @@ export interface InputPopoverProps {
   input: ReactElement;
   popperContent: ReactNode;
 
-  popoverPortalProps?: Omit<RuiPopover.PortalProps, 'children'>;
+  popoverPortalProps?: Omit<RuiPopover.PopoverPortalProps, 'children'>;
   popoverContentProps?: Omit<RuiPopover.PopoverContentProps, 'children' | 'onOpenAutoFocus'>;
 }
 

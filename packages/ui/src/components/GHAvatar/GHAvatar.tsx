@@ -1,4 +1,4 @@
-import * as RuiAvatar from '@radix-ui/react-avatar';
+import { Avatar as RuiAvatar } from 'radix-ui';
 import { AvatarSkeleton } from '../Skeleton';
 
 export interface GHAvatarProps {

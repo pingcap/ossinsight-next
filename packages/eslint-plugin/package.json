@@ -8,11 +8,12 @@
     "dev": "tsc -w"
   },
   "devDependencies": {
+    "@types/eslint": "^9.6.1",
     "@types/node": "20.4.2",
-    "eslint": "8.45.0"
+    "eslint": "^9.29.0"
   },
   "peerDependencies": {
-    "eslint": "8.45.0"
+    "eslint": "^9.29.0"
   },
   "dependencies": {
     "@stoplight/json": "^3.21.0",

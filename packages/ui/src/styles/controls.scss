@@ -1,4 +1,4 @@
-@import "theme";
+@use "theme" as *;
 
 @mixin control-shadow($color: $color-primary-darkened) {
   @apply outline-none rounded;

@@ -1,15 +1,15 @@
 'use client';
 
-import * as RuiMenubar from '@radix-ui/react-menubar';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Menubar as RuiMenubar } from 'radix-ui';
 import { useState } from 'react';
 import { SiteHeaderConfig } from '../../types/ui-config';
+
+import { HeaderAnalyzeSelector } from '../AnalyzeSelector/HeaderAnalyzeSelector';
 import { SiteConfigIcon } from '../SiteConfigIcon';
 import { MenuItem } from './MenuItem';
 import './style.scss';
-
-import { HeaderAnalyzeSelector } from '../AnalyzeSelector/HeaderAnalyzeSelector';
 
 export interface SiteHeaderProps extends SiteHeaderConfig {
 

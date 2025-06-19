@@ -14,7 +14,7 @@
     "@ossinsight/widgets-parent": "workspace:^",
     "@types/d3": "^7.4.1",
     "@types/d3-cloud": "^1.2.6",
-    "@types/react": "18.2.15",
+    "@types/react": "19.1.0",
     "d3": "^7.8.5",
     "d3-cloud": "^1.2.7"
   }

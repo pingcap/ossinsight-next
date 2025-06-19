@@ -1,26 +1,28 @@
+import { createShareInfo } from '@/components/Share/utils';
 import Widget from '@/components/Widget';
 import { fetchWidgetData, widgetMeta, widgetMetadataGenerator } from '@/utils/widgets';
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps, widgetSignature } from './utils';
-import { createShareInfo } from '@/components/Share/utils';
+import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps } from './utils';
 
 export default async function page (props: WidgetPageProps) {
-  const { name } = widgetPageParams(props.params);
+  const { name } = await widgetPageParams(props.params);
   const { data, linkedData, parameters } = await fetchWidgetData(name, props.searchParams);
-  const shareInfo = await createShareInfo(name, linkedData, props.searchParams as any);
+  const shareInfo = await createShareInfo(name, linkedData, props.searchParams);
 
   return (
     <Widget name={name} params={parameters} data={data} linkedData={linkedData} shareInfo={shareInfo} />
   );
 }
 
-export async function generateMetadata ({ params, searchParams }: WidgetPageProps): Promise<Metadata> {
-  const requestHeaders = headers();
+export async function generateMetadata ({ params: paramsPromise, searchParams: searchParamsPromise }: WidgetPageProps): Promise<Metadata> {
+  const requestHeaders = await headers();
   const host = requestHeaders.get('host');
 
-  const { name } = widgetPageParams(params);
+  const params = await paramsPromise;
+  const { name } = await widgetPageParams(paramsPromise);
+  const searchParams = await searchParamsPromise;
 
   const widget = widgetMeta(name);
   const generateMetadata = await widgetMetadataGenerator(name);
@@ -29,7 +31,7 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
     return {};
   }
 
-  const linkedData = await makeLinkedData(name, searchParams);
+  const linkedData = await makeLinkedData(name, searchParamsPromise);
 
   const usp = stringArrayRecord2UrlSearch(searchParams);
   const twitterImageUsp = new URLSearchParams(usp);
@@ -40,7 +42,7 @@ export async function generateMetadata ({ params, searchParams }: WidgetPageProp
 
   twitterImageUsp.set('image_size', 'twitter:summary_large_image');
 
-  const finalTitle = (title ?? decodeURIComponent(params.name)) + ' | OSSInsight';
+  const finalTitle = (title ?? name) + ' | OSSInsight';
   const finalDescription = description || widget.description;
   const finalKeywords = ['OSSInsight', 'OSSInsight Widget', 'GitHub Analytics'].concat(widget.keywords ?? []).concat(keywords ?? []);
 

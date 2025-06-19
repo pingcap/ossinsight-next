@@ -3,9 +3,10 @@ import { LinkedData, resolveParameters } from '@ossinsight/widgets-core/src/para
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
-export type WidgetPageProps = { params: { vendor: string, name: string }, searchParams: Record<string, string | string[]> };
+export type WidgetPageProps = { params: Promise<{ vendor: string, name: string }>, searchParams: Promise<Record<string, string | string[]>> };
 
-export const widgetPageParams = cache((params: WidgetPageProps['params']) => {
+export const widgetPageParams = cache(async (paramsPromise: WidgetPageProps['params']) => {
+  const params = await paramsPromise;
   if (params.vendor !== 'official') {
     notFound();
   }
@@ -21,11 +22,12 @@ export const widgetPageParams = cache((params: WidgetPageProps['params']) => {
   };
 });
 
-export function widgetSignature (props: WidgetPageProps) {
-  return JSON.stringify(props);
+export async function widgetSignature (props: WidgetPageProps) {
+  return JSON.stringify({ params: await props.params, searchParams: await props.searchParams });
 }
 
-export const makeLinkedData = cache((name: string, searchParams: Record<string, string | string[]>, defaultLinkedData?: LinkedData, signal?: AbortSignal) => {
+export const makeLinkedData = cache(async (name: string, searchParamsPromise: Promise<Record<string, string | string[]>>, defaultLinkedData?: LinkedData, signal?: AbortSignal) => {
+  const searchParams = await searchParamsPromise;
   return widgetParameterDefinitions(name).then(paramDef => resolveParameters(paramDef, searchParams, defaultLinkedData, signal));
 });
 
@@ -58,7 +60,7 @@ export function filterWidgetUrlParameters (name: string, paramName: string) {
 
 export function getExcludeWidgetParameters (name: string) {
   if (allowVsWidgets.includes(name)) {
-    return []
+    return [];
   }
-  return ['vs_repo_id']
+  return ['vs_repo_id'];
 }

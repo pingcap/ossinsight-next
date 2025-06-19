@@ -8,7 +8,9 @@
     "outDir": "dist",
     "rootDir": "src",
     "sourceMap": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strict": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": [

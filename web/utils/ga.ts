@@ -1,4 +1,5 @@
 import siteConfig from '@/site.config';
+import { ipAddress } from '@vercel/functions';
 import { NextRequest, userAgent } from 'next/server';
 
 export function serverSendGaMeasurementEvent (events: GaEvent[]) {
@@ -30,7 +31,7 @@ export function apiEvent (name: string, params: GaEventParams, request: NextRequ
 
   const requestParams = {
     url: request.url,
-    ip: request.ip,
+    ip: ipAddress(request),
     userAgent: ua.ua,
     os: `${ua.os.name} ${ua.os.version}`,
     browser: `${ua.browser.name} ${ua.browser.version}`,

@@ -12,7 +12,9 @@ import { createLinkedDataContext, createVisualizationContext, createWidgetBaseCo
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
+export async function GET (request: NextRequest, { params: routeParams }: { params: Promise<{ vendor: string, name: string }> }) {
+  const { vendor, name: paramName } = await routeParams;
+
   if (vendor !== 'official') {
     notFound();
   }

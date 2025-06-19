@@ -2,7 +2,7 @@ import { BuiltinWidgetsMap } from '@ossinsight/widgets-core/src/renderer/builtin
 import { isEmptyData } from '@ossinsight/widgets-core/src/utils/datasource';
 import { FlexBaseLayout, GridLayout, Layout, WidgetLayout } from '@ossinsight/widgets-utils/src/compose';
 
-function Compose (component: any, props: any, ...children: any): Layout {
+function Compose (component: any, props: any, ...children: any): Layout | null {
   const { padding = 0, gap = 0, size = undefined, grow = undefined, data, ifEmpty, ...restProps } = props;
   if (ifEmpty) {
     if (isEmptyData(data)) {
@@ -12,7 +12,7 @@ function Compose (component: any, props: any, ...children: any): Layout {
             layout: 'widget',
             widget: 'builtin:empty',
             data: {},
-            parameters: undefined,
+            parameters: {},
             children: [],
           };
         }
@@ -34,7 +34,7 @@ function Compose (component: any, props: any, ...children: any): Layout {
   }
 
   // flatten children to a single array and remove falsy values.
-  children = children.filter(Boolean).flatMap(child => child);
+  children = children.filter(Boolean).flatMap((child: any) => child);
 
   if (typeof component === 'function') {
     return component({ ...props, children });

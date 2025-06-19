@@ -4,3 +4,12 @@ packages:
   - widgets/**/*
   - endpoints
   - widgets
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - core-js-pure
+  - es5-ext
+  - esbuild
+  - sharp
+  - unrs-resolver

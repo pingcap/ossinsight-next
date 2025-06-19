@@ -2,7 +2,7 @@ import { size } from '@/app/analyze/[owner]/twitter-image';
 import { getOwnerInfo } from '@/components/Analyze/utils';
 import { DateTime } from 'luxon';
 import { notFound } from 'next/navigation';
-import { ImageResponse } from 'next/server';
+import { ImageResponse } from 'next/og';
 import { FC, SVGAttributes } from 'react';
 
 export default async function Image ({ params }: { params: { owner: string } }) {

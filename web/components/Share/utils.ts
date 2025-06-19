@@ -7,13 +7,13 @@ import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context'
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
-export function getOrigin () {
+export async function getOrigin () {
   if (typeof location !== 'undefined') {
     return location.origin;
   }
 
   const { headers } = require('next/headers');
-  const host = headers().get('host');
+  const host = (await headers()).get('host');
   if (!host) {
     return siteConfig.host;
   }
@@ -21,17 +21,17 @@ export function getOrigin () {
   return /^localhost:/.test(host) ? 'http://' + host : 'https://' + host;
 }
 
-export async function createShareInfo (fullName: string, linkedData: LinkedData, params: Record<string, string>): Promise<ShareOptions> {
+export async function createShareInfo (fullName: string, linkedData: LinkedData, params: Promise<Record<string, string | string[]>>): Promise<ShareOptions> {
   const generateMetadata = await widgetMetadataGenerator(fullName);
 
   const { title, keywords } = generateMetadata(
-    createWidgetContext('client', params, linkedData),
+    createWidgetContext('client', await params, linkedData),
   );
 
-  const usp = new URLSearchParams(params);
+  const usp = new URLSearchParams(await params as any);
   const imageUsp = new URLSearchParams(usp);
 
-  const origin = getOrigin();
+  const origin = await getOrigin();
 
   const visualizer = await widgetVisualizer(fullName);
   const width = resolveWidgetWidth(visualizer);

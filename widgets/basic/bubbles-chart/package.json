@@ -10,7 +10,7 @@
   "devDependencies": {
     "@ossinsight/widgets-parent": "workspace:^",
     "@types/luxon": "^3.3.2",
-    "@types/react": "18.2.15",
+    "@types/react": "19.1.0",
     "luxon": "^3.4.3"
   }
 }

@@ -2,12 +2,13 @@ import { Filter, WidgetCreator, WidgetsList } from '@/components/Widget';
 import { filteredWidgetsNames, nonPopularWidgetsNames } from '@/utils/widgets';
 import { ScrollAnchor } from '@ossinsight/ui/src/components/ScrollAnchor';
 import { SwitchingText } from '@ossinsight/ui/src/components/SwitchingText';
-import ArrowDownIcon from 'bootstrap-icons/icons/arrow-down.svg'
+import ArrowDownIcon from 'bootstrap-icons/icons/arrow-down.svg';
 import { Metadata } from 'next';
 
-export default async function Home ({ searchParams }: {
-  searchParams: any
+export default async function Home ({ searchParams: searchParamsPromise }: {
+  searchParams: Promise<any>
 }) {
+  const searchParams = await searchParamsPromise;
   const config = {
     search: searchParams['q'] ?? '',
     tag: (typeof searchParams['tag'] === 'string' ? searchParams['tag'] : undefined),
@@ -31,12 +32,12 @@ export default async function Home ({ searchParams }: {
         {'within 30s!'}
       </h1>
       <WidgetCreator className="mt-16" />
-      <ScrollAnchor className="text-center text-title flex items-center gap-2 justify-center mx-auto mt-16" id='widgets-list' top={120}>
+      <ScrollAnchor className="text-center text-title flex items-center gap-2 justify-center mx-auto mt-16" id="widgets-list" top={120}>
         <ArrowDownIcon />
         Find more customized widgets
       </ScrollAnchor>
       <Filter config={config} />
-      <section id='widgets-list' className="grid grid-cols-1 divide-dashed divide-y-4">
+      <section id="widgets-list" className="grid grid-cols-1 divide-dashed divide-y-4">
         <WidgetsList className="py-8" widgets={filteredWidgetsNames(config)} />
         {!config.tag && (
           <WidgetsList className="py-8" widgets={nonPopularWidgetsNames()} />
