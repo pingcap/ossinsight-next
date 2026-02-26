@@ -9,6 +9,13 @@ html, body {
   color: var(--text-color-content);
 }
 
+// Fix SVG display issues caused by Tailwind's preflight (display: block)
+// Bootstrap Icons use the 'bi' class prefix
+svg.bi {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 :root {
   --site-header-height: 60px;
   // ! TODO - remove legacy values

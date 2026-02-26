@@ -1,7 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import { EChartsOption, EChartsType, init } from 'echarts';
 import mergeRefs from 'merge-refs';
-import { ForwardedRef, forwardRef, RefObject, useEffect, useRef, useState } from 'react';
+import { Ref, RefObject, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -13,10 +13,11 @@ interface EChartsComponentProps extends WidgetReactVisualizationProps {
   visualizer: VisualizerModule<'echarts', EChartsOption, any, any>;
   parameters: Record<string, string | string[]>;
   linkedData: LinkedData;
+  ref?: Ref<HTMLDivElement>;
 }
 
-function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: EChartsComponentProps, ref: ForwardedRef<HTMLDivElement>) {
-  const echartsRef = useRef<EChartsType>();
+export default function EChartsComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme, ref }: EChartsComponentProps) {
+  const echartsRef = useRef<EChartsType>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const size = useSize(containerRef);
@@ -106,5 +107,3 @@ function useSize (ref: RefObject<HTMLDivElement | null>) {
 function isAvailableSize (size: typeof INITIAL_SIZE) {
   return size.width > 0 && size.height > 0;
 }
-
-export default forwardRef(EChartsComponent);

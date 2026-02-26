@@ -1,4 +1,4 @@
-import { cloneElement, ForwardedRef, forwardRef, lazy, Suspense } from 'react';
+import { cloneElement, lazy, Ref, Suspense } from 'react';
 import { WidgetReactVisualizationProps } from '../../types';
 import Svg from './react-svg';
 
@@ -6,10 +6,11 @@ const ECharts = lazy(() => import('./echarts'));
 const Compose = lazy(() => import('./compose'));
 
 export interface WidgetVisualizationProxyProps extends WidgetReactVisualizationProps {
-  noSuspense?: boolean
+  noSuspense?: boolean;
+  ref?: Ref<any>;
 }
 
-export default forwardRef(function WidgetVisualization ({ dynamicHeight, noSuspense = false, ...props }: WidgetVisualizationProxyProps, ref: ForwardedRef<any>) {
+export default function WidgetVisualization ({ dynamicHeight, noSuspense = false, ref, ...props }: WidgetVisualizationProxyProps) {
   let el;
   switch (props.type) {
     case 'echarts':
@@ -42,4 +43,4 @@ export default forwardRef(function WidgetVisualization ({ dynamicHeight, noSuspe
   }
 
   return el;
-});
+}

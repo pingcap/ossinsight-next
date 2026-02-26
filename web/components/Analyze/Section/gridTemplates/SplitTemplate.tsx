@@ -2,7 +2,7 @@ import { cloneElement, ReactElement } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface SplitTemplateProps {
-  children: [left: ReactElement, right: ReactElement];
+  children: [left: ReactElement<{ className?: string }>, right: ReactElement<{ className?: string }>];
 }
 
 export function SplitTemplate ({ children: [left, right] }: SplitTemplateProps) {

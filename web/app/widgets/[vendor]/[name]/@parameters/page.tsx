@@ -2,10 +2,12 @@ import { getExcludeWidgetParameters, makeLinkedData, widgetPageParams, WidgetPag
 import { ServerParameters } from '@/components/Widget/server';
 import { Suspense } from 'react';
 
-export default function ParametersSection (props: WidgetPageProps) {
-  const { name } = widgetPageParams(props.params);
-  const signature = widgetSignature(props);
-  const linkedData = makeLinkedData(name, props.searchParams);
+export default async function ParametersSection (props: WidgetPageProps) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+  const { name } = widgetPageParams(params);
+  const signature = widgetSignature(params, searchParams);
+  const linkedData = makeLinkedData(name, searchParams);
 
   const excludeParameters = getExcludeWidgetParameters(name);
   return (

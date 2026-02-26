@@ -5,8 +5,9 @@ import AnalyzeOwnerContextProvider from '@/components/Context/Analyze/AnalyzeOwn
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-export default async function Page ({ params }: { params: { owner: string } }) {
-  const data = await fetchOwnerInfo(decodeURIComponent(params.owner));
+export default async function Page ({ params }: { params: Promise<{ owner: string }> }) {
+  const { owner } = await params;
+  const data = await fetchOwnerInfo(decodeURIComponent(owner));
   if (data.type === 'Organization') {
     return (
       <AnalyzeOwnerContextProvider data={data}>
@@ -15,12 +16,13 @@ export default async function Page ({ params }: { params: { owner: string } }) {
       </AnalyzeOwnerContextProvider>
     );
   } else {
-    redirect(`https://ossinsight.io/analyze/${params.owner}`);
+    redirect(`https://ossinsight.io/analyze/${owner}`);
   }
 }
 
-export async function generateMetadata ({ params }: { params: { owner: string } }): Promise<Metadata> {
-  const data = await fetchOwnerInfo(decodeURIComponent(params.owner));
+export async function generateMetadata ({ params }: { params: Promise<{ owner: string }> }): Promise<Metadata> {
+  const { owner } = await params;
+  const data = await fetchOwnerInfo(decodeURIComponent(owner));
   if (data.type === 'Organization') {
     const title = `Analyze ${data.name} | OSSInsight`
     const description = 'Unlock the power of time-flexible organization analytics, community recognition metrics, participant insights, and productivity analysis with OSSInsight.';

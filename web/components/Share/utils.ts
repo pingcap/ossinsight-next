@@ -7,13 +7,14 @@ import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context'
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import { getWidgetSize } from '@ossinsight/widgets-utils/src/utils';
 
-export function getOrigin () {
+export async function getOrigin () {
   if (typeof location !== 'undefined') {
     return location.origin;
   }
 
-  const { headers } = require('next/headers');
-  const host = headers().get('host');
+  const { headers } = await import('next/headers');
+  const headersList = await headers();
+  const host = headersList.get('host');
   if (!host) {
     return siteConfig.host;
   }
@@ -31,7 +32,7 @@ export async function createShareInfo (fullName: string, linkedData: LinkedData,
   const usp = new URLSearchParams(params);
   const imageUsp = new URLSearchParams(usp);
 
-  const origin = getOrigin();
+  const origin = await getOrigin();
 
   const visualizer = await widgetVisualizer(fullName);
   const width = resolveWidgetWidth(visualizer);

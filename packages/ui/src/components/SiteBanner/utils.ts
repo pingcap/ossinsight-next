@@ -1,4 +1,5 @@
-import { createElement, Fragment, ReactElement } from 'react';
+import { ReactElement } from 'react';
+import * as prod from 'react/jsx-runtime';
 import rehypeReact from 'rehype-react';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
@@ -22,5 +23,9 @@ const processor = unified()
   .use(remarkParse)
   .use(validate)
   .use(remarkRehype)
-  .use(rehypeReact, { createElement, Fragment })
+  .use(rehypeReact, {
+    Fragment: prod.Fragment,
+    jsx: prod.jsx,
+    jsxs: prod.jsxs,
+  } as any)
   .freeze();

@@ -4,7 +4,7 @@ import ChevronDownIcon from 'bootstrap-icons/icons/chevron-down.svg';
 import ChevronUpIcon from 'bootstrap-icons/icons/chevron-up.svg';
 import clsx from 'clsx';
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { ReactNode, Ref } from 'react';
 import './style.scss';
 import { Listbox, Transition } from '@headlessui/react';
 import {
@@ -13,24 +13,25 @@ import {
   CheckIcon as GHCheckIcon,
 } from '@primer/octicons-react';
 
-export const Select = React.forwardRef<
-  HTMLButtonElement,
-  SelectPrimitive.SelectProps & {
-  id?: string
+export interface SelectProps extends SelectPrimitive.SelectProps {
+  id?: string;
   label?: string | React.ReactNode;
   className?: string;
   placeholder?: string;
   renderValue?: (value: any) => ReactNode;
   startIcon?: ReactNode;
-} & Pick<SelectPrimitive.SelectContentProps, 'position'>
->(({ id, children, className, position, placeholder, renderValue, startIcon, ...props }, forwardedRef) => {
+  position?: SelectPrimitive.SelectContentProps['position'];
+  ref?: Ref<HTMLButtonElement>;
+}
+
+export function Select({ id, children, className, position, placeholder, renderValue, startIcon, ref, ...props }: SelectProps) {
   return (
     <div className={clsx('SelectWrapper', className)}>
       <SelectPrimitive.Root {...props}>
         <SelectPrimitive.Trigger
           className={clsx('SelectTrigger')}
           id={id}
-          ref={forwardedRef}
+          ref={ref}
         >
           {startIcon}
           {renderValue
@@ -60,17 +61,18 @@ export const Select = React.forwardRef<
       </SelectPrimitive.Root>
     </div>
   );
-});
+}
 
-export const SelectItem = React.forwardRef<
-  HTMLDivElement,
-  SelectPrimitive.SelectItemProps
->(({ children, className, ...props }, forwardedRef) => {
+export interface SelectItemProps extends SelectPrimitive.SelectItemProps {
+  ref?: Ref<HTMLDivElement>;
+}
+
+export function SelectItem({ children, className, ref, ...props }: SelectItemProps) {
   return (
     <SelectPrimitive.Item
       className={clsx('SelectItem', className)}
       {...props}
-      ref={forwardedRef}
+      ref={ref}
     >
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator className="SelectItemIndicator">
@@ -78,19 +80,19 @@ export const SelectItem = React.forwardRef<
       </SelectPrimitive.ItemIndicator>
     </SelectPrimitive.Item>
   );
-});
-
-export const SelectGroup = React.forwardRef<
-  HTMLDivElement,
-  SelectPrimitive.SelectGroupProps & {
-  label?: string | React.ReactNode;
 }
->(({ children, label, className, ...props }, forwardedRef) => {
+
+export interface SelectGroupProps extends SelectPrimitive.SelectGroupProps {
+  label?: string | React.ReactNode;
+  ref?: Ref<HTMLDivElement>;
+}
+
+export function SelectGroup({ children, label, className, ref, ...props }: SelectGroupProps) {
   return (
     <SelectPrimitive.Group
       className={clsx('SelectGroup', className)}
       {...props}
-      ref={forwardedRef}
+      ref={ref}
     >
       {label && (
         <SelectPrimitive.Label className="SelectLabel">
@@ -100,20 +102,21 @@ export const SelectGroup = React.forwardRef<
       {children}
     </SelectPrimitive.Group>
   );
-});
+}
 
-export const SelectSeparator = React.forwardRef<
-  HTMLDivElement,
-  SelectPrimitive.SelectSeparatorProps
->(({ className, ...props }, forwardedRef) => {
+export interface SelectSeparatorProps extends SelectPrimitive.SelectSeparatorProps {
+  ref?: Ref<HTMLDivElement>;
+}
+
+export function SelectSeparator({ className, ref, ...props }: SelectSeparatorProps) {
   return (
     <SelectPrimitive.Separator
       className={clsx('SelectSeparator', className)}
       {...props}
-      ref={forwardedRef}
+      ref={ref}
     />
   );
-});
+}
 
 export type SelectParamOption<K extends string | number = string> = {
   key: K;
@@ -189,7 +192,7 @@ export function HLSelect<T extends string | number = string>(props: {
 }
 
 export function useSimpleSelect<T extends number | string = string> (
-  options: Array<SelectParamOption<T>>, // TODO support inheritance options, such as [[SelectParamOption<T>, SelectParamOption<T>], SelectParamOption<T>]
+  options: Array<SelectParamOption<T>>,
   defaultVal: SelectParamOption<T>,
   id?: string,
   startIcon?: ReactNode

@@ -9,10 +9,13 @@ export default async function renderSvg (props: WidgetNodeVisualizationProps) {
   width = visualizer.width ?? width;
   height = visualizer.height ?? height;
 
+  const canvasWidth = width * dpr;
+  const canvasHeight = height * dpr;
+
   const option = await visualizer.default(data, {
-    ...createVisualizationContext({ width: width * dpr, height: height * dpr, dpr, colorScheme }),
+    ...createVisualizationContext({ width: canvasWidth, height: canvasHeight, dpr, colorScheme }),
     ...createWidgetContext('server', parameters, linkedData),
-    createCanvas: () => new Canvas(1, 1) as any,
+    createCanvas: () => createCanvas(canvasWidth, canvasHeight) as any,
   });
 
   // @ts-ignore

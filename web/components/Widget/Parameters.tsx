@@ -49,7 +49,7 @@ export function WidgetParameters ({ widgetName, linkedData, excludeParameters }:
   }, [searchParams]);
 
   return (
-    <ParametersContext.Provider value={{ linkedData }}>
+    <ParametersContext value={{ linkedData }}>
       <div className="flex flex-col items-start gap-4 mt-4">
         {Object.entries(parameters).filter(([key]) => !excludeParameters.includes(key)).map(([key, config]) => {
           const pId = `${key}-${id}`;
@@ -109,7 +109,7 @@ export function WidgetParameters ({ widgetName, linkedData, excludeParameters }:
           Update
         </Button>
       </div>
-    </ParametersContext.Provider>
+    </ParametersContext>
   );
 }
 

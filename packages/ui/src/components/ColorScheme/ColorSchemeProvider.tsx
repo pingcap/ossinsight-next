@@ -5,8 +5,8 @@ export function ColorSchemeProvider ({ children }: { children: ReactNode}) {
   const [colorScheme, setColorScheme] = useState('auto');
 
   return (
-    <ColorSchemeContext.Provider value={{ colorScheme, setColorScheme }}>
+    <ColorSchemeContext value={{ colorScheme, setColorScheme }}>
       {children}
-    </ColorSchemeContext.Provider>
+    </ColorSchemeContext>
   )
 }

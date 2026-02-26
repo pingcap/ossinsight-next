@@ -1,7 +1,7 @@
 import { VisualizerModule } from '@ossinsight/widgets-types';
 import clsx from 'clsx';
 import mergeRefs from 'merge-refs';
-import { cloneElement, ForwardedRef, forwardRef, ReactElement, useEffect, useRef, useState } from 'react';
+import { cloneElement, ReactElement, Ref, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -22,9 +22,10 @@ interface SvgComponentProps extends WidgetReactVisualizationProps {
   visualizer: SvgVisualizerModule;
   parameters: any;
   linkedData: LinkedData;
+  ref?: Ref<HTMLDivElement>;
 }
 
-export default forwardRef(function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme }: SvgComponentProps, ref: ForwardedRef<HTMLDivElement>) {
+export default function Svg ({ visualizer, data, parameters, linkedData, className, style, colorScheme, ref }: SvgComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: 0,
@@ -88,8 +89,8 @@ export default forwardRef(function Svg ({ visualizer, data, parameters, linkedDa
   return (
     <div className={className} style={style} ref={mergeRefs(containerRef, ref)}>
       {cloneElement(el, {
-        className: clsx(el.props.className, 'w-full h-full'),
-      })}
+        className: clsx((el.props as { className?: string }).className, 'w-full h-full'),
+      } as any)}
     </div>
   );
-});
+}

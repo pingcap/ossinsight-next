@@ -8,8 +8,9 @@ interface Params {
 
 export const runtime = 'edge';
 
-export async function GET (req: NextRequest, reqCtx: { params: Params }) {
-  const queryName = getQueryName(reqCtx.params);
+export async function GET (req: NextRequest, reqCtx: { params: Promise<Params> }) {
+  const params = await reqCtx.params;
+  const queryName = getQueryName(params);
 
   if (!hasEndpoint(queryName)) {
     return new Response(JSON.stringify({ message: 'Endpoint not found.' }), {
@@ -19,23 +20,23 @@ export async function GET (req: NextRequest, reqCtx: { params: Params }) {
 
   const endpoint = await loadEndpoint(queryName);
 
-  const params: any = {};
+  const queryParams: Record<string, string | string[]> = {};
   for (let [name, value] of req.nextUrl.searchParams.entries()) {
-    const prev = params[name];
+    const prev = queryParams[name];
     if (prev != null) {
       if (prev instanceof Array) {
         prev.push(value);
       } else {
-        params[name] = [prev, value];
+        queryParams[name] = [prev, value];
       }
     } else {
-      params[name] = value;
+      queryParams[name] = value;
     }
   }
 
   let result;
   try {
-    result = await executeEndpoint(queryName, endpoint.config, endpoint.sql, params, req.geo);
+    result = await executeEndpoint(queryName, endpoint.config, endpoint.sql, queryParams);
   } catch (err: any) {
     if (err instanceof APIError) {
       return new Response(JSON.stringify({ message: err.message }), {

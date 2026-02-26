@@ -1,15 +1,15 @@
 import BackButton from '@/app/widgets/[vendor]/[name]/BackButton';
 import { Providers } from '@/app/widgets/[vendor]/[name]/Providers';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 
-type Params = {
-  parameters: ReactElement
-  info: ReactElement
-  share: ReactElement
-  children: ReactElement
+type LayoutProps = {
+  parameters: ReactNode
+  info: ReactNode
+  share: ReactNode
+  children: ReactNode
 }
 
-export default function Layout ({ parameters, info, share, children }: Params) {
+export default function Layout ({ parameters, info, share, children }: LayoutProps) {
   return (
     <Providers>
       <div className="flex flex-col lg:flex-row min-h-page lg:max-h-page">

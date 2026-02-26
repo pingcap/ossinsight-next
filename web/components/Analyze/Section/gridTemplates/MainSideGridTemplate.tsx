@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 
 interface MainSideGridTemplateProps {
   inverse?: boolean;
-  children: [main: ReactElement, side: ReactElement];
+  children: [main: ReactElement<{ className?: string }>, side: ReactElement<{ className?: string }>];
 }
 
 export function MainSideGridTemplate ({ inverse = false, children: [main, side] }: MainSideGridTemplateProps) {

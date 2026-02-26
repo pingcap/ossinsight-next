@@ -3,7 +3,7 @@
 import { visualizers } from '@ossinsight/widgets';
 import { ComposeVisualizationConfig, VisualizerModule } from '@ossinsight/widgets-types';
 import mergeRefs from 'merge-refs';
-import { cloneElement, createElement, ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
+import { cloneElement, createElement, Ref, useEffect, useRef, useState } from 'react';
 import { LinkedData } from '../../parameters/resolver';
 import { WidgetReactVisualizationProps } from '../../types';
 import { createVisualizationContext, createWidgetContext } from '../../utils/context';
@@ -15,11 +15,12 @@ interface ComposeComponentProps extends WidgetReactVisualizationProps {
   visualizer: VisualizerModule<'compose', ComposeVisualizationConfig, any, any>;
   parameters: any;
   linkedData: LinkedData;
+  ref?: Ref<HTMLDivElement>;
 }
 
 const dpr = typeof devicePixelRatio === 'number' ? devicePixelRatio : 2;
 
-export default forwardRef(function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme }: ComposeComponentProps, ref: ForwardedRef<HTMLDivElement>) {
+export default function ComposeComponent ({ className, style, data, visualizer, parameters, linkedData, colorScheme, ref }: ComposeComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(() => ({
     width: visualizer.width ?? 0,
@@ -130,4 +131,4 @@ export default forwardRef(function ComposeComponent ({ className, style, data, v
       })}
     </div>
   );
-});
+}

@@ -16,8 +16,8 @@ export default function AnalyzeOwnerContextProvider ({
   data: AnalyzeOwnerContextProps;
 }) {
   return (
-    <AnalyzeOwnerContext.Provider value={data}>
+    <AnalyzeOwnerContext value={data}>
       {children}
-    </AnalyzeOwnerContext.Provider>
+    </AnalyzeOwnerContext>
   );
 }

@@ -3,7 +3,7 @@ import { ColorSchemeContext } from '@ossinsight/ui/src/components/ColorScheme/co
 import { LinkedData } from '@ossinsight/widgets-core/src/parameters/resolver';
 import WidgetVisualization from '@ossinsight/widgets-core/src/renderer/react';
 import { createVisualizationContext, createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
-import { CSSProperties, forwardRef, ForwardRefExoticComponent, lazy, LazyExoticComponent, RefAttributes, useContext, useMemo } from 'react';
+import { ComponentType, CSSProperties, lazy, LazyExoticComponent, Ref, useContext, useMemo } from 'react';
 
 interface WidgetProps {
   className?: string;
@@ -12,10 +12,10 @@ interface WidgetProps {
   params: Record<string, string | string[]>;
   data: any;
   linkedData: LinkedData;
+  ref?: Ref<HTMLDivElement>;
 }
 
-// FIXME
-const dirtyWidgetsMap = new Map<string, LazyExoticComponent<ForwardRefExoticComponent<WidgetProps & RefAttributes<HTMLDivElement>>>>;
+const dirtyWidgetsMap = new Map<string, LazyExoticComponent<ComponentType<WidgetProps>>>;
 
 export function useWidget (name: string) {
   const cached = dirtyWidgetsMap.get(name);
@@ -37,9 +37,9 @@ async function createWidget (name: string) {
     widgetMetadataGenerator(name),
   ]);
 
-  const Widget = forwardRef<HTMLDivElement, WidgetProps>(({
-    className, style, name, data, linkedData, params,
-  }, forwardedRef) => {
+  function Widget({
+    className, style, name, data, linkedData, params, ref,
+  }: WidgetProps) {
     const { colorScheme } = useContext(ColorSchemeContext);
 
     const dynamicHeight = useMemo(() => {
@@ -79,10 +79,10 @@ async function createWidget (name: string) {
         parameters={params}
         linkedData={linkedData}
         colorScheme={colorScheme}
-        ref={forwardedRef}
+        ref={ref}
       />
     );
-  });
+  }
 
   Widget.displayName = `Widget:${name}`;
 

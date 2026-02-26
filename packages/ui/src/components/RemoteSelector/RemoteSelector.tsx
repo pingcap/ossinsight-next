@@ -1,4 +1,4 @@
-import { ChangeEvent, cloneElement, FocusEvent, MouseEvent, ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, cloneElement, FocusEvent, MouseEvent, ReactElement, ReactNode, Ref, useCallback, useEffect, useRef, useState } from 'react';
 import { InputPopover, InputPopoverProps } from '../InputPopover';
 import { RemoteSelectedItem } from './RemoteSelectedItem';
 import { useRemoteList, UseRemoteListOptions } from './useRemoteList';
@@ -173,7 +173,7 @@ export function RemoteSelector<Item> ({
               onFocus: onInputFocus,
               onBlur: onInputBlur,
             }),
-            { ref: inputRef }
+            { ref: inputRef } as { ref: Ref<HTMLInputElement> }
           )}
           popperContent={renderChildren()}
           popoverPortalProps={popoverPortalProps}
@@ -187,7 +187,7 @@ export function RemoteSelector<Item> ({
       <InputPopover
         open={open}
         onOpenChange={onOpenChange}
-        input={cloneElement(renderInput({ id, value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur }), { ref: inputRef })}
+        input={cloneElement(renderInput({ id, value: input, onChange: onInputChange, onFocus: onInputFocus, onBlur: onInputBlur }), { ref: inputRef } as { ref: Ref<HTMLInputElement> })}
         popperContent={renderChildren()}
         popoverPortalProps={popoverPortalProps}
         popoverContentProps={popoverContentProps}

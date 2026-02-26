@@ -17,5 +17,9 @@
   "devDependencies": {
     "typescript": "^5.2.2"
   },
-  "packageManager": "pnpm@8.6.12"
+  "packageManager": "pnpm@9.15.0",
+  "dependencies": {
+    "react": "19.3.0-canary-f93b9fd4-20251217",
+    "react-dom": "19.3.0-canary-f93b9fd4-20251217"
+  }
 }

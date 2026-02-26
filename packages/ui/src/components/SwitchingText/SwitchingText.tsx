@@ -6,7 +6,7 @@ import { Transition } from '../Transition';
 import './style.scss';
 
 export interface SwitchingTextProps {
-  children: ReactElement[];
+  children: ReactElement<{ className?: string }>[];
 }
 
 export function SwitchingText ({ children }: SwitchingTextProps) {

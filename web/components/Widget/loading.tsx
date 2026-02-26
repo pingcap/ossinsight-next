@@ -1,11 +1,11 @@
 import { DynamicOptionsLoadingProps } from 'next/dynamic';
-import { ForwardedRef, forwardRef, ReactElement, RefAttributes } from 'react';
+import { Ref } from 'react';
 import './chartloader.scss';
 
-export default forwardRef(function Loading ({}: DynamicOptionsLoadingProps, ref: ForwardedRef<HTMLDivElement>) {
+export default function Loading ({ ref }: DynamicOptionsLoadingProps & { ref?: Ref<HTMLDivElement> }) {
   return (
     <div ref={ref} className="w-full h-full flex items-center justify-center">
       <span className="chart-loader" />
     </div>
   );
-}) as (props: DynamicOptionsLoadingProps & RefAttributes<HTMLDivElement>) => ReactElement;
+}

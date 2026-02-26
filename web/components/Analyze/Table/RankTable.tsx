@@ -11,20 +11,21 @@ import { Scale } from '@ossinsight/ui/src/components/transitions';
 import { alpha2ToTitle } from '@ossinsight/widgets-utils/src/geo';
 import { useSearchParams } from 'next/navigation';
 import * as React from 'react';
-import { ForwardedRef, forwardRef, useMemo } from 'react';
+import { Ref, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Tooltip } from '@ossinsight/ui';
 
-const Table = forwardRef(function Table (props: {
+function Table (props: {
   rows?: Array<Array<string | number>>;
   header?: Array<string>;
   maxRows?: number;
-}, forwardedRef: ForwardedRef<any>) {
-  const { rows, header, maxRows = 10 } = props;
+  ref?: Ref<any>;
+}) {
+  const { rows, header, maxRows = 10, ref } = props;
 
   return (
     <>
-      <table className={twMerge('min-w-full divide-y divide-gray-700')} ref={forwardedRef}>
+      <table className={twMerge('min-w-full divide-y divide-gray-700')} ref={ref}>
         <thead>
           <tr>
             <th
@@ -64,19 +65,19 @@ const Table = forwardRef(function Table (props: {
       </table>
     </>
   );
-});
+}
 
 export function upperFirst (str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export const TableSkeleton = forwardRef(function TableSkeleton ({}, forwardedRef: ForwardedRef<any>) {
+export function TableSkeleton ({ ref }: { ref?: Ref<any> }) {
   return (
     <>
-      <Loader ref={forwardedRef} />
+      <Loader ref={ref} />
     </>
   );
-});
+}
 
 export function GeoRankTableContent (props: {
   id: number;

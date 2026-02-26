@@ -1,4 +1,5 @@
-import { Filter, WidgetCreator, WidgetsList } from '@/components/Widget';
+import { Filter, WidgetCreator } from '@/components/Widget';
+import { WidgetsList } from '@/components/Widget/List';
 import { filteredWidgetsNames, nonPopularWidgetsNames } from '@/utils/widgets';
 import { ScrollAnchor } from '@ossinsight/ui/src/components/ScrollAnchor';
 import { SwitchingText } from '@ossinsight/ui/src/components/SwitchingText';
@@ -6,11 +7,12 @@ import ArrowDownIcon from 'bootstrap-icons/icons/arrow-down.svg'
 import { Metadata } from 'next';
 
 export default async function Home ({ searchParams }: {
-  searchParams: any
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }) {
+  const params = await searchParams;
   const config = {
-    search: searchParams['q'] ?? '',
-    tag: (typeof searchParams['tag'] === 'string' ? searchParams['tag'] : undefined),
+    search: (params['q'] as string) ?? '',
+    tag: (typeof params['tag'] === 'string' ? params['tag'] : undefined),
   };
 
   return (

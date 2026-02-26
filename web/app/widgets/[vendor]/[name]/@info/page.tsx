@@ -2,14 +2,16 @@ import { makeLinkedData, widgetPageParams, WidgetPageProps, widgetSignature } fr
 import { ServerWidgetInfo } from '@/components/Widget/server/Info';
 import { Suspense } from 'react';
 
-export default function InfoSection (props: WidgetPageProps) {
-  const { name } = widgetPageParams(props.params);
-  const signature = widgetSignature(props);
-  const linkedData = makeLinkedData(name, props.searchParams);
+export default async function InfoSection (props: WidgetPageProps) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+  const { name } = widgetPageParams(params);
+  const signature = widgetSignature(params, searchParams);
+  const linkedData = makeLinkedData(name, searchParams);
 
   return (
     <Suspense key={signature} fallback="loading...">
-      <ServerWidgetInfo name={name} linkedDataPromise={linkedData} searchParams={props.searchParams} />
+      <ServerWidgetInfo name={name} linkedDataPromise={linkedData} searchParams={searchParams} />
     </Suspense>
   );
 }

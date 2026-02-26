@@ -2,11 +2,12 @@ import { size } from '@/app/analyze/[owner]/twitter-image';
 import { getOwnerInfo } from '@/components/Analyze/utils';
 import { DateTime } from 'luxon';
 import { notFound } from 'next/navigation';
-import { ImageResponse } from 'next/server';
+import { ImageResponse } from 'next/og';
 import { FC, SVGAttributes } from 'react';
 
-export default async function Image ({ params }: { params: { owner: string } }) {
-  const owner = decodeURIComponent(params.owner);
+export default async function Image ({ params }: { params: Promise<{ owner: string }> }) {
+  const { owner: ownerParam } = await params;
+  const owner = decodeURIComponent(ownerParam);
   const info = await getOwnerInfo(owner);
   if (info.type !== 'Organization') {
     notFound();
@@ -58,7 +59,7 @@ export default async function Image ({ params }: { params: { owner: string } }) 
       >
         <Decorators />
 
-        <img src={`https://github.com/${params.owner}.png`} width={90} height={90} style={{ position: 'absolute', left: 40, top: 53, borderRadius: 45, background: 'white', border: '1px solid white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.50)' }} />
+        <img src={`https://github.com/${owner}.png`} width={90} height={90} style={{ position: 'absolute', left: 40, top: 53, borderRadius: 45, background: 'white', border: '1px solid white', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.50)' }} />
         <div style={{ position: 'absolute', top: 53, left: 149, fontSize: 48, lineHeight: '57.6px', fontWeight: 600, color: 'white' }}>
           {info.name}
         </div>

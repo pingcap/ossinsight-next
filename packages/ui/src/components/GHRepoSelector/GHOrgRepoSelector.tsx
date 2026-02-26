@@ -154,8 +154,12 @@ export function HLGHOrgRepoSelectorTemplate(props: {
   const deferredText = React.useDeferredValue(text);
 
   const [popoverElement, setPopoverElement] = React.useState<
-    HTMLDivElement | null | undefined
+    HTMLElement | null | undefined
   >(undefined);
+
+  const popoverRef = React.useCallback((el: HTMLElement | null) => {
+    setPopoverElement(el);
+  }, []);
 
   React.useEffect(() => {
     if (popoverElement === null) {
@@ -233,13 +237,15 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                 disabled={disabled}
                 className='relative w-full cursor-pointer rounded-lg bg-[var(--background-color-popover)] py-2 pl-3 pr-20 text-[var(--text-color-subtitle)] text-left shadow-md border border-[var(--selector-border-color)] focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'
               >
-                <span className='block truncate w-auto lg:w-80 overflow-hidden'>
-                  <RepoIcon className='mr-2' />
-                  {selectedItems.length === 0 ? (
-                    <>{allItem.name}</>
-                  ) : (
-                    selectedItems.map((i) => i.name).join(', ')
-                  )}
+                <span className='inline-flex items-center truncate w-auto lg:w-80 overflow-hidden'>
+                  <RepoIcon className='mr-2 flex-shrink-0' />
+                  <span className='truncate'>
+                    {selectedItems.length === 0 ? (
+                      <>{allItem.name}</>
+                    ) : (
+                      selectedItems.map((i) => i.name).join(', ')
+                    )}
+                  </span>
                 </span>
                 <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
                   <span className='bg-[var(--selector-fill-color)] text-white text-xs font-medium px-2 py-1 mr-2 rounded-full inline-flex items-center gap-2'>
@@ -272,7 +278,7 @@ export function HLGHOrgRepoSelectorTemplate(props: {
                 leaveTo='opacity-0 translate-y-1'
               >
                 <Popover.Panel
-                  ref={setPopoverElement}
+                  ref={popoverRef}
                   className='absolute left-1/2 z-10 mt-3 w-fit max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-3xl'
                 >
                   <div className='overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-[var(--background-color-popover)] w-auto lg:w-[400px]'>

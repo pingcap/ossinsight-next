@@ -70,7 +70,7 @@ export function usePerformanceOptimizedNetworkRequest<Args extends any[], Result
  * @param fn
  */
 export function useSafeCallback<Fn extends (...args: any[]) => any> (fn: (signal: AbortSignal, ...args: Parameters<Fn>) => ReturnType<Fn>) {
-  const acRef = useRef<AbortController>();
+  const acRef = useRef<AbortController>(undefined);
   const latestFn = useLatestValue(fn);
 
   const callback = useCallback((...args: Parameters<Fn>) => {

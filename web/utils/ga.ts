@@ -30,7 +30,7 @@ export function apiEvent (name: string, params: GaEventParams, request: NextRequ
 
   const requestParams = {
     url: request.url,
-    ip: request.ip,
+    ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? undefined,
     userAgent: ua.ua,
     os: `${ua.os.name} ${ua.os.version}`,
     browser: `${ua.browser.name} ${ua.browser.version}`,

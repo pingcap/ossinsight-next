@@ -20,7 +20,7 @@ export function useCancellablePromise<Params, Result> ({ executor, defaultResult
   const [executing, setExecuting] = useState(false);
   const [error, setError] = useState<unknown>(undefined);
 
-  const paramsRef = useRef<Params>();
+  const paramsRef = useRef<Params>(undefined);
   const lastCancellableRef = useRef<CancelablePromise<Result> | undefined>(undefined);
 
   const mounted = useRef(true);

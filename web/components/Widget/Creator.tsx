@@ -48,17 +48,17 @@ export function WidgetCreator ({ className }: { className?: string }) {
   return (
     <div className={className}>
       <div className="max-w-screen-md mx-auto flex flex-col sm:items-end sm:flex-row gap-4">
-        <div className="flex flex-col flex-1 gap-1">
-          <label className="text-xs flex gap-1" htmlFor="analyze-selector">
-            <CheckCircleFillIcon width={10} heigit={10} className="text-[#4A65C6]" />
-            Input your repository/user name
+        <div className="flex flex-col flex-1">
+          <label className="text-xs text-subtitle flex items-center gap-1 mb-2" htmlFor="analyze-selector">
+            <CheckCircleFillIcon className="w-[14px] h-[14px] text-[#4A65C6] flex-shrink-0" />
+            <span>Input your repository/user name</span>
           </label>
           <AnalyzeSelector id="analyze-selector" tuple={tuple} onTupleChange={setTuple} />
         </div>
-        <div className="flex flex-col flex-1 gap-1 p-1 -m-1 overflow-hidden">
-          <label className="text-xs flex gap-1" htmlFor="widget-selector">
-            <CheckCircleFillIcon width={10} heigit={10} className="text-[#4A65C6]" />
-            Select a widget type
+        <div className="flex flex-col flex-1 p-1 -m-1 overflow-visible">
+          <label className="text-xs text-subtitle flex items-center gap-1 mb-2" htmlFor="widget-selector">
+            <CheckCircleFillIcon className="w-[14px] h-[14px] text-[#4A65C6] flex-shrink-0" />
+            <span>Select a widget type</span>
           </label>
           <QuickSelector key={tuple.type} widgets={widgets} widget={widget} setWidget={setWidget} />
         </div>

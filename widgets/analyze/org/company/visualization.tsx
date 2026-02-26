@@ -81,26 +81,7 @@ export default async function (
   });
 
 
-  const words: cloud.Word[] = await new Promise<cloud.Word[]>((resolve, reject) => {
-    const layout = cloud()
-      .canvas(ctx.createCanvas)
-      .size([ctx.width, ctx.height])
-      .words(data)
-      .padding(2)
-      .rotate(0)
-      .font('Heiti TC')
-      .fontSize(function (d) { return d.size; })
-      .random(() => 0.5)
-      .on('end', (word) => resolve(word));
-    layout.start();
-    if (signal) {
-      signal.onabort = () => {
-        layout.stop();
-        reject(signal.reason);
-      }
-    }
-  });
-
+  const words = await getWordCloudLayout(input, ctx, signal);
   return (
     <svg width={width} height={height} viewBox={`${-viewBoxWidth/2} ${-viewBoxHeight/2} ${viewBoxWidth} ${viewBoxHeight}`}>
       <g>
@@ -119,6 +100,65 @@ export default async function (
       </g>
     </svg>
   );
+}
+
+export type WordCloudLayoutWord = cloud.Word;
+
+/** Returns word layout only (no React). Used for server-side thumbnail without react-dom. */
+export async function getWordCloudLayout (
+  input: Input,
+  ctx: WidgetVisualizerContext<Params>,
+  signal?: AbortSignal,
+): Promise<cloud.Word[]> {
+  let viewBoxWidth = ctx.width;
+  let viewBoxHeight = ctx.height;
+  if (ctx.runtime === 'server') {
+    viewBoxWidth /= ctx.dpr;
+    viewBoxHeight /= ctx.dpr;
+  }
+  const minFontSize = 14;
+  const maxFontSize = Math.min(viewBoxHeight, viewBoxWidth) / 4;
+  const valueIndex = ctx.parameters?.activity || 'participants';
+  const generateData = () => {
+    return input
+      .flatMap((data, i) =>
+        transformCompanyData(data ?? [], valueIndex).map((item) => {
+          item.color = ['#dd6b66', '#759aa0'][i];
+          return item;
+        }),
+      )
+      .sort((a, b) => b.size - a.size);
+  };
+  const data = generateData();
+  const min = Math.min(...data.map(d => d.size));
+  const max = Math.max(...data.map(d => d.size));
+  data.forEach(word => {
+    if (max === min) {
+      word.size = (minFontSize + maxFontSize) / 4;
+      return word;
+    }
+    word.size = (word.size - min) * (maxFontSize - minFontSize) / (max - min) + minFontSize;
+    return word;
+  });
+  return new Promise<cloud.Word[]>((resolve, reject) => {
+    const layout = cloud()
+      .canvas(ctx.createCanvas)
+      .size([ctx.width, ctx.height])
+      .words(data)
+      .padding(2)
+      .rotate(0)
+      .font('Heiti TC')
+      .fontSize(function (d) { return d.size; })
+      .random(() => 0.5)
+      .on('end', (word) => resolve(word));
+    layout.start();
+    if (signal) {
+      signal.onabort = () => {
+        layout.stop();
+        reject(signal.reason);
+      }
+    }
+  });
 }
 
 const visible = [0x09, 0x20]

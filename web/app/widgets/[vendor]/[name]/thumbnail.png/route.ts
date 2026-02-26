@@ -1,4 +1,5 @@
 import { filterWidgetUrlParameters } from '@/app/widgets/[vendor]/[name]/utils';
+import { renderWordCloudThumbnail } from '@/app/widgets/[vendor]/[name]/renderWordCloudThumbnail';
 import config from '@/site.config';
 import { apiEvent, autoParams, serverSendGaMeasurementEvent } from '@/utils/ga';
 import { resolveImageSizeConfig } from '@/utils/siteConfig';
@@ -12,7 +13,8 @@ import { createLinkedDataContext, createVisualizationContext, createWidgetBaseCo
 import { notFound } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET (request: NextRequest, { params: { vendor, name: paramName } }: { params: { vendor: string, name: string } }) {
+export async function GET (request: NextRequest, { params }: { params: Promise<{ vendor: string, name: string }> }) {
+  const { vendor, name: paramName } = await params;
   if (vendor !== 'official') {
     notFound();
   }
@@ -24,7 +26,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
   }
 
   const datasource = widgetDatasourceFetcher(name);
-  const params = await widgetParameterDefinitions(name);
+  const paramDefs = await widgetParameterDefinitions(name);
   const visualizer = await widgetVisualizer(name);
   const generateMetadata = await widgetMetadataGenerator(name);
 
@@ -36,7 +38,7 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     parameters[key] = value;
   });
 
-  Object.assign(parameters, resolveExpressions(params));
+  Object.assign(parameters, resolveExpressions(paramDefs));
 
   const paramDef = await widgetParameterDefinitions(name);
   const linkedData = await resolveParameters(paramDef, parameters);
@@ -79,7 +81,11 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
 
   let canvas: Canvas;
 
-  if (visualizer.type !== 'compose') {
+  // Word cloud: render with canvas only (no React) to avoid react-dom version mismatch.
+  const getWordCloudLayout = (visualizer as { getWordCloudLayout?: (input: unknown, ctx: Record<string, unknown>) => Promise<unknown> }).getWordCloudLayout;
+  if (typeof getWordCloudLayout === 'function') {
+    canvas = await renderWordCloudThumbnail(getWordCloudLayout as Parameters<typeof renderWordCloudThumbnail>[0], data, { ...renderCtx, colorScheme });
+  } else if (visualizer.type !== 'compose') {
     // Use compose to render all others images temporary.
     canvas = await renderCompose({
       width,
@@ -114,7 +120,8 @@ export async function GET (request: NextRequest, { params: { vendor, name: param
     });
   }
 
-  return new NextResponse(canvas.toBuffer('image/png'), {
+  const buffer = canvas.toBuffer('image/png');
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       'Content-Type': 'image/png',
     },

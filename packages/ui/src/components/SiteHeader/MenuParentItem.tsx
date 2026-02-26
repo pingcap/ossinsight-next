@@ -14,7 +14,7 @@ export function MenuParentItem ({ item, onValueChange }: { item: MenuParentItemC
     };
   }, []);
 
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+  const timeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const handleMouseEnter = useCallback(() => {
     clearTimeout(timeout.current);

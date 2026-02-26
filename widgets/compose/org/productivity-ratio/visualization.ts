@@ -152,8 +152,8 @@ const handleInputData = (data: DataPoint[], activity: string) => {
         },
         {} as Record<'merged' | 'closed' | 'open', PRMergedDataPoint>
       );
-      const prCurrent = merged.current_period_percentage;
-      const prDiff = merged.percentage_change;
+      const prCurrent = merged?.current_period_percentage ?? 0;
+      const prDiff = merged?.percentage_change ?? 0;
       return {
         title: 'Pull Request Merged Ratio',
         label: `${(prCurrent * 100).toFixed(0)}%`,

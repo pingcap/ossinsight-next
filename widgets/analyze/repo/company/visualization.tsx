@@ -82,7 +82,66 @@ export default async function (
     return word;
   });
 
-  const words: cloud.Word[] = await new Promise<cloud.Word[]>((resolve, reject) => {
+  const words = await getWordCloudLayout(input, ctx, signal);
+  return (
+    <svg width={width} height={height} viewBox={`${-viewBoxWidth / 2} ${-viewBoxHeight / 2} ${viewBoxWidth} ${viewBoxHeight}`}>
+      <g>
+        {words.map((word, i) => (
+          <text
+            key={i}
+            fill={'#dd6b66'}
+            fontSize={`${word.size}px`}
+            fontFamily="Heiti TC"
+            textAnchor="middle"
+            transform={`translate(${[word.x, word.y]})rotate(${word.rotate})`}
+            dangerouslySetInnerHTML={{ __html: word.text }}
+          />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+export type WordCloudLayoutWord = cloud.Word;
+
+/** Returns word layout only (no React). Used for server-side thumbnail without react-dom. */
+export async function getWordCloudLayout (
+  input: Input,
+  ctx: WidgetVisualizerContext<Params>,
+  signal?: AbortSignal,
+): Promise<WordCloudLayoutWord[]> {
+  let viewBoxWidth = ctx.width;
+  let viewBoxHeight = ctx.height;
+  if (ctx.runtime === 'server') {
+    viewBoxWidth /= ctx.dpr;
+    viewBoxHeight /= ctx.dpr;
+  }
+  const minFontSize = 14;
+  const maxFontSize = Math.min(viewBoxHeight, viewBoxWidth) / 4;
+  const companyType = `analyze-${ctx.parameters.activity || 'stars'}-company`;
+  const valueIndex = companyValueIndices[companyType];
+  const generateData = () => {
+    return input
+      .flatMap((data, i) =>
+        transformCompanyData(data ?? [], valueIndex).map((item) => {
+          item.color = ctx.theme.echartsColorPalette[i];
+          return item;
+        }),
+      )
+      .sort((a, b) => a.size - b.size);
+  };
+  const data = generateData();
+  const min = Math.min(...data.map(d => d.size));
+  const max = Math.max(...data.map(d => d.size));
+  data.forEach(word => {
+    if (max === min) {
+      word.size = (minFontSize + maxFontSize) / 4;
+      return word;
+    }
+    word.size = (word.size - min) * (maxFontSize - minFontSize) / (max - min) + minFontSize;
+    return word;
+  });
+  return new Promise<cloud.Word[]>((resolve, reject) => {
     const layout = cloud()
       .canvas(ctx.createCanvas)
       .size([ctx.width, ctx.height])
@@ -101,24 +160,6 @@ export default async function (
       };
     }
   });
-
-  return (
-    <svg width={width} height={height} viewBox={`${-viewBoxWidth / 2} ${-viewBoxHeight / 2} ${viewBoxWidth} ${viewBoxHeight}`}>
-      <g>
-        {words.map((word, i) => (
-          <text
-            key={i}
-            fill={'#dd6b66'}
-            fontSize={`${word.size}px`}
-            fontFamily="Heiti TC"
-            textAnchor="middle"
-            transform={`translate(${[word.x, word.y]})rotate(${word.rotate})`}
-            dangerouslySetInnerHTML={{ __html: word.text }}
-          />
-        ))}
-      </g>
-    </svg>
-  );
 }
 
 const visible = [0x09, 0x20]

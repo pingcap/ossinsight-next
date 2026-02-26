@@ -198,7 +198,7 @@ export function ScrollspyContextProvider ({ children, scrollTarget }: { children
 
   return (
     createElement(
-      ScrollspyContext.Provider,
+      ScrollspyContext,
       {
         value: cls,
       },

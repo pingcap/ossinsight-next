@@ -3,21 +3,25 @@ import { fetchWidgetData, widgetMeta, widgetMetadataGenerator } from '@/utils/wi
 import { createWidgetContext } from '@ossinsight/widgets-core/src/utils/context';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
-import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps, widgetSignature } from './utils';
+import { makeLinkedData, stringArrayRecord2UrlSearch, widgetPageParams, WidgetPageProps } from './utils';
 import { createShareInfo } from '@/components/Share/utils';
 
 export default async function page (props: WidgetPageProps) {
-  const { name } = widgetPageParams(props.params);
-  const { data, linkedData, parameters } = await fetchWidgetData(name, props.searchParams);
-  const shareInfo = await createShareInfo(name, linkedData, props.searchParams as any);
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+  const { name } = widgetPageParams(params);
+  const { data, linkedData, parameters } = await fetchWidgetData(name, searchParams);
+  const shareInfo = await createShareInfo(name, linkedData, searchParams as any);
 
   return (
     <Widget name={name} params={parameters} data={data} linkedData={linkedData} shareInfo={shareInfo} />
   );
 }
 
-export async function generateMetadata ({ params, searchParams }: WidgetPageProps): Promise<Metadata> {
-  const requestHeaders = headers();
+export async function generateMetadata (props: WidgetPageProps): Promise<Metadata> {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+  const requestHeaders = await headers();
   const host = requestHeaders.get('host');
 
   const { name } = widgetPageParams(params);

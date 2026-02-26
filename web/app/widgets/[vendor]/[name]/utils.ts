@@ -3,9 +3,14 @@ import { LinkedData, resolveParameters } from '@ossinsight/widgets-core/src/para
 import { notFound } from 'next/navigation';
 import { cache } from 'react';
 
-export type WidgetPageProps = { params: { vendor: string, name: string }, searchParams: Record<string, string | string[]> };
+export type WidgetPageParams = { vendor: string, name: string };
+export type WidgetPageSearchParams = Record<string, string | string[]>;
+export type WidgetPageProps = {
+  params: Promise<WidgetPageParams>,
+  searchParams: Promise<WidgetPageSearchParams>
+};
 
-export const widgetPageParams = cache((params: WidgetPageProps['params']) => {
+export const widgetPageParams = cache((params: WidgetPageParams) => {
   if (params.vendor !== 'official') {
     notFound();
   }
@@ -21,8 +26,8 @@ export const widgetPageParams = cache((params: WidgetPageProps['params']) => {
   };
 });
 
-export function widgetSignature (props: WidgetPageProps) {
-  return JSON.stringify(props);
+export function widgetSignature (params: WidgetPageParams, searchParams: WidgetPageSearchParams) {
+  return JSON.stringify({ params, searchParams });
 }
 
 export const makeLinkedData = cache((name: string, searchParams: Record<string, string | string[]>, defaultLinkedData?: LinkedData, signal?: AbortSignal) => {
